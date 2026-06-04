@@ -1,0 +1,18 @@
+iosxe_devices:
+  - name: WLC_1
+    host: 192.168.0.100
+    port: 22
+    username: admin
+    password: Cisco123
+    enable_secret: Cisco123
+    platform: C9800-CL
+    transport: ssh
+    os_version: 17.9.4
+    ap_username: admin
+    ap_password: Aigle123
+    ap_secret: Aigle123
+    jumphost_ip: 192.168.0.24
+    tftp_ip: 192.168.0.24
+
+
+  - name : SPARSHA_LABs
