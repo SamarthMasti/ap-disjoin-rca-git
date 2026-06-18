@@ -1,0 +1,12 @@
+{
+  "cc:7f:75:5a:e7:40": {
+    "ap_mac": "cc:7f:75:5a:e7:40",
+    "ap_name": "Ap9115D",
+    "disjoin_count": 1,
+    "ip": "192.168.0.3",
+    "last_disjoin_time": "2026-06-15T12:40:37.540436+00:00",
+    "workflow_active": true,
+    "workflow_expiry_time": "2026-06-15T13:10:37.540457+00:00",
+    "workflow_start_time": "2026-06-15T12:40:37.540436+00:00"
+  }
+}

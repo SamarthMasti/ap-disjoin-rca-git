@@ -1,0 +1,10 @@
+[
+  {
+    "ap_name": "Ap3800e_11StaticIp",
+    "mac": "78:72:5d:1c:4f:a0",
+    "ip": "192.168.0.213",
+    "timestamp": 1781528989.438866,
+    "event_time": "2026-06-15 13:09:49 UTC",
+    "used": false
+  }
+]

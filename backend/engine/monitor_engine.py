@@ -4,6 +4,7 @@ import importlib
 import json
 import re
 import sys
+import traceback
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -11,6 +12,62 @@ from typing import Any
 
 from backend.adapters import BackendEventBridge
 from backend.config import MonitorRuntimeConfig, RuntimePaths
+
+
+class _GuiEventStream:
+    """Mirrors a terminal stream and forwards complete lines to the GUI."""
+
+    def __init__(self, stream: Any, event_bridge: BackendEventBridge,event_sink=None):
+        self._stream = stream
+        self._event_bridge = event_bridge
+        self._event_sink = event_sink
+        self._pending = ""
+
+    def write(self, text: str) -> int:
+        written = self._stream.write(text)
+        self._pending += text
+        while "\n" in self._pending:
+            line, self._pending = self._pending.split("\n", 1)
+            self._emit_line(line.rstrip("\r"))
+        if self._pending:
+            self._emit_line(self._pending.rstrip("\r"))
+            self._pending = ""
+   
+        return written
+    def _emit_line(self, line: str) -> None:
+        if self._event_sink:
+            self._event_sink({"type": "log_line", "line": line})
+        else:
+            self._event_bridge.emit("log_line", line=line)
+    def flush(self) -> None:
+        try:
+            if self._stream is not None:
+                self._stream.flush()
+        except Exception:
+            pass
+        if self._pending:
+            self._emit_line(self._pending.rstrip("\r"))
+            self._pending = ""
+
+    def fileno(self) -> int:
+        try:
+            if self._stream is not None:
+                return self._stream.fileno()
+        except Exception:
+            pass
+        return -1
+
+    def isatty(self) -> bool:
+        try:
+            if self._stream is not None:
+                return self._stream.isatty()
+        except Exception:
+            pass
+        return False
+
+    @property
+    def encoding(self) -> str | None:
+        return getattr(self._stream, "encoding", None)
 
 
 @dataclass(slots=True)
@@ -37,12 +94,16 @@ class MonitorResult:
             "high_confidence_findings": self.high_confidence_findings,
             "report_json": self.report_json,
             "report_summary": self.report_summary,
+            "session_log": self.session_log,
         }
 
 
 class MonitorEngine:
     """Frontend-neutral engine facade that preserves the existing monitor workflow."""
 
+    def __init__(self):
+        self._stop_requested = False
+        self._live_monitor = None   # ← ADD THIS
     def start(self, config: MonitorRuntimeConfig) -> MonitorResult:
         legacy = self._load_legacy_backend()
         self._apply_runtime_config(legacy, config)
@@ -60,32 +121,65 @@ class MonitorEngine:
         log_path = report_dir / f"session_log_{safe_host}_{stamp}.txt"
         log_file = log_path.open("w", encoding="utf-8", buffering=1)
         orig_stderr = sys.stderr
-        sys.stderr = legacy._TeeStream(orig_stderr, log_file)
+        orig_stdout = sys.stdout
+        gui_stderr = _GuiEventStream(legacy._TeeStream(orig_stderr or log_file, log_file), event_bridge, config.event_sink)
+        gui_stdout = _GuiEventStream(legacy._TeeStream(orig_stdout or log_file, log_file), event_bridge, config.event_sink)
+        sys.stderr = gui_stderr
+        sys.stdout = gui_stdout
 
         monitor = None
+        json_path: Path | None = None
+        txt_path: Path | None = None
         try:
             print(f"[{legacy.ts()}] Minion AP Disjoin Monitor starting — WLC={host}", file=sys.stderr)
             print(f"[{legacy.ts()}] Trigger mode: {legacy.TRIGGER_MODE.upper()}", file=sys.stderr)
             self._clear_stale_workflow_state(legacy)
-
             monitor = legacy.LiveMonitor(
                 auth=auth,
                 wlc_host=host,
                 device_name=config.device_name,
                 grpc_port=config.grpc_port,
             )
+            if legacy.TRIGGER_MODE == "eem_batch":
+                monitor._eem_window_seconds = getattr(config, "eem_window_seconds", 600)
+            self._live_monitor = monitor   # ← ADD THIS
             legacy._rca_executor = legacy.ThreadPoolExecutor(max_workers=legacy.MAX_CONCURRENT_RCA)
-            monitor._push_eem_applet()
-            monitor.listen(config.duration_minutes)
-            legacy._rca_executor.shutdown(wait=True)
+            try:
+                monitor._push_eem_applet()
+                monitor.listen(config.duration_minutes)
+            finally:
+                self._live_monitor = None   # ← ADD THIS
+                legacy._rca_executor.shutdown(wait=True)
 
             json_path, txt_path = monitor.save_report()
             event_bridge.report_generated(report_json=str(json_path), report_summary=str(txt_path))
+        except Exception as exc:
+            print(
+                f"[{legacy.ts()}] ERROR: Monitor execution failed: "
+                f"{type(exc).__name__}: {exc}",
+                file=sys.stderr,
+            )
+            traceback.print_exc(file=sys.stderr)
+            event_bridge.emit(
+                "engine_failed",
+                error=str(exc),
+                error_type=type(exc).__name__,
+                session_log=str(log_path),
+            )
+            raise
         finally:
+            gui_stderr.flush()
+            gui_stdout.flush()
             sys.stderr = orig_stderr
+            sys.stdout = orig_stdout
             log_file.close()
 
-        print(f"[{legacy.ts()}] Session log saved → {log_path}", file=sys.stderr)
+        if monitor is None or json_path is None or txt_path is None:
+            raise RuntimeError("Monitor workflow ended before report generation")
+
+        session_saved_line = f"[{legacy.ts()}] Session log saved → {log_path}"
+        print(session_saved_line, file=sys.stderr)
+        event_bridge.emit("log_line", line=session_saved_line)
         high = sum(
             1 for r in monitor.ap_reports.values()
             if (r.get("correlation") or {}).get("confidence") == "high"
@@ -103,7 +197,10 @@ class MonitorEngine:
             report_summary=str(txt_path),
             session_log=str(log_path),
         )
-        print(json.dumps(result.as_dict(), indent=2))
+        result_json = json.dumps(result.as_dict(), indent=2)
+        print(result_json)
+        for line in result_json.splitlines():
+            event_bridge.emit("log_line", line=line)
         event_bridge.emit("engine_completed", result=result.as_dict())
         return result
 
@@ -127,7 +224,12 @@ class MonitorEngine:
         legacy.DISJOIN_EVENT_HISTORY_FILE = state_files["disjoin_event_history"]
         legacy.AP_WORKFLOW_STATE_FILE = state_files["ap_workflow_state"]
         legacy.FINALIZED_APS_FILE = state_files["finalized_aps"]
-        legacy.TRIGGER_MODE = "snmp" if config.snmp_enabled else "telemetry"
+        if config.snmp_enabled:
+            legacy.TRIGGER_MODE = "snmp"
+        elif getattr(config, "trigger_mode", "telemetry") == "eem_batch":
+            legacy.TRIGGER_MODE = "eem_batch"
+        else:
+            legacy.TRIGGER_MODE = "telemetry"
         legacy.SNMP_COMMUNITY = config.snmp_community or "public"
 
     def _load_legacy_backend(self) -> Any:

@@ -1,0 +1,12 @@
+{
+  "2c:33:11:2b:32:80": {
+    "ap_mac": "2c:33:11:2b:32:80",
+    "ap_name": "Ap2802Den",
+    "disjoin_count": 1,
+    "ip": "192.168.0.211",
+    "last_disjoin_time": "2026-06-18T10:16:07.160187+00:00",
+    "workflow_active": false,
+    "workflow_expiry_time": "2026-06-18T10:46:07.160219+00:00",
+    "workflow_start_time": "2026-06-18T10:16:07.160187+00:00"
+  }
+}

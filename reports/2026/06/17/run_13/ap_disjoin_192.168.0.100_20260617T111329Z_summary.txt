@@ -1,0 +1,17 @@
+AP Disjoin Session — 192.168.0.100
+==================================================
+
+No disjoin events with traceable MAC detected.
+
+==========================
+AP DISJOIN HISTORY
+==========================
+
+AP Name : Ap9115D
+MAC     : cc:7f:75:5a:e7:40
+IP      : 192.168.0.15
+
+Total Disjoins : 1
+
+Disjoin Timeline:
+  1. 2026-06-17 11:09:21 UTC

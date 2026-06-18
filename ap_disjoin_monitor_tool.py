@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ap_disjoin_monitor_tool.py — Minion Network Automation Toolkit
+ap_disjoin_monitor_tool.py —  Network Automation Toolkit
 ==============================================================
 Live-stream AP disjoin detection for Cisco Catalyst 9800 IOS-XE WLC.
 
@@ -24,6 +24,7 @@ import re
 import sys
 import time
 import socket
+import traceback
 
 import threading
 from datetime import datetime, timezone
@@ -53,7 +54,11 @@ from backend.state import disjoin_occurrences as state_disjoin_occurrences
 from backend.state import event_history as state_event_history
 from backend.state import finalized_history as state_finalized_history
 from backend.state import workflow_state as state_workflow_state
-
+from backend.rca import (
+    correlate, correlate_ap_side, CorrelationEngine,
+    collect_ap_side_evidence, resolve_ap_name_from_mac,
+    collect_advanced_capwap_on_ap,
+)
 MAX_CONCURRENT_RCA = int(os.getenv("MAX_CONCURRENT_RCA", "5"))
 _rca_queue: queue.Queue = queue.Queue()
 _rca_executor: ThreadPoolExecutor | None = None
@@ -65,23 +70,19 @@ from logging.handlers import RotatingFileHandler
 
 def setup_logging(log_dir: Path) -> logging.Logger:
     log_dir.mkdir(parents=True, exist_ok=True)
-    logger = logging.getLogger("minion")
-    logger.setLevel(logging.DEBUG)
+    logger = logging.getLogger("")
+    logger.setLevel(logging.WARNING)
     fmt = logging.Formatter(
         "%(asctime)s [%(levelname)s] %(message)s",
         datefmt="%Y-%m-%dT%H:%M:%SZ"
     )
-    # Rotating file handler — 5 MB × 5 files
-    fh = RotatingFileHandler(
-        log_dir / "minion.log", maxBytes=5*1024*1024, backupCount=5, encoding="utf-8"
-    )
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(fmt)
-    ch = logging.StreamHandler(sys.stderr)
-    ch.setLevel(logging.INFO)
-    ch.setFormatter(fmt)
-    #logger.addHandler(fh)
-    logger.addHandler(ch)
+   
+    if not logger.handlers:
+        ch = logging.StreamHandler(sys.stderr)
+        ch.setLevel(logging.INFO)
+        ch.setFormatter(fmt)
+        #logger.addHandler(fh)
+        logger.addHandler(ch)
     return logger
 
 log: logging.Logger | None = None   # initialized in run_monitor()
@@ -107,7 +108,37 @@ MIN_RCA_SESSION_AGE = int(
 )
 _dedup_cache: dict[str, float] = {}   # key → last_seen epoch
 _dedup_lock  = threading.Lock()
+# ── AP Traced Count file ──────────────────────────────────────────────────
+AP_TRACED_COUNT_FILE = REPORTS_DIR / "ap_traced_count.json"
+AP_TRACED_COUNT_LOCK = threading.Lock()
 
+def set_ap_traced_count(value: int) -> None:
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    with AP_TRACED_COUNT_LOCK:
+        tmp = AP_TRACED_COUNT_FILE.with_suffix(".json.tmp")
+        try:
+            tmp.write_text(json.dumps({"count": value}), encoding="utf-8")
+            tmp.replace(AP_TRACED_COUNT_FILE)
+        except Exception:
+            try: tmp.unlink(missing_ok=True)
+            except Exception: pass
+
+def increment_ap_traced_count() -> int:
+    with AP_TRACED_COUNT_LOCK:
+        try:
+            data = json.loads(AP_TRACED_COUNT_FILE.read_text(encoding="utf-8"))
+            current = data.get("count", 0)
+        except Exception:
+            current = 0
+        new_val = current + 1
+        tmp = AP_TRACED_COUNT_FILE.with_suffix(".json.tmp")
+        try:
+            tmp.write_text(json.dumps({"count": new_val}), encoding="utf-8")
+            tmp.replace(AP_TRACED_COUNT_FILE)
+        except Exception:
+            try: tmp.unlink(missing_ok=True)
+            except Exception: pass
+        return new_val
 def _is_duplicate(key: str) -> bool:
     """Returns True if this key was seen within DEDUP_CACHE_TTL seconds."""
     now = time.monotonic()
@@ -143,6 +174,14 @@ CGDC_LOCK                  = threading.Lock()
 CGDC_BATCH_SIZE            = 3
 CGDC_WINDOW_SECONDS        = 600
 
+# ── EEM-BATCH MODE: single global RCA session state machine ──────────────
+# States: IDLE → RCA_ACTIVE → WAITING_RECURRENCE → IDLE
+GLOBAL_RCA_SESSION_FILE             = REPORTS_DIR / "global_rca_session.json"
+GLOBAL_RCA_SESSION_LOCK             = threading.Lock()
+EEM_BATCH_DETECTION_WINDOW_SECONDS  = 600    # 3 disjoins (any AP) within 10 min
+EEM_BATCH_RECURRENCE_WINDOW_SECONDS = 1800   # same locked AP recurs within 30 min
+FOURTH_DISJOIN_RECURRENCE_WINDOW = int(os.getenv("FOURTH_DISJOIN_RECURRENCE_WINDOW", "1800"))
+
 DISJOIN_OCCURRENCES_FILE   = REPORTS_DIR / "disjoin_occurrences.json"
 DISJOIN_OCCURRENCES_LOCK   = threading.Lock()
 
@@ -163,6 +202,83 @@ SUCCESS_RE = re.compile(
     r"\d+\s+bytes\s+copied\s+in\s+\d+(\.\d+)?\s+secs",
     re.I
 )
+# ── Custom Debug Commands — Start/Stop block parser ────────────────────────
+DEBUG_START_RE = re.compile(r"^\s*start\s*$", re.IGNORECASE)
+DEBUG_STOP_RE  = re.compile(r"^\s*stop\s*$",  re.IGNORECASE)
+
+def parse_debug_command_file(path: str) -> tuple[list[str], list[str]]:
+    """
+    Parse an attached debug-command .txt file into (start_cmds, stop_cmds).
+
+    - A line that is exactly "Start" marks the beginning of the start block.
+    - A line that is exactly "Stop" (if present, after Start) ends the start
+      block and begins the stop block — everything after it to EOF.
+    - If no "Stop" line exists, every line after "Start" becomes start_cmds
+      and stop_cmds is empty.
+    - If no "Start" line exists at all, every non-blank line in the file is
+      treated as start_cmds (flat list still works).
+    Blank lines and lines starting with '!' or '#' are ignored.
+    """
+    try:
+        raw_lines = Path(path).read_text(encoding="utf-8").splitlines()
+    except Exception as exc:
+        print(f"[{ts()}] [DEBUG_CMDS] Could not read {path}: {exc}", file=sys.stderr)
+        return [], []
+
+    start_idx = None
+    stop_idx  = None
+    for i, line in enumerate(raw_lines):
+        if start_idx is None and DEBUG_START_RE.match(line):
+            start_idx = i
+            continue
+        if start_idx is not None and stop_idx is None and DEBUG_STOP_RE.match(line):
+            stop_idx = i
+            break
+
+    def _clean(block: list[str]) -> list[str]:
+        return [
+            l.strip() for l in block
+            if l.strip() and not l.strip().startswith("!") and not l.strip().startswith("#")
+        ]
+
+    if start_idx is None:
+        return _clean(raw_lines), []
+
+    if stop_idx is not None:
+        return _clean(raw_lines[start_idx + 1:stop_idx]), _clean(raw_lines[stop_idx + 1:])
+
+    return _clean(raw_lines[start_idx + 1:]), []
+
+def load_command_catalog(path: str) -> list[dict]:
+    """
+    Load a flat command list from a .conf file.
+    Each line is either:
+        a plain command            → {"cmd": line, "is_debug": False}
+        a command|debug             → {"cmd": cmd_part, "is_debug": True}
+    Blank lines and lines starting with '#' or '!' are ignored.
+    Returns [] if the file doesn't exist or fails to parse — caller should
+    fall back to an empty list (no commands run) rather than crash.
+    """
+    p = Path(path)
+    if not p.exists():
+        print(f"[{ts()}] [CMD_CATALOG] File not found: {path} — no commands loaded.", file=sys.stderr)
+        return []
+    try:
+        raw_lines = p.read_text(encoding="utf-8").splitlines()
+    except Exception as exc:
+        print(f"[{ts()}] [CMD_CATALOG] Could not read {path}: {exc}", file=sys.stderr)
+        return []
+
+    catalog: list[dict] = []
+    for line in raw_lines:
+        line = line.strip()
+        if not line or line.startswith("#") or line.startswith("!"):
+            continue
+        if line.endswith("|debug"):
+            catalog.append({"cmd": line[:-len("|debug")].strip(), "is_debug": True})
+        else:
+            catalog.append({"cmd": line, "is_debug": False})
+    return catalog
 # ---------------------------------------------------------------------------
 # Patterns
 # ---------------------------------------------------------------------------
@@ -177,7 +293,7 @@ DISJOIN_RE = re.compile(
     re.IGNORECASE,
 )
 EEM_TRIGGER_RE = re.compile(
-    r"AP_JOIN_DISJOIN.*Disjoined",
+    r"(AP_JOIN_DISJOIN.*Disjoined|EEM_BATCH_TRIGGER)",
     re.IGNORECASE
 )
 APNAME_RE = re.compile(
@@ -515,8 +631,8 @@ def collect_ap_side_evidence(conn: Any, ap_name: str | None, mac: str) -> dict[s
 # show commands → send_command (returns output)
 # debug commands → send_command_timing (toggle only; output is the ack line)
 AP_ADVANCED_CAPWAP_CATALOG: list[dict] = [
-    {"key": "terminal-len",        "cmd": "terminal length 0",      "is_debug": True},    
-    {"key": "show-logging",        "cmd": "show logging",  "is_debug": False},    
+    #{"key": "terminal-len",        "cmd": "terminal length 0",      "is_debug": True},    
+    #{"key": "show-logging",        "cmd": "show logging",  "is_debug": False},    
     # ── CAPWAP client state ───────────────────────────────────────────────
     {"key": "capwap-client-conf",  "cmd": "show capwap client conf",  "is_debug": False},
     {"key": "capwap-client-rcb",   "cmd": "show capwap client rcb",   "is_debug": False},
@@ -568,6 +684,10 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
     
     print(f"[{ts()}]   [AP] Connecting directly to AP at {ap_ip} ...",
           file=sys.stdout)
+    catalog = load_command_catalog("CONF/ap_commands.conf")
+    if not catalog:
+        catalog = AP_ADVANCED_CAPWAP_CATALOG   # fallback to built-in defaults
+        print(f"[{ts()}]   [AP] Using built-in command catalog (CONF/ap_commands.conf not found/empty).", file=sys.stderr)
     time.sleep(TRACE_SETTLE_DELAY)
     try:
         ap_conn = ConnectHandler(
@@ -578,6 +698,7 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
             password=ap_auth["password"],
             secret=ap_auth.get("secret", "password"),
             fast_cli=False,
+            global_delay_factor=2,
         )
         if ap_auth.get("secret"):
             ap_conn.enable()
@@ -586,8 +707,15 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
               file=sys.stderr)
         return advanced
 
+    # Set terminal length outside the catalog loop so a failure here
+    # doesn't cascade through the skip-on-error guard for every command.
     try:
-        for entry in AP_ADVANCED_CAPWAP_CATALOG:
+        ap_conn.send_command_timing("terminal length 0", delay_factor=1, read_timeout=5)
+    except Exception:
+        pass
+
+    try:
+        for entry in catalog:
             cmd      = entry["cmd"]
             is_debug = entry["is_debug"]
 
@@ -692,7 +820,60 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
         file=sys.stderr,
     )
     return advanced
+def send_custom_commands_to_wlc(conn: Any, commands: list[str]) -> dict[str, str]:
+    """
+    Send exact custom commands to an already-open WLC SSH session.
+    'debug ...' commands use send_command_timing (ack-only, non-blocking);
+    everything else uses send_command. Never raises.
+    """
+    results: dict[str, str] = {}
+    for cmd in commands:
+        is_debug = cmd.strip().lower().startswith("debug")
+        print(f"[{ts()}]   [CUSTOM-WLC]{' (debug)' if is_debug else ''} {cmd}", file=sys.stderr)
+        try:
+            out = (conn.send_command_timing(cmd, delay_factor=1, read_timeout=15) if is_debug
+                   else conn.send_command(cmd, read_timeout=30))
+            results[cmd] = out if out else "(no output)"
+        except Exception as exc:
+            print(f"[{ts()}]   [CUSTOM-WLC] Error on '{cmd}': {exc}", file=sys.stderr)
+            results[cmd] = f"ERROR: {exc}"
+    return results
 
+
+def send_custom_commands_to_ap(ap_ip: str, ap_auth: dict, commands: list[str]) -> dict[str, str]:
+    """
+    Open a dedicated SSH session to the AP and send exact custom commands.
+    Mirrors collect_advanced_capwap_on_ap()'s connection handling. Never raises.
+    """
+    results: dict[str, str] = {}
+    if not ap_ip or not commands:
+        return results
+    try:
+        ap_conn = ConnectHandler(
+            device_type="cisco_ios", host=ap_ip, port=22,
+            username=ap_auth["username"], password=ap_auth["password"],
+            secret=ap_auth.get("secret", "password"), fast_cli=False,
+        )
+        if ap_auth.get("secret"):
+            ap_conn.enable()
+    except Exception as exc:
+        print(f"[{ts()}]   [CUSTOM-AP] AP SSH failed: {exc} — skipping custom commands", file=sys.stderr)
+        return results
+    try:
+        for cmd in commands:
+            is_debug = cmd.strip().lower().startswith("debug")
+            print(f"[{ts()}]   [CUSTOM-AP]{' (debug)' if is_debug else ''} {cmd}", file=sys.stderr)
+            try:
+                out = (ap_conn.send_command_timing(cmd, delay_factor=1, read_timeout=10) if is_debug
+                       else ap_conn.send_command(cmd, read_timeout=15))
+                results[cmd] = out if out else "(no output)"
+            except Exception as exc:
+                print(f"[{ts()}]   [CUSTOM-AP] Error on '{cmd}': {exc}", file=sys.stderr)
+                results[cmd] = f"ERROR: {exc}"
+    finally:
+        ap_conn.disconnect()
+        print(f"[{ts()}]   [CUSTOM-AP] AP SSH session closed.", file=sys.stderr)
+    return results
 def correlate_ap_side(ap_evidence: dict[str, str], ap_name: str | None) -> dict[str, Any]:
     """
     Infer probable AP-side root cause from WLC-reported AP telemetry.
@@ -1355,7 +1536,7 @@ def evaluate_disjoin_event(monitor: "LiveMonitor") -> None:
 
         # ── Valid event ───────────────────────────────────────────────
         print(f"[{ts()}] [EVENT] VALID EVENT DETECTED", file=sys.stderr)
-
+        set_ap_traced_count(3)
         # Mark A, B, C used — match by identity (index in unused list)
         marked = event_engine.mark_window_used(occurrences, window)
         save_disjoin_occurrences(occurrences)
@@ -1439,16 +1620,252 @@ def process_cgdc_event(
     ip: str | None,
     monitor: "LiveMonitor",
 ) -> None:
-    """
-    Called once per confirmed disjoin event.
-    Appends occurrence then evaluates the sliding window.
-    """
     append_disjoin_occurrence(mac, ap_name, ip)
+    increment_ap_traced_count()
     print(
         f"[{ts()}] [EVENT] New occurrence appended — mac={mac} ap={ap_name or '?'}",
         file=sys.stderr,
     )
     evaluate_disjoin_event(monitor)
+
+# ---------------------------------------------------------------------------
+# EEM-BATCH global session state machine
+# ---------------------------------------------------------------------------
+
+def _load_global_rca_session() -> dict:
+    """
+    Load the single global RCA session state from disk.
+    Returns IDLE state dict on missing file or corruption.
+    """
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    _idle = {
+        "state":        "IDLE",
+        "locked_mac":   None,
+        "locked_ap_name": None,
+        "locked_ip":    None,
+        "trigger_ts":   None,
+        "detection_window": [],   # list of {mac, ap_name, ip, timestamp} for current window
+    }
+    if not GLOBAL_RCA_SESSION_FILE.exists():
+        return _idle
+    try:
+        data = json.loads(GLOBAL_RCA_SESSION_FILE.read_text(encoding="utf-8"))
+        if not isinstance(data, dict) or "state" not in data:
+            raise ValueError("bad schema")
+        return data
+    except Exception as exc:
+        print(f"[{ts()}] [GLOBAL_RCA] WARNING: Could not load session file: {exc} — starting IDLE.", file=sys.stderr)
+        return _idle
+
+
+def _save_global_rca_session(data: dict) -> None:
+    """Atomically persist global RCA session state to disk."""
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    tmp = GLOBAL_RCA_SESSION_FILE.with_suffix(".json.tmp")
+    try:
+        tmp.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
+        tmp.replace(GLOBAL_RCA_SESSION_FILE)
+    except Exception as exc:
+        print(f"[{ts()}] [GLOBAL_RCA] WARNING: Could not save session file: {exc}", file=sys.stderr)
+        try:
+            tmp.unlink(missing_ok=True)
+        except Exception:
+            pass
+
+
+def _reset_global_rca_session() -> None:
+    """Reset state to IDLE and persist."""
+    _save_global_rca_session({
+        "state":          "IDLE",
+        "locked_mac":     None,
+        "locked_ap_name": None,
+        "locked_ip":      None,
+        "trigger_ts":     None,
+        "detection_window": [],
+    })
+    print(f"[{ts()}] [GLOBAL_RCA] State → IDLE", file=sys.stderr)
+
+
+def _eem_batch_on_disjoin(
+    mac: str,
+    ap_name: str | None,
+    ip: str | None,
+    monitor: "LiveMonitor",
+) -> None:
+    """
+    EEM-BATCH MODE state machine entry point.
+    Called for EVERY individual disjoin that arrives while in eem_batch mode
+    (i.e. BEFORE the WLC has batched 3 — we receive individual MDT events
+    because the WLC syslog EEM also fires per-event; the batch trigger is
+    the 3rd one carrying "EEM_BATCH_TRIGGER").
+
+    State transitions:
+      IDLE              → accumulate detection window; on 3rd within 10 min → RCA_ACTIVE
+      RCA_ACTIVE        → ignore all APs (still record to occurrences.json)
+      WAITING_RECURRENCE→ if same locked AP reappears within 30 min → finalize
+                          else ignore (still record to occurrences.json)
+
+    Ignored disjoins (during RCA_ACTIVE / WAITING_RECURRENCE) are always
+    appended to disjoin_occurrences.json so they are not lost.
+    """
+    now_epoch = time.time()
+    now_iso   = ts()
+
+    with GLOBAL_RCA_SESSION_LOCK:
+        session = _load_global_rca_session()
+        state   = session.get("state", "IDLE")
+
+        # ── Always record every disjoin to occurrences.json ──────────
+        append_disjoin_occurrence(mac, ap_name, ip)
+        record_disjoin_event(mac, ap_name=ap_name, ip=ip)
+
+        # ── STATE: RCA_ACTIVE — ignore, RCA workflow is running ───────
+        if state == "RCA_ACTIVE":
+            print(
+                f"[{now_iso}] [GLOBAL_RCA] State=RCA_ACTIVE — "
+                f"disjoin from {mac} ignored (RCA in progress for {session.get('locked_mac')})",
+                file=sys.stderr,
+            )
+            return
+
+        # ── STATE: WAITING_RECURRENCE — watch for locked AP only ──────
+        if state == "WAITING_RECURRENCE":
+            locked_mac  = session.get("locked_mac")
+            trigger_ts_epoch = session.get("trigger_ts_epoch", 0)
+            elapsed     = now_epoch - trigger_ts_epoch
+
+            if mac != locked_mac:
+                print(
+                    f"[{now_iso}] [GLOBAL_RCA] State=WAITING_RECURRENCE — "
+                    f"disjoin from {mac} ignored (watching for {locked_mac})",
+                    file=sys.stderr,
+                )
+                return
+
+            # Same AP reappeared
+            if elapsed <= EEM_BATCH_RECURRENCE_WINDOW_SECONDS:
+                print(
+                    f"[{now_iso}] [GLOBAL_RCA] RECURRENCE CONFIRMED — "
+                    f"locked AP {locked_mac} disjoined again after {elapsed:.0f}s "
+                    f"(within {EEM_BATCH_RECURRENCE_WINDOW_SECONDS}s window) → FINALIZE",
+                    file=sys.stderr,
+                )
+                # Transition to IDLE before launching finalization
+                # (finalization is async; we don't want a second disjoin to re-enter)
+                _reset_global_rca_session()
+                _ip   = session.get("locked_ip") or ip
+                _name = session.get("locked_ap_name") or ap_name
+                threading.Thread(
+                    target=monitor._finalize_rca_session,
+                    args=(None, locked_mac, _ip),
+                    daemon=True,
+                ).start()
+            else:
+                print(
+                    f"[{now_iso}] [GLOBAL_RCA] RECURRENCE TIMEOUT — "
+                    f"locked AP {locked_mac} reappeared after {elapsed:.0f}s "
+                    f"(> {EEM_BATCH_RECURRENCE_WINDOW_SECONDS}s) → resetting to IDLE",
+                    file=sys.stderr,
+                )
+                _reset_global_rca_session()
+            return
+
+        # ── STATE: IDLE — accumulate detection window ──────────────────
+        window: list[dict] = session.get("detection_window", [])
+
+        # Prune entries older than EEM_BATCH_DETECTION_WINDOW_SECONDS
+        window = [
+            e for e in window
+            if now_epoch - e.get("timestamp_epoch", 0) <= EEM_BATCH_DETECTION_WINDOW_SECONDS
+        ]
+
+        # Append current disjoin
+        window.append({
+            "mac":             mac,
+            "ap_name":         ap_name,
+            "ip":              ip,
+            "timestamp_iso":   now_iso,
+            "timestamp_epoch": now_epoch,
+        })
+
+        print(
+            f"[{now_iso}] [GLOBAL_RCA] State=IDLE — detection window now "
+            f"{len(window)}/{CGDC_BATCH_SIZE} disjoins",
+            file=sys.stderr,
+        )
+
+        if len(window) < CGDC_BATCH_SIZE:
+            # Not enough disjoins yet — save updated window and wait
+            session["detection_window"] = window
+            _save_global_rca_session(session)
+            return
+
+        # ── 3 disjoins within 10 min — VALID BURST ────────────────────
+        locked = window[-1]   # 3rd (most recent) disjoin becomes the locked AP
+        locked_mac     = locked["mac"]
+        locked_ap_name = locked["ap_name"]
+        locked_ip      = locked["ip"]
+
+        print(
+            f"[{now_iso}] [GLOBAL_RCA] VALID BURST DETECTED — "
+            f"3 disjoins in {now_epoch - window[0]['timestamp_epoch']:.0f}s. "
+            f"Locked AP: {locked_mac} ({locked_ap_name or '?'}) → RCA_ACTIVE",
+            file=sys.stderr,
+        )
+
+        # Persist ACTIVE state before spawning RCA thread
+        _save_global_rca_session({
+            "state":            "RCA_ACTIVE",
+            "locked_mac":       locked_mac,
+            "locked_ap_name":   locked_ap_name,
+            "locked_ip":        locked_ip,
+            "trigger_ts":       now_iso,
+            "trigger_ts_epoch": now_epoch,
+            "detection_window": [],   # clear for next cycle
+            "burst_participants": [
+                {"mac": e["mac"], "ap_name": e["ap_name"], "ip": e["ip"]}
+                for e in window
+            ],
+        })
+
+    # ── Launch RCA (_react) outside the lock ──────────────────────────
+    event_ts_iso = now_iso
+    set_ap_workflow_active(locked_mac, locked_ap_name, locked_ip)
+
+    def _rca_then_wait(_mac=locked_mac, _name=locked_ap_name, _ip=locked_ip):
+        # Run the full RCA evidence collection (_react handles SSH/MYCAP/show cmds)
+        monitor._react(_mac, _name, _ip, event_ts_iso, [], True)
+
+        # _react returns after telemetry collection + MYCAP started.
+        # Now transition to WAITING_RECURRENCE.
+        with GLOBAL_RCA_SESSION_LOCK:
+            _s = _load_global_rca_session()
+            if _s.get("state") == "RCA_ACTIVE" and _s.get("locked_mac") == _mac:
+                _s["state"] = "WAITING_RECURRENCE"
+                _save_global_rca_session(_s)
+                print(
+                    f"[{ts()}] [GLOBAL_RCA] State → WAITING_RECURRENCE "
+                    f"(watching for {_mac} to disjoin again within "
+                    f"{EEM_BATCH_RECURRENCE_WINDOW_SECONDS}s)",
+                    file=sys.stderr,
+                )
+
+        # ── 30-min timeout: if locked AP never reappears, reset ───────
+        time.sleep(EEM_BATCH_RECURRENCE_WINDOW_SECONDS)
+        with GLOBAL_RCA_SESSION_LOCK:
+            _s = _load_global_rca_session()
+            if _s.get("state") == "WAITING_RECURRENCE" and _s.get("locked_mac") == _mac:
+                print(
+                    f"[{ts()}] [GLOBAL_RCA] 30-min recurrence window expired for "
+                    f"{_mac} — no recurrence detected → resetting to IDLE",
+                    file=sys.stderr,
+                )
+                _reset_global_rca_session()
+                clear_ap_workflow(_mac)
+
+    threading.Thread(target=_rca_then_wait, daemon=True).start()
+
+
 class LiveMonitor:
 
     def __init__(self, auth: dict[str, Any], wlc_host: str, device_name: str | None, grpc_port: int = GRPC_PORT) -> None:
@@ -1469,7 +1886,46 @@ class LiveMonitor:
         self.ap_reports  : dict[str, dict]  = {}      # keyed by MAC
         self.raw_stream  : list[str]         = []
         self.live_buffer : deque             = deque(maxlen=LIVE_BUFFER_MAXLEN)  # rolling live context
-
+        self.stop_event = threading.Event()
+        self._eem_window_seconds = 600   # overwritten by MonitorEngine if eem_batch mode
+        # Allow GUI to override the 30-min finalization timeout
+        _rca_timeout_override = auth.get("rca_session_timeout_seconds")
+        if _rca_timeout_override:
+            global RCA_SESSION_TIMEOUT
+            RCA_SESSION_TIMEOUT = int(_rca_timeout_override)
+            print(f"[{ts()}] [CONFIG] RCA_SESSION_TIMEOUT set to {RCA_SESSION_TIMEOUT}s from config.", file=sys.stderr)
+        _4th_window_override = auth.get("fourth_disjoin_recurrence_window_seconds")
+        if _4th_window_override:
+            global FOURTH_DISJOIN_RECURRENCE_WINDOW
+            FOURTH_DISJOIN_RECURRENCE_WINDOW = int(_4th_window_override)
+            print(
+                f"[{ts()}] [CONFIG] FOURTH_DISJOIN_RECURRENCE_WINDOW set to "
+                f"{FOURTH_DISJOIN_RECURRENCE_WINDOW}s from config.",
+                file=sys.stderr,
+            )
+        # ── Custom debug commands (optional) ────────────────────────
+        self.debug_commands_enabled = bool(auth.get("debug_commands_enabled", False))
+        self.wlc_debug_start_cmds: list[str] = []
+        self.wlc_debug_stop_cmds:  list[str] = []
+        self.ap_debug_start_cmds:  list[str] = []
+        self.ap_debug_stop_cmds:   list[str] = []
+        if self.debug_commands_enabled:
+            _wlc_file = auth.get("wlc_debug_cmd_file")
+            _ap_file  = auth.get("ap_debug_cmd_file")
+            if _wlc_file:
+                self.wlc_debug_start_cmds, self.wlc_debug_stop_cmds = parse_debug_command_file(_wlc_file)
+            if _ap_file:
+                self.ap_debug_start_cmds, self.ap_debug_stop_cmds = parse_debug_command_file(_ap_file)
+            print(
+                f"[{ts()}] [DEBUG_CMDS] Loaded WLC(start={len(self.wlc_debug_start_cmds)}, "
+                f"stop={len(self.wlc_debug_stop_cmds)})  "
+                f"AP(start={len(self.ap_debug_start_cmds)}, stop={len(self.ap_debug_stop_cmds)})",
+                file=sys.stderr,
+            )
+        # Per-MAC finalization guard — prevents double-finalization if two
+        # disjoin events arrive for the same MAC while finalization is in flight.
+        self._finalizing_macs: set[str] = set()
+        self._finalizing_lock = threading.Lock()
     # ------------------------------------------------------------------ #
     # Phase 1 — session setup                                             #
     # ------------------------------------------------------------------ #
@@ -1509,25 +1965,74 @@ class LiveMonitor:
                 file=sys.stderr,
             )
             return
-
+        # ── If a custom EEM script was attached via GUI, send it and return ──
+        eem_script_path = self.auth.get("eem_script_path")
+        if eem_script_path and Path(eem_script_path).exists():
+            print(f"[{ts()}] [EEM] Sending attached EEM script: {eem_script_path}", file=sys.stderr)
+            try:
+                lines = Path(eem_script_path).read_text(encoding="utf-8").splitlines()
+                # Strip blank lines and comments, send as config block
+                config_lines = [l for l in lines if l.strip() and not l.strip().startswith("!")]
+                conn.send_config_set(config_lines, read_timeout=60, exit_config_mode=True)
+                print(f"[{ts()}] [EEM] Custom EEM script sent — {len(config_lines)} lines.", file=sys.stderr)
+            except Exception as exc:
+                print(f"[{ts()}] [EEM] WARNING: Failed to send custom script: {exc}", file=sys.stderr)
+            finally:
+                conn.disconnect()
+                print(f"[{ts()}] EEM setup SSH session closed.", file=sys.stderr)
+            return   # ← skip the built-in EEM config below
         if TRIGGER_MODE == "snmp":
-            EEM_CONFIG = [
+            # Mirrors the eem_batch applet exactly (event/action numbering and all) —
+            # only the export action differs: snmp-trap instead of export-to-telemetry.
+            EEM_APPLET_CONFIG = [
                 f"snmp-server community {SNMP_COMMUNITY} RO",
                 f"snmp-server host {jumphost_ip} version 2c {SNMP_COMMUNITY}",
                 "snmp-server enable traps",
-                "no event manager applet AP_DISJOIN",
-                "event manager applet AP_DISJOIN",
-                ' event syslog pattern "Disjoined"',
-                ' action 1.0 snmp-trap strdata "$_syslog_msg"',
+                "no event manager applet AP_DISJOIN_BATCH_SNMP",
+                "event manager applet AP_DISJOIN_BATCH_SNMP",
+                ' event syslog occurs 3 pattern "AP_JOIN_DISJOIN.*Disjoined" period 600',
+                ' action 010 set trigger_msg "EEM_BATCH_TRIGGER"',
+                ' action 020 syslog msg "$trigger_msg"',
+                ' action 030 snmp-trap strdata "$trigger_msg"',
+            ]
+            EEM_TELEMETRY_CONFIG = []   # SNMP mode has no MDT subscription
+        elif TRIGGER_MODE == "eem_batch":
+            EEM_APPLET_CONFIG = [
+            "no event manager applet AP_DISJOIN_BATCH",
+            "event manager applet AP_DISJOIN_BATCH",
+            ' event syslog occurs 3 pattern "AP_JOIN_DISJOIN.*Disjoined" period 600',
+            ' action 010 set trigger_msg "EEM_BATCH_TRIGGER"',
+            ' action 020 syslog msg "$trigger_msg"',
+            ' action 030 export-to-telemetry "$trigger_msg"',
+            "no event manager applet AP_DISJOIN_INDIVIDUAL",
+            "event manager applet AP_DISJOIN_INDIVIDUAL",
+            ' event syslog pattern "AP_JOIN_DISJOIN.*Disjoined"',
+            ' action 010 export-to-telemetry "$_syslog_msg"',
+              ]
+            EEM_TELEMETRY_CONFIG = [
+                "no telemetry ietf subscription 12123",
+                "telemetry ietf subscription 12123",
+                " encoding encode-kvgpb",
+                " filter xpath /ios-events-ios-xe-oper:eem-event-publish",
+                f" source-address {source_ip}",
+                " stream yang-notif-native",
+                " update-policy on-change",
+                f" receiver ip address {jumphost_ip} 57500 protocol grpc-tcp",
             ]
         else:
-            EEM_CONFIG = [
+            EEM_APPLET_CONFIG = [
                 "no event manager applet AP_DISJOIN",
                 "event manager applet AP_DISJOIN",
                 ' event syslog pattern "AP_JOIN_DISJOIN.*Disjoined"',
-                ' action 1.0 syslog msg "$_syslog_msg"',
-                ' action 2.0 cli command "show ap summary"',
-                ' action 3.0 export-to-telemetry $_syslog_msg',
+                ' action 010 counter name AP_DISJOIN_CNT op inc value 1',
+                ' action 020 if $_counter_val_AP_DISJOIN_CNT ge 3',
+                ' action 030  counter name AP_DISJOIN_CNT op set value 0',
+                ' action 040  syslog msg "$_syslog_msg"',
+                ' action 050  cli command "show ap summary"',
+                ' action 060  export-to-telemetry $_syslog_msg',
+                ' action 070 end',
+            ]
+            EEM_TELEMETRY_CONFIG = [
                 "no telemetry ietf subscription 12123",
                 "telemetry ietf subscription 12123",
                 " encoding encode-kvgpb",
@@ -1539,8 +2044,11 @@ class LiveMonitor:
             ]
 
         try:
-            conn.send_config_set(EEM_CONFIG, read_timeout=30, exit_config_mode=False)
-            conn.exit_config_mode()
+            # Step 1: push EEM applet (exits applet submode cleanly first)
+            conn.send_config_set(EEM_APPLET_CONFIG, read_timeout=30, exit_config_mode=True)
+            # Step 2: push telemetry subscription at global config level (SNMP has none)
+            if EEM_TELEMETRY_CONFIG:
+                conn.send_config_set(EEM_TELEMETRY_CONFIG, read_timeout=30, exit_config_mode=True)
             print(f"[{ts()}] EEM applet config sent.", file=sys.stderr)
 
             # verify registration
@@ -1551,7 +2059,7 @@ class LiveMonitor:
             if "AP_DISJOIN" in verify:
                 print(f"[{ts()}] Verified: EEM applet AP_DISJOIN is registered on WLC.", file=sys.stderr)
             else:
-                print(f"[{ts()}] WARNING: EEM applet not found after push — verify manually.", file=sys.stderr)
+                pass #print(f"[{ts()}] WARNING: EEM applet not found after push — verify manually.", file=sys.stderr)
 
         except Exception as exc:
             print(f"[{ts()}] WARNING: EEM applet push failed mid-flight: {exc}", file=sys.stderr)
@@ -1596,37 +2104,120 @@ class LiveMonitor:
             return
 
         try:
-            self.epc_meta = epc_start(conn)
+            # epc_start: not yet implemented — mark as disabled and close
+            self.epc_meta = {
+                "epc_enabled": False,
+                "epc_start_time": ts(),
+                "epc_error": "epc_start not implemented",
+                "epc_export_file": None,
+                "epc_export_time": None,
+            }
         finally:
             conn.disconnect()
             print(f"[{ts()}] [EPC] EPC setup SSH session closed.", file=sys.stderr)
+    def _run_custom_debug_start(self, mac: str, ip: str | None) -> None:
+        """Send the attached 'Start' commands to WLC + AP. No-op if disabled."""
+        if not self.debug_commands_enabled:
+            return
+        if self.wlc_debug_start_cmds:
+            print(f"[{ts()}] [CUSTOM_DEBUG] Sending {len(self.wlc_debug_start_cmds)} "
+                  f"start command(s) to WLC for {mac} ...", file=sys.stderr)
+            try:
+                conn = ConnectHandler(
+                    device_type="cisco_ios", host=self.wlc_host, port=self.auth["port"],
+                    username=self.auth["username"], password=self.auth["password"],
+                    secret=self.auth.get("secret"), fast_cli=False,
+                )
+                if self.auth.get("secret"):
+                    conn.enable()
+                digits = re.sub(r"[^0-9a-fA-F]", "", mac)
+                mycap_name = f"MYCAP_{digits}"
 
+                _auto_start = [
+                    f"monitor capture {mycap_name} clear",
+                    f"monitor capture {mycap_name} buffer size 100 circular bidirectional interface Tw0/0/0 both",
+                    f"monitor capture {mycap_name} control-plane both",
+                ]
+
+                if ip:
+                    _auto_start.append(
+                        f"monitor capture {mycap_name} match ipv4 host {ip} any bidirectional"
+                    )
+
+                _auto_start.append(f"monitor capture {mycap_name} start")
+
+                send_custom_commands_to_wlc(conn, _auto_start)
+                send_custom_commands_to_wlc(conn, self.wlc_debug_start_cmds)
+                conn.disconnect()
+            except Exception as exc:
+                print(f"[{ts()}] [CUSTOM_DEBUG] WLC SSH failed: {exc}", file=sys.stderr)
+        if self.ap_debug_start_cmds and ip:
+            print(f"[{ts()}] [CUSTOM_DEBUG] Sending {len(self.ap_debug_start_cmds)} "
+                  f"start command(s) to AP {ip} for {mac} ...", file=sys.stderr)
+            send_custom_commands_to_ap(ip, self.ap_auth, self.ap_debug_start_cmds)
+
+    def _run_custom_debug_stop(self, mac: str, ip: str | None) -> None:
+        """Send the attached 'Stop' commands to WLC + AP. No-op if disabled."""
+        if not self.debug_commands_enabled:
+            return
+        if self.wlc_debug_stop_cmds:
+            print(f"[{ts()}] [CUSTOM_DEBUG] Sending {len(self.wlc_debug_stop_cmds)} "
+                  f"stop command(s) to WLC for {mac} ...", file=sys.stderr)
+            try:
+                conn = ConnectHandler(
+                    device_type="cisco_ios", host=self.wlc_host, port=self.auth["port"],
+                    username=self.auth["username"], password=self.auth["password"],
+                    secret=self.auth.get("secret"), fast_cli=False,
+                )
+                if self.auth.get("secret"):
+                    conn.enable()
+                send_custom_commands_to_wlc(conn, self.wlc_debug_stop_cmds)
+                digits = re.sub(r"[^0-9a-fA-F]", "", mac)
+                mycap_name = f"MYCAP_{digits}"
+
+                _auto_stop = [
+                    f"monitor capture {mycap_name} stop",
+                    f"monitor capture {mycap_name} export bootflash:ApDisjoinEpc_{mycap_name}.pcap",
+                ]
+
+                send_custom_commands_to_wlc(conn, _auto_stop)
+                conn.disconnect()
+            except Exception as exc:
+                print(f"[{ts()}] [CUSTOM_DEBUG] WLC SSH failed during stop: {exc}", file=sys.stderr)
+        if self.ap_debug_stop_cmds and ip:
+            print(f"[{ts()}] [CUSTOM_DEBUG] Sending {len(self.ap_debug_stop_cmds)} "
+                  f"stop command(s) to AP {ip} for {mac} ...", file=sys.stderr)
+            send_custom_commands_to_ap(ip, self.ap_auth, self.ap_debug_stop_cmds)
     # DELETE stream(), ADD:
     def _finalize_rca_session(self, conn: Any, mac: str, ip: str | None) -> None:
-        """
-        Execute the clean finalization sequence for the active RCA session.
-        Called ONLY when a second disjoin of the SAME AP/MAC is received.
-        Opens a fresh SSH connection — the RCA collection conn may already be closed.
-
-        Sequence:
-          1. undebug all on WLC
-          2. monitor capture MYCAP stop
-          3. monitor capture MYCAP export bootflash:mycap.pcap
-          4. show flash: | inc .pcap   (verify)
-          5. undebug all on AP (direct SSH)
-          6. generate + save JSON and summary reports
-          7. clear ACTIVE_RCA state
-        """
-        global ACTIVE_RCA_SESSIONS
-
-        print(f"[{ts()}] [FINALIZE] Second disjoin of same AP ({mac}) — starting finalization sequence.",
-              file=sys.stderr)
-
-        # ── 1+2+3+4: WLC cleanup via fresh SSH ───────────────────────────
-        wlc_conn = None
+        from backend.engine.finalizer import run_finalization
+        with ACTIVE_RCA_LOCK:
+            _session = ACTIVE_RCA_SESSIONS.get(mac, {})
+        mycap_name = _session.get("mycap_name") or f"MYCAP_{re.sub(r'[^0-9a-fA-F]', '', mac)}"
+        if self.debug_commands_enabled:
+            self._run_custom_debug_stop(mac, ip)
+        run_finalization(
+            wlc_host=self.wlc_host,
+            auth=self.auth,
+            ap_auth=self.ap_auth,
+            mac=mac,
+            ip=ip,
+            mycap_name=mycap_name,
+            active_rca_sessions=ACTIVE_RCA_SESSIONS,
+            active_rca_lock=ACTIVE_RCA_LOCK,
+            ts=ts,
+            clear_ap_workflow=clear_ap_workflow,
+            mark_ap_used=mark_ap_used,
+            reset_disjoin_counter=reset_disjoin_counter,
+            append_finalized_ap=append_finalized_ap,
+            save_report=self.save_report,
+            skip_hardcoded=self.debug_commands_enabled,
+        )
+    def _cleanup_telemetry_subscription(self) -> None:
+        """Remove the MDT telemetry subscription from WLC on exit."""
+        print(f"[{ts()}] [CLEANUP] Removing telemetry subscription 12123 from {self.wlc_host} ...", file=sys.stderr)
         try:
-            print(f"[{ts()}] [FINALIZE] Opening WLC SSH for cleanup ...", file=sys.stderr)
-            wlc_conn = ConnectHandler(
+            conn = ConnectHandler(
                 device_type="cisco_ios",
                 host=self.wlc_host,
                 port=self.auth["port"],
@@ -1636,246 +2227,20 @@ class LiveMonitor:
                 fast_cli=False,
             )
             if self.auth.get("secret"):
-                wlc_conn.enable()
-
-            # undebug all
-            print(f"[{ts()}] [FINALIZE] [WLC] undebug all", file=sys.stderr)
-            try:
-                wlc_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
-            except Exception as exc:
-                print(f"[{ts()}] [FINALIZE] WARNING: undebug all failed: {exc}", file=sys.stderr)
-
-            # ── Stop MYCAP ────────────────────────────────────────────────
-            stop_cmd = f"monitor capture {MYCAP_NAME} stop"
-            print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_cmd}", file=sys.stderr)
-            try:
-                stop_out = wlc_conn.send_command_timing(
-                    stop_cmd, delay_factor=1, read_timeout=30
-                )
-                if stop_out:
-                    print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_out.strip()}", file=sys.stderr)
-                # "Capture MYCAP is not active" is informational — not a failure.
-                if "not active" in (stop_out or "").lower():
-                    print(
-                        f"[{ts()}] [FINALIZE] [MYCAP] Capture was already stopped — continuing.",
-                        file=sys.stderr,
-                    )
-            except Exception as exc:
-                print(f"[{ts()}] [FINALIZE] WARNING: '{stop_cmd}' failed: {exc}", file=sys.stderr)
-
-            # ── Export MYCAP — handle interactive overwrite prompt ────────
-            export_cmd = f"monitor capture {MYCAP_NAME} export bootflash:ApDisjoinEpc.pcap"
-            print(f"[{ts()}] [FINALIZE] [MYCAP] {export_cmd}", file=sys.stderr)
-            try:
-                # Send the export command and collect the immediate response.
-                # IOS-XE may pause and emit an interactive overwrite prompt before
-                # completing the export.  We must answer it before sending anything
-                # else, otherwise the next command string gets partially consumed
-                # by the pending prompt (producing e.g. "how flash: | inc .pcap").
-                export_out = wlc_conn.send_command_timing(
-                    export_cmd,
-                    delay_factor=1,       # give IOS-XE time to emit the prompt
-                    read_timeout=30,
-                )
-                print(f"[{ts()}] [FINALIZE] [MYCAP] initial response: {export_out.strip()!r}",
-                      file=sys.stderr)
-
-                OVERWRITE_PATTERNS = (
-                    "overwrite?[confirm]",
-                    "overwrite existing",
-                    "[confirm]",
-                    "confirm",
-                )
-                if any(p in export_out.lower() for p in OVERWRITE_PATTERNS):
-                    print(
-                        f"[{ts()}] [FINALIZE] [MYCAP] Overwrite prompt detected — "
-                        f"sending ENTER to confirm.",
-                        file=sys.stderr,
-                    )
-                    # Send ENTER and wait for the export to finish writing the file.
-                    confirm_out = wlc_conn.send_command_timing(
-                        "\n",
-                        delay_factor=1,   # file export can take several seconds
-                        read_timeout=60,
-                    )
-                    if confirm_out:
-                        print(
-                            f"[{ts()}] [FINALIZE] [MYCAP] post-confirm output: "
-                            f"{confirm_out.strip()!r}",
-                            file=sys.stderr,
-                        )
-                    # Extra settle — ensure IOS-XE has returned to the exec prompt
-                    # and the output buffer is fully drained before the next command.
-                    time.sleep(2)
-                    wlc_conn.clear_buffer()
-                else:
-                    # No prompt — export completed (or failed) without interaction.
-                    # Still allow a short settle before verification.
-                    time.sleep(2)
-                    wlc_conn.clear_buffer()
-
-            except Exception as exc:
-                print(
-                    f"[{ts()}] [FINALIZE] WARNING: export command failed: {exc}",
-                    file=sys.stderr,
-                )
-
-            # ── Verify .pcap exists on flash — only after export is complete ─
-            verify_cmd = "show flash: | inc .pcap"
-            print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_cmd}", file=sys.stderr)
-            try:
-                verify_out = wlc_conn.send_command(
-                    verify_cmd,
-                    read_timeout=30,
-                )
-                if verify_out:
-                    print(
-                        f"[{ts()}] [FINALIZE] [MYCAP] {verify_out.strip()}",
-                        file=sys.stderr,
-                    )
-                    if "mycap.pcap" in verify_out.lower():
-                        print(
-                            f"[{ts()}] [FINALIZE] [MYCAP] ✓ mycap.pcap confirmed on flash.",
-                            file=sys.stderr,
-                        )
-                    else:
-                        print(
-                            f"[{ts()}] [FINALIZE] [MYCAP] WARNING: mycap.pcap not found in "
-                            f"flash listing — export may have failed.",
-                            file=sys.stderr,
-                        )
-            except Exception as exc:
-                print(
-                    f"[{ts()}] [FINALIZE] WARNING: '{verify_cmd}' failed: {exc}",
-                    file=sys.stderr,
-                )
-
-            # ── Upload MYCAP to tftp server for analysis ────────
-            #copy flash:/mycap.pcap tftp://192.168.0.6/mycap.pcap
-            tftp_ip = self.auth.get("tftp_ip", "")
-            export_cmd = f"copy flash:/ApDisjoinEpc.pcap tftp://{tftp_ip}/ApDisjoinEpc.pcap"
-            print(f"[{ts()}] [EPC_TFTP_Upload] {export_cmd}", file=sys.stderr)
-            try:
-                export_out = wlc_conn.send_command_timing(
-                    export_cmd,
-                    delay_factor=1,       # give IOS-XE time to emit the prompt
-                    read_timeout=100,
-                )
-                print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}",file=sys.stderr)
-                # Send ENTER and wait for the export to finish writing the file.
-                confirm_out = wlc_conn.send_command_timing(
-                    "\n",
-                    delay_factor=1,   # file export can take several seconds
-                    read_timeout=10,
-                )
-                print(f"[{ts()}] [EPC_TFTP_Upload] Second Enter response: {export_out.strip()!r}",file=sys.stderr)
-                # Send ENTER and wait for the export to finish writing the file.
-                confirm_out = wlc_conn.send_command_timing(
-                    "\n",
-                    delay_factor=1,
-                    read_timeout=10,
-                )
-                if SUCCESS_RE.search(confirm_out or ""):
-                    print(f"[{ts()}] [EPC_TFTP_Upload] ✓ ApDisjoinEpc.pcap transferred successfully.", file=sys.stderr)
-                else:
-                    print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: ApDisjoinEpc.pcap transfer may have failed. Response: {confirm_out!r}", file=sys.stderr)
-            except Exception as exc:
-                print(
-                    f"[{ts()}] [EPC_TFTP_Upload] WARNING: export command failed: {exc}",
-                    file=sys.stderr,
-                )
-            # ── Upload RA Always ON Traces to tftp server for analysis ────────
-            #copy flash:/ALWAYS_ON_3c41.0e3a.ca00.log tftp://192.168.0.6/ALWAYS_ON_3c41.0e3a.ca00.log
-            digits  = re.sub(r"[^0-9a-fA-F]", "", mac)
-            dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
-            export_cmd = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
-            print(f"[{ts()}] [EPC_TFTP_Upload] {export_cmd}", file=sys.stderr)
-            try:
-                export_out = wlc_conn.send_command_timing(
-                    export_cmd,
-                    delay_factor=1,       # give IOS-XE time to emit the prompt
-                    read_timeout=100,
-                )
-                print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}",file=sys.stderr)
-                # Send ENTER and wait for the export to finish writing the file.
-                confirm_out = wlc_conn.send_command_timing(
-                    "\n",
-                    delay_factor=1,   # file export can take several seconds
-                    read_timeout=10,
-                )
-                print(f"[{ts()}] [EPC_TFTP_Upload] Second Enter response: {export_out.strip()!r}",file=sys.stderr)
-                # Send ENTER and wait for the export to finish writing the file.
-                confirm_out = wlc_conn.send_command_timing(
-                    "\n",
-                    delay_factor=1,
-                    read_timeout=10,
-                )
-                if SUCCESS_RE.search(confirm_out or ""):
-                    print(f"[{ts()}] [EPC_TFTP_Upload] ✓ ALWAYS_ON log transferred successfully.", file=sys.stderr)
-                else:
-                    print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Response: {confirm_out!r}", file=sys.stderr)
-            except Exception as exc:
-                print(
-                    f"[{ts()}] [EPC_TFTP_Upload] WARNING: export command failed: {exc}",
-                    file=sys.stderr,
-                )
+                conn.enable()
+            cleanup_cmds = [
+                "no telemetry ietf subscription 12123",
+                "no event manager applet AP_DISJOIN",
+                "no event manager applet AP_DISJOIN_BATCH",
+                "no event manager applet AP_DISJOIN_BATCH_SNMP",
+                "no event manager applet AP_DISJOIN_INDIVIDUAL",
+                "no event manager applet FOURTH_DISJOIN_WATCHER",
+            ]
+            conn.send_config_set(cleanup_cmds, read_timeout=15, exit_config_mode=True)
+            conn.disconnect()
+            print(f"[{ts()}] [CLEANUP] Telemetry subscription 12123 removed.", file=sys.stderr)
         except Exception as exc:
-            print(f"[{ts()}] [FINALIZE] WARNING: WLC SSH for cleanup failed: {exc}", file=sys.stderr)
-        finally:
-            if wlc_conn:
-                try:
-                    wlc_conn.disconnect()
-                    print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)
-                except Exception:
-                    pass
-
-        # ── 5: undebug all on AP (direct SSH) ────────────────────────────
-        if ip:
-            try:
-                print(f"[{ts()}] [FINALIZE] [AP] Connecting to AP {ip} for undebug all ...",
-                      file=sys.stderr)
-                ap_conn = ConnectHandler(
-                    device_type="cisco_ios",
-                    host=ip,
-                    port=22,
-                    username=self.ap_auth["username"],
-                    password=self.ap_auth["password"],
-                    secret=self.ap_auth.get("secret", ""),
-                    fast_cli=False,
-                )
-                if self.ap_auth.get("secret"):
-                    ap_conn.enable()
-                ap_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
-                print(f"[{ts()}] [FINALIZE] [AP] undebug all sent to AP {ip}", file=sys.stderr)
-                ap_conn.disconnect()
-            except Exception as exc:
-                print(f"[{ts()}] [FINALIZE] WARNING: AP undebug all failed: {exc}", file=sys.stderr)
-
-        # ── 6: generate reports ───────────────────────────────────────────
-        print(f"[{ts()}] [FINALIZE] Generating reports ...", file=sys.stderr)
-        try:
-            json_path, txt_path = self.save_report()
-            print(f"[{ts()}] [FINALIZE] JSON report  → {json_path}", file=sys.stderr)
-            print(f"[{ts()}] [FINALIZE] Summary report → {txt_path}", file=sys.stderr)
-        except Exception as exc:
-            print(f"[{ts()}] [FINALIZE] WARNING: report generation failed: {exc}", file=sys.stderr)
-
-        # ── 7: clear ACTIVE_RCA state ─────────────────────────────────────
-        with ACTIVE_RCA_LOCK:
-            ACTIVE_RCA_SESSIONS.pop(mac, None)
-        clear_ap_workflow(mac)
-        mark_ap_used(mac)
-        print(f"[{ts()}] [FINALIZE] Session complete for {mac}.", file=sys.stderr)
-        reset_disjoin_counter(mac)
-        print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)
-        print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)
-        append_finalized_ap(
-                mac=mac,
-                ap_name=ACTIVE_RCA_SESSIONS.get(mac, {}).get("ap_name"),
-                ip=ip,
-                
-            )
-    
+            print(f"[{ts()}] [CLEANUP] WARNING: Could not remove subscription: {exc}", file=sys.stderr)
     def listen(self, duration_minutes: int | None) -> None:
         import grpc
         from concurrent import futures
@@ -1886,18 +2251,8 @@ class LiveMonitor:
         if TRIGGER_MODE == "snmp":
             import socketserver, struct
 
-            class _SnmpTrapHandler(socketserver.BaseRequestHandler):
-                def handle(inner_self):
-                    data = inner_self.request[0]
-                    try:
-                        text = data.decode("latin-1", errors="replace")
-                    except Exception:
-                        text = repr(data)
-                    print(f"[{ts()}] [SNMP] Raw trap received ({len(data)} bytes)",
-                          file=sys.stderr)
-                    if "AP_JOIN_DISJOIN" in text and "Disjoined" in text:
-                        self._on_eem_trigger(text, ts())
-
+            from backend.snmp.trap_receiver import make_snmp_trap_handler
+            _SnmpTrapHandler = make_snmp_trap_handler(ts=ts, on_eem_trigger=self._on_eem_trigger)
             snmp_server = socketserver.UDPServer(("0.0.0.0", 162), _SnmpTrapHandler)
             snmp_thread = threading.Thread(target=snmp_server.serve_forever, daemon=True)
             snmp_thread.start()
@@ -1911,6 +2266,10 @@ class LiveMonitor:
                         print(f"[{ts()}] Duration limit reached.", file=sys.stderr)
                         break
                     time.sleep(1)
+                    if self.stop_event.is_set():
+                        print(f"[{ts()}] Stop requested — shutting down gRPC listener.", file=sys.stderr)
+                        break
+
             except KeyboardInterrupt:
                 print(f"\n[{ts()}] Interrupted. Flushing report...", file=sys.stderr)
             finally:
@@ -1945,8 +2304,15 @@ class LiveMonitor:
                     debug_file.write_text(json.dumps(payload_record, indent=2), encoding="utf-8")
                     print(f"[{ts()}] [MDT_DEBUG] Saved raw payload → {debug_file}", file=sys.stderr)
                 self.live_buffer.append(f"{ts()} [MDT] {node_id} {path} {event_text}")
-                if "AP_JOIN_DISJOIN" in event_text or "Disjoined" in event_text:
+                if "AP_JOIN_DISJOIN" in event_text and "Disjoined" in event_text:
+                    self._last_disjoin_line = event_text
+                    if TRIGGER_MODE == "eem_batch" and not _is_duplicate(event_text):
+                        self._on_eem_trigger(event_text, ts())
+                if "EEM_BATCH_TRIGGER" in event_text:
+                    print(f"[{ts()}] [EEM] EEM Batch Trigger fired — 3 disjoins detected", file=sys.stdout)
                     self._on_eem_trigger(event_text, ts())
+                
+                
 
         class MdtDialoutCollector(mdt_grpc_dialout_pb2_grpc.gRPCMdtDialoutServicer):
             def __init__(inner_self):
@@ -1954,12 +2320,13 @@ class LiveMonitor:
 
             def MdtDialout(inner_self, request_iterator, context):
                 peer = context.peer()
-                print(f"[{ts()}] [MDT] gRPC session opened from {peer}", file=sys.stderr)
+                _err = sys.stderr
+                print(f"[{ts()}] [MDT] gRPC session opened from {peer}", file=_err)
                 try:
                     for dialout_args in request_iterator:
                         raw = dialout_args.data
                         self.raw_stream.append(repr(raw[:200]))
-                        _decode_and_dispatch(raw)        # ← plain closure call, no self needed
+                        _decode_and_dispatch(raw)
                 except Exception:
                         print(
                             f"[{ts()}] [MDT] Stream exception from {peer}\n"
@@ -1971,7 +2338,8 @@ class LiveMonitor:
 
     # server setup inside listen()
 
-        server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        self._grpc_server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        server = self._grpc_server
         servicer = MdtDialoutCollector()
         mdt_grpc_dialout_pb2_grpc.add_gRPCMdtDialoutServicer_to_server(servicer, server)
         tls_cert = os.getenv("GRPC_TLS_CERT")
@@ -1993,7 +2361,7 @@ class LiveMonitor:
             print(f"[{ts()}] gRPC TLS {'mTLS' if tls_ca else 'TLS'} enabled on port {self.grpc_port}", file=sys.stderr)
         else:
             server.add_insecure_port(f"0.0.0.0:{self.grpc_port}")
-            print(f"[{ts()}] WARNING: gRPC running insecure — set GRPC_TLS_CERT/KEY for production", file=sys.stderr)
+            #print(f"[{ts()}] WARNING: gRPC running insecure — set GRPC_TLS_CERT/KEY for production", file=sys.stderr)
         server.start()
         print(f"[{ts()}] MDT gRPC dial-out collector listening on port {self.grpc_port}. Ctrl+C to stop.",
               file=sys.stderr)
@@ -2004,11 +2372,16 @@ class LiveMonitor:
                 if deadline and time.monotonic() > deadline:
                     print(f"[{ts()}] Duration limit reached.", file=sys.stderr)
                     break
+                if self.stop_event.is_set():
+                    print(f"[{ts()}] Stop requested — shutting down gRPC listener.", file=sys.stderr)
+                    break
                 time.sleep(1)
         except KeyboardInterrupt:
             print(f"\n[{ts()}] Interrupted. Flushing report...", file=sys.stderr)
         finally:
-            server.stop(grace=5)
+            server.stop(grace=2)
+            self._cleanup_telemetry_subscription()
+            
 
     # ------------------------------------------------------------------ #
     # Phase 3/4/5 — react to a disjoin line                              #
@@ -2016,6 +2389,11 @@ class LiveMonitor:
 
     # DELETE _check_line(), ADD:
     def _on_eem_trigger(self, trigger_line: str, trigger_ts: str) -> None:
+        # ── SNMP mode has no _decode_and_dispatch() step — the 4th-disjoin
+        # recurrence trap lands here directly. Route it exactly like the
+        # gRPC/telemetry path does, before any of the batch-trigger logic below.
+        
+
         print(f"[{trigger_ts}] *** EEM TRIGGER received — parsing structured payload ***", file=sys.stderr)
         # Direct extraction from structured SNMP payload
         m_name   = APNAME_RE.search(trigger_line)
@@ -2028,37 +2406,77 @@ class LiveMonitor:
         ip      = m_ip.group(1)     if m_ip     else None
         reason  = m_reason.group(1) if m_reason else "unknown"
 
-        # Dedup check — mac now available
-        dedup_key = f"{mac}:{reason}"
-        if _is_duplicate(dedup_key):
-            print(f"[{trigger_ts}] [DEDUP] Duplicate trigger suppressed for {mac}", file=sys.stderr)
-            return
+        # Dedup check — skip entirely for eem_batch and snmp, both rely on their own
+        # state machine (_handle_eem_batch_trigger / workflow-active checks) for dedup.
+        # For telemetry: suppress within 30s unless workflow already active for this AP.
+        if TRIGGER_MODE not in ("eem_batch", "snmp"):
+            dedup_key = f"{mac}:{reason}"
+            if _is_duplicate(dedup_key):
+                if not is_ap_workflow_active(mac):
+                    print(f"[{trigger_ts}] [DEDUP] Duplicate trigger suppressed for {mac}", file=sys.stderr)
+                    return
+                print(f"[{trigger_ts}] [DEDUP] Duplicate but workflow active for {mac} — passing through for finalization.", file=sys.stderr)
         
 
         print(f"[{trigger_ts}] DISJOIN payload | ap={ap_name or '?'} ip={ip or '?'} mac={mac or '?'} reason={reason}", file=sys.stderr)
 
         # ── Guard: skip JOIN events — AP_JOIN_DISJOIN syslog covers both ──
         payload_lower = trigger_line.lower()
-        if "ap_join_disjoin" not in payload_lower or "disjoined" not in payload_lower:
-            print(f"[{trigger_ts}] [FILTER] Non-disjoin MDT event ignored (likely AP join): {trigger_line[:80]}", file=sys.stderr)
+        # AFTER:
+        is_batch_trigger = "eem_batch_trigger" in payload_lower
+        is_disjoin_event = "ap_join_disjoin" in payload_lower and "disjoined" in payload_lower
+        if not is_batch_trigger and not is_disjoin_event:
+            print(f"[{trigger_ts}] [FILTER] Non-disjoin MDT event ignored: {trigger_line[:80]}", file=sys.stderr)
             return
+
+        # ── EEM_BATCH: only react to the WLC-confirmed 3rd disjoin trigger ──
+        
 
         self.events.append({"timestamp": trigger_ts, "trigger_line": trigger_line,
                             "ap_name": ap_name, "ap_mac": mac, "ip": ip, "reason": reason})
-# ── CGDC batch processor — runs in background, never blocks MDT ──
-        if mac:
+
+        if not mac:
+            if TRIGGER_MODE in ("eem_batch", "snmp"):
+                print(f"[{trigger_ts}] [EEM_BATCH] Batch trigger received — launching log fetch", file=sys.stderr)
+                threading.Thread(
+                    target=self._handle_eem_batch_trigger,
+                    daemon=True,
+                ).start()
+                return
+            print(f"[{ts()}] No APMAC in payload — skipping RCA", file=sys.stderr)
+            return
+
+        # ── EEM_BATCH / SNMP: WLC already confirmed 3 disjoins — fetch APs then fire RCA ──
+        if TRIGGER_MODE in ("eem_batch", "snmp"):
+            if is_batch_trigger:
+                threading.Thread(
+                    target=self._handle_eem_batch_trigger,
+                    daemon=True,
+                ).start()
+            else:
+                # Individual disjoin — record only, WLC hasn't confirmed burst yet
+                if mac and not _is_duplicate(f"indiv_disjoin:{mac}:{ip or ''}"):
+                    append_disjoin_occurrence(mac, ap_name, ip)
+                    record_disjoin_event(mac, ap_name=ap_name, ip=ip)
+                    _occ = load_disjoin_occurrences()
+                    _seen = {e.get("mac") for e in _occ if e.get("mac")}
+                    print(
+                        f"[{trigger_ts}] [DISJOIN_DETECTED] AP={ap_name or '?'} "
+                        f"MAC={mac} IP={ip or '?'} | Total unique APs seen: {len(_seen)}",
+                        file=sys.stderr,
+                    )
+                    
+        
+
+        # ── telemetry: existing per-AP CGDC sliding window ─────
+        global ACTIVE_RCA_SESSIONS
+
+        if mac and TRIGGER_MODE not in ("eem_batch", "snmp"):
             threading.Thread(
                 target=process_cgdc_event,
                 args=(mac, ap_name, ip, self),
                 daemon=True,
             ).start()
-        
-
-        if not mac:
-            print(f"[{ts()}] No APMAC in payload — skipping RCA", file=sys.stderr)
-            return
-
-        global ACTIVE_RCA_SESSIONS
 
         # ── Per-AP workflow disjoin counter (only if workflow already active) ──
         if is_ap_workflow_active(mac):
@@ -2067,13 +2485,28 @@ class LiveMonitor:
                 f"— triggering finalization immediately.",
                 file=sys.stderr,
             )
+            # Guard: only one finalization thread per MAC at a time.
+            with self._finalizing_lock:
+                if mac in self._finalizing_macs:
+                    print(
+                        f"[{ts()}] [WORKFLOW] Finalization already in flight for {mac} "
+                        f"— suppressing duplicate.",
+                        file=sys.stderr,
+                    )
+                    return
+                self._finalizing_macs.add(mac)
+
             with ACTIVE_RCA_LOCK:
                 session = ACTIVE_RCA_SESSIONS.get(mac)
-            threading.Thread(
-                target=self._finalize_rca_session,
-                args=(None, mac, session.get("ip") if session else ip),
-                daemon=True,
-            ).start()
+
+            def _finalize_and_clear(_mac=mac, _ip=session.get("ip") if session else ip):
+                try:
+                    self._finalize_rca_session(None, _mac, _ip)
+                finally:
+                    with self._finalizing_lock:
+                        self._finalizing_macs.discard(_mac)
+
+            threading.Thread(target=_finalize_and_clear, daemon=True).start()
             return
     def _react(self, mac: str, ap_name: str | None, ip: str | None, event_ts: str, live_snapshot: list[str], force_rca: bool = False) -> None:
         global ACTIVE_RCA_SESSIONS
@@ -2175,118 +2608,168 @@ class LiveMonitor:
 
             evidence: dict[str, str] = {}
 
-            # ── PHASE 4b: terminal session setup ─────────────────────
-            for cmd in ["terminal exec prompt timestamp", "terminal length 0"]:
-                print(f"[{ts()}]   [WLC-SETUP] {cmd}", file=sys.stderr)
+            evidence: dict[str, str] = {}
+            wlc_ap_evidence:    dict[str, str] = {}
+            direct_ap_evidence: dict[str, str] = {}
+
+            if not self.debug_commands_enabled:
+                # ── PHASE 4b: terminal session setup ─────────────────────
+                for cmd in ["terminal exec prompt timestamp", "terminal length 0"]:
+                    print(f"[{ts()}]   [WLC-SETUP] {cmd}", file=sys.stderr)
+                    try:
+                        out = conn.send_command_timing(cmd, delay_factor=1, read_timeout=15)
+                        evidence[cmd] = out if out else "(no output)"
+                    except Exception as exc:
+                        print(f"[{ts()}]   [WLC-SETUP] Error on '{cmd}': {exc}", file=sys.stderr)
+                        evidence[cmd] = f"ERROR: {exc}"
+
+                # ── PHASE 4c: debug platform condition ───────────────────
+                for cmd in [
+                    f"debug platform condition feature wireless mac {dot_mac}",
+                    "debug platform condition start",
+                ]:
+                    print(f"[{ts()}]   [WLC-DEBUG] {cmd}", file=sys.stderr)
+                    try:
+                        out = conn.send_command_timing(cmd, delay_factor=1, read_timeout=15)
+                        evidence[cmd] = out if out else "(no output)"
+                    except Exception as exc:
+                        print(f"[{ts()}]   [WLC-DEBUG] Error on '{cmd}': {exc}", file=sys.stderr)
+                        evidence[cmd] = f"ERROR: {exc}"
+                # ── show debug — snapshot active WLC debugs ──────────────
+                _wlc_sd = "show debug"
+                print(f"[{ts()}]   [WLC-DEBUG] {_wlc_sd}", file=sys.stderr)
                 try:
-                    out = conn.send_command_timing(cmd, delay_factor=1, read_timeout=15)
-                    evidence[cmd] = out if out else "(no output)"
+                    out = conn.send_command(_wlc_sd, read_timeout=15)
+                    evidence[f"{_wlc_sd} (post-WLC-debugs)"] = out if out else "(no output)"
                 except Exception as exc:
-                    print(f"[{ts()}]   [WLC-SETUP] Error on '{cmd}': {exc}", file=sys.stderr)
-                    evidence[cmd] = f"ERROR: {exc}"
+                    print(f"[{ts()}]   [WLC-DEBUG] Error on '{_wlc_sd}': {exc}", file=sys.stderr)
+                    evidence[f"{_wlc_sd} (post-WLC-debugs)"] = f"ERROR: {exc}"
 
-            # ── PHASE 4c: debug platform condition ───────────────────
-            for cmd in [
-                f"debug platform condition feature wireless mac {dot_mac}",
-                "debug platform condition start",
-            ]:
-                print(f"[{ts()}]   [WLC-DEBUG] {cmd}", file=sys.stderr)
-                try:
-                    out = conn.send_command_timing(cmd, delay_factor=1, read_timeout=15)
-                    evidence[cmd] = out if out else "(no output)"
-                except Exception as exc:
-                    print(f"[{ts()}]   [WLC-DEBUG] Error on '{cmd}': {exc}", file=sys.stderr)
-                    evidence[cmd] = f"ERROR: {exc}"
-# ── show debug — snapshot active WLC debugs ──────────────
-            _wlc_sd = "show debug"
-            print(f"[{ts()}]   [WLC-DEBUG] {_wlc_sd}", file=sys.stderr)
-            try:
-                out = conn.send_command(_wlc_sd, read_timeout=15)
-                evidence[f"{_wlc_sd} (post-WLC-debugs)"] = out if out else "(no output)"
-            except Exception as exc:
-                print(f"[{ts()}]   [WLC-DEBUG] Error on '{_wlc_sd}': {exc}", file=sys.stderr)
-                evidence[f"{_wlc_sd} (post-WLC-debugs)"] = f"ERROR: {exc}"
-
-            # ── PHASE 4d: MYCAP packet capture ───────────────────────
-            # ── PHASE 4d: MYCAP packet capture ───────────────────────
-                #monitor capture MYCAP clear
-                #monitor capture MYCAP buffer size 100 circular bidirectional interface Tw0/0/0 both
-                #monitor capture MYCAP control-plane both
-                #monitor capture MYCAP match ipv4 host <ap_ip> any bidirectional
-                #monitor capture start
-                #monitor capture MYCAP export flash:ApDisjoinEpc.pcap
-                #show flash: | in .pcap
-                #show monitor capture MYCAP buffer brief
-                #copy flash:ApDisjEpc.pcap tftp://192.168.0.6/ApDisjEpc.pcap
-
-            _mycap_cmds = [
-                f"monitor capture {MYCAP_NAME} clear",
-                f"monitor capture {MYCAP_NAME} buffer size 100 circular bidirectional interface Tw0/0/0 both",
-                f"monitor capture {MYCAP_NAME} control-plane both",
-                f"monitor capture {MYCAP_NAME} match ipv4 host {ip} any bidirectional" if ip else None,
-                f"monitor capture {MYCAP_NAME} start",
-                f"ping 192.168.0.212",
-                f"ping 192.168.0.1",
-            ]
-            _mycap_cmds = [c for c in _mycap_cmds if c is not None]
-            for cmd in _mycap_cmds:
-                print(f"[{ts()}]   [MYCAP] {cmd}", file=sys.stderr)
-                try:
-                    out = conn.send_command_timing(cmd, delay_factor=1, read_timeout=15)
-                    evidence[cmd] = out if out else "(no output)"
-                except Exception as exc:
-                    print(f"[{ts()}]   [MYCAP] Error on '{cmd}': {exc}", file=sys.stderr)
-                    evidence[cmd] = f"ERROR: {exc}"
-
-            # ── PHASE 4e: ping AP to verify reachability ─────────────
-            if ip:
-                cmd = f"ping {ip}"
-                print(f"[{ts()}]   [WLC-PING] {cmd}", file=sys.stderr)
-                try:
-                    out = conn.send_command(cmd, read_timeout=30)
-                    evidence[cmd] = out if out else "(no output)"
-                except Exception as exc:
-                    print(f"[{ts()}]   [WLC-PING] Error on '{cmd}': {exc}", file=sys.stderr)
-                    evidence[cmd] = f"ERROR: {exc}"
-
-            # ── PHASE 5: WLC evidence collection ─────────────────────
-            _show_cmds: list[str] = [
-                "show logging",
-                "show platform resources",
-                "show processes cpu platform | include wncd",
-                "show ap image summary",
-                "show logging | include AP_JOIN_DISJOIN",
-                "show ap uptime",
-                "show wireless stats ap history",
-                "show ap crash-file",
-                "dir all | include crash",
-                "show processes cpu platform sorted",
-                "show logging",
-                "show platform software object-manager chassis active F0 childless-delete-object",
-                "show platform software object-manager chassis active F0 pending-issue-update",
-                f"show wireless stats ap mac {dot_mac} discovery detailed",
-                f"show wireless stats ap mac {dot_mac} join detailed",
-                f"show logging profile wireless start last 15 min filter mac {dot_mac} "
-                f"to-file harddisk:AP_DISCONNECT_ALWAYS_ON_LOG_{event_ts_safe}.log",
-                "show logging",
-            ]
-            if ap_name:
-                _show_cmds += [
-                    f"show ap name {ap_name} config general",
-                    f"show ap name {ap_name} uptime",
+                # ── PHASE 4d: MYCAP packet capture ───────────────────────
+                mycap_name = f"MYCAP_{digits}"   # unique per AP — avoids cross-session clobbering
+                with ACTIVE_RCA_LOCK:
+                    if mac in ACTIVE_RCA_SESSIONS:
+                        ACTIVE_RCA_SESSIONS[mac]["mycap_name"] = mycap_name
+                _mycap_cmds = [
+                    f"monitor capture {mycap_name} clear",
+                    f"monitor capture {mycap_name} buffer size 100 circular bidirectional interface Tw0/0/0 both",
+                    f"monitor capture {mycap_name} control-plane both",
+                    f"monitor capture {mycap_name} match ipv4 host {ip} any bidirectional" if ip else None,
+                    f"monitor capture {mycap_name} start",
+                    f"ping 192.168.0.212",
+                    f"ping 192.168.0.1",
                 ]
-            for cmd in _show_cmds:
-                print(f"[{ts()}]   {cmd}", file=sys.stderr)
+                _mycap_cmds = [c for c in _mycap_cmds if c is not None]
+                for cmd in _mycap_cmds:
+                    print(f"[{ts()}]   [MYCAP] {cmd}", file=sys.stderr)
+                    try:
+                        out = conn.send_command_timing(cmd, delay_factor=1, read_timeout=15)
+                        evidence[cmd] = out if out else "(no output)"
+                    except Exception as exc:
+                        print(f"[{ts()}]   [MYCAP] Error on '{cmd}': {exc}", file=sys.stderr)
+                        evidence[cmd] = f"ERROR: {exc}"
+
+                # ── MYCAP verification — give the capture 15s to collect packets ──
+                print(f"[{ts()}]   [MYCAP] Waiting 15s for capture {mycap_name} to collect packets...", file=sys.stderr)
+                time.sleep(15)
+                _verify_cmd = f"show monitor capture {mycap_name} buffer brief"
+                print(f"[{ts()}]   [MYCAP] {_verify_cmd}", file=sys.stderr)
                 try:
-                    output = conn.send_command(cmd, read_timeout=120)
-                    if not output or output.strip().startswith("%") or "Invalid input" in output:
-                        print(f"[{ts()}]   Skipped (unsupported/error): {cmd}", file=sys.stderr)
-                        evidence[cmd] = "(skipped — unsupported or error response)"
-                    else:
-                        evidence[cmd] = output
+                    verify_out = conn.send_command(_verify_cmd, read_timeout=30)
+                    evidence[_verify_cmd] = verify_out if verify_out else "(no output)"
+                    if not verify_out or not verify_out.strip():
+                        print(f"[{ts()}]   [MYCAP] WARNING: No packets captured for {mycap_name} after 15s.", file=sys.stderr)
                 except Exception as exc:
-                    print(f"[{ts()}]   Error on '{cmd}': {exc}", file=sys.stderr)
-                    evidence[cmd] = f"ERROR: {exc}"
+                    print(f"[{ts()}]   [MYCAP] Error on '{_verify_cmd}': {exc}", file=sys.stderr)
+                    evidence[_verify_cmd] = f"ERROR: {exc}"
+
+                # ── PHASE 4e: ping AP to verify reachability ─────────────
+                if ip:
+                    cmd = f"ping {ip}"
+                    print(f"[{ts()}]   [WLC-PING] {cmd}", file=sys.stderr)
+                    try:
+                        out = conn.send_command(cmd, read_timeout=30)
+                        evidence[cmd] = out if out else "(no output)"
+                    except Exception as exc:
+                        print(f"[{ts()}]   [WLC-PING] Error on '{cmd}': {exc}", file=sys.stderr)
+                        evidence[cmd] = f"ERROR: {exc}"
+
+                # ── PHASE 5: WLC evidence collection (externalized) ──────
+                _wlc_catalog = load_command_catalog(
+                    self.auth.get("wlc_evidence_cmd_file", "CONF/wlc_commands.conf")
+                )
+                _show_cmds: list[str] = []
+                for entry in _wlc_catalog:
+                    raw_cmd = entry["cmd"]
+                    if "{ap_name}" in raw_cmd and not ap_name:
+                        continue   # skip ap_name-dependent lines if AP name unknown
+                    cmd = raw_cmd.format(
+                        mac=dot_mac,
+                        event_ts=event_ts_safe,
+                        ap_name=ap_name or "",
+                    )
+                    _show_cmds.append(cmd)
+                if not _show_cmds:
+                    print(f"[{ts()}] [CMD_CATALOG] WLC command catalog empty — no evidence commands to run.", file=sys.stderr)
+                for cmd in _show_cmds:
+                    print(f"[{ts()}]   {cmd}", file=sys.stderr)
+                    try:
+                        output = conn.send_command(cmd, read_timeout=120)
+                        if not output or output.strip().startswith("%") or "Invalid input" in output:
+                            print(f"[{ts()}]   Skipped (unsupported/error): {cmd}", file=sys.stderr)
+                            evidence[cmd] = "(skipped — unsupported or error response)"
+                        else:
+                            evidence[cmd] = output
+                    except Exception as exc:
+                        print(f"[{ts()}]   Error on '{cmd}': {exc}", file=sys.stderr)
+                        evidence[cmd] = f"ERROR: {exc}"
+
+                # ── PHASE 6: parallel WLC AP telemetry + direct AP SSH ────
+                def _wlc_ap_worker() -> None:
+                    print(f"[{ts()}] [WLC AP TELEMETRY] Starting collection ...", file=sys.stderr)
+                    wlc_ap_evidence.update(collect_ap_side_evidence(conn, ap_name, mac))
+                    print(f"[{ts()}] [WLC AP TELEMETRY] Done — {len(wlc_ap_evidence)} commands.",
+                          file=sys.stderr)
+
+                def _ap_ssh_worker() -> None:
+                    if not ip:
+                        print(f"[{ts()}] [DIRECT AP SSH TELEMETRY] No AP IP — skipping.",
+                              file=sys.stderr)
+                        return
+                    direct_ap_evidence.update(
+                        collect_advanced_capwap_on_ap(ip, self.ap_auth, ap_name))
+
+                t_wlc = threading.Thread(target=_wlc_ap_worker, daemon=True)
+                t_ap  = threading.Thread(target=_ap_ssh_worker, daemon=True)
+                t_wlc.start()
+                t_ap.start()
+                t_wlc.join()
+                t_ap.join()
+
+            else:
+                # ── CUSTOM-ONLY MODE: skip ALL hardcoded evidence collection ──
+                # Only the attached wlc_cmds.txt / ap_cmds.txt start-commands run.
+                mycap_name = f"MYCAP_{digits}"
+                with ACTIVE_RCA_LOCK:
+                    if mac in ACTIVE_RCA_SESSIONS:
+                        ACTIVE_RCA_SESSIONS[mac]["mycap_name"] = mycap_name
+
+                if self.wlc_debug_start_cmds:
+                    print(f"[{ts()}] [CUSTOM-ONLY] Sending {len(self.wlc_debug_start_cmds)} "
+                          f"WLC start command(s) for {mac} ...", file=sys.stderr)
+                    evidence.update(send_custom_commands_to_wlc(conn, self.wlc_debug_start_cmds))
+                else:
+                    print(f"[{ts()}] [CUSTOM-ONLY] No WLC custom commands loaded — nothing sent.",
+                          file=sys.stderr)
+
+                if self.ap_debug_start_cmds and ip:
+                    print(f"[{ts()}] [CUSTOM-ONLY] Sending {len(self.ap_debug_start_cmds)} "
+                          f"AP start command(s) to {ip} for {mac} ...", file=sys.stderr)
+                    direct_ap_evidence.update(
+                        send_custom_commands_to_ap(ip, self.ap_auth, self.ap_debug_start_cmds))
+                elif self.ap_debug_start_cmds and not ip:
+                    print(f"[{ts()}] [CUSTOM-ONLY] No AP IP available — skipping AP custom commands.",
+                          file=sys.stderr)
 
             # ── correlation (WLC controller evidence) ─────────────────
             live_context  = "\n".join(live_snapshot)
@@ -2302,31 +2785,6 @@ class LiveMonitor:
                 f"{finding['probable_cause']}",
                 file=sys.stderr,
             )
-
-            # ── PHASE 6: parallel WLC AP telemetry + direct AP SSH ────
-            wlc_ap_evidence:    dict[str, str] = {}
-            direct_ap_evidence: dict[str, str] = {}
-
-            def _wlc_ap_worker() -> None:
-                print(f"[{ts()}] [WLC AP TELEMETRY] Starting collection ...", file=sys.stderr)
-                wlc_ap_evidence.update(collect_ap_side_evidence(conn, ap_name, mac))
-                print(f"[{ts()}] [WLC AP TELEMETRY] Done — {len(wlc_ap_evidence)} commands.",
-                      file=sys.stderr)
-
-            def _ap_ssh_worker() -> None:
-                if not ip:
-                    print(f"[{ts()}] [DIRECT AP SSH TELEMETRY] No AP IP — skipping.",
-                          file=sys.stderr)
-                    return
-                direct_ap_evidence.update(
-                    collect_advanced_capwap_on_ap(ip, self.ap_auth, ap_name))
-
-            t_wlc = threading.Thread(target=_wlc_ap_worker, daemon=True)
-            t_ap  = threading.Thread(target=_ap_ssh_worker, daemon=True)
-            t_wlc.start()
-            t_ap.start()
-            t_wlc.join()
-            t_ap.join()
 
             # ── WLC AP correlation ────────────────────────────────────
             if wlc_ap_evidence:
@@ -2429,7 +2887,21 @@ class LiveMonitor:
                         f"triggering finalization.",
                         file=sys.stderr,
                     )
-                    self._finalize_rca_session(None, _mac, _ip)
+                    # Honour the same finalization guard used by _on_eem_trigger.
+                    with self._finalizing_lock:
+                        if _mac in self._finalizing_macs:
+                            print(
+                                f"[{ts()}] [TIMEOUT] Finalization already in flight for {_mac} "
+                                f"— timeout worker exiting.",
+                                file=sys.stderr,
+                            )
+                            return
+                        self._finalizing_macs.add(_mac)
+                    try:
+                        self._finalize_rca_session(None, _mac, _ip)
+                    finally:
+                        with self._finalizing_lock:
+                            self._finalizing_macs.discard(_mac)
                 else:
                     print(
                         f"[{ts()}] [TIMEOUT] Session for {_mac} already finalized — "
@@ -2437,13 +2909,489 @@ class LiveMonitor:
                         file=sys.stderr,
                     )
             threading.Thread(target=_timeout_finalize_worker, daemon=True).start()
+    def _finalize_all_active_on_4th(self, trigger_line: str = "") -> None:
+        """
+        Called when FOURTH_DISJOIN_DETECTED fires.
+        Parses the AP that actually disjoined out of the embedded syslog text
+        and compares it against the locked AP from the original 3-disjoin batch.
+          - MATCH    → same AP recurred → finalize active RCA session(s) (logic below unchanged).
+          - NO MATCH → a different AP disjoined → record it only, no finalization.
+        """
+        now = ts()
+
+        m_name = APNAME_RE.search(trigger_line)
+        m_mac  = APMAC_RE.search(trigger_line)
+        m_ip   = APIP_RE.search(trigger_line)
+        ap_name = m_name.group(1) if m_name else None
+        mac     = normalise_mac(m_mac.group(1)) if m_mac else None
+        ip      = m_ip.group(1) if m_ip else None
+
+        if not mac:
+            print(f"[{now}] [4TH_DISJOIN] Could not parse AP MAC from trigger payload — ignoring.", file=sys.stderr)
+            return
+
+        # ── Always record this disjoin to the disjoins file ──────────
+        # ── Always record this disjoin to the disjoins file ──────────
+        append_disjoin_occurrence(mac, ap_name, ip)
+        record_disjoin_event(mac, ap_name=ap_name, ip=ip)
+        set_ap_traced_count(len({o.get("mac") for o in load_disjoin_occurrences() if o.get("mac")}))   # ← ADD THIS LINE
+
+        locked_mac = getattr(self, "_locked_mac_for_4th", None)
+
+        if mac != locked_mac:
+            print(
+                f"[{now}] [DISJOIN_DETECTED] AP={ap_name or '?'} MAC={mac} IP={ip or '?'} "
+                f"(non-matching disjoin received — recorded)",
+                file=sys.stdout,
+            )
+            print(
+                f"[{now}] [4TH_DISJOIN] Disjoin from {mac} ({ap_name or '?'}) does NOT match "
+                f"locked AP {locked_mac} — recording only, no finalization.",
+                file=sys.stderr,
+            )
+            return   # ← self._increment_detected_aps_counter(mac, ap_name, ip) line is DELETED
+
+        print(f"[{now}] [4TH_DISJOIN] Disjoin from {mac} matches locked AP — finalizing active RCA session(s) ...", file=sys.stderr)
+
+        with ACTIVE_RCA_LOCK:
+            active_macs = list(ACTIVE_RCA_SESSIONS.keys())
+
+        # If _react hasn't populated ACTIVE_RCA_SESSIONS yet but workflow IS active,
+        # fall back to the locked MAC itself so finalization is never missed.
+        if not active_macs and is_ap_workflow_active(mac):
+            active_macs = [mac]
+
+        finalize_threads: list[threading.Thread] = []
+
+        for mac in active_macs:
+            with ACTIVE_RCA_LOCK:
+                session = ACTIVE_RCA_SESSIONS.get(mac)
+            ip = session.get("ip") if session else None
+
+            should_skip = False
+            with self._finalizing_lock:
+                if mac in self._finalizing_macs:
+                    should_skip = True
+                else:
+                    self._finalizing_macs.add(mac)
+
+            if should_skip:
+                print(f"[{now}] [4TH_DISJOIN] Finalization already in flight for {mac} — waiting for it to complete.", file=sys.stderr)
+                while True:
+                    with self._finalizing_lock:
+                        if mac not in self._finalizing_macs:
+                            break
+                    time.sleep(1)
+                print(f"[{now}] [4TH_DISJOIN] In-flight finalization for {mac} completed.", file=sys.stderr)
+                continue
+
+            print(f"[{now}] [4TH_DISJOIN] Finalizing {mac} ({ip or '?'}) ...", file=sys.stderr)
+
+            def _do_finalize(_mac=mac, _ip=ip):
+                try:
+                    self._finalize_rca_session(None, _mac, _ip)
+                finally:
+                    with self._finalizing_lock:
+                        self._finalizing_macs.discard(_mac)
+
+            t = threading.Thread(target=_do_finalize, daemon=True)
+            finalize_threads.append(t)
+            t.start()
+        if not finalize_threads:
+            return
+        # Wait for ALL finalization threads to complete before shutting down
+        for t in finalize_threads:
+            t.join()
+
+        # ── Remove the 4th-disjoin watcher applet from WLC ───────────
+        try:
+            _c = ConnectHandler(
+                device_type="cisco_ios",
+                host=self.wlc_host,
+                port=self.auth["port"],
+                username=self.auth["username"],
+                password=self.auth["password"],
+                secret=self.auth.get("secret"),
+                fast_cli=False,
+            )
+            if self.auth.get("secret"):
+                _c.enable()
+            _c.send_config_set(
+                ["no event manager applet FOURTH_DISJOIN_WATCHER"],
+                read_timeout=15, exit_config_mode=True,
+            )
+            _c.disconnect()
+            print(f"[{now}] [4TH_DISJOIN] FOURTH_DISJOIN_WATCHER applet removed from WLC.", file=sys.stderr)
+            self._watcher_running_for = None
+        except Exception as exc:
+            print(f"[{now}] [4TH_DISJOIN] WARNING: Could not remove watcher applet: {exc}", file=sys.stderr)
         
         
+
+        print(
+        f"\n[{now}] ╔══════════════════════════════════════════════════╗",
+        file=sys.stderr,
+            )
+        print(
+                f"[{now}] ║        ✅  EVIDENCE COLLECTION COMPLETE          ║",
+                file=sys.stderr,
+            )
+        print(
+                f"[{now}] ║  disjoin confirmed — RCA finalized           ║",
+                file=sys.stderr,
+            )
+        print(
+                f"[{now}] ║  AP: {', '.join(active_macs) or 'unknown':<44}║",
+                file=sys.stderr,
+            )
+        print(
+                f"[{now}] ║  Reports saved to: {str(REPORTS_DIR):<31}║",
+                file=sys.stderr,
+            )
+        print(
+                f"[{now}] ╚══════════════════════════════════════════════════╝\n",
+                file=sys.stderr,
+            )
+        # ── Graceful shutdown — 4th disjoin confirmed, evidence collected ──────
+        now2 = ts()
+        report = self.ap_reports.get(active_macs[0] if active_macs else "", {})
+        wlc_tel = report.get("wlc_telemetry_file", str(REPORTS_DIR))
+        ap_tel  = report.get("ap_telemetry_file",  str(REPORTS_DIR))
+
+        print(f"\n[{now2}] ┌─────────────────────────────────────────────────────┐", file=sys.stderr)
+        print(f"[{now2}] │  ✅  RCA COMPLETE — EVIDENCE SUMMARY                 │", file=sys.stderr)
+        print(f"[{now2}] ├─────────────────────────────────────────────────────┤", file=sys.stderr)
+        print(f"[{now2}] │  WLC Telemetry  → {str(wlc_tel)[-50:]:<50}│", file=sys.stderr)
+        print(f"[{now2}] │  AP  Telemetry  → {str(ap_tel)[-50:]:<50}│", file=sys.stderr)
+        print(f"[{now2}] │  Reports dir    → {str(REPORTS_DIR):<50}│", file=sys.stderr)
+        print(f"[{now2}] ├─────────────────────────────────────────────────────┤", file=sys.stderr)
+        print(f"[{now2}] │  Shutting down monitor and cleaning up WLC applets.  │", file=sys.stderr)
+        print(f"[{now2}] └─────────────────────────────────────────────────────┘\n", file=sys.stderr)
+
+        # Signal the listen() loop to stop — triggers _cleanup_telemetry_subscription()
+        self.stop_event.set()
+    def _increment_detected_aps_counter(self, mac: str, ap_name: str | None, ip: str | None) -> None:
+        """
+        Append a newly-seen AP to the most recent detected_aps_*.txt file and
+        bump its 'Total unique APs seen' count — this is the same file the GUI
+        polls (_poll_ap_occurrences) to populate the 'APs TRACED' stat card.
+        """
+        REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+        detected_files = sorted(REPORTS_DIR.glob("detected_aps_*.txt"), reverse=True)
+        if not detected_files:
+            print(f"[{ts()}] [4TH_DISJOIN] No detected_aps file found — skipping AP counter update.", file=sys.stderr)
+            return
+
+        path = detected_files[0]
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+        except Exception as exc:
+            print(f"[{ts()}] [4TH_DISJOIN] Could not read {path}: {exc}", file=sys.stderr)
+            return
+
+        if any(mac in line for line in lines):
+            print(f"[{ts()}] [4TH_DISJOIN] AP {mac} already present in {path.name} — not re-counting.", file=sys.stderr)
+            return
+
+        new_total = None
+        for i, line in enumerate(lines):
+            m = re.search(r"Total unique APs seen in disjoin log:\s*(\d+)", line)
+            if m:
+                new_total = int(m.group(1)) + 1
+                lines[i] = f"Total unique APs seen in disjoin log: {new_total}"
+                break
+
+        if new_total is None:
+            print(f"[{ts()}] [4TH_DISJOIN] Could not find AP counter line in {path.name} — skipping.", file=sys.stderr)
+            return
+
+        lines.append(f"  {new_total}. AP={ap_name or '?'}  MAC={mac}  IP={ip or '?'}")
+
+        try:
+            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            print(f"[{ts()}] [4TH_DISJOIN] AP counter incremented → {new_total} (added {mac}) in {path.name}", file=sys.stderr)
+        except Exception as exc:
+            print(f"[{ts()}] [4TH_DISJOIN] Could not write {path}: {exc}", file=sys.stderr)
+    def _handle_eem_batch_trigger(self) -> None:
+        """
+        Called when WLC EEM fires EEM_BATCH_TRIGGER (3 disjoins confirmed by WLC).
+        SSH to WLC, fetch latest AP_JOIN_DISJOIN log lines, extract the 3 most
+        recent unique APs, then launch RCA for each.
+        """
+        trigger_ts = ts()
+        print(f"[{trigger_ts}] [EEM_BATCH] Trigger received — SSHing to WLC to fetch latest disjoins ...", file=sys.stderr)
+
+        try:
+            conn = ConnectHandler(
+                device_type="cisco_ios",
+                host=self.wlc_host,
+                port=self.auth["port"],
+                username=self.auth["username"],
+                password=self.auth["password"],
+                secret=self.auth.get("secret"),
+                fast_cli=False,
+            )
+            if self.auth.get("secret"):
+                conn.enable()
+        except Exception as exc:
+            print(f"[{trigger_ts}] [EEM_BATCH] SSH failed: {exc} — cannot fetch AP details", file=sys.stderr)
+            return
+
+        try:
+            output = conn.send_command(
+                "show logging | include AP_JOIN_DISJOIN",
+                read_timeout=30,
+            )
+        except Exception as exc:
+            print(f"[{trigger_ts}] [EEM_BATCH] 'show logging' failed: {exc}", file=sys.stderr)
+            conn.disconnect()
+            return
+        finally:
+            conn.disconnect()
+            print(f"[{trigger_ts}] [EEM_BATCH] SSH session closed after log fetch.", file=sys.stderr)
+
+        # ── Parse ALL disjoin lines — collect every AP seen ──────────
+        all_detected: list[dict] = []
+        seen_macs_detected: set[str] = set()
+        for line in reversed(output.splitlines()):
+            if "Disjoined" not in line:
+                continue
+
+            m_name = APNAME_RE.search(line)
+            m_mac  = APMAC_RE.search(line)
+            m_ip   = APIP_RE.search(line)
+
+            mac_val  = normalise_mac(m_mac.group(1)) if m_mac else None
+            name_val = m_name.group(1) if m_name else None
+            ip_val   = m_ip.group(1)   if m_ip   else None
+
+            if not mac_val or mac_val in seen_macs_detected:
+                continue
+
+            seen_macs_detected.add(mac_val)
+            all_detected.append({
+                "mac": mac_val, "ap_name": name_val, "ip": ip_val,
+                "detected_at": trigger_ts,
+            })
+
+        if not all_detected:
+            print(f"[{trigger_ts}] [EEM_BATCH] No AP_JOIN_DISJOIN lines found in logging — RCA aborted.", file=sys.stderr)
+            return
+
+        # ── Write ALL detected APs to a file ─────────────────────────
+        REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+        detected_path = REPORTS_DIR / f"detected_aps_{re.sub(r'[^0-9]', '', trigger_ts)[:14]}.txt"
+        detected_lines = [
+            f"Detected APs at EEM Batch Trigger — {trigger_ts}",
+            f"Total unique APs seen in disjoin log: {len(all_detected)}",
+            "=" * 50, "",
+        ]
+        for i, ap in enumerate(all_detected, start=1):
+            detected_lines.append(
+                f"  {i}. AP={ap['ap_name'] or '?'}  MAC={ap['mac']}  IP={ap['ip'] or '?'}"
+            )
+        detected_lines.append("")
+        detected_path.write_text("\n".join(detected_lines), encoding="utf-8")
+        print(
+            f"[{trigger_ts}] [EEM_BATCH] {len(all_detected)} AP(s) detected — "
+            f"written to {detected_path}",
+            file=sys.stderr,
+        )
+        history_event = {
+            "event_time": trigger_ts,
+            "event_valid": True,
+            "aps": [
+                {"ap_name": ap["ap_name"], "mac": ap["mac"], "ip": ap["ip"]}
+                for ap in all_detected
+            ],
+        }
+        completed_count = append_disjoin_event_history(history_event)
+        print(f"[{trigger_ts}] [EEM_BATCH] Event recorded → Completed_Disjoin_Events_Count={completed_count}", file=sys.stderr)
+
+        # ── The locked AP for the 4th watcher = the most recent (first in reversed list) ──
+        # parsed keeps the single entry used for RCA launch (unchanged behaviour)
+        parsed: list[dict] = [all_detected[0]]
+        entry = parsed[0]
+        locked_mac_for_4th = entry["mac"]
+        self._locked_mac_for_4th = locked_mac_for_4th   # remember for match-check in _finalize_all_active_on_4th
+        self._eem_batch_ap_count = getattr(self, "_eem_batch_ap_count", 0) + len(all_detected)
+        print(
+            f"[{trigger_ts}] [EEM_BATCH] Last disjoin: mac={entry['mac']} "
+            f"ap={entry['ap_name'] or '?'} ip={entry['ip'] or '?'}",
+            file=sys.stderr,
+        )
+
+        # ── Push 4th-disjoin watcher EEM applet to WLC ───────────────
+        try:
+            _4th_conn = ConnectHandler(
+                device_type="cisco_ios",
+                host=self.wlc_host,
+                port=self.auth["port"],
+                username=self.auth["username"],
+                password=self.auth["password"],
+                secret=self.auth.get("secret"),
+                fast_cli=False,
+            )
+            if self.auth.get("secret"):
+                _4th_conn.enable()
+
+            _digits = re.sub(r"[^0-9a-fA-F]", "", locked_mac_for_4th)
+            _dot_mac = f"{_digits[0:4]}.{_digits[4:8]}.{_digits[8:12]}".lower()
+
+            _4th_export_action = (
+                ' action 020 snmp-trap strdata "$trigger_msg"' if TRIGGER_MODE == "snmp"
+                else ' action 020 export-to-telemetry "$trigger_msg"'
+            )
+            
+            _suspend_batch = [
+                "no event manager applet AP_DISJOIN_BATCH",
+            ]
+            _4th_conn.send_config_set(_suspend_batch, read_timeout=30, exit_config_mode=True)
+            _4th_conn.disconnect()
+            print(
+                f"[{trigger_ts}] [EEM_BATCH] disjoin watcher pushed for MAC {_dot_mac}. "
+                f"AP_DISJOIN_BATCH suspended until 4th disjoin or timeout.",
+                f"Waiting up to {FOURTH_DISJOIN_RECURRENCE_WINDOW}s for same AP to disjoin again.",
+                file=sys.stderr,
+            )
+        except Exception as exc:
+            print(f"[{trigger_ts}] [EEM_BATCH] WARNING: Could not push 4th-disjoin applet: {exc}", file=sys.stderr)
+
+        # ── Launch RCA for the last disjoined AP only ─────────────────
+        for entry in parsed:
+            ap_mac  = entry["mac"]
+            ap_name = entry["ap_name"]
+            ap_ip   = entry["ip"]
+
+            if is_ap_workflow_active(ap_mac):
+                ...
+                continue
+
+            append_disjoin_occurrence(ap_mac, ap_name, ap_ip)
+            record_disjoin_event(ap_mac, ap_name=ap_name, ip=ap_ip)
+            set_ap_workflow_active(ap_mac, ap_name, ap_ip)
+            set_ap_workflow_active(ap_mac, ap_name, ap_ip)
+
+            # Pre-register in ACTIVE_RCA_SESSIONS so _finalize_all_active_on_4th
+            # can find this MAC immediately, even before _react acquires SSH.
+            with ACTIVE_RCA_LOCK:
+                ACTIVE_RCA_SESSIONS[ap_mac] = {
+                    "mac":        ap_mac,
+                    "ap_name":    ap_name,
+                    "ip":         ap_ip,
+                    "start_time": time.time(),
+                }
+
+            # ── Start recurrence timeout watcher only once per locked MAC ──
+            if not getattr(self, "_watcher_running_for", None) == locked_mac_for_4th:
+                self._watcher_running_for = locked_mac_for_4th
+                threading.Thread(
+                    target=self._fourth_disjoin_timeout_watcher,
+                    args=(locked_mac_for_4th, FOURTH_DISJOIN_RECURRENCE_WINDOW),
+                    daemon=True,
+                ).start()
+            else:
+                print(
+                    f"[{trigger_ts}] [4TH_WATCHER] Watcher already running for "
+                    f"{locked_mac_for_4th} — not restarting timer.",
+                    file=sys.stderr,
+                )
+
+            
+
+            print(f"[{trigger_ts}] [EEM_BATCH] Launching RCA for mac={ap_mac} ap={ap_name or '?'} ip={ap_ip or '?'}", file=sys.stderr)
+
+            if _rca_executor:
+                _rca_executor.submit(
+                    self._react,
+                    ap_mac, ap_name, ap_ip, trigger_ts, [], True,
+                )
+            else:
+                threading.Thread(
+                    target=self._react,
+                    args=(ap_mac, ap_name, ap_ip, trigger_ts, [], True),
+                    daemon=True,
+                ).start()  
 
     # ------------------------------------------------------------------ #
     # Report                                                              #
     # ------------------------------------------------------------------ #
+    def _fourth_disjoin_timeout_watcher(self, locked_mac: str, window_seconds: int) -> None:
+        start = time.monotonic()
+        poll_interval = 5
+        now_iso = ts()
+        WATCHER_GRACE_SECONDS = 60
 
+        print(
+            f"[{now_iso}] [4TH_WATCHER] Waiting up to {window_seconds}s for "
+            f"AP {locked_mac} to disjoin again (disjoin = finalization trigger).",
+            file=sys.stderr,
+        )
+
+        while time.monotonic() - start < window_seconds:
+            elapsed = time.monotonic() - start
+            with ACTIVE_RCA_LOCK:
+                still_active = locked_mac in ACTIVE_RCA_SESSIONS
+            if elapsed > WATCHER_GRACE_SECONDS and not still_active and not is_ap_workflow_active(locked_mac):
+                print(
+                    f"[{ts()}] [4TH_WATCHER] AP {locked_mac} session already finalized "
+                    f"— watcher exiting cleanly.",
+                    file=sys.stderr,
+                )
+                return
+            time.sleep(poll_interval)
+
+        # ── Timeout: 4th disjoin did NOT arrive within the window ────── (dedented — was inside the while loop before)
+        print(
+            f"\n[{ts()}] [4TH_WATCHER] ⏰ Recurrence window ({window_seconds}s) expired "
+            f"for AP {locked_mac} — no 4th disjoin detected.",
+            file=sys.stderr,
+        )
+        print(
+            f"[{ts()}] [4TH_WATCHER] Resetting monitoring loop → re-pushing EEM batch applet.",
+            file=sys.stderr,
+        )
+
+        # Step 1: Remove the stale 4th-disjoin watcher applet from WLC
+        try:
+            _c = ConnectHandler(
+                device_type="cisco_ios",
+                host=self.wlc_host,
+                port=self.auth["port"],
+                username=self.auth["username"],
+                password=self.auth["password"],
+                secret=self.auth.get("secret"),
+                fast_cli=False,
+            )
+            if self.auth.get("secret"):
+                _c.enable()
+            _c.send_config_set(
+                ["no event manager applet FOURTH_DISJOIN_WATCHER"],
+                read_timeout=15, exit_config_mode=True,
+            )
+            _c.disconnect()
+            print(f"[{ts()}] [4TH_WATCHER] Stale FOURTH_DISJOIN_WATCHER removed from WLC.", file=sys.stderr)
+        except Exception as exc:
+            print(f"[{ts()}] [4TH_WATCHER] WARNING: Could not remove watcher applet: {exc}", file=sys.stderr)
+
+        with ACTIVE_RCA_LOCK:
+            still_active = locked_mac in ACTIVE_RCA_SESSIONS
+            session = ACTIVE_RCA_SESSIONS.get(locked_mac, {})
+        if still_active:
+            print(f"[{ts()}] [4TH_WATCHER] Finalizing RCA session for {locked_mac} after timeout.", file=sys.stderr)
+            with self._finalizing_lock:
+                if locked_mac not in self._finalizing_macs:
+                    self._finalizing_macs.add(locked_mac)
+                    try:
+                        self._finalize_rca_session(None, locked_mac, session.get("ip"))
+                    finally:
+                        with self._finalizing_lock:
+                            self._finalizing_macs.discard(locked_mac)
+
+        clear_ap_workflow(locked_mac)
+        mark_ap_used(locked_mac)
+
+        self._watcher_running_for = None
     def save_report(self) -> tuple[Path, Path]:
         REPORTS_DIR.mkdir(parents=True, exist_ok=True)
         stamp     = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -2608,7 +3556,10 @@ def resolve_auth(args: argparse.Namespace) -> dict[str, Any]:
         "ap_password": (device_data or {}).get("ap_password", "Cisco"),
         "ap_secret":   (device_data or {}).get("ap_secret", ""),
         "jumphost_ip": (device_data or {}).get("jumphost_ip", ""),
-        "tftp_ip":     (device_data or {}).get("tftp_ip", ""),}
+        "tftp_ip":     (device_data or {}).get("tftp_ip", ""),
+        "eem_script_path": getattr(args, "eem_script_path", None),
+        "fourth_disjoin_recurrence_window_seconds": (device_data or {}).get("fourth_disjoin_recurrence_window_seconds", None),
+        "wlc_evidence_cmd_file": (device_data or {}).get("wlc_evidence_cmd_file", "CONF/wlc_commands.conf"),}
 
 
 # ---------------------------------------------------------------------------
@@ -2629,14 +3580,20 @@ def _run_monitor_legacy_inline(args: argparse.Namespace) -> None:
     log_path     = REPORTS_DIR / f"session_log_{safe_host}_{stamp}.txt"
     _log_file    = log_path.open("w", encoding="utf-8", buffering=1)
     _orig_stderr = sys.stderr
+    _orig_stdout = sys.stdout
     sys.stderr   = _TeeStream(_orig_stderr, _log_file)
+    sys.stdout   = _TeeStream(_orig_stdout, _log_file)
     # ─────────────────────────────────────────────────────────────────────
 
-    print(f"[{ts()}] Minion AP Disjoin Monitor starting — WLC={host}", file=sys.stderr)
+    print(f"[{ts()}]  AP Disjoin Monitor starting — WLC={host}", file=sys.stderr)
 
     # ── Trigger mode selection ────────────────────────────────────────────
     global TRIGGER_MODE
-    TRIGGER_MODE = "snmp" if getattr(args, "snmp", False) else "telemetry"
+    TRIGGER_MODE = (
+        "snmp"      if getattr(args, "snmp", False)      else
+        "eem_batch" if getattr(args, "eem_batch", False)  else
+        "telemetry"
+    )
     print(f"[{ts()}] Trigger mode: {TRIGGER_MODE.upper()}", file=sys.stderr)
     # ─────────────────────────────────────────────────────────────────────
 
@@ -2656,6 +3613,7 @@ def _run_monitor_legacy_inline(args: argparse.Namespace) -> None:
     monitor = LiveMonitor(auth=auth, wlc_host=host,
                       device_name=getattr(args, "device", None),
                       grpc_port=grpc_port)
+    _emergency_cleanup._monitor = monitor
     global _rca_executor
     _rca_executor = ThreadPoolExecutor(max_workers=MAX_CONCURRENT_RCA)
     monitor._push_eem_applet()
@@ -2666,6 +3624,7 @@ def _run_monitor_legacy_inline(args: argparse.Namespace) -> None:
 
     # ── Restore stderr and close log ─────────────────────────────────────
     sys.stderr = _orig_stderr
+    sys.stdout = _orig_stdout
     _log_file.close()
     print(f"[{ts()}] Session log saved → {log_path}", file=sys.stderr)
     high = sum(
@@ -2678,7 +3637,7 @@ def _run_monitor_legacy_inline(args: argparse.Namespace) -> None:
         "trigger_mode": f"EEM_{'SNMP_trap' if TRIGGER_MODE == 'snmp' else 'MDT_gRPC_dialout'}",
         "grpc_port": grpc_port if TRIGGER_MODE != "snmp" else None,
         "total_disjoin_events": len(monitor.events),
-        "unique_aps_traced": len(monitor.ap_reports),
+        "unique_aps_traced": max(len(monitor.ap_reports), getattr(monitor, "_eem_batch_ap_count", 0)),
         "high_confidence_findings": high,
         "report_json": str(json_path), "report_summary": str(txt_path),
     }, indent=2))
@@ -2717,7 +3676,9 @@ def run_analyze(args: argparse.Namespace) -> None:
 
 def run_monitor(args: argparse.Namespace) -> None:
     config = config_from_args(args)
-    MonitorEngine().start(config)
+    engine = MonitorEngine()
+    _emergency_cleanup._engine = engine
+    engine.start(config)
 
 
 # ---------------------------------------------------------------------------
@@ -2726,7 +3687,7 @@ def run_monitor(args: argparse.Namespace) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        description="Minion — Live AP Disjoin Monitor for Cisco 9800 WLC"
+        description=" — Live AP Disjoin Monitor for Cisco 9800 WLC"
     )
     sub = p.add_subparsers(dest="subcommand", required=True)
 
@@ -2751,7 +3712,25 @@ def build_parser() -> argparse.ArgumentParser:
     ana.set_defaults(func=run_analyze)
 
     return p
+import atexit
+import signal
 
+def _emergency_cleanup():
+    """Best-effort cleanup of WLC applets on unexpected exit."""
+    try:
+        # Try engine path (GUI/MonitorEngine flow)
+        if hasattr(_emergency_cleanup, "_engine") and _emergency_cleanup._engine:
+            monitor = getattr(_emergency_cleanup._engine, "_monitor", None)
+            if monitor:
+                monitor._cleanup_telemetry_subscription()
+                return
+        # Try direct monitor path (legacy inline flow)
+        if hasattr(_emergency_cleanup, "_monitor") and _emergency_cleanup._monitor:
+            _emergency_cleanup._monitor._cleanup_telemetry_subscription()
+    except Exception:
+        pass
+
+atexit.register(_emergency_cleanup)
 
 def main() -> None:
     args = build_parser().parse_args()

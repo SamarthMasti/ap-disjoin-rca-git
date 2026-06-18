@@ -1,3 +1,4 @@
+# backend/adapters/event_bridge.py
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -33,3 +34,9 @@ class BackendEventBridge:
     def report_generated(self, **payload: Any) -> None:
         self.emit("report_generated", **payload)
 
+    # ── Added: engine lifecycle events ───────────────────────────────────
+    def engine_started(self, **payload: Any) -> None:
+        self.emit("engine_started", **payload)
+
+    def engine_completed(self, **payload: Any) -> None:
+        self.emit("engine_completed", **payload)

@@ -98,6 +98,9 @@ class MonitorRuntimeConfig:
     ap_password: str = "Cisco"
     ap_secret: str = ""
     epc_enabled: bool = True
+    debug_commands_enabled: bool = False
+    wlc_debug_cmd_file: str | None = "CONF/wlc_commands.conf"
+    ap_debug_cmd_file: str | None = "CONF/ap_commands.conf"
     event_sink: BackendEventSink | None = field(default=None, repr=False, compare=False)
 
     @property
@@ -116,6 +119,10 @@ class MonitorRuntimeConfig:
             "ap_secret": self.ap_secret or "",
             "jumphost_ip": self.jumphost_ip or "",
             "tftp_ip": self.tftp_ip or "",
+            "debug_commands_enabled": self.debug_commands_enabled,
+            "wlc_debug_cmd_file": self.wlc_debug_cmd_file,
+            "ap_debug_cmd_file": self.ap_debug_cmd_file,
+            "wlc_evidence_cmd_file": getattr(self, "wlc_evidence_cmd_file", "CONF/wlc_commands.conf"),
         }
 
 
@@ -205,7 +212,7 @@ def config_from_gui_dict(config: dict[str, Any], event_sink: BackendEventSink | 
         trigger_mode=str(config.get("trigger_mode") or "telemetry").lower(),
         snmp_community=str(config.get("snmp_community") or "public"),
         duration_minutes=int(duration) if duration else None,
-        report_dir=str(config.get("report_dir") or DEFAULT_REPORT_DIR),
+        report_dir=_resolve_run_dir(str(config.get("report_dir") or DEFAULT_REPORT_DIR)),
         log_dir=str(config["log_dir"]) if config.get("log_dir") else None,
         capture_dir=str(config["capture_dir"]) if config.get("capture_dir") else None,
         state_dir=str(config["state_dir"]) if config.get("state_dir") else None,
@@ -214,5 +221,33 @@ def config_from_gui_dict(config: dict[str, Any], event_sink: BackendEventSink | 
         ap_username=str(config.get("ap_username") or "Cisco"),
         ap_password=str(config.get("ap_password") or "Cisco"),
         ap_secret=str(config.get("ap_secret") or ""),
+        debug_commands_enabled=bool(config.get("debug_commands_enabled", False)),
+        wlc_debug_cmd_file=config.get("wlc_debug_cmd_file") or "CONF/wlc_commands.conf",
+        ap_debug_cmd_file=config.get("ap_debug_cmd_file") or "CONF/ap_commands.conf",
         event_sink=event_sink,
     )
+def _resolve_run_dir(base_report_dir: str) -> str:
+    """
+    Resolve the per-run subdirectory path:
+        <base_report_dir>/YYYY/MM/DD/run_N
+    N is auto-incremented — counts existing run_* folders under today's date.
+    Creates the directory immediately so all writers find it ready.
+    """
+    from datetime import date
+    today   = date.today()
+    day_dir = (
+        Path(base_report_dir)
+        / str(today.year)
+        / f"{today.month:02d}"
+        / f"{today.day:02d}"
+    )
+    day_dir.mkdir(parents=True, exist_ok=True)
+
+    existing = sorted(
+        p for p in day_dir.iterdir()
+        if p.is_dir() and p.name.startswith("run_")
+    )
+    next_n  = len(existing) + 1
+    run_dir = day_dir / f"run_{next_n}"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return str(run_dir)

@@ -1,0 +1,140 @@
+[2026-06-17T08:37:51.375638+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-17T08:37:51.376022+00:00] Trigger mode: EEM_BATCH
+[2026-06-17T08:37:51.377496+00:00] [DEBUG_CMDS] Loaded WLC(start=17, stop=3)  AP(start=17, stop=3)
+[2026-06-17T08:37:51.377765+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-17T08:37:53.262734+00:00] EEM applet config sent.
+[2026-06-17T08:37:53.827473+00:00] EEM setup SSH session closed.
+[2026-06-17T08:37:53.985250+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+[2026-06-17T08:37:54.278554+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:58337
+[2026-06-17T08:42:18.434296+00:00] *** EEM TRIGGER received — parsing structured payload ***
+[2026-06-17T08:42:18.434296+00:00] DISJOIN payload | ap=? ip=? mac=? reason=unknown
+[2026-06-17T08:42:18.434296+00:00] [EEM_BATCH] Batch trigger received — launching log fetch
+[2026-06-17T08:42:18.435337+00:00] [EEM_BATCH] Trigger received — SSHing to WLC to fetch latest disjoins ...
+[2026-06-17T08:42:18.435337+00:00] [EEM_BATCH] SSH session closed after log fetch.
+[2026-06-17T08:42:18.435337+00:00] [EEM_BATCH] 2 AP(s) detected — written to C:\AP_DIJSOIN\reports\2026\06\17\run_8\detected_aps_20260617084218.txt
+[2026-06-17T08:42:18.435337+00:00] [EEM_BATCH] Last disjoin: mac=78:72:5d:1c:4f:a0 ap=Ap3800e_11StaticIp ip=192.168.0.213
+[2026-06-17T08:42:18.435337+00:00] [EEM_BATCH] disjoin watcher pushed for MAC 7872.5d1c.4fa0. Waiting up to 1800s for same AP to disjoin again.
+[2026-06-17T08:42:21.360433+00:00] [AP_STATS] 78:72:5d:1c:4f:a0 | count=1 ap=Ap3800e_11StaticIp ip=192.168.0.213
+[2026-06-17T08:42:21.385323+00:00] [SUMMARY] total_disjoins=1 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\17\run_8\summary_stats.json
+[2026-06-17T08:42:21.389211+00:00] [4TH_WATCHER] Waiting up to 1800s for AP 78:72:5d:1c:4f:a0 to disjoin again (disjoin = finalization trigger).
+[2026-06-17T08:42:21.389895+00:00] [CUSTOM_DEBUG] Sending 17 start command(s) to WLC for 78:72:5d:1c:4f:a0 ...[2026-06-17T08:42:18.435337+00:00] [EEM_BATCH] Launching RCA for mac=78:72:5d:1c:4f:a0 ap=Ap3800e_11StaticIp ip=192.168.0.213
+
+[2026-06-17T08:42:21.404508+00:00] [AP_STATS] 78:72:5d:1c:4f:a0 | count=2 ap=Ap3800e_11StaticIp ip=192.168.0.213
+[2026-06-17T08:42:21.421355+00:00] [SUMMARY] total_disjoins=2 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\17\run_8\summary_stats.json
+[2026-06-17T08:42:21.421641+00:00] Disjoin counter for 192.168.0.213: 1 (threshold=3)
+[2026-06-17T08:42:21.421773+00:00] [CGDC] force_rca=True — bypassing legacy counter threshold (count=1) for 78:72:5d:1c:4f:a0
+[2026-06-17T08:42:21.421899+00:00] *** THRESHOLD REACHED (1) — triggering full troubleshooting workflow for 192.168.0.213 ***
+[2026-06-17T08:42:21.422012+00:00] Opening SSH session to 192.168.0.100 ...
+[2026-06-17T08:42:22.202859+00:00] debug wireless mac 78:72:5d:1c:4f:a0
+[2026-06-17T08:42:22.209033+00:00]   [CUSTOM-WLC] show ap sum
+[2026-06-17T08:42:22.759364+00:00]   [CUSTOM-WLC] terminal exec prompt timestamp
+[2026-06-17T08:42:23.279514+00:00]   [CUSTOM-WLC] terminal length 0
+[2026-06-17T08:42:23.778679+00:00]   [CUSTOM-WLC] (debug) debug platform condition start
+[2026-06-17T08:42:25.980789+00:00]   [CUSTOM-WLC] show debug
+
+[2026-06-17T08:42:26.390085+00:00] [4TH_WATCHER] ⏰ Recurrence window (1800s) expired for AP 78:72:5d:1c:4f:a0 — no 4th disjoin detected.
+[2026-06-17T08:42:26.391123+00:00] [4TH_WATCHER] Resetting monitoring loop → re-pushing EEM batch applet.
+[2026-06-17T08:42:26.825845+00:00]   [CUSTOM-WLC] show logging
+[2026-06-17T08:42:27.319699+00:00] [4TH_WATCHER] Stale FOURTH_DISJOIN_WATCHER removed from WLC.
+[2026-06-17T08:42:27.320083+00:00] [4TH_WATCHER] Finalizing RCA session for 78:72:5d:1c:4f:a0 after timeout.
+[2026-06-17T08:42:27.326868+00:00]   [CUSTOM-WLC] show platform resources
+[2026-06-17T08:42:27.366989+00:00] [CUSTOM_DEBUG] Sending 3 stop command(s) to WLC for 78:72:5d:1c:4f:a0 ...
+[2026-06-17T08:42:28.259591+00:00]   [CUSTOM-WLC] (debug) debug platform condition stop
+[2026-06-17T08:42:28.357599+00:00]   [CUSTOM-WLC] show processes cpu platform | include wncd
+[2026-06-17T08:42:30.461817+00:00]   [CUSTOM-WLC] undebug all
+[2026-06-17T08:42:32.054687+00:00]   [CUSTOM-WLC] show debug
+[2026-06-17T08:42:32.058061+00:00]   [CUSTOM-WLC] show ap image summary
+[2026-06-17T08:42:32.630392+00:00]   [CUSTOM-WLC] show logging | include AP_JOIN_DISJOIN
+[2026-06-17T08:42:32.995738+00:00] [CUSTOM_DEBUG] Sending 3 stop command(s) to AP 192.168.0.213 for 78:72:5d:1c:4f:a0 ...
+[2026-06-17T08:42:33.173474+00:00]   [CUSTOM-WLC] show ap uptime
+[2026-06-17T08:42:33.709450+00:00] [CUSTOM-ONLY] Sending 17 WLC start command(s) for 78:72:5d:1c:4f:a0 ...
+[2026-06-17T08:42:33.710129+00:00]   [CUSTOM-WLC] show ap sum
+[2026-06-17T08:42:33.801945+00:00]   [CUSTOM-WLC] show wireless stats ap history
+[2026-06-17T08:42:34.285204+00:00]   [CUSTOM-WLC] terminal exec prompt timestamp
+[2026-06-17T08:42:34.410979+00:00]   [CUSTOM-WLC] show ap crash-file
+[2026-06-17T08:42:34.816188+00:00]   [CUSTOM-WLC] terminal length 0
+[2026-06-17T08:42:34.971479+00:00]   [CUSTOM-WLC] dir all | include crash
+[2026-06-17T08:42:35.326220+00:00]   [CUSTOM-WLC] (debug) debug platform condition start
+[2026-06-17T08:42:37.528041+00:00]   [CUSTOM-WLC] show debug
+[2026-06-17T08:42:38.442900+00:00]   [CUSTOM-WLC] show processes cpu platform sorted
+[2026-06-17T08:42:38.449155+00:00]   [CUSTOM-WLC] show logging
+[2026-06-17T08:42:38.949306+00:00]   [CUSTOM-WLC] show platform resources
+[2026-06-17T08:42:42.088580+00:00]   [CUSTOM-WLC] show platform software object-manager chassis active F0 childless-delete-object
+[2026-06-17T08:42:42.344917+00:00]   [CUSTOM-WLC] show processes cpu platform | include wncd
+[2026-06-17T08:42:42.650295+00:00]   [CUSTOM-WLC] show platform software object-manager chassis active F0 pending-issue-update
+[2026-06-17T08:42:43.008854+00:00]   [CUSTOM-AP] AP SSH failed: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.213:22
+
+ — skipping custom commands
+[2026-06-17T08:42:43.009789+00:00] [FINALIZE] Second disjoin of same AP (78:72:5d:1c:4f:a0) — starting finalization sequence.
+[2026-06-17T08:42:43.010085+00:00] [FINALIZE] [CUSTOM-ONLY] Skipping hardcoded WLC/MYCAP/TFTP cleanup sequence for 78:72:5d:1c:4f:a0 — custom stop commands already sent by caller.
+[2026-06-17T08:42:43.010306+00:00] [FINALIZE] Generating reports ...
+[2026-06-17T08:42:43.012689+00:00] [FINALIZE] JSON report   → C:\AP_DIJSOIN\reports\2026\06\17\run_8\ap_disjoin_192.168.0.json
+[2026-06-17T08:42:43.013060+00:00] [FINALIZE] Summary report → C:\AP_DIJSOIN\reports\2026\06\17\run_8\ap_disjoin_192.168.0.100_20260617T084243Z_summary.txt
+[2026-06-17T08:42:43.015760+00:00] [COOLDOWN] AP 78:72:5d:1c:4f:a0 marked used — will be available again in 600s.
+[2026-06-17T08:42:43.016031+00:00] [FINALIZE] Session complete for 78:72:5d:1c:4f:a0.
+[2026-06-17T08:42:43.016497+00:00] [FINALIZE] Disjoin counter reset for 78:72:5d:1c:4f:a0.
+[2026-06-17T08:42:43.016760+00:00] [FINALIZE] Finalization complete for 78:72:5d:1c:4f:a0.
+[2026-06-17T08:42:44.091380+00:00] [CUSTOM_DEBUG] Sending 17 start command(s) to AP 192.168.0.213 for 78:72:5d:1c:4f:a0 ...
+[2026-06-17T08:42:45.989125+00:00]   [CUSTOM-WLC] show ap image summary
+[2026-06-17T08:42:47.123513+00:00]   [CUSTOM-WLC] show logging | include AP_JOIN_DISJOIN
+[2026-06-17T08:42:47.667650+00:00]   [CUSTOM-WLC] show ap uptime
+[2026-06-17T08:42:48.356971+00:00]   [CUSTOM-WLC] show wireless stats ap history
+[2026-06-17T08:42:48.954669+00:00]   [CUSTOM-WLC] show ap crash-file
+[2026-06-17T08:42:49.515334+00:00]   [CUSTOM-WLC] dir all | include crash
+[2026-06-17T08:42:52.860736+00:00]   [CUSTOM-WLC] show processes cpu platform sorted
+[2026-06-17T08:42:54.107505+00:00]   [CUSTOM-AP] AP SSH failed: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.213:22
+
+ — skipping custom commands
+[2026-06-17T08:42:56.535483+00:00]   [CUSTOM-WLC] show platform software object-manager chassis active F0 childless-delete-object
+[2026-06-17T08:42:58.452138+00:00]   [CUSTOM-WLC] show platform software object-manager chassis active F0 pending-issue-update
+[2026-06-17T08:42:59.015617+00:00] [CUSTOM-ONLY] Sending 17 AP start command(s) to 192.168.0.213 for 78:72:5d:1c:4f:a0 ...
+[2026-06-17T08:43:09.017265+00:00]   [CUSTOM-AP] AP SSH failed: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.213:22
+
+ — skipping custom commands
+[2026-06-17T08:43:09.023493+00:00] Correlation → [HIGH] AP watchdog / kernel panic triggered reboot → disjoin
+[2026-06-17T08:43:09.023806+00:00] [WLC AP TELEMETRY] Collection returned no evidence
+[2026-06-17T08:43:09.026322+00:00] WLC telemetry saved → C:\AP_DIJSOIN\reports\2026\06\17\run_8\wlc_telemetry_192_168_0_213_20260617084218.txt
+[2026-06-17T08:43:09.027936+00:00] AP telemetry saved → C:\AP_DIJSOIN\reports\2026\06\17\run_8\ap_telemetry_192_168_0_213_20260617084218.txt
+[2026-06-17T08:43:09.050557+00:00] SSH session closed after telemetry collection for 78:72:5d:1c:4f:a0. Session now WAITING_FOR_NEXT_DISJOIN.
+[2026-06-17T08:43:09.051399+00:00] [TIMEOUT] 30-min timer started for 78:72:5d:1c:4f:a0.
+[2026-06-17T08:50:37.156869+00:00] [MDT] Stream exception from ipv4:192.168.0.100:58337
+Traceback (most recent call last):
+  File "ap_disjoin_monitor_tool.py", line 2249, in ap_disjoin_monitor_tool.LiveMonitor.listen.MdtDialoutCollector.MdtDialout
+    for dialout_args in request_iterator:
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 542, in __next__
+    return self._next()
+           ~~~~~~~~~~^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 534, in _next
+    request = self._look_for_request()
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 516, in _look_for_request
+    _raise_rpc_error(self._state)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 220, in _raise_rpc_error
+    raise rpc_error
+grpc.RpcError
+
+[2026-06-17T08:50:37.161472+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:58337
+[2026-06-17T08:50:37.332365+00:00] Stop requested — shutting down gRPC listener.
+[2026-06-17T08:50:37.332887+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...
+[2026-06-17T08:50:38.506635+00:00] [CLEANUP] Telemetry subscription 12123 removed.

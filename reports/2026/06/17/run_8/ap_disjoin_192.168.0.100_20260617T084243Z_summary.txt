@@ -1,0 +1,18 @@
+AP Disjoin Session — 192.168.0.100
+==================================================
+
+No disjoin events with traceable MAC detected.
+
+==========================
+AP DISJOIN HISTORY
+==========================
+
+AP Name : Ap3800e_11StaticIp
+MAC     : 78:72:5d:1c:4f:a0
+IP      : 192.168.0.213
+
+Total Disjoins : 2
+
+Disjoin Timeline:
+  1. 2026-06-17 08:42:21 UTC
+  2. 2026-06-17 08:42:21 UTC

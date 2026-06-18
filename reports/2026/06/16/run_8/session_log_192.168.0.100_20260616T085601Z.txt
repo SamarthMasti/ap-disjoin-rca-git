@@ -1,0 +1,31 @@
+[2026-06-16T08:56:01.009692+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-16T08:56:01.010186+00:00] Trigger mode: EEM_BATCH
+[2026-06-16T08:56:01.010778+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-16T08:56:02.993342+00:00] EEM applet config sent.
+[2026-06-16T08:56:03.547855+00:00] EEM setup SSH session closed.
+[2026-06-16T08:56:03.665109+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+[2026-06-16T08:56:03.972250+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:55149
+[2026-06-16T08:56:30.137081+00:00] [AP_STATS] cc:7f:75:5a:e7:40 | count=1 ap=Ap9115D ip=192.168.0.48
+[2026-06-16T08:56:30.157723+00:00] [SUMMARY] total_disjoins=1 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\16\run_8\summary_stats.json
+[2026-06-16T08:56:30.134182+00:00] [4TH_DISJOIN] Disjoin from cc:7f:75:5a:e7:40 (Ap9115D) does NOT match locked AP None — recording only, no finalization.
+[2026-06-16T08:56:30.159105+00:00] [4TH_DISJOIN] No detected_aps file found — skipping AP counter update.
+[2026-06-16T09:07:07.654222+00:00] [MDT] Stream exception from ipv4:192.168.0.100:55149
+Traceback (most recent call last):
+  File "ap_disjoin_monitor_tool.py", line 2055, in ap_disjoin_monitor_tool.LiveMonitor.listen.MdtDialoutCollector.MdtDialout
+    for dialout_args in request_iterator:
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 542, in __next__
+    return self._next()
+           ~~~~~~~~~~^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 534, in _next
+    request = self._look_for_request()
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 516, in _look_for_request
+    _raise_rpc_error(self._state)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 220, in _raise_rpc_error
+    raise rpc_error
+grpc.RpcError
+
+[2026-06-16T09:07:07.659475+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:55149
+[2026-06-16T09:07:08.033101+00:00] Stop requested — shutting down gRPC listener.
+[2026-06-16T09:07:08.033521+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...
+[2026-06-16T09:07:09.269235+00:00] [CLEANUP] Telemetry subscription 12123 removed.

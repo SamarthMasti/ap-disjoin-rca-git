@@ -1,0 +1,7 @@
+Detected APs at EEM Batch Trigger — 2026-06-17T09:32:40.447570+00:00
+Total unique APs seen in disjoin log: 3
+==================================================
+
+  1. AP=Ap9105  MAC=3c:41:0e:3a:ca:00  IP=192.168.0.212
+  2. AP=Ap3800e_11StaticIp  MAC=78:72:5d:1c:4f:a0  IP=192.168.0.213
+  3. AP=Ap9115D  MAC=cc:7f:75:5a:e7:40  IP=192.168.0.15

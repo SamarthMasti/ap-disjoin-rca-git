@@ -1,0 +1,10 @@
+Direct AP SSH Telemetry — 192.168.0.48
+AP MAC  : cc:7f:75:5a:e7:40
+AP Name : Ap9115D
+AP IP   : 192.168.0.48
+Event   : 2026-06-16T09:10:17.755071+00:00
+============================================================
+
+── DIRECT AP SSH TELEMETRY ──
+
+No direct AP SSH output collected.

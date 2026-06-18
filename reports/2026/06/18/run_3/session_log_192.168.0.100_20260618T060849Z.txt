@@ -1,0 +1,17 @@
+[2026-06-18T06:08:49.102752+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-18T06:08:49.103265+00:00] Trigger mode: EEM_BATCH
+[2026-06-18T06:08:49.103659+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-18T06:08:59.112856+00:00] WARNING: SSH failed during EEM setup: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.100:22
+
+
+[2026-06-18T06:08:59.112884+00:00] Proceeding — ensure AP_DISJOIN applet is already present on WLC.
+[2026-06-18T06:08:59.246266+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+[2026-06-18T06:23:26.707628+00:00] Stop requested — shutting down gRPC listener.
+[2026-06-18T06:23:26.708081+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...

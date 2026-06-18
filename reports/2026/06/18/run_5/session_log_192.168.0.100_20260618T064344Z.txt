@@ -1,0 +1,225 @@
+[2026-06-18T06:43:44.420535+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-18T06:43:44.420854+00:00] Trigger mode: EEM_BATCH
+[2026-06-18T06:43:44.421255+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-18T06:43:46.310741+00:00] EEM applet config sent.
+[2026-06-18T06:43:46.874515+00:00] EEM setup SSH session closed.
+[2026-06-18T06:43:46.988954+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+[2026-06-18T06:43:47.330420+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:60155
+[2026-06-18T06:46:54.310237+00:00] *** EEM TRIGGER received — parsing structured payload ***
+[2026-06-18T06:46:54.310237+00:00] DISJOIN payload | ap=? ip=? mac=? reason=unknown
+[2026-06-18T06:46:54.310237+00:00] [EEM_BATCH] Batch trigger received — launching log fetch
+[2026-06-18T06:46:54.311604+00:00] [EEM_BATCH] Trigger received — SSHing to WLC to fetch latest disjoins ...
+[2026-06-18T06:46:54.311604+00:00] [EEM_BATCH] SSH session closed after log fetch.
+[2026-06-18T06:46:54.311604+00:00] [EEM_BATCH] 4 AP(s) detected — written to C:\AP_DIJSOIN\reports\2026\06\18\run_5\detected_aps_20260618064654.txt
+[2026-06-18T06:46:54.311604+00:00] [EEM_BATCH] Last disjoin: mac=3c:41:0e:3a:ca:00 ap=Ap9105 ip=192.168.0.212
+[2026-06-18T06:46:54.311604+00:00] [EEM_BATCH] disjoin watcher pushed for MAC 3c41.0e3a.ca00. AP_DISJOIN_BATCH suspended until 4th disjoin or timeout. Waiting up to 1800s for same AP to disjoin again.
+[2026-06-18T06:46:57.065028+00:00] [AP_STATS] 3c:41:0e:3a:ca:00 | count=1 ap=Ap9105 ip=192.168.0.212
+[2026-06-18T06:46:57.084855+00:00] [SUMMARY] total_disjoins=1 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\18\run_5\summary_stats.json
+[2026-06-18T06:46:57.102099+00:00] [4TH_WATCHER] Waiting up to 1800s for AP 3c:41:0e:3a:ca:00 to disjoin again (disjoin = finalization trigger).[2026-06-18T06:46:54.311604+00:00] [EEM_BATCH] Launching RCA for mac=3c:41:0e:3a:ca:00 ap=Ap9105 ip=192.168.0.212
+
+[2026-06-18T06:46:57.111726+00:00] [AP_STATS] 3c:41:0e:3a:ca:00 | count=2 ap=Ap9105 ip=192.168.0.212
+[2026-06-18T06:46:57.126307+00:00] [SUMMARY] total_disjoins=2 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\18\run_5\summary_stats.json
+[2026-06-18T06:46:57.126573+00:00] Disjoin counter for 192.168.0.212: 1 (threshold=3)
+[2026-06-18T06:46:57.126716+00:00] [CGDC] force_rca=True — bypassing legacy counter threshold (count=1) for 3c:41:0e:3a:ca:00
+[2026-06-18T06:46:57.126813+00:00] *** THRESHOLD REACHED (1) — triggering full troubleshooting workflow for 192.168.0.212 ***
+[2026-06-18T06:46:57.126949+00:00] Opening SSH session to 192.168.0.100 ...
+[2026-06-18T06:46:57.908181+00:00] debug wireless mac 3c:41:0e:3a:ca:00
+[2026-06-18T06:47:09.415010+00:00]   [WLC-SETUP] terminal exec prompt timestamp
+[2026-06-18T06:47:11.616637+00:00]   [WLC-SETUP] terminal length 0
+[2026-06-18T06:47:13.818929+00:00]   [WLC-DEBUG] debug platform condition feature wireless mac 3c41.0e3a.ca00
+[2026-06-18T06:47:16.021424+00:00]   [WLC-DEBUG] debug platform condition start
+[2026-06-18T06:47:18.223974+00:00]   [WLC-DEBUG] show debug
+[2026-06-18T06:47:19.059318+00:00]   [MYCAP] monitor capture MYCAP_3c410e3aca00 clear
+[2026-06-18T06:47:21.262743+00:00]   [MYCAP] monitor capture MYCAP_3c410e3aca00 buffer size 100 circular bidirectional interface Tw0/0/0 both
+[2026-06-18T06:47:23.565471+00:00]   [MYCAP] monitor capture MYCAP_3c410e3aca00 control-plane both
+[2026-06-18T06:47:25.767998+00:00]   [MYCAP] monitor capture MYCAP_3c410e3aca00 match ipv4 host 192.168.0.212 any bidirectional
+[2026-06-18T06:47:27.970054+00:00]   [MYCAP] monitor capture MYCAP_3c410e3aca00 start
+[2026-06-18T06:47:30.172287+00:00]   [MYCAP] ping 192.168.0.212
+[2026-06-18T06:47:32.374065+00:00]   [MYCAP] ping 192.168.0.1
+[2026-06-18T06:47:34.576809+00:00]   [MYCAP] Waiting 15s for capture MYCAP_3c410e3aca00 to collect packets...
+[2026-06-18T06:47:49.577869+00:00]   [MYCAP] show monitor capture MYCAP_3c410e3aca00 buffer brief
+[2026-06-18T06:47:50.130787+00:00]   [WLC-PING] ping 192.168.0.212
+[2026-06-18T06:47:50.640664+00:00]   show logging
+[2026-06-18T06:47:51.179820+00:00]   show platform resources
+[2026-06-18T06:47:51.954934+00:00]   show processes cpu platform | include wncd
+[2026-06-18T06:47:56.995278+00:00]   show ap image summary
+[2026-06-18T06:47:58.130262+00:00]   show logging | include AP_JOIN_DISJOIN
+[2026-06-18T06:47:58.661295+00:00]   show ap uptime
+[2026-06-18T06:47:59.345723+00:00]   show wireless stats ap history
+[2026-06-18T06:47:59.882170+00:00]   show ap crash-file
+[2026-06-18T06:48:00.442720+00:00]   dir all | include crash
+[2026-06-18T06:48:04.069365+00:00]   show processes cpu platform sorted
+[2026-06-18T06:48:07.754921+00:00]   show logging
+[2026-06-18T06:48:08.256212+00:00]   show platform software object-manager chassis active F0 childless-delete-object
+[2026-06-18T06:48:08.830135+00:00]   show platform software object-manager chassis active F0 pending-issue-update
+[2026-06-18T06:48:09.391988+00:00]   show wireless stats ap mac 3c41.0e3a.ca00 discovery detailed
+[2026-06-18T06:48:09.933984+00:00]   show wireless stats ap mac 3c41.0e3a.ca00 join detailed
+[2026-06-18T06:48:10.499122+00:00]   show logging profile wireless start last 15 min filter mac 3c41.0e3a.ca00 to-file harddisk:AP_DISCONNECT_ALWAYS_ON_LOG_20260618064654.log
+[2026-06-18T06:48:11.113657+00:00]   Skipped (unsupported/error): show logging profile wireless start last 15 min filter mac 3c41.0e3a.ca00 to-file harddisk:AP_DISCONNECT_ALWAYS_ON_LOG_20260618064654.log
+[2026-06-18T06:48:11.114782+00:00]   show logging
+[2026-06-18T06:48:11.641143+00:00]   show ap name Ap9105 config general
+[2026-06-18T06:48:12.264908+00:00]   show ap name Ap9105 uptime
+[2026-06-18T06:48:12.774838+00:00]   Skipped (unsupported/error): show ap name Ap9105 uptime
+[2026-06-18T06:48:12.776230+00:00] [WLC AP TELEMETRY] Starting collection ...
+[2026-06-18T06:48:12.776650+00:00]   [WLC AP TELEMETRY] show ap uptime
+[2026-06-18T06:48:13.352662+00:00]   [WLC AP TELEMETRY] show ap summary
+[2026-06-18T06:48:13.903013+00:00]   [WLC AP TELEMETRY] show ap crash-file
+[2026-06-18T06:48:14.489715+00:00]   [WLC AP TELEMETRY] show ap name Ap9105 config general
+[2026-06-18T06:48:15.215098+00:00]   [WLC AP TELEMETRY] show ap name Ap9105 capwap retransmit
+[2026-06-18T06:48:15.798263+00:00]   [WLC AP TELEMETRY] show ap name Ap9105 ethernet statistics
+[2026-06-18T06:48:16.317335+00:00]   [WLC AP TELEMETRY] show ap name Ap9105 environment
+[2026-06-18T06:48:16.889708+00:00]   [WLC AP TELEMETRY] show platform resources
+[2026-06-18T06:48:17.655395+00:00]   [WLC AP TELEMETRY] show processes cpu platform | include wncd
+[2026-06-18T06:48:20.118147+00:00]   [AP] (debug) terminal length 0
+[2026-06-18T06:48:22.067919+00:00]   [WLC AP TELEMETRY] show ap image summary
+[2026-06-18T06:48:22.319273+00:00]   [AP] Skipped (unsupported/error): terminal length 0
+[2026-06-18T06:48:22.319599+00:00]   [AP] show logging
+[2026-06-18T06:48:22.830201+00:00]   [AP] Skipped (unsupported/error): show logging
+[2026-06-18T06:48:22.830567+00:00]   [AP] show capwap client conf
+[2026-06-18T06:48:23.203093+00:00]   [WLC AP TELEMETRY] show logging | include AP_JOIN_DISJOIN
+[2026-06-18T06:48:23.319521+00:00]   [AP] Skipped (unsupported/error): show capwap client conf
+[2026-06-18T06:48:23.319912+00:00]   [AP] show capwap client rcb
+[2026-06-18T06:48:23.733209+00:00]   [WLC AP TELEMETRY] show wireless stats ap history
+[2026-06-18T06:48:24.022109+00:00]   [AP] show pnpinfo
+[2026-06-18T06:48:24.330919+00:00]   [WLC AP TELEMETRY] dir all | include crash
+[2026-06-18T06:48:24.546710+00:00]   [AP] Skipped (unsupported/error): show pnpinfo
+[2026-06-18T06:48:24.548292+00:00]   [AP] show pnp log
+[2026-06-18T06:48:25.049771+00:00]   [AP] Skipped (unsupported/error): show pnp log
+[2026-06-18T06:48:25.050077+00:00]   [AP] show ipv6 dhcp
+[2026-06-18T06:48:25.675211+00:00]   [AP] show dtls connections
+[2026-06-18T06:48:26.226567+00:00]   [AP] show dtls statistics
+[2026-06-18T06:48:26.777982+00:00]   [AP] (debug) debug capwap client event
+[2026-06-18T06:48:27.506462+00:00]   [WLC AP TELEMETRY] show processes cpu platform sorted | exclude      0%      0%      0%
+[2026-06-18T06:48:28.981641+00:00]   [AP] Skipped (unsupported/error): debug capwap client event
+[2026-06-18T06:48:28.981991+00:00]   [AP] (debug) debug capwap client info
+[2026-06-18T06:48:31.183587+00:00]   [AP] Skipped (unsupported/error): debug capwap client info
+[2026-06-18T06:48:31.189868+00:00]   [AP] (debug) debug capwap client payload
+[2026-06-18T06:48:32.531575+00:00]   [WLC AP TELEMETRY] show platform software object-manager chassis active F0 childless-delete-object
+[2026-06-18T06:48:33.407067+00:00]   [AP] Skipped (unsupported/error): debug capwap client payload
+[2026-06-18T06:48:33.407619+00:00]   [AP] (debug) debug capwap client detail
+[2026-06-18T06:48:34.074161+00:00]   [WLC AP TELEMETRY] show platform software object-manager chassis active F0 pending-issue-update
+[2026-06-18T06:48:34.636650+00:00]   [WLC AP TELEMETRY] show wireless stats ap mac 3c41.0e3a.ca00 discovery detailed
+[2026-06-18T06:48:35.177492+00:00]   [WLC AP TELEMETRY] show wireless stats ap mac 3c41.0e3a.ca00 join detailed
+[2026-06-18T06:48:35.610773+00:00]   [AP] Skipped (unsupported/error): debug capwap client detail
+[2026-06-18T06:48:35.611331+00:00]   [AP] (debug) debug capwap client pmtu
+[2026-06-18T06:48:35.719316+00:00]   [WLC AP TELEMETRY] show logging profile wireless start last 15 min filter mac 3c41.0e3a.ca00 to-file flash:ALWAYS_ON_3c41.0e3a.ca00.log
+[2026-06-18T06:48:37.814173+00:00]   [AP] Skipped (unsupported/error): debug capwap client pmtu
+[2026-06-18T06:48:37.814518+00:00]   [AP] (debug) debug capwap client events
+[2026-06-18T06:48:38.252080+00:00] [WLC AP TELEMETRY] Done — 19 commands.
+[2026-06-18T06:48:40.016409+00:00]   [AP] Skipped (unsupported/error): debug capwap client events
+[2026-06-18T06:48:40.016730+00:00]   [AP] (debug) debug dtls client events
+[2026-06-18T06:48:42.218515+00:00]   [AP] Skipped (unsupported/error): debug dtls client events
+[2026-06-18T06:48:42.218750+00:00]   [AP] (debug) debug dtls client events detail
+[2026-06-18T06:48:44.420174+00:00]   [AP] Skipped (unsupported/error): debug dtls client events detail
+[2026-06-18T06:48:44.420405+00:00]   [AP] (debug) debug traffic host filter UDP dst_port 5246 capture
+[2026-06-18T06:48:46.622405+00:00]   [AP] Skipped (unsupported/error): debug traffic host filter UDP dst_port 5246 capture
+[2026-06-18T06:48:46.622873+00:00]   [AP] (debug) debug traffic wired filter UDP dst_port 5246 capture
+[2026-06-18T06:48:48.825720+00:00]   [AP] Skipped (unsupported/error): debug traffic wired filter UDP dst_port 5246 capture
+[2026-06-18T06:48:48.826387+00:00]   [AP] show ip int br
+[2026-06-18T06:48:49.733567+00:00]   [AP] (debug) debug capwap client error
+[2026-06-18T06:48:51.935358+00:00]   [AP] Skipped (unsupported/error): debug capwap client error
+[2026-06-18T06:48:51.935593+00:00]   [AP] (debug) debug dtls client error
+[2026-06-18T06:48:54.136868+00:00]   [AP] Skipped (unsupported/error): debug dtls client error
+[2026-06-18T06:48:54.137210+00:00]   [AP] (debug) debug dtls client event
+[2026-06-18T06:48:56.339317+00:00]   [AP] Skipped (unsupported/error): debug dtls client event
+[2026-06-18T06:48:56.339842+00:00]   [AP] (debug) terminal monitor
+[2026-06-18T06:48:58.541762+00:00]   [AP] Skipped (unsupported/error): terminal monitor
+[2026-06-18T06:48:58.542203+00:00]   [AP] show logging
+[2026-06-18T06:48:59.031527+00:00]   [AP] Skipped (unsupported/error): show logging
+[2026-06-18T06:48:59.031774+00:00]   [AP] show debug
+[2026-06-18T06:49:00.574115+00:00]   [AP] done — 6 commands returned output.
+[2026-06-18T06:49:00.586445+00:00]   [AP] AP SSH session closed.
+[2026-06-18T06:49:00.589383+00:00] Correlation → [HIGH] AP crashed → stopped sending CAPWAP heartbeats → WLC disjoined it
+[2026-06-18T06:49:00.589742+00:00] [WLC AP TELEMETRY] Correlation → [MEDIUM] Crash file exists but AP uptime suggests it predates this disjoin event. May be a prior unrelated crash.
+[2026-06-18T06:49:00.591450+00:00] WLC telemetry saved → C:\AP_DIJSOIN\reports\2026\06\18\run_5\wlc_telemetry_192_168_0_212_20260618064654.txt
+[2026-06-18T06:49:00.592674+00:00] AP telemetry saved → C:\AP_DIJSOIN\reports\2026\06\18\run_5\ap_telemetry_192_168_0_212_20260618064654.txt
+[2026-06-18T06:49:00.611253+00:00] SSH session closed after telemetry collection for 3c:41:0e:3a:ca:00. Session now WAITING_FOR_NEXT_DISJOIN.
+[2026-06-18T06:49:00.612276+00:00] [TIMEOUT] 30-min timer started for 3c:41:0e:3a:ca:00.
+[2026-06-18T06:50:02.850335+00:00] [AP_STATS] cc:7f:75:5a:e7:40 | count=1 ap=Ap9115D ip=192.168.0.53
+[2026-06-18T06:50:02.867346+00:00] [SUMMARY] total_disjoins=3 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\18\run_5\summary_stats.json
+[2026-06-18T06:50:02.834207+00:00] [4TH_DISJOIN] Disjoin from cc:7f:75:5a:e7:40 (Ap9115D) does NOT match locked AP 3c:41:0e:3a:ca:00 — recording only, no finalization.
+[2026-06-18T06:50:02.879072+00:00] [4TH_DISJOIN] AP cc:7f:75:5a:e7:40 already present in detected_aps_20260618064654.txt — not re-counting.
+[2026-06-18T06:50:12.782134+00:00] [AP_STATS] 2c:33:11:2b:32:80 | count=1 ap=Ap2802Den ip=192.168.0.211
+[2026-06-18T06:50:12.805586+00:00] [SUMMARY] total_disjoins=4 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\18\run_5\summary_stats.json
+[2026-06-18T06:50:12.766929+00:00] [4TH_DISJOIN] Disjoin from 2c:33:11:2b:32:80 (Ap2802Den) does NOT match locked AP 3c:41:0e:3a:ca:00 — recording only, no finalization.
+[2026-06-18T06:50:12.806943+00:00] [4TH_DISJOIN] AP 2c:33:11:2b:32:80 already present in detected_aps_20260618064654.txt — not re-counting.
+[2026-06-18T06:51:54.059883+00:00] [AP_STATS] 3c:41:0e:3a:ca:00 | count=3 ap=Ap9105 ip=192.168.0.212
+[2026-06-18T06:51:54.080971+00:00] [SUMMARY] total_disjoins=5 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\18\run_5\summary_stats.json
+[2026-06-18T06:51:54.042027+00:00] [4TH_DISJOIN] Disjoin from 3c:41:0e:3a:ca:00 matches locked AP — finalizing active RCA session(s) ...
+[2026-06-18T06:51:54.042027+00:00] [4TH_DISJOIN] Finalizing 3c:41:0e:3a:ca:00 (192.168.0.212) ...
+[2026-06-18T06:51:54.124884+00:00] [FINALIZE] Second disjoin of same AP (3c:41:0e:3a:ca:00) — starting finalization sequence.
+[2026-06-18T06:51:54.125086+00:00] [FINALIZE] Opening WLC SSH for cleanup ...
+[2026-06-18T06:51:55.053476+00:00] [FINALIZE] [WLC] undebug all
+[2026-06-18T06:51:57.255544+00:00] [FINALIZE] [MYCAP] monitor capture MYCAP_3c410e3aca00 stop
+[2026-06-18T06:51:59.457785+00:00] [FINALIZE] [MYCAP] Capture MYCAP_3c410e3aca00 is not active
+
+Unable to deactivate Capture.
+[2026-06-18T06:51:59.458347+00:00] [FINALIZE] [MYCAP] Capture was already stopped — continuing.
+[2026-06-18T06:52:02.459050+00:00] [FINALIZE] [MYCAP] monitor capture MYCAP_3c410e3aca00 export bootflash:ApDisjoinEpc_MYCAP_3c410e3aca00.pcap
+[2026-06-18T06:52:04.762441+00:00] [FINALIZE] [MYCAP] initial response: 'A file name already exist, overwrite?[confirm]'
+[2026-06-18T06:52:04.762949+00:00] [FINALIZE] [MYCAP] Overwrite prompt detected — sending ENTER to confirm.
+[2026-06-18T06:52:06.966857+00:00] [FINALIZE] [MYCAP] post-confirm output: 'No capture buffer for epc_id 1.\n\n Failed to Export : Buffer NOT Found'
+[2026-06-18T06:52:09.070073+00:00] [FINALIZE] [MYCAP] show flash: | inc .pcap
+[2026-06-18T06:52:12.110333+00:00] [FINALIZE] [MYCAP] 47     440375 Jun 17 2026 13:30:27.0000000000 +00:00 ApDisjoinEpc_MYCAP_cc7f755ae740.pcap
+ 50   58698126 Apr 15 2026 14:18:05.0000000000 +00:00 webuiTmp.pcap
+ 63      93027 May 11 2026 13:20:18.0000000000 +00:00 apcap.pcap
+ 76     650397 Jun 17 2026 12:01:06.0000000000 +00:00 ApDisjoinEpc_MYCAP_78725d1c4fa0.pcap
+366     344709 Jun 16 2026 15:13:33.0000000000 +00:00 ApDisjoinEpc_MYCAP_3c410e3aca00.pcap
+481      17429 May 27 2026 19:45:09.0000000000 +00:00 ApDisjEpc.pcap
+506    3645964 Jun 11 2026 20:44:27.0000000000 +00:00 ApDisjoinEpc.pcap
+614   10382221 May 27 2026 18:22:15.0000000000 +00:00 TEST_PCAP.pcap
+627     474301 May 28 2026 12:09:07.0000000000 +00:00 mycap.pcap
+663         24 Jun 17 2026 19:59:56.0000000000 +00:00 ApDisjoinEpc_MYCAP.pcap
+668   23935959 May 20 2026 20:23:24.0000000000 +00:00 capwap_capture.pcap
+677       4096 Feb 20 2025 00:43:28.0000000000 +00:00 pcap
+[2026-06-18T06:52:12.111512+00:00] [FINALIZE] [MYCAP] ✓ ApDisjoinEpc_MYCAP_3c410e3aca00.pcap confirmed on flash.
+[2026-06-18T06:52:12.111635+00:00] [EPC_TFTP_Upload] copy flash:/ApDisjoinEpc_MYCAP_3c410e3aca00.pcap tftp://192.168.0.245/ApDisjoinEpc_MYCAP_3c410e3aca00.pcap
+[2026-06-18T06:52:14.414371+00:00] [EPC_TFTP_Upload] First Enter response: 'Address or name of remote host [192.168.0.245]?'
+[2026-06-18T06:52:21.020029+00:00] [EPC_TFTP_Upload] ✓ ApDisjoinEpc.pcap transferred successfully.
+[2026-06-18T06:52:21.020481+00:00] [EPC_TFTP_Upload] copy flash:/ALWAYS_ON_3c41.0e3a.ca00.log tftp://192.168.0.245/ALWAYS_ON_3c41.0e3a.ca00.log
+[2026-06-18T06:52:23.323051+00:00] [EPC_TFTP_Upload] First Enter response: 'Address or name of remote host [192.168.0.245]?'
+[2026-06-18T06:52:29.827177+00:00] [EPC_TFTP_Upload] ✓ ALWAYS_ON log transferred successfully.
+[2026-06-18T06:52:29.850045+00:00] [FINALIZE] WLC cleanup SSH session closed.
+[2026-06-18T06:52:29.850274+00:00] [FINALIZE] [AP] Connecting to AP 192.168.0.212 for undebug all ...
+[2026-06-18T06:52:39.860676+00:00] [FINALIZE] WARNING: AP undebug all failed: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.212:22
+
+
+[2026-06-18T06:52:39.861137+00:00] [FINALIZE] Generating reports ...
+[2026-06-18T06:52:39.863224+00:00] [FINALIZE] JSON report   → C:\AP_DIJSOIN\reports\2026\06\18\run_5\ap_disjoin_192.168.0.json
+[2026-06-18T06:52:39.863487+00:00] [FINALIZE] Summary report → C:\AP_DIJSOIN\reports\2026\06\18\run_5\ap_disjoin_192.168.0.100_20260618T065239Z_summary.txt
+[2026-06-18T06:52:39.865929+00:00] [COOLDOWN] AP 3c:41:0e:3a:ca:00 marked used — will be available again in 600s.
+[2026-06-18T06:52:39.866184+00:00] [FINALIZE] Session complete for 3c:41:0e:3a:ca:00.
+[2026-06-18T06:52:39.866548+00:00] [FINALIZE] Disjoin counter reset for 3c:41:0e:3a:ca:00.
+[2026-06-18T06:52:39.866699+00:00] [FINALIZE] Finalization complete for 3c:41:0e:3a:ca:00.
+[2026-06-18T06:51:54.042027+00:00] [4TH_DISJOIN] FOURTH_DISJOIN_WATCHER applet removed from WLC.
+
+[2026-06-18T06:51:54.042027+00:00] ╔══════════════════════════════════════════════════╗
+[2026-06-18T06:51:54.042027+00:00] ║        ✅  EVIDENCE COLLECTION COMPLETE          ║
+[2026-06-18T06:51:54.042027+00:00] ║  disjoin confirmed — RCA finalized           ║
+[2026-06-18T06:51:54.042027+00:00] ║  AP: 3c:41:0e:3a:ca:00                           ║
+[2026-06-18T06:51:54.042027+00:00] ║  Reports saved to: C:\AP_DIJSOIN\reports\2026\06\18\run_5║
+[2026-06-18T06:51:54.042027+00:00] ╚══════════════════════════════════════════════════╝
+
+
+[2026-06-18T06:52:41.011033+00:00] ┌─────────────────────────────────────────────────────┐
+[2026-06-18T06:52:41.011033+00:00] │  ✅  RCA COMPLETE — EVIDENCE SUMMARY                 │
+[2026-06-18T06:52:41.011033+00:00] ├─────────────────────────────────────────────────────┤
+[2026-06-18T06:52:41.011033+00:00] │  WLC Telemetry  → n_5\wlc_telemetry_192_168_0_212_20260618064654.txt│
+[2026-06-18T06:52:41.011033+00:00] │  AP  Telemetry  → un_5\ap_telemetry_192_168_0_212_20260618064654.txt│
+[2026-06-18T06:52:41.011033+00:00] │  Reports dir    → C:\AP_DIJSOIN\reports\2026\06\18\run_5            │
+[2026-06-18T06:52:41.011033+00:00] ├─────────────────────────────────────────────────────┤
+[2026-06-18T06:52:41.011033+00:00] │  Shutting down monitor and cleaning up WLC applets.  │
+[2026-06-18T06:52:41.011033+00:00] └─────────────────────────────────────────────────────┘
+
+[2026-06-18T06:52:41.191872+00:00] Stop requested — shutting down gRPC listener.
+[2026-06-18T06:52:41.193454+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...
+[2026-06-18T06:52:41.208607+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:60155
+[2026-06-18T06:52:42.138851+00:00] [4TH_WATCHER] AP 3c:41:0e:3a:ca:00 session already finalized — watcher exiting cleanly.
+[2026-06-18T06:52:42.550342+00:00] [CLEANUP] Telemetry subscription 12123 removed.

@@ -1,0 +1,117 @@
+[2026-06-15T13:26:47.754849+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-15T13:26:47.755805+00:00] Trigger mode: EEM_BATCH
+[2026-06-15T13:26:47.756598+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-15T13:26:50.110021+00:00] EEM applet config sent.
+[2026-06-15T13:26:50.687634+00:00] EEM setup SSH session closed.
+[2026-06-15T13:26:50.910253+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+[2026-06-15T13:26:51.182065+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:56623
+[2026-06-15T13:28:09.404412+00:00] *** EEM TRIGGER received — parsing structured payload ***
+[2026-06-15T13:28:09.404412+00:00] DISJOIN payload | ap=? ip=? mac=? reason=unknown
+[2026-06-15T13:28:09.404412+00:00] [EEM_BATCH] Batch trigger received — launching log fetch
+[2026-06-15T13:28:09.406377+00:00] [EEM_BATCH] Trigger received — SSHing to WLC to fetch latest disjoins ...
+[2026-06-15T13:28:09.406377+00:00] [EEM_BATCH] SSH session closed after log fetch.
+[2026-06-15T13:28:09.406377+00:00] [EEM_BATCH] Last disjoin: mac=78:72:5d:1c:4f:a0 ap=Ap3800e_11StaticIp ip=192.168.0.213
+[2026-06-15T13:28:09.406377+00:00] [EEM_BATCH] 4th-disjoin watcher pushed for MAC 7872.5d1c.4fa0
+[2026-06-15T13:28:12.771528+00:00] [AP_STATS] 78:72:5d:1c:4f:a0 | count=1 ap=Ap3800e_11StaticIp ip=192.168.0.213
+[2026-06-15T13:28:12.813490+00:00] [SUMMARY] total_disjoins=1 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\15\run_10\summary_stats.json
+[2026-06-15T13:28:09.406377+00:00] [EEM_BATCH] Launching RCA for mac=78:72:5d:1c:4f:a0 ap=Ap3800e_11StaticIp ip=192.168.0.213
+[2026-06-15T13:28:12.855763+00:00] [AP_STATS] 78:72:5d:1c:4f:a0 | count=2 ap=Ap3800e_11StaticIp ip=192.168.0.213
+[2026-06-15T13:28:12.885768+00:00] [SUMMARY] total_disjoins=2 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\15\run_10\summary_stats.json
+[2026-06-15T13:28:12.888410+00:00] Disjoin counter for 192.168.0.213: 1 (threshold=3)
+[2026-06-15T13:28:12.888729+00:00] [CGDC] force_rca=True — bypassing legacy counter threshold (count=1) for 78:72:5d:1c:4f:a0
+[2026-06-15T13:28:12.888911+00:00] *** THRESHOLD REACHED (1) — triggering full troubleshooting workflow for 192.168.0.213 ***
+[2026-06-15T13:28:12.889160+00:00] Opening SSH session to 192.168.0.100 ...
+[2026-06-15T13:28:14.157682+00:00] debug wireless mac 78:72:5d:1c:4f:a0
+[2026-06-15T13:28:25.665916+00:00]   [WLC-SETUP] terminal exec prompt timestamp
+[2026-06-15T13:28:27.869621+00:00]   [WLC-SETUP] terminal length 0
+[2026-06-15T13:28:30.073431+00:00]   [WLC-DEBUG] debug platform condition feature wireless mac 7872.5d1c.4fa0
+[2026-06-15T13:28:32.377787+00:00]   [WLC-DEBUG] debug platform condition start
+[2026-06-15T13:28:34.580643+00:00]   [WLC-DEBUG] show debug
+[2026-06-15T13:28:35.428736+00:00]   [MYCAP] monitor capture MYCAP_78725d1c4fa0 clear
+[2026-06-15T13:28:37.632126+00:00]   [MYCAP] monitor capture MYCAP_78725d1c4fa0 buffer size 100 circular bidirectional interface Tw0/0/0 both
+[2026-06-15T13:28:39.935724+00:00]   [MYCAP] monitor capture MYCAP_78725d1c4fa0 control-plane both
+[2026-06-15T13:28:42.138569+00:00]   [MYCAP] monitor capture MYCAP_78725d1c4fa0 match ipv4 host 192.168.0.213 any bidirectional
+[2026-06-15T13:28:44.442618+00:00]   [MYCAP] monitor capture MYCAP_78725d1c4fa0 start
+[2026-06-15T13:28:46.645941+00:00]   [MYCAP] ping 192.168.0.212
+[2026-06-15T13:28:59.354600+00:00]   [MYCAP] ping 192.168.0.1
+[2026-06-15T13:29:01.557044+00:00]   [MYCAP] Waiting 15s for capture MYCAP_78725d1c4fa0 to collect packets...
+[2026-06-15T13:29:16.558379+00:00]   [MYCAP] show monitor capture MYCAP_78725d1c4fa0 buffer brief
+[2026-06-15T13:29:18.159884+00:00]   [WLC-PING] ping 192.168.0.213
+[2026-06-15T13:29:28.785027+00:00]   show logging
+[2026-06-15T13:29:29.327188+00:00]   show platform resources
+[2026-06-15T13:29:30.830637+00:00]   show processes cpu platform | include wncd
+[2026-06-15T13:29:34.506793+00:00]   show ap image summary
+[2026-06-15T13:29:35.096716+00:00]   show logging | include AP_JOIN_DISJOIN
+[2026-06-15T13:29:35.683888+00:00]   show ap uptime
+[2026-06-15T13:29:36.353032+00:00]   show wireless stats ap history
+[2026-06-15T13:29:36.981206+00:00]   show ap crash-file
+[2026-06-15T13:29:37.585678+00:00]   dir all | include crash
+[2026-06-15T13:29:40.650538+00:00]   show processes cpu platform sorted
+[2026-06-15T13:29:44.340331+00:00]   show logging
+[2026-06-15T13:29:44.869990+00:00]   show platform software object-manager chassis active F0 childless-delete-object
+[2026-06-15T13:29:46.878870+00:00]   show platform software object-manager chassis active F0 pending-issue-update
+[2026-06-15T13:29:47.467357+00:00]   show wireless stats ap mac 7872.5d1c.4fa0 discovery detailed
+[2026-06-15T13:29:48.022550+00:00]   show wireless stats ap mac 7872.5d1c.4fa0 join detailed
+[2026-06-15T13:29:48.628684+00:00]   show logging profile wireless start last 15 min filter mac 7872.5d1c.4fa0 to-file harddisk:AP_DISCONNECT_ALWAYS_ON_LOG_20260615132809.log
+[2026-06-15T13:29:49.300831+00:00]   Skipped (unsupported/error): show logging profile wireless start last 15 min filter mac 7872.5d1c.4fa0 to-file harddisk:AP_DISCONNECT_ALWAYS_ON_LOG_20260615132809.log
+[2026-06-15T13:29:49.301322+00:00]   show logging
+[2026-06-15T13:29:49.839863+00:00]   show ap name Ap3800e_11StaticIp config general
+[2026-06-15T13:29:51.179775+00:00]   show ap name Ap3800e_11StaticIp uptime
+[2026-06-15T13:29:51.703704+00:00]   Skipped (unsupported/error): show ap name Ap3800e_11StaticIp uptime
+[2026-06-15T13:29:51.755127+00:00] Correlation → [HIGH] AP crashed → stopped sending CAPWAP heartbeats → WLC disjoined it
+[2026-06-15T13:29:51.759370+00:00] [WLC AP TELEMETRY] Starting collection ...
+[2026-06-15T13:29:51.760365+00:00]   [WLC AP TELEMETRY] show ap uptime
+[2026-06-15T13:29:52.427044+00:00]   [WLC AP TELEMETRY] show ap summary
+[2026-06-15T13:29:52.991802+00:00]   [WLC AP TELEMETRY] show ap crash-file
+[2026-06-15T13:29:53.671045+00:00]   [WLC AP TELEMETRY] show ap name Ap3800e_11StaticIp config general
+[2026-06-15T13:29:54.346886+00:00]   [WLC AP TELEMETRY] show ap name Ap3800e_11StaticIp capwap retransmit
+[2026-06-15T13:29:54.952644+00:00]   [WLC AP TELEMETRY] show ap name Ap3800e_11StaticIp ethernet statistics
+[2026-06-15T13:29:55.551891+00:00]   [WLC AP TELEMETRY] show ap name Ap3800e_11StaticIp environment
+[2026-06-15T13:29:56.150071+00:00]   [WLC AP TELEMETRY] show platform resources
+[2026-06-15T13:29:57.011940+00:00]   [WLC AP TELEMETRY] show processes cpu platform | include wncd
+[2026-06-15T13:30:02.160513+00:00]   [WLC AP TELEMETRY] show ap image summary
+[2026-06-15T13:30:02.974356+00:00]   [WLC AP TELEMETRY] show logging | include AP_JOIN_DISJOIN
+[2026-06-15T13:30:03.536893+00:00]   [WLC AP TELEMETRY] show wireless stats ap history
+[2026-06-15T13:30:04.112093+00:00]   [WLC AP TELEMETRY] dir all | include crash
+[2026-06-15T13:30:06.763700+00:00]   [AP] AP SSH failed: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.213:22
+
+ — skipping AP-direct collection
+[2026-06-15T13:30:07.383927+00:00]   [WLC AP TELEMETRY] show processes cpu platform sorted | exclude      0%      0%      0%
+[2026-06-15T13:30:12.208541+00:00]   [WLC AP TELEMETRY] show platform software object-manager chassis active F0 childless-delete-object
+[2026-06-15T13:30:13.008455+00:00]   [WLC AP TELEMETRY] show platform software object-manager chassis active F0 pending-issue-update
+[2026-06-15T13:30:13.584601+00:00]   [WLC AP TELEMETRY] show wireless stats ap mac 7872.5d1c.4fa0 discovery detailed
+[2026-06-15T13:30:14.149219+00:00]   [WLC AP TELEMETRY] show wireless stats ap mac 7872.5d1c.4fa0 join detailed
+[2026-06-15T13:30:14.755784+00:00]   [WLC AP TELEMETRY] show logging profile wireless start last 15 min filter mac 7872.5d1c.4fa0 to-file flash:ALWAYS_ON_7872.5d1c.4fa0.log
+[2026-06-15T13:30:17.517760+00:00] [WLC AP TELEMETRY] Done — 19 commands.
+[2026-06-15T13:30:17.519260+00:00] [WLC AP TELEMETRY] Correlation → [MEDIUM] Crash file exists but AP uptime suggests it predates this disjoin event. May be a prior unrelated crash.
+[2026-06-15T13:30:17.528400+00:00] WLC telemetry saved → C:\AP_DIJSOIN\reports\2026\06\15\run_10\wlc_telemetry_192_168_0_213_20260615132809.txt
+[2026-06-15T13:30:17.530665+00:00] AP telemetry saved → C:\AP_DIJSOIN\reports\2026\06\15\run_10\ap_telemetry_192_168_0_213_20260615132809.txt
+[2026-06-15T13:30:17.578695+00:00] SSH session closed after telemetry collection for 78:72:5d:1c:4f:a0. Session now WAITING_FOR_NEXT_DISJOIN.
+[2026-06-15T13:30:17.582444+00:00] [TIMEOUT] 30-min timer started for 78:72:5d:1c:4f:a0.
+[2026-06-15T13:32:43.817075+00:00] [MDT] Stream exception from ipv4:192.168.0.100:56623
+Traceback (most recent call last):
+  File "ap_disjoin_monitor_tool.py", line 2044, in ap_disjoin_monitor_tool.LiveMonitor.listen.MdtDialoutCollector.MdtDialout
+    for dialout_args in request_iterator:
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 542, in __next__
+    return self._next()
+           ~~~~~~~~~~^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 534, in _next
+    request = self._look_for_request()
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 516, in _look_for_request
+    _raise_rpc_error(self._state)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 220, in _raise_rpc_error
+    raise rpc_error
+grpc.RpcError
+
+[2026-06-15T13:32:43.824919+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:56623
+[2026-06-15T13:32:44.180546+00:00] Stop requested — shutting down gRPC listener.
+[2026-06-15T13:32:44.182719+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...
+[2026-06-15T13:32:45.821271+00:00] [CLEANUP] Telemetry subscription 12123 removed.

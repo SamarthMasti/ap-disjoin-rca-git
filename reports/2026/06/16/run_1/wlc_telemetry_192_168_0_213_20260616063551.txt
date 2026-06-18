@@ -1,0 +1,1530 @@
+WLC Telemetry — 192.168.0.100
+AP MAC  : 78:72:5d:1c:4f:a0
+AP Name : Ap3800e_11StaticIp
+AP IP   : 192.168.0.213
+Event   : 2026-06-16T06:35:51.132586+00:00
+============================================================
+
+── WLC CONTROLLER DIAGNOSTICS ──
+
+=== terminal exec prompt timestamp ===
+(no output)
+
+=== terminal length 0 ===
+(no output)
+
+=== debug platform condition feature wireless mac 7872.5d1c.4fa0 ===
+(no output)
+
+=== debug platform condition start ===
+(no output)
+
+=== show debug (post-WLC-debugs) ===
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.032 IST Tue Jun 16 2026
+
+IOSXE Conditional Debug Configs:
+
+Conditional Debug Global State: Start
+
+Conditions                                                                                     Direction
+----------------------------------------------------------------------------------------------|---------
+
+
+
+
+Feature Condition       Type                     Value                          
+-----------------------|------------------------|--------------------------------------------------------
+
+ewlc                     mac                       7872.5d1c.4fa0                                                  
+
+
+
+Feature      Type           Submode                                                                                       Level   
+------------|-------------|----------------------------------------------------------------------------------------------|----------
+ewlc          controlplane  NOT REGISTERED                                                                                 debug   
+
+IOSXE Packet Tracing Configs: 
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.034 IST Tue Jun 16 2026
+
+
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.056 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.084 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.096 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.108 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.124 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.146 IST Tue Jun 16 2026
+
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.158 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.175 IST Tue Jun 16 2026
+
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.188 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.204 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.216 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.253 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.268 IST Tue Jun 16 2026
+
+Packet Infra debugs:
+
+Ip Address                                               Port
+------------------------------------------------------|----------
+
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.306 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.322 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.334 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.347 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.359 IST Tue Jun 16 2026
+
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.371 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.388 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.402 IST Tue Jun 16 2026
+
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.418 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.434 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.447 IST Tue Jun 16 2026
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.460 IST Tue Jun 16 2026
+
+
+
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:06:20.474 IST Tue Jun 16 2026
+
+
+=== monitor capture MYCAP_78725d1c4fa0 clear ===
+Capture point does not exist : MYCAP_78725d1c4fa0
+
+=== monitor capture MYCAP_78725d1c4fa0 buffer size 100 circular bidirectional interface Tw0/0/0 both ===
+(no output)
+
+=== monitor capture MYCAP_78725d1c4fa0 control-plane both ===
+(no output)
+
+=== monitor capture MYCAP_78725d1c4fa0 match ipv4 host 192.168.0.213 any bidirectional ===
+(no output)
+
+=== monitor capture MYCAP_78725d1c4fa0 start ===
+Started capture point : MYCAP_78725d1c4fa0
+
+=== ping 192.168.0.212 ===
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.0.212, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+=== ping 192.168.0.1 ===
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.0.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+
+=== show monitor capture MYCAP_78725d1c4fa0 buffer brief ===
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:02.174 IST Tue Jun 16 2026
+ ----------------------------------------------------------------------------
+ #   size   timestamp     source	     destination      dscp    protocol
+ ----------------------------------------------------------------------------
+
+
+=== ping 192.168.0.213 ===
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.0.213, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+=== show logging ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:32.560 IST Tue Jun 16 2026
+
+Syslog logging: enabled (0 messages dropped, 3 messages rate-limited, 0 flushes, 0 overruns, xml disabled, filtering disabled)
+
+No Active Message Discriminator.
+
+
+
+No Inactive Message Discriminator.
+
+
+    Console logging: level debugging, 352 messages logged, xml disabled,
+                     filtering disabled
+    Monitor logging: level debugging, 0 messages logged, xml disabled,
+                     filtering disabled
+    Buffer logging:  level debugging, 352 messages logged, xml disabled,
+                    filtering disabled
+    Exception Logging: size (4096 bytes)
+    Count and timestamp logging messages: disabled
+    Persistent logging: disabled
+
+No active filter modules.
+
+    Trap logging: level informational, 333 message lines logged
+        Logging Source-Interface:       VRF Name:
+    TLS Profiles: 
+
+Log Buffer (8388608 bytes):
+
+*Jan  1 00:04:33.081: %CRYPTO-5-SELF_TEST_START: Crypto algorithms release (Rel5b), Entropy release (3.4.1)
+       begin Crypto Module self-tests
+*Jan  1 00:04:33.081: %CRYPTO-5-SELF_TEST_START: Crypto algorithms release (Rel5b), Entropy release (3.4.1)
+       begin Crypto Module Integrity Test
+*Jan  1 00:04:33.089: %CRYPTO-5-SELF_TEST_END: Crypto Integrity self-test completed successfully
+       All tests passed.
+*Jan  1 00:04:33.403: %CRYPTO-5-SELF_TEST_END: Crypto Algorithm self-test completed successfully
+       All tests passed.
+*Jan  1 00:04:34.020: RMI-HAINFRA-NOTICE: Interface, Local and Remote IP set to invalid, ret -1
+Adding registry invocations for the WLC platform
+
+*Jan  1 00:04:36.901: %SMART_LIC-6-AGENT_ENABLED: Smart Agent for Licensing is enabled 
+*Jan  1 00:04:39.850: WLC-HA-Notice: RF Progression event: RF_PROG_ACTIVE_FAST, Switchover triggered
+*Jan  1 00:04:39.920: mcp_pm_subsys_init : Init done sucessfullyAdding registry invocations for the eWLC custom port
+
+*Jan  1 00:04:42.559: %SSH-4-SSH_COMPLIANCE_SSH_RSA_DISABLED: Please note that ssh-rsa algorithm stands disabled from IOS-XE release 17.16.1 onwards and will not be part of the preferred publickey or hostkey algorithms by default. Users may choose to configure them explicitly if required
+*Jan  1 00:04:43.336: %SMART_LIC-6-AGENT_ENABLED: Smart Agent for Licensing is enabled 
+*Jan  1 00:04:43.840: %SPANTREE-5-EXTENDED_SYSID: Extended SysId enabled for type vlan
+*Jan  1 00:04:43.850: %TLSCLIENT-5-TLSCLIENT_BINOS: TLS Client is BINOS based
+*Jan  1 00:04:44.811: %SMART_LIC-6-AGENT_ENABLED: Smart Agent for Licensing is enabled 
+*Jan  1 00:04:44.860: %CRYPTO_ENGINE-4-CSDL_COMPLIANCE_DISABLED: Cisco PSB security compliance has been disabled by platform
+*Jan  1 00:04:45.012: %VOICE_HA-7-STATUS: CUBE HA-supported platform detected.
+*Jan  1 00:04:45.046: %CUBE-3-LICENSING:  SIP trunking (CUBE) licensing is now based on dynamic sessions counting, static license capacity configuration through 'mode border-element license capacity' would be ignored.
+*Jan  1 00:04:45.052: %SIP-5-LICENSING: CUBE license reporting period has been set to the minimum value of 8 hours.[CSOD-RP]: IFS: Created IOS 'cloudfs' filesystem for S3 cloud storage: /bootflash/.cloudfs
+IOSd ipc listen handler status 0UAC IPv4 only mode could not be set
+*Jan  1 00:04:45.490: mcp_pm_init_done : Called
+*Jan  1 00:04:45.512: %LINK-3-UPDOWN: Interface EOBC0, changed state to up
+*Jan  1 00:04:45.548: %LINK-3-UPDOWN: Interface Lsmpi0, changed state to up
+*Jan  1 00:04:45.548: %LINEPROTO-5-UPDOWN: Line protocol on Interface VoIP-Null0, changed state to up
+*Jan  1 00:04:45.548: %LINEPROTO-5-UPDOWN: Line protocol on Interface LI-Null0, changed state to up
+*Jan  1 00:04:45.549: %LINK-3-UPDOWN: Interface LIIN0, changed state to up
+*Jan  1 00:04:45.549: %LINK-3-UPDOWN: Interface GigabitEthernet0, changed state to down
+*Jan  1 00:04:45.667: %PNP-6-PNP_DISCOVERY_STARTED: PnP Discovery startedIOSD CMAN IPC BR notification receivedcman channel UP, remote location 1/0/0/0IOSD-CMAN IPC setting TDL domian and handleIOSD CMAN IPC setting TDL domaincman channel, local location 1/0/0/0TDL domain set iosd_cmrp.rp_0_0_rp_0_0
+*Jan  1 00:02:16.700: %RIF_MGR_FSM-6-RP_LINK_DOWN: Chassis 1 R0/0: rif_mgr: Setting RP link status to DOWN
+*Jan  1 00:02:16.700: %STACKMGR-1-DUAL_ACTIVE_CFG_MSG: Chassis 1 R0/0: stack_mgr: Dual Active Detection links are not available anymore
+*Jan  1 00:02:16.715: %STACKMGR-6-STACK_LINK_CHANGE: Chassis 1 R0/0: stack_mgr: Stack port 1 on Chassis 1 is down
+*Jan  1 00:02:16.715: %STACKMGR-6-STACK_LINK_CHANGE: Chassis 1 R0/0: stack_mgr: Stack port 2 on Chassis 1 is down
+*Jan  1 00:02:16.723: %STACKMGR-6-STACK_LINK_CHANGE: Chassis 1 R0/0: stack_mgr: Stack port 1 on Chassis 1 is up
+*Jan  1 00:02:16.731: %STACKMGR-6-STACK_LINK_CHANGE: Chassis 1 R0/0: stack_mgr: Stack port 2 on Chassis 1 is up
+*Jan  1 00:03:29.522: %CMRP-5-CHASSIS_MONITOR_BOOT_TIME_PRINT: Chassis 1 R0/0: cmand: Card 0 took 58 secs to boot
+*Jan  1 00:04:16.717: %STACKMGR-6-CHASSIS_ADDED: Chassis 1 R0/0: stack_mgr: Chassis 1 has been added to the stack.
+*Jan  1 00:04:18.870: %STACKMGR-6-CHASSIS_ADDED: Chassis 1 R0/0: stack_mgr: Chassis 1 has been added to the stack.
+*Jan  1 00:04:20.886: %STACKMGR-6-CHASSIS_ADDED: Chassis 1 R0/0: stack_mgr: Chassis 1 has been added to the stack.
+*Jan  1 00:04:20.886: %STACKMGR-6-ACTIVE_ELECTED: Chassis 1 R0/0: stack_mgr: Chassis 1 has been elected ACTIVE.
+*Jan  1 00:04:20.890: %TDLDB-6-DBPERSIST_OPERATION_INFO: Chassis 1 R0/0: btman: Cancelled restore operation and is intended - DB: persistent-config.meta, Reason: Abort binary-config restore
+*Jan  1 00:04:20.890: %TDLDB-3-DBPERSIST_OPERATION_FAILURE: Chassis 1 R0/0: btman: Operation: restore, DB: /tmp/rp/tdldb_rcow/0/INFRA_CONFIG_DB, Failure reason: Operation canceled
+*Jan  1 00:04:31.278: %IOSXE-3-PLATFORM: Chassis 1 R0/0: kernel: usdm_drv: userMemAlloc:425 Requested node 7 not present. Using node 0 as default
+*Jan  1 00:04:33.808: %MM_MGR_LOG-4-HIGH_CIPHER_DISABLED: Chassis 1 R0/0: mobilityd: SECURITY WARNING - Module: MM_MGR - Command: no wireless mobility high-cipher - Reason: Mobility DTLS with high cipher mode is not enabled - Recommendation: Consider enabling high cipher mode.
+*Jan  1 00:04:39.581: %CMRP-5-CHASSIS_MONITOR_BOOT_TIME_PRINT: Chassis 1 R0/0: cmand: Card F0 took 134 secs to boot
+*Jan  1 00:04:46.568: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to down
+*Jan  1 00:04:46.574: %LINEPROTO-5-UPDOWN: Line protocol on Interface EOBC0, changed state to up
+*Jan  1 00:04:46.574: %LINEPROTO-5-UPDOWN: Line protocol on Interface Lsmpi0, changed state to up
+*Jan  1 00:04:46.574: %LINEPROTO-5-UPDOWN: Line protocol on Interface LIIN0, changed state to up
+*Jan  1 00:04:46.574: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0, changed state to down
+*Jan  1 00:04:46.595: %SYS-5-CONFIG_P: Configured programmatically by process MGMT VRF Process from console as vty0
+*Jan  1 00:04:47.470: %IOSXE_MGMTVRF-6-CREATE_SUCCESS_INFO: Management vrf Mgmt-intf created with ID 1, ipv4 table-id 0x1, ipv6 table-id 0x1E000001
+*Jan  1 00:04:47.526: %SMART_LIC-5-IN_COMPLIANCE: All entitlements and licenses in use on this device are authorized
+*Jan  1 00:04:47.533: %SYS-5-CONFIG_P: Configured programmatically by process MGMT VRF Process from console as vty0
+*Jan  1 00:04:48.170: %ONEP_BASE-6-SS_ENABLED: ONEP: Service set Base was enabled by Default
+*Jan  1 00:04:52.396: %SYS-7-NVRAM_INIT_WAIT_TIME: Waited 0 seconds for NVRAM to be available
+*Jan  1 00:04:52.641: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named TP-self-signed-585968591 has been generated or imported by crypto config
+*Jan  1 00:04:52.643: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: SSH - Command: crypto key generate rsa modulus 2048 label TP-self-signed-585968591  - Reason: An SSH hostkey has been provisioned on the device with insufficient key length - Remediation: Please provision an SSH RSA hostkey with minimum modulus size of 3072 bits for enhanced security - Submode: exec - Parent CLI: Not Applicable
+*Jan  1 00:04:52.647: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named CLOUDM_PKEY has been generated or imported by crypto config
+*Jan  1 00:04:52.650: %SYS-6-PRIVCFG_DECRYPT_SUCCESS: Successfully apply the private config file
+*Jan  1 00:04:52.650: %IOSXE_RP_CFG_INFO-6-MCPRP_ASCII_CFG_APPLIED: System configuration : ASCII 
+*Jan  1 00:04:52.673: %SYS-4-SYSTEM_SECURITY_MODE_CHANGE: System Security Mode Changed from SECURE to INSECURE
+*Jan  1 00:04:52.708: %SYS-4-SERVICE_INTERNAL: Enabled
+*Jan  1 00:04:52.711: %CNS IQ:0.1 ID:0 Changed:[WLC]
+*Jan  1 00:04:52.711: %CNS IQ:0.2 ID:1 Changed:[WLC]
+*Jan  1 00:04:52.711: %CNS IQ:0.3 ID:2 Changed:[WLC]
+*Jan  1 00:04:52.726: %SYS-6-CLOCKUPDATE: System clock has been updated from 00:04:52 UTC Sun Jan 1 2017 to 05:34:52 IST Sun Jan 1 2017, configured from console by vty0.
+Jan  1 00:04:52.765: %IOSXE_RP_PAE_NOT-6-PAE_STARTUP: Product Analytics is Enabled
+Jan  1 00:04:52.775: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: TP-self-signed-585968591 created successfully
+Jan  1 00:04:52.851: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: SLA-TrustPoint created successfully
+Jan  1 00:04:52.878: yang-infra: self-signed cert inserted(TP-self-signed-585968591)
+Jan  1 00:04:53.338: %PKI-6-TRUSTPOOL_DOWNLOAD_SUCCESS: Trustpool Download is successful
+Jan  1 00:04:53.365: %AAA-4-USERNAME_CONFIGURATION: user with username: admin configured
+Jan  1 00:04:53.365: AAA CC: AAA CC Default Policy Validation: AAA Default policy is not available, creating one
+Jan  1 00:04:53.366: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: AAA - Command: username admin privilege 15 password 0 * - Reason: Configuration employs a weak password or key - Remediation: Configure a strong password or key meeting security complexity requirements - Submode: configure - Parent CLI: configure
+Jan  1 00:04:53.367: %AAAA-4-CLI_DEPRECATED: WARNING: Command has been added to the configuration using a type 0 password. However, recommended to migrate to strong type-6 encryption
+Jan  1 00:04:53.367: %AAA-6-USER_PRIVILEGE_UPDATE: username: admin privilege updated with priv-15
+Jan  1 00:04:53.427: % Redundancy mode change to SSO
+
+Jan  1 00:04:53.427: %VOICE_HA-7-STATUS: NONE->SSO; SSO mode will not take effect until after a platform reload.
+Jan  1 00:04:54.097: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: IP - Command: ip forward-protocol udp tftp - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: This is a legacy feature, please consider disabling it - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:54.100: %SYS-4-INSECURE_WARNING: Module: FTP - Command: ip ftp passive  - The configuration is inconsistent with secure network operation and is not recommended
+Jan  1 00:04:54.102: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: TELNET - Command: ip telnet comport enable - Reason: IP traffic is not encrypted - Remediation: Migrate to secure SSH-based remote access - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:54.108: %SYS-4-INSECURE_WARNING: Module: TFTP - Command: ip tftp blocksize 512 - The configuration is inconsistent with secure network operation and is not recommended
+Jan  1 00:04:54.110: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: HTTP - Command: ip http server  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Use http secure server to ensure secure web access - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:54.190: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: RCMD - Command: ip rcmd domain-lookup - Reason: No encryption is configured - Remediation: This is a legacy feature, please consider disabling it - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:54.191: %SNMP-4-SNMPCOMMUNITY: SNMP Community CLI is configured. Version 1 and 2c is not secure
+Jan  1 00:04:54.205: %SNMP-4-SNMPCOMMUNITY: SNMP Community CLI is configured. Version 1 and 2c is not secure
+Jan  1 00:04:54.373: %SNMP-4-SNMP_HOST: SNMP host CLI with security model 2 configured. configure security model v3
+Jan  1 00:04:54.550: %SNMP-4-SNMP_HOST: SNMP host CLI with security model 2 configured. configure security model v3
+Jan  1 00:04:54.726: %SNMP-4-SNMP_HOST: SNMP host CLI with security model 2 configured. configure security model v3
+Jan  1 00:04:54.902: %SNMP-4-SNMP_HOST: SNMP host CLI with security model 2 configured. configure security model v3
+Jan  1 00:04:55.078: %SNMP-4-SNMP_HOST: SNMP host CLI with security model 2 configured. configure security model v3
+Jan  1 00:04:55.255: %SNMP-4-SNMP_HOST: SNMP host CLI with security model 2 configured. configure security model v3
+Jan  1 00:04:55.431: %SNMP-4-SNMP_HOST: SNMP host CLI with security model 2 configured. configure security model v3
+Jan  1 00:04:55.613: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: NTP - Command: ntp allow mode control - Reason: NTP allow mode control renders device susceptible to DDoS attacks - Remediation: If control mode needs to be enabled, configure a higher rate-limit delay and monitor the flow - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:55.628: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: NTP - Command: ntp server 216.239.35.4 prefer  - Reason: NTP configuration lacks authentication, allowing potential time manipulation attacks - Remediation: Configure a valid auth key and make it trusted using the command - ntp trusted-key - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:56.974: %SYS-5-CONFIG_I: Configured from memory by console
+Jan  1 00:04:56.989: %IOSXE_OIR-6-REMSPA: SPA removed from subslot 0/0, interfaces disabled
+Jan  1 00:04:56.990: %IOSXE_OIR-6-REMSPA: SPA removed from subslot 0/1, interfaces disabled
+Jan  1 00:04:57.042: %CRYPTO-5-SELF_TEST_START: Crypto algorithms release (Rel5b), Entropy release (3.4.1)
+       begin Crypto Module self-tests
+Jan  1 00:04:57.160: %SPA_OIR-6-OFFLINECARD: SPA (BUILT-IN-4x2_5GE) offline in subslot 0/0
+Jan  1 00:04:57.161: %SPA_OIR-6-OFFLINECARD: SPA (BUILT-IN-2x10GE-F) offline in subslot 0/1
+Jan  1 00:04:57.175: %IOSXE_OIR-6-INSCARD: Card (fp) inserted in slot F0
+Jan  1 00:04:57.175: %IOSXE_OIR-6-ONLINECARD: Card (fp) online in slot F0
+Jan  1 00:04:57.232: %IOSXE_OIR-6-INSCARD: Card (cc) inserted in slot 0
+Jan  1 00:04:57.232: %IOSXE_OIR-6-ONLINECARD: Card (cc) online in slot 0
+Jan  1 00:04:57.044: %PSD_MOD-4-DMI_WARN_NETCONF_START: Chassis 1 R0/0: psd: PSD/DMI: netconf-yang server has been notified to start
+Jan  1 00:04:57.220: %MCAST_ERROR_MESSAGE-6-MCAST_MOM_CONFIG_CHANGE: Chassis 1 R0/0: wncd: Capwap multicast mode is Multicast-over-Unicast. IPv4 [Multicast-over-Unicast:] and IPv6 [Multicast-over-Unicast:] with Wireless multicast status Disabled.
+Jan  1 00:04:57.232: %CFMGR_LOG-4-COUNTRY_CFG_DEPRECATED_CLI: Chassis 1 R0/0: wncd: Deprecated CLI used: 'ap country <coutry-code>' is deprecated, instead use 'wireless country <country-code>'
+Jan  1 00:04:57.548: %CRYPTO-5-SELF_TEST_END: Crypto Algorithm self-test completed successfully
+       All tests passed.
+Jan  1 00:04:57.715: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: RCMD - Command: ip rcmd domain-lookup - Reason: No encryption is configured - Remediation: This is a legacy feature, please consider disabling it - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:57.715: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: NTP - Command: ntp allow mode control - Reason: NTP allow mode control renders device susceptible to DDoS attacks - Remediation: If control mode needs to be enabled, configure a higher rate-limit delay and monitor the flow - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:57.722: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: IP - Command: ip forward-protocol udp tftp - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: This is a legacy feature, please consider disabling it - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:57.722: %SYS-4-INSECURE_DYNAMIC_WARNING: Module: TELNET - Command: ip telnet comport enable - Reason: IP traffic is not encrypted - Remediation: Migrate to secure SSH-based remote access - Submode: configure - Parent CLI: Not Applicable
+Jan  1 00:04:57.745: %IOSXE_OIR-6-INSSPA: SPA inserted in subslot 0/0
+Jan  1 00:04:57.747: %IOSXE_OIR-6-INSSPA: SPA inserted in subslot 0/1
+Jan  1 00:04:57.396: %WLANMGR_TRACE_MESSAGE-4-EWLC_WLANMGR_WARN: Chassis 1 R0/0: wncmgrd: Wlanmgr Warning: SECURITY WARNING - Module: WLANMGR - Command: security wpa akm psk - Reason: psk is not a secure authentication key management method - Recommendation: Consider using high secure methods like psk-sha256 or SAE for wlan AigleWifi
+Jan  1 00:04:57.412: %WLANMGR_TRACE_MESSAGE-4-EWLC_WLANMGR_WARN: Chassis 1 R0/0: wncmgrd: Wlanmgr Warning: SECURITY WARNING - Module: WLANMGR - Command: security wpa akm psk - Reason: psk is not a secure authentication key management method - Recommendation: Consider using high secure methods like psk-sha256 or SAE for wlan denLabWlan
+Jan  1 00:04:57.706: %NMSP_SYSLOG-1-NMSP_INSECURE_CIPHER_NOTICE: Chassis 1 R0/0: nmspd: NMSP INSECURE CIPHER WARNING: no nmsp strong-cipher CLI uses Insecure cipher and alternative is nmsp strong-cipher
+Jan  1 00:04:59.719: %DMI-6-NETCONF_SSH_INFO: Chassis 1 R0/0: ncsshd_bp: NETCONF/SSH: [pid(657)] WARNING: Using self-signed trustpoint for netconf hostkey is deprecated. Please generate dedicated netconf SSH keypair instead.
+Jan  1 00:05:00.648: %CRYPTO-6-ISAKMP_ON_OFF: ISAKMP is OFF
+Jan  1 00:05:00.648: %CRYPTO-6-GDOI_ON_OFF: GDOI is OFF
+Jan  1 00:05:01.559: %SYS-5-RESTART: System restarted --
+Cisco IOS Software [IOSXE], C9800 Software (C9800_IOSXE-K9), Version 26.01.1prd20, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2026 by Cisco Systems, Inc.
+Compiled Mon 16-Mar-26 05:33 by mcpre
+Jan  1 00:05:04.702: %SPA_OIR-6-ONLINECARD: SPA (BUILT-IN-4x2_5GE) online in subslot 0/0
+Jan  1 00:05:05.177: %SPA_OIR-6-ONLINECARD: SPA (BUILT-IN-2x10GE-F) online in subslot 0/1
+Jan  1 00:05:06.242: %PNP-6-PNP_BEST_UDI_UPDATE: Best UDI [PID:C9800-L-F-K9,VID:01,SN:FCL245200HY] identified via (entity-mibs)
+Jan  1 00:05:06.242: %PNP-6-PNP_CDP_UPDATE: Device UDI [PID:C9800-L-F-K9,VID:01,SN:FCL245200HY] identified for CDP
+Jan  1 00:05:06.242: %PNP-6-PNP_DISCOVERY_STOPPED: PnP Discovery stopped (Startup Config Present)
+Jan  1 00:05:06.283: %SNMP-5-COLDSTART: SNMP agent on host WLC is undergoing a cold start
+Jan  1 00:05:06.665: %LINK-3-UPDOWN: Interface TwoGigabitEthernet0/0/0, changed state to down
+Jan  1 00:05:06.688: %LINK-3-UPDOWN: Interface TwoGigabitEthernet0/0/1, changed state to down
+Jan  1 00:05:06.691: %LINK-3-UPDOWN: Interface TwoGigabitEthernet0/0/2, changed state to down
+Jan  1 00:05:06.694: %LINK-3-UPDOWN: Interface TwoGigabitEthernet0/0/3, changed state to down
+Jan  1 00:05:07.164: %LINK-3-UPDOWN: Interface TenGigabitEthernet0/1/0, changed state to down
+Jan  1 00:05:07.167: %LINK-3-UPDOWN: Interface TenGigabitEthernet0/1/1, changed state to down
+Jan  1 00:05:10.016: %CRYPTO-6-ISAKMP_ON_OFF: ISAKMP is OFF
+Jan  1 00:05:10.016: %CRYPTO-6-GDOI_ON_OFF: GDOI is OFF
+Jan  1 00:05:10.163: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: CISCO_IDEVID_SUDI created successfully
+Jan  1 00:05:10.167: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named CISCO_IDEVID_SUDI has been generated or imported by pki-sudi
+Jan  1 00:05:10.179: yang-infra: Configured netconf trustpoint (CISCO_IDEVID_SUDI) created
+Jan  1 00:05:10.181: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: CISCO_IDEVID_SUDI0 created successfully
+Jan  1 00:05:10.223: yang-infra: PKI no mismatch found
+Jan  1 00:05:10.225: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: TEST_CISCO_IDEVID_SUDI created successfully
+Jan  1 00:05:10.230: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named TEST_CISCO_IDEVID_SUDI has been generated or imported by pki-sudi
+Jan  1 00:05:10.282: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: TEST_CISCO_IDEVID_SUDI0 created successfully
+Jan  1 00:05:10.289: %PKI-6-TRUSTPOINT_DELETE: Trustpoint: TEST_CISCO_IDEVID_SUDI deleted succesfully
+Jan  1 00:05:10.291: %CRYPTO_ENGINE-5-KEY_DELETED: A key named TEST_CISCO_IDEVID_SUDI has been removed from key storage
+Jan  1 00:05:10.292: %PKI-6-TRUSTPOINT_DELETE: Trustpoint: TEST_CISCO_IDEVID_SUDI0 deleted succesfully
+Jan  1 00:05:10.293: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: TEST_CISCO_IDEVID_SUDI created successfully
+Jan  1 00:05:10.301: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named TEST_CISCO_IDEVID_SUDI has been generated or imported by pki-sudi
+Jan  1 00:05:10.334: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: TEST_CISCO_IDEVID_SUDI0 created successfully
+Jan  1 00:05:10.337: %PKI-6-TRUSTPOINT_DELETE: Trustpoint: TEST_CISCO_IDEVID_SUDI deleted succesfully
+Jan  1 00:05:10.339: %CRYPTO_ENGINE-5-KEY_DELETED: A key named TEST_CISCO_IDEVID_SUDI has been removed from key storage
+Jan  1 00:05:10.339: %PKI-6-TRUSTPOINT_DELETE: Trustpoint: TEST_CISCO_IDEVID_SUDI0 deleted succesfully
+Jan  1 00:05:10.340: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: TEST_CISCO_IDEVID_SUDI created successfully
+Jan  1 00:05:10.344: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named TEST_CISCO_IDEVID_SUDI has been generated or imported by pki-sudi
+Jan  1 00:05:10.362: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: TEST_CISCO_IDEVID_SUDI0 created successfully
+Jan  1 00:05:10.365: %PKI-6-TRUSTPOINT_DELETE: Trustpoint: TEST_CISCO_IDEVID_SUDI deleted succesfully
+Jan  1 00:05:10.367: %CRYPTO_ENGINE-5-KEY_DELETED: A key named TEST_CISCO_IDEVID_SUDI has been removed from key storage
+Jan  1 00:05:10.367: %PKI-6-TRUSTPOINT_DELETE: Trustpoint: TEST_CISCO_IDEVID_SUDI0 deleted succesfully
+Jan  1 00:05:10.368: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: CISCO_IDEVID_CMCA3_SUDI created successfully
+Jan  1 00:05:10.373: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named CISCO_IDEVID_CMCA3_SUDI has been generated or imported by pki-sudi
+Jan  1 00:05:10.375: %LINK-3-UPDOWN: Interface TwoGigabitEthernet0/0/0, changed state to up
+Jan  1 00:05:10.429: yang-infra: Configured netconf trustpoint (CISCO_IDEVID_CMCA3_SUDI) created
+Jan  1 00:05:10.431: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: CISCO_IDEVID_CMCA3_SUDI0 created successfully
+Jan  1 00:05:10.436: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: CISCO_IDEVID_CMCA2_SUDI created successfully
+Jan  1 00:05:10.441: %CRYPTO_ENGINE-5-KEY_ADDITION: A key named CISCO_IDEVID_CMCA2_SUDI has been generated or imported by pki-sudi
+Jan  1 00:05:10.471: yang-infra: Configured netconf trustpoint (CISCO_IDEVID_CMCA2_SUDI) created
+Jan  1 00:05:10.474: %PKI-6-TRUSTPOINT_CREATE: Trustpoint: CISCO_IDEVID_CMCA2_SUDI0 created successfully
+Jan  1 00:05:10.969: %SMART_LIC-6-REPORTING_REQUIRED: A Usage report acknowledgement will be required in 364 days.
+Jan  1 00:05:11.375: %LINEPROTO-5-UPDOWN: Line protocol on Interface TwoGigabitEthernet0/0/0, changed state to up
+Jan  1 00:05:11.392: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to up
+Jan  1 00:05:11.971: %SMART_LIC-5-IN_COMPLIANCE: All entitlements and licenses in use on this device are authorized
+Jan  1 00:05:14.215: %INSTALL-5-DEVICE_RELOAD_MESSAGE: Chassis 1 R0/0: install_mgr: Last Boot Reason: PowerOn
+Jan  1 00:05:23.442: %LOADBALANCE_TRACE_MESSAGE-5-LB_LOG_MSG: Chassis 1 R0/0: wncmgrd: Loadbalancer Log : AP ( 192.168.0.4 ) : Loadbalancer algorithm assigned Instance (0) for site tag (Den)
+Jan  1 00:05:23.651: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac:  Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:23.939: %HA_EM-6-LOG: TEST_TELEMETRY: Telemetry Event Triggered
+Jan  1 00:05:23.940: %HA_EM-6-LOG: AP_DISJOIN: 
+Jan  1 00:05:23.651: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac:  Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:30.720: %DMI-6-NETCONF_SSH_INFO: Chassis 1 R0/0: ncsshd_bp: NETCONF/SSH: [pid(657)] WARNING: Using self-signed trustpoint for netconf hostkey is deprecated. Please generate dedicated netconf SSH keypair instead.
+Jan  1 00:05:34.322: %NDBMAN-5-ACTIVE: Chassis 1 R0/0: ndbmand: All data providers active.
+Jan  1 00:05:39.136: %CLOUDM_ONBOARDING_DRAGONFLY-3-CLOUDM_ONBOARDING_HTTPCON_ERROR: Chassis 1 R0/0: cloudm: cloud token request failed with HTTP connection error: SSL error.
+Jan  1 00:05:43.526: %DMI-2-CONFD_SUB_FAIL: Chassis 1 R0/0: dmiauthd: Failed to subscribe /native/router/ios-lisp:lisp/ios-lisp:instance-container/ios-lisp:instance-list model badly formatted or nonexistent path (8): No such namespace "'ios-lisp'" after: /native/router.
+Jan  1 00:05:44.594: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac:  Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:44.816: %DMI-5-SYNC_NEEDED: Chassis 1 R0/0: dmiauthd: Configuration change requiring running configuration sync detected - 'Initial Sync'. The running configuration will be synchronized  to the NETCONF running data store.
+Jan  1 00:05:44.948: %HA_EM-6-LOG: TEST_TELEMETRY: Telemetry Event Triggered
+Jan  1 00:05:44.948: %HA_EM-6-LOG: AP_DISJOIN: 
+Jan  1 00:05:44.594: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac:  Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:45.287: %DMI-5-SYNC_START: Chassis 1 R0/0: dmiauthd: Synchronization of the running configuration to the NETCONF running data store has started.
+Jan  1 00:05:47.486: %PKI-3-CERTIFICATE_INVALID_NOT_YET_VALID: Certificate chain validation has failed.  The certificate (SN: 40016EFB0A205CFAEBE18F71D73ABB78) is not yet valid   Validity period starts on 191212222615Z
+Jan  1 00:05:48.493: %PKI-3-CERTIFICATE_INVALID_NOT_YET_VALID: Certificate chain validation has failed.  The certificate (SN: 40016EFB0A205CFAEBE18F71D73ABB78) is not yet valid   Validity period starts on 191212222615Z
+Jan  1 00:05:49.083: %DMI-5-SYNC_COMPLETE: Chassis 1 R0/0: dmiauthd: The running configuration has been synchronized to the NETCONF running data store.
+Jan  1 00:05:49.982: %SMART_LIC-3-COMM_FAILED: Communications failure with the Cisco Smart License Utility (CSLU) : Unable to resolve server hostname/domain name 
+Jan  1 00:05:55.350: %PKI-3-CERTIFICATE_INVALID_NOT_YET_VALID: Certificate chain validation has failed.  The certificate (SN: 022D162F) is not yet valid   Validity period starts on 200508213613Z
+Jan  1 00:05:55.352: %CERT_MGR_ERRMSG-3-CERT_VALIDATION_ERR: Chassis 1 R0/0: wncd: Certificate Validation Error, Cert validation status:pki_ssl_status@pki_ssl_status:PKI_SSL_ERROR
+Jan  1 00:05:55.352: %DTLS_TRACE_MSG-3-WLC_DTLS_ERR: Chassis 1 R0/0: wncd: DTLS Error, session:192.168.0.48[5261] MAC: cc7f.755a.e740 , Certificate validation failed
+Jan  1 00:05:55.353: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac:  Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Certificate verify failed
+Jan  1 00:05:55.693: %HA_EM-6-LOG: TEST_TELEMETRY: Telemetry Event Triggered
+Jan  1 00:05:55.694: %HA_EM-6-LOG: AP_DISJOIN: 
+Jan  1 00:05:55.353: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac:  Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Certificate verify failed
+Jan  1 00:05:58.266: %PKI-3-CERTIFICATE_INVALID_NOT_YET_VALID: Certificate chain validation has failed.  The certificate (SN: 40016EFB0A205CFAEBE18F71D73ABB78) is not yet valid   Validity period starts on 191212222615Z
+Jan  1 00:05:59.334: %PKI-3-CERTIFICATE_INVALID_NOT_YET_VALID: Certificate chain validation has failed.  The certificate (SN: 40016EFB0A205CFAEBE18F71D73ABB78) is not yet valid   Validity period starts on 191212222615Z
+Jun 16 05:00:05.552: %SMART_LIC-6-USAGE_NO_ACK: A Usage report acknowledgement has not been received in the last 0 days.
+Jun 16 05:00:15.070: %CLOUDM_ONBOARDING_DRAGONFLY-6-CLOUDM_ONBOARDING_SUCCESS: Chassis 1 R0/0: cloudm: Successfully received access token response
+Jun 16 05:00:36.524: %CW_LIC-5-AP_AIR_STATE: Chassis 1 R0/0: wncd: AP with mac address fc58.9a19.1320 has moved to AIR state
+Jun 16 05:00:37.068: %APMGR_TRACE_MESSAGE-3-WLC_AP_LOG_MSG: Chassis 1 R0/0: wncd: AP Remote Log: fc58.9a19.1320  Last AP CW9166 reboot was due to crash
+Jun 16 05:00:38.367: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac: fc58.9a19.1320 Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Ethernet MAC: 6849.927a.3e30  Joined
+Jun 16 05:00:58.085: %CW_LIC-5-AP_AIR_STATE: Chassis 1 R0/0: wncd: AP with mac address 7872.5d1c.4fa0 has moved to AIR state
+Jun 16 05:00:59.408: %APMGR_TRACE_MESSAGE-4-WLC_CONFIG_CHECKER_WARNING: Chassis 1 R0/0: wncd: config check: AP 7872.5d1c.4fa0  did not present WLC name in config status request during join.
+Jun 16 05:00:59.408: %APMGR_TRACE_MESSAGE-4-WLC_CONFIG_CHECKER_WARNING: Chassis 1 R0/0: wncd: config check: AP 7872.5d1c.4fa0  did not present WLC IP address in config status request during join.
+Jun 16 05:00:59.408: %APMGR_TRACE_MESSAGE-3-WLC_AP_LOG_MSG: Chassis 1 R0/0: wncd: AP Remote Log: 7872.5d1c.4fa0  Last AP Ap3800e_11StaticIp reboot was due to crash
+Jun 16 05:00:59.409: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:00:59.409: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:00:59.410: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.315: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.315: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.315: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.918: %SYS-4-INSECURE_CONFIG: Module: TFTP - Command: ip tftp source-interface Vlan1  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Transition to secure file transfer methods using SCP, SFTP, HTTPS protocols
+Jun 16 05:01:00.918: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server community * rw  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.918: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server community * ro  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.918: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server host 192.168.0.14 version 2c *  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.918: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server host 192.168.0.141 version 2c *  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.918: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server host 192.168.0.16 version 2c *  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.918: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server host 192.168.0.19 version 2c *  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.919: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server host 192.168.0.20 version 2c *  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.919: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server host 192.168.0.31 version 2c *  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.919: %SYS-4-INSECURE_CONFIG: Module: SNMP - Command: snmp-server host 192.168.0.9 version 2c *  - Reason: Legacy protocol poses data confidentiality and integrity risks due to lack of encryption and authentication - Remediation: Configure SNMP v3 User
+Jun 16 05:01:00.684: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.684: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.685: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.763: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.764: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.764: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.840: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.840: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:00.841: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:01.029: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:01.029: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:01.029: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:01.104: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:01.104: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 7872.5d1c.4fa0 : country code (IN ) and regulatory domain (-A) mismatch for slot 1
+Jun 16 05:01:01.165: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac: 7872.5d1c.4fa0 Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Ethernet MAC: 7872.5d1c.2c10  Joined
+Jun 16 05:01:04.795: %CW_LIC-5-AP_AIR_STATE: Chassis 1 R0/0: wncd: AP with mac address cc7f.755a.e740 has moved to AIR state
+Jun 16 05:01:05.185: %APMGR_TRACE_MESSAGE-3-WLC_AP_LOG_MSG: Chassis 1 R0/0: wncd: AP Remote Log: cc7f.755a.e740  Last AP Ap9115D reboot was due to crash
+Jun 16 05:01:06.674: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac: cc7f.755a.e740 Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Ethernet MAC: 6c41.0ecc.ad80  Joined
+Jun 16 05:25:10.717: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:25:16.420: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 10:55:16 IST Tue Jun 16 2026
+Jun 16 05:25:16.420: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:35:21.525: %SYS-6-TTY_EXPIRE_TIMER: (exec timer expired, tty 2 (192.168.0.19)), user admin
+Jun 16 05:35:21.525: %SYS-6-LOGOUT: User admin has exited tty session 2(192.168.0.19)
+Jun 16 05:35:21.525: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 0) for user 'admin' using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 05:35:48.591: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:36:19.970: %SSH-5-SSH2_USERAUTH: User '' authentication for SSH2 Session from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Failed
+Jun 16 05:36:19.970: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 0) for user '' using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 05:36:27.961: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:36:32.292: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 11:06:32 IST Tue Jun 16 2026
+Jun 16 05:36:32.292: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:43:59.172: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 1) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:43:59.456: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 11:13:59 IST Tue Jun 16 2026
+Jun 16 05:43:59.456: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 1) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:44:10.189: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 2) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:44:10.317: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 11:14:10 IST Tue Jun 16 2026
+Jun 16 05:44:10.317: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 2) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 05:44:11.127: %SYS-5-CONFIG_I: Configured from console by admin on vty2 (192.168.0.19)
+Jun 16 05:44:11.162: %SYS-6-LOGOUT: User admin has exited tty session 4(192.168.0.19)
+Jun 16 05:44:11.162: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 2) for user '' using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 05:44:11.272: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 1) for user '' using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 05:46:41.584: %SYS-6-TTY_EXPIRE_TIMER: (exec timer expired, tty 2 (192.168.0.19)), user admin
+Jun 16 05:46:41.584: %SYS-6-LOGOUT: User admin has exited tty session 2(192.168.0.19)
+Jun 16 05:46:41.584: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 0) for user 'admin' using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 05:58:42.454: %SMART_LIC-5-IN_COMPLIANCE: All entitlements and licenses in use on this device are authorized
+Jun 16 05:58:43.742: %ENVIRONMENTAL-6-NOTICE: Temp: BRDTEMP1, Location: R0, State: Minor, Reading: 54 Celsius
+Jun 16 06:13:22.078: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:13:25.511: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 11:43:25 IST Tue Jun 16 2026
+Jun 16 06:13:25.511: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:15:40.503: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.0.19)
+Jun 16 06:16:29.143: %CW_LIC-5-AP_AIR_STATE: Chassis 1 R0/0: wncd: AP with mac address 3c41.0e3a.ca00 has moved to AIR state
+Jun 16 06:16:29.888: %APMGR_TRACE_MESSAGE-3-WLC_AP_LOG_MSG: Chassis 1 R0/0: wncd: AP Remote Log: 3c41.0e3a.ca00  Last AP Ap9105 reboot was due to crash
+Jun 16 06:16:29.889: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:29.889: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:29.890: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.622: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.623: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.623: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.821: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.821: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.821: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.910: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.911: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:30.911: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.012: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.012: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.013: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.184: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.184: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.184: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.242: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.242: %APMGR_TRACE_MESSAGE-3-WLC_GEN_ERR: Chassis 1 R0/0: wncd: Error in AP: 3c41.0e3a.ca00 : country code (IN ) and regulatory domain (-B) mismatch for slot 1
+Jun 16 06:16:31.345: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9105 Mac: 3c41.0e3a.ca00 Session-IP: 192.168.0.212[5276] 192.168.0.100[5246] Ethernet MAC: 5c71.0dec.f340  Joined
+Jun 16 06:25:41.805: %SYS-6-TTY_EXPIRE_TIMER: (exec timer expired, tty 2 (192.168.0.19)), user admin
+Jun 16 06:25:41.805: %SYS-6-LOGOUT: User admin has exited tty session 2(192.168.0.19)
+Jun 16 06:25:41.805: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 0) for user 'admin' using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 06:34:50.288: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 0) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:34:50.490: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 12:04:50 IST Tue Jun 16 2026
+Jun 16 06:34:50.490: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 0) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:34:51.504: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.0.19)
+Jun 16 06:34:51.994: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.0.19)
+Jun 16 06:34:52.555: %SYS-6-LOGOUT: User admin has exited tty session 2(192.168.0.19)
+Jun 16 06:34:52.555: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 0) for user '' using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 06:34:52.891: %DMI-5-SYNC_NEEDED: Chassis 1 R0/0: dmiauthd: Configuration change requiring running configuration sync detected - 'CLI '  event manager applet AP_DISJOIN_BATCH   action 030 export-to-telemetry "$trigger_msg"' failed to synchronize and triggered a full sync'. The running configuration will be synchronized  to the NETCONF running data store.
+Jun 16 06:34:52.960: %DMI-5-SYNC_START: Chassis 1 R0/0: dmiauthd: Synchronization of the running configuration to the NETCONF running data store has started.
+Jun 16 06:34:54.395: %MDT_CONNECTION-6-STATE_CHANGED: Chassis 1 R0/0: pubd: Connection state changed (id 1 - 192.168.0.19:57500:0:192.168.0.100): UP
+Jun 16 06:34:55.721: %DMI-5-SYNC_COMPLETE: Chassis 1 R0/0: dmiauthd: The running configuration has been synchronized to the NETCONF running data store.
+Jun 16 06:35:01.701: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:10.578: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 12:05:10 IST Tue Jun 16 2026
+Jun 16 06:35:10.578: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 0) using crypto cipher 'aes256-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:34.600: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac: cc7f.755a.e740 Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+Jun 16 06:35:35.008: %HA_EM-6-LOG: TEST_TELEMETRY: Telemetry Event Triggered
+Jun 16 06:35:44.689: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9105 Mac: 3c41.0e3a.ca00 Session-IP: 192.168.0.212[5276] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+Jun 16 06:35:45.008: %HA_EM-6-LOG: TEST_TELEMETRY: Telemetry Event Triggered
+Jun 16 06:35:55.459: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac: 7872.5d1c.4fa0 Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+Jun 16 06:35:55.760: %HA_EM-6-LOG: TEST_TELEMETRY: Telemetry Event Triggered
+Jun 16 06:35:55.760: %HA_EM-6-LOG: AP_DISJOIN_BATCH: EEM_BATCH_TRIGGER
+Jun 16 06:35:55.870: %HA_EM-7-FMPD_FILE_OPEN: fh_stmt_file: failed to open file harddisk:AP_DISCONNECT_Outputs_1781591755.txt : No such device
+Jun 16 06:35:55.870: %HA_EM-3-FMPD_ERROR: Error executing applet TEST_AI_AP_ANALYSIS statement 103
+Jun 16 06:35:55.880: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 2) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:56.028: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 12:05:56 IST Tue Jun 16 2026
+Jun 16 06:35:56.028: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 2) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:57.166: %SYS-6-LOGOUT: User admin has exited tty session 4(192.168.0.19)
+Jun 16 06:35:57.166: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 2) for user '' using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 06:35:57.208: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 1) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:57.337: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 12:05:57 IST Tue Jun 16 2026
+Jun 16 06:35:57.337: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 1) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:58.349: %SYS-5-CONFIG_I: Configured from console by admin on vty1 (192.168.0.19)
+Jun 16 06:35:58.377: %SSH-5-SSH2_CLOSE: SSH2 Session from 192.168.0.19 (tty = 1) for user '' using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' closed
+Jun 16 06:35:58.508: %SSH-5-SSH2_SESSION: SSH2 Session request from 192.168.0.19 (tty = 2) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:58.635: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: admin] [Source: 192.168.0.19] [localport: 22] at 12:05:58 IST Tue Jun 16 2026
+Jun 16 06:35:58.636: %SSH-5-SSH2_USERAUTH: User 'admin' authentication for SSH2 Session from 192.168.0.19 (tty = 2) using crypto cipher 'aes128-ctr', hmac 'hmac-sha2-256' Succeeded
+Jun 16 06:35:58.713: %DMI-5-SYNC_NEEDED: Chassis 1 R0/0: dmiauthd: Configuration change requiring running configuration sync detected - 'CLI '  event manager applet FOURTH_DISJOIN_WATCHER   action 020 export-to-telemetry "$trigger_msg"' failed to synchronize and triggered a full sync'. The running configuration will be synchronized  to the NETCONF running data store.
+Jun 16 06:35:58.779: %DMI-5-SYNC_START: Chassis 1 R0/0: dmiauthd: Synchronization of the running configuration to the NETCONF running data store has started.
+Jun 16 06:35:59.793: %SYS-5-CONFIG_I: Configured from console by  on vty1 (EEM:Mandatory.ra_tracing_tool.tcl)
+Jun 16 06:36:01.513: %DMI-5-SYNC_COMPLETE: Chassis 1 R0/0: dmiauthd: The running configuration has been synchronized to the NETCONF running data store.
+Jun 16 06:36:02.543: %SYS-5-CONFIG_I: Configured from console by  on vty1 (EEM:Mandatory.ra_tracing_tool.tcl)
+Jun 16 06:36:02.646: %HA_EM-6-LOG: Mandatory.ra_tracing_tool.tcl: Successfully started RA tracing on condition: MAC @ 78:72:5d:1c:4f:a0
+Jun 16 06:36:29.539: %BUFCAP-4-ENABLE: Capture Point MYCAP_78725d1c4fa0 enabled.
+
+=== show platform resources ===
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:13.728 IST Tue Jun 16 2026
+**State Acronym: H - Healthy, W - Warning, C - Critical                                             
+Resource                 Usage                 Max             Warning         Critical        State
+----------------------------------------------------------------------------------------------------
+RP0 (ok, active)                                                                               H    
+ Control Processor       5.00%                 100%            80%             90%             H    
+  DRAM                   5075MB(32%)           15458MB         88%             93%             H    
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:13.811 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:13.832 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:13.847 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:13.862 IST Tue Jun 16 2026
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:13.877 IST Tue Jun 16 2026
+ESP0(ok, active)                                                                               H    
+ QFP                                                                                           H    
+  DRAM                   175055KB(9%)          1835008KB       85%             95%             H    
+  IRAM                   414KB(20%)            2048KB          85%             95%             H    
+  CPU Utilization        0.00%                 100%            60%             80%             H    
+
+
+=== show processes cpu platform | include wncd ===
+ 23175   23151      0%      0%      0%  S           395260  wncd_0                
+
+=== show ap image summary ===
+Load for five secs: 1%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:18.577 IST Tue Jun 16 2026
+
+Total number of APs  : 1
+
+
+Number of APs 
+        Initiated                  : 0
+        Downloading                : 0
+        Predownloading             : 0
+        Completed downloading      : 0
+        Completed predownloading   : 0
+        Not Supported              : 0
+        Failed to Predownload      : 0
+        Predownload in progress    : No
+
+
+=== show logging | include AP_JOIN_DISJOIN ===
+Jan  1 00:05:23.651: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac:  Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:23.651: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac:  Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:44.594: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac:  Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:44.594: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac:  Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:55.353: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac:  Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Certificate verify failed
+Jan  1 00:05:55.353: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac:  Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Certificate verify failed
+Jun 16 05:00:38.367: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac: fc58.9a19.1320 Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Ethernet MAC: 6849.927a.3e30  Joined
+Jun 16 05:01:01.165: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac: 7872.5d1c.4fa0 Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Ethernet MAC: 7872.5d1c.2c10  Joined
+Jun 16 05:01:06.674: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac: cc7f.755a.e740 Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Ethernet MAC: 6c41.0ecc.ad80  Joined
+Jun 16 06:16:31.345: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9105 Mac: 3c41.0e3a.ca00 Session-IP: 192.168.0.212[5276] 192.168.0.100[5246] Ethernet MAC: 5c71.0dec.f340  Joined
+Jun 16 06:35:34.600: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac: cc7f.755a.e740 Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+Jun 16 06:35:44.689: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9105 Mac: 3c41.0e3a.ca00 Session-IP: 192.168.0.212[5276] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+Jun 16 06:35:55.459: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac: 7872.5d1c.4fa0 Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+
+=== show ap uptime ===
+Load for five secs: 1%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:19.799 IST Tue Jun 16 2026
+
+Number of APs: 1
+
+
+AP Name                          Ethernet MAC    Radio MAC       AP Up Time                                          Association Up Time
+---------------------------------------------------------------------------------------------------------------------------------------------------
+CW9166                           6849.927a.3e30  fc58.9a19.1320  1 hour 40 minutes 33 seconds                        1 hour 36 minutes 42 seconds                 
+
+
+=== show wireless stats ap history ===
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:20.441 IST Tue Jun 16 2026
+
+AP Name                          Radio MAC       Event      Time               Recent Disconnect Time   Disconnect Reason          Disconnect Count
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ap9105                           3c41.0e3a.ca00  Disjoined  06/16/26 12:05:44  NA                       Wtp reset config cmd sent  1 
+Ap9105                           3c41.0e3a.ca00  Joined     06/16/26 11:46:31  NA                       NA                         NA
+CW9166                           fc58.9a19.1320  Joined     06/16/26 10:30:38  NA                       NA                         NA
+CW9166                           fc58.9a19.1320  Disjoined  01/01/17 05:35:23  NA                       DTLS close alert from peer 1 
+Ap9115D                          cc7f.755a.e740  Disjoined  06/16/26 12:05:34  NA                       Wtp reset config cmd sent  1 
+Ap9115D                          cc7f.755a.e740  Joined     06/16/26 10:31:06  NA                       NA                         NA
+Ap9115D                          cc7f.755a.e740  Disjoined  01/01/17 05:35:55  NA                       Certificate verify failed  1 
+Ap3800e_11StaticIp               7872.5d1c.4fa0  Disjoined  06/16/26 12:05:55  NA                       Wtp reset config cmd sent  1 
+Ap3800e_11StaticIp               7872.5d1c.4fa0  Joined     06/16/26 10:31:01  NA                       NA                         NA
+Ap3800e_11StaticIp               7872.5d1c.4fa0  Disjoined  01/01/17 05:35:44  NA                       DTLS close alert from peer 1 
+
+
+=== show ap crash-file ===
+Load for five secs: 0%/0%; one minute: 0%; five minutes: 0%
+Time source is NTP, 12:07:20.990 IST Tue Jun 16 2026
+
+File Location: BOOTFLASH
+AP Name                          Crash File                         Radio Slot 0                       Radio Slot 1                       Radio Slot 2                      Radio Slot 3
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+=== dir all | include crash ===
+40      -rw-            14027  Apr 21 2026 05:50:54 +05:30  :A:p:3800e_11StaticIp_78725d1c4fa0.crash
+36      -rw-           100604  Aug 30 2024 19:08:34 +05:30  Ap9120_d4e880198660.crash
+32      -rw-            82292  Nov 28 2023 16:18:49 +05:30  AP5C71.0DEC.F1EC_3c410e3abf60.crash
+
+=== show processes cpu platform sorted ===
+Load for five secs: 6%/2%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:25.425 IST Tue Jun 16 2026
+CPU utilization for five seconds:  5%, one minute:  6%, five minutes:  5%
+Core 0: CPU utilization for five seconds:  4%, one minute:  5%, five minutes:  2%
+Core 1: CPU utilization for five seconds: 34%, one minute:  6%, five minutes:  3%
+Core 2: CPU utilization for five seconds:  5%, one minute:  3%, five minutes:  3%
+Core 3: CPU utilization for five seconds:  2%, one minute:  6%, five minutes:  6%
+Core 4: CPU utilization for five seconds:  1%, one minute:  1%, five minutes:  1%
+Core 5: CPU utilization for five seconds:  3%, one minute:  6%, five minutes:  5%
+Core 6: CPU utilization for five seconds:  1%, one minute:  1%, five minutes:  1%
+Core 7: CPU utilization for five seconds: 33%, one minute: 39%, five minutes: 39%
+Core 8: CPU utilization for five seconds:  0%, one minute:  0%, five minutes:  0%
+Core 9: CPU utilization for five seconds:  0%, one minute:  0%, five minutes:  0%
+Core 10: CPU utilization for five seconds:  0%, one minute:  0%, five minutes:  0%
+   Pid    PPid    5Sec    1Min    5Min  Status        Size  Name                  
+--------------------------------------------------------------------------------
+ 22329   22305     58%     58%     57%  S           352640  ucode_pkt_PPE0        
+ 26116   26108     35%      3%      0%  S           133864  smand                 
+  4548    4405      2%      2%      1%  S          1527868  linux_iosd-imag       
+ 27770   27761      1%      0%      0%  S           244152  cli_agent             
+ 24163   24142      1%      1%      1%  S           240256  fman_fp_image         
+ 22660   22638      1%      0%      0%  S           367176  wncmgrd               
+ 32714   32605      0%      0%      0%  S             1408  erl_child_setup       
+ 32686   32680      0%      0%      0%  S           255668  ndbmand               
+ 32680    3947      0%      0%      0%  S             6400  pman                  
+ 32605   32563      0%      3%      1%  S           290676  confd.smp             
+ 32563   32555      0%      0%      0%  S            15744  confd_mgrd            
+ 32555    3947      0%      0%      0%  S             6272  pman                  
+ 32442   32435      0%      0%      0%  S            10496  pttcd                 
+ 32435    3947      0%      0%      0%  S             6272  pman                  
+ 32316   32305      0%      0%      0%  S           310368  pubd                  
+ 32305    3947      0%      0%      0%  S             6520  pman                  
+ 32127   32121      0%      0%      0%  S            17836  paed-maintenanc       
+ 32121    3947      0%      0%      0%  S             6272  pman                  
+ 32013   32005      0%      0%      0%  S           320600  paed                  
+ 32005    3947      0%      0%      0%  S             6272  pman                  
+ 31217       2      0%      0%      0%  I                0  kworker/8:2H          
+ 31216       2      0%      0%      0%  I                0  kworker/0:2H-kblockd  
+ 28700   32127      0%      0%      0%  S             1536  sleep                 
+ 28077   28069      0%      0%      0%  S            60016  csod                  
+ 28069    3947      0%      0%      0%  S             6384  pman                  
+ 27761    3947      0%      0%      0%  S             6400  pman                  
+ 27629   27620      0%      0%      0%  S            73280  cloudm                
+ 27620    3947      0%      0%      0%  S             6272  pman                  
+ 27501   27492      0%      0%      0%  S           343856  dbm                   
+ 27492    3947      0%      0%      0%  S             6512  pman                  
+ 27291   27282      0%      0%      0%  S           158892  fman_rp               
+ 27282    3947      0%      0%      0%  S             6400  pman                  
+ 27158   27149      0%      0%      0%  R            46740  hman                  
+ 27149    3947      0%      0%      0%  S             6400  pman                  
+ 26852   26841      0%      0%      0%  S           106296  odm_1                 
+ 26841    3947      0%      0%      0%  S             6400  pman                  
+ 26735   26726      0%      0%      0%  S           173596  odm_0                 
+ 26726    3947      0%      0%      0%  S             6528  pman                  
+ 26617   26609      0%      0%      0%  S            39004  odm_proxy             
+ 26609    3947      0%      0%      0%  S             6272  pman                  
+ 26494   26485      0%      0%      0%  S            20984  plogd                 
+ 26485    3947      0%      0%      0%  S             6400  pman                  
+ 26378   26371      0%      0%      0%  S           148968  repm                  
+ 26371    3947      0%      0%      0%  S             6384  pman                  
+ 26236   26228      0%      0%      0%  S            27648  service_mgr           
+ 26228    3947      0%      0%      0%  S             6400  pman                  
+ 26108    3947      0%      0%      0%  S             6260  pman                  
+ 25979   25967      0%      0%      0%  S           189276  sessmgrd              
+ 25967    3947      0%      0%      0%  S             6400  pman                  
+ 25807   25798      0%      0%      0%  S           306724  wncloudm              
+ 25798    3947      0%      0%      0%  S             6396  pman                  
+ 25662   25653      0%      0%      0%  S           140624  psd                   
+ 25653    3947      0%      0%      0%  S             6272  pman                  
+ 25399   25376      0%      0%      0%  S           219108  mobilityd             
+ 25376    3947      0%      0%      0%  S             6400  pman                  
+ 24930   24903      0%      0%      0%  S           194380  nmspd                 
+ 24903    3947      0%      0%      0%  S             6400  pman                  
+ 24447   24424      0%      0%      0%  S           197408  rogued                
+ 24424    3947      0%      0%      0%  S             6272  pman                  
+ 24142   15240      0%      0%      0%  S             6276  pman                  
+ 24002   23978      0%      0%      0%  S           212068  rrm                   
+ 23978    3947      0%      0%      0%  S             6400  pman                  
+ 23742   23721      0%      0%      0%  S           259448  cpp_cp_svr            
+ 23721   15240      0%      0%      0%  S             6272  pman                  
+ 23573   23552      0%      0%      0%  S            90128  wdad                  
+ 23552    3947      0%      0%      0%  S             6272  pman                  
+ 23378   23361      0%      0%      0%  S            80056  cpp_sp_svr            
+ 23361   15240      0%      0%      0%  S             6400  pman                  
+ 23272   23251      0%      0%      0%  S             1920  sntp                  
+ 23251       1      0%      0%      0%  S             2816  stack_sntp.sh         
+ 23175   23151      0%      0%      0%  S           395260  wncd_0                
+ 23151    3947      0%      0%      0%  S             6400  pman                  
+ 22984   22959      0%      0%      0%  S            66304  cpp_driver            
+ 22959   15240      0%      0%      0%  S             6264  pman                  
+ 22668   22645      0%      0%      0%  S            79872  cpp_ha_top_leve       
+ 22645   15240      0%      0%      0%  S             6400  pman                  
+ 22638    3947      0%      0%      0%  S             6400  pman                  
+ 22305   15240      0%      0%      0%  S             6400  pman                  
+ 22180   22160      0%      0%      0%  S           115368  wstatsd               
+ 22160    3947      0%      0%      0%  S             6144  pman                  
+ 21908   21886      0%      0%      0%  S            27776  service_mgr           
+ 21886   15240      0%      0%      0%  S             6384  pman                  
+ 21443   13476      0%      0%      0%  S             1792  inotifywait           
+ 21246       2      0%      0%      0%  I                0  kworker/1:2           
+ 20847    2371      0%      0%      0%  S             1536  inotifywait           
+ 20729   12203      0%      0%      0%  S             1664  inotifywait           
+ 20422   12766      0%      0%      0%  S             1664  inotifywait           
+ 20417   12766      0%      0%      0%  S            19884  issu_stack.sh         
+ 20416   12766      0%      0%      0%  S             1664  inotifywait           
+ 20408   12766      0%      0%      0%  S            19628  issu_stack.sh         
+ 20406   12766      0%      0%      0%  S             1664  inotifywait           
+ 19781   10659      0%      0%      0%  S             1408  sleep                 
+ 19780   19677      0%      0%      0%  S             1408  sleep                 
+ 19766   13924      0%      0%      0%  S             1536  sleep                 
+ 19677   10659      0%      0%      0%  S             1948  chasync.sh            
+ 19117   14420      0%      0%      0%  S             1408  sleep                 
+ 17725   17716      0%      0%      0%  S            71044  iomd                  
+ 17716   15876      0%      0%      0%  S             6528  pman                  
+ 17502   17493      0%      0%      0%  S            71040  iomd                  
+ 17493   15876      0%      0%      0%  S             6272  pman                  
+ 16744   16736      0%      0%      0%  S            38912  cmcc                  
+ 16736   15876      0%      0%      0%  S             6384  pman                  
+ 16594   16585      0%      0%      0%  S            36076  hman                  
+ 16585   15876      0%      0%      0%  S             6400  pman                  
+ 15997   15876      0%      0%      0%  S             1664  inotifywait           
+ 15949       1      0%      0%      0%  S             3968  rotee                 
+ 15876       1      0%      0%      0%  S            11368  pvp.sh                
+ 15488   15479      0%      0%      0%  S            36224  cman_fp               
+ 15479   15240      0%      0%      0%  S             6524  pman                  
+ 15365   15240      0%      0%      0%  S             1536  inotifywait           
+ 15315       1      0%      0%      0%  S             3968  rotee                 
+ 15240       1      0%      0%      0%  S            11368  pvp.sh                
+ 14420   14403      0%      0%      0%  S            15052  periodic.sh           
+ 14403    3947      0%      0%      0%  S             6400  pman                  
+ 14167   14151      0%      0%      0%  S            43856  pistisd               
+ 14151    3947      0%      0%      0%  S             6272  pman                  
+ 13924   13915      0%      0%      0%  S             2816  sort_files_by_i       
+ 13915    3947      0%      0%      0%  S             6400  pman                  
+ 13476   13467      0%      0%      0%  S            20528  auto_upgrade_cl       
+ 13467    3947      0%      0%      0%  S             6400  pman                  
+ 13058   13051      0%      0%      0%  S            46388  install_mgr           
+ 13051    3947      0%      0%      0%  S             6400  pman                  
+ 12766   12757      0%      0%      0%  S            20608  issu_stack.sh         
+ 12757    3947      0%      0%      0%  S             6400  pman                  
+ 12480   12471      0%      0%      0%  S            27384  lman                  
+ 12471    3947      0%      0%      0%  S             6400  pman                  
+ 12203   12153      0%      0%      0%  S            21284  ncd.sh                
+ 12153    3947      0%      0%      0%  S             6400  pman                  
+ 11715   11706      0%      0%      0%  S            36336  vman                  
+ 11706    3947      0%      0%      0%  S             6264  pman                  
+ 11152    3947      0%      0%      0%  S             1664  inotifywait           
+ 11151   10665      0%      0%      0%  S             1536  inotifywait           
+ 11094   10678      0%      0%      0%  S             1664  inotifywait           
+ 11087       1      0%      0%      0%  S             3968  rotee                 
+ 11015   10686      0%      0%      0%  S             1664  inotifywait           
+ 11012       1      0%      0%      0%  S             3968  rotee                 
+ 10991   10679      0%      0%      0%  S             1536  inotifywait           
+ 10918       1      0%      0%      0%  S             4096  rotee                 
+ 10902       1      0%      0%      0%  S             3968  rotee                 
+ 10686       1      0%      0%      0%  S             8524  selinux_smu.sh        
+ 10679       1      0%      0%      0%  S             8688  kernel_smu.sh         
+ 10678       1      0%      0%      0%  S            12272  kernel_ftrace.s       
+ 10667       1      0%      0%      0%  S             2304  xinetd                
+ 10666       1      0%      0%      0%  S             2176  xinetd                
+ 10665       1      0%      0%      0%  S            18004  rollback_timer.       
+ 10659       1      0%      0%      0%  S             3200  chasync.sh            
+ 10658       1      0%      0%      0%  S             3456  auxinit.sh            
+  9419       1      0%      0%      0%  S             1920  xinetd                
+  9418       2      0%      0%      0%  I                0  kworker/6:2-mm_percp  
+  8784       2      0%      0%      0%  I                0  kworker/9:2-cgroup_d  
+  7559       2      0%      0%      0%  S                0  lfts_sar_aux          
+  7558       2      0%      0%      0%  I                0  kworker/R-lfts_       
+  7438    7159      0%      0%      0%  S             1664  inotifywait           
+  7308       1      0%      0%      0%  S             4032  rotee                 
+  7159       1      0%      0%      0%  S             8596  iptbl.sh              
+  6689    6605      0%      0%      0%  S             1816  inotifywait           
+  6667       1      0%      0%      0%  S             4024  rotee                 
+  6605       1      0%      0%      0%  S            10240  reflector.sh          
+  6548    5983      0%      0%      0%  S             1848  inotifywait           
+  6528       1      0%      0%      0%  S             3968  rotee                 
+  6156    5985      0%      0%      0%  S             1280  sleep                 
+  6139       2      0%      0%      0%  I                0  nfsd                  
+  6138       2      0%      0%      0%  I                0  nfsd                  
+  6137       2      0%      0%      0%  I                0  nfsd                  
+  6136       2      0%      0%      0%  I                0  nfsd                  
+  6135       2      0%      0%      0%  I                0  nfsd                  
+  6134       2      0%      0%      0%  I                0  nfsd                  
+  6133       2      0%      0%      0%  I                0  nfsd                  
+  6131       2      0%      0%      0%  I                0  nfsd                  
+  6109       1      0%      0%      0%  S             4096  rotee                 
+  6069       2      0%      0%      0%  I                0  kworker/12:2-events   
+  6048       2      0%      0%      0%  I                0  lockd                 
+  6031       1      0%      0%      0%  S             1920  xinetd                
+  6027       1      0%      0%      0%  S             1536  rpc.statd             
+  6026       1      0%      0%      0%  S             2692  rpc.mountd            
+  6011       1      0%      0%      0%  S            26956  libvirtd              
+  5995       1      0%      0%      0%  S             2056  rpcbind               
+  5988       1      0%      0%      0%  S            13788  virtlogd              
+  5985       1      0%      0%      0%  S             4232  oom.sh                
+  5983       1      0%      0%      0%  S            10444  droputil.sh           
+  5846    5834      0%      0%      0%  S            44112  rif_mgr               
+  5834    3947      0%      0%      0%  S             6400  pman                  
+  5648    5640      0%      0%      0%  S            60124  btman                 
+  5640    3947      0%      0%      0%  S             6348  pman                  
+  5527    5519      0%      0%      0%  S            26112  keyman                
+  5519    3947      0%      0%      0%  S             6412  pman                  
+  5332    5324      0%      0%      0%  S            25384  emd                   
+  5324    3947      0%      0%      0%  S             6272  pman                  
+  5244       2      0%      0%      0%  I                0  kworker/R-edac-       
+  5125    5118      0%      0%      0%  S            12560  tam_svcs_esg_cf       
+  5118    3947      0%      0%      0%  S             6388  pman                  
+  5058       2      0%      0%      0%  I                0  kworker/R-adf_p       
+  5017    5010      0%      0%      0%  S            15448  tams_proc             
+  5010    3947      0%      0%      0%  S             6512  pman                  
+  4910    4903      0%      0%      0%  S            15744  tamd_proc             
+  4903    3947      0%      0%      0%  S             6268  pman                  
+  4708    4700      0%      0%      0%  S            48700  cmand                 
+  4700    3947      0%      0%      0%  S             6268  pman                  
+  4601    4593      0%      0%      0%  S            40824  stack_mgr             
+  4593    3947      0%      0%      0%  S             6400  pman                  
+  4557       2      0%      0%      0%  I                0  kworker/R-qat_f       
+  4556       2      0%      0%      0%  I                0  kworker/R-qat_d       
+  4423       2      0%      0%      0%  S                0  lsmpi-rx              
+  4422       2      0%      0%      0%  S                0  lsmpi-xmit            
+  4421       2      0%      0%      0%  S                0  lsmpi-refill          
+  4405    3947      0%      0%      0%  S             6288  pman                  
+  4081       2      0%      0%      0%  I                0  kworker/u32:0-events  
+  4020       1      0%      0%      0%  S             3988  rotee                 
+  4003       2      0%      0%      0%  I                0  kworker/1:2H-kblockd  
+  3947       1      0%      0%      0%  S            12664  pvp.sh                
+  3942    3828      0%      0%      0%  S             1536  inotifywait           
+  3914       1      0%      0%      0%  S             3992  rotee                 
+  3839       2      0%      0%      0%  I                0  kworker/R-ixgbe       
+  3828       1      0%      0%      0%  S            13216  psvp.sh               
+  2642    2641      0%      0%      0%  S             1800  inet_gethost          
+  2641   32714      0%      0%      0%  S             1664  inet_gethost          
+  2515       1      0%      0%      0%  S             3968  rotee                 
+  2410       2      0%      0%      0%  I                0  kworker/6:2H          
+  2371       1      0%      0%      0%  S             9984  ondemand_mem_mo       
+  2149    2080      0%      0%      0%  S            12160  nginx                 
+  2147    2080      0%      0%      0%  S            12732  nginx                 
+  2080    2072      0%      0%      0%  S            22744  nginx                 
+  2072    3947      0%      0%      0%  S             6272  pman                  
+  1961    1955      0%      0%      0%  S             1320  nginx_helper.sh       
+  1960    1955      0%      0%      0%  S             1664  inotifywait           
+  1955    1947      0%      0%      0%  S             2816  nginx_helper.sh       
+  1947    3947      0%      0%      0%  S             6400  pman                  
+  1103    1096      0%      0%      0%  S            19200  ngiolite              
+  1096   15876      0%      0%      0%  S             6272  pman                  
+   864       2      0%      0%      0%  I                0  kworker/15:2-cgroup_  
+   859     852      0%      0%      0%  S            19200  ngiolite              
+   852   15876      0%      0%      0%  S             6400  pman                  
+   669       2      0%      0%      0%  S                0  SarIosdMond           
+   657     651      0%      0%      0%  S            20992  ncsshd                
+   651    3947      0%      0%      0%  S             6512  pman                  
+   533     526      0%      0%      0%  S            17792  ncsshd_bp             
+   526    3947      0%      0%      0%  S             6400  pman                  
+   412     404      0%      0%      0%  S            81276  dmiauthd              
+   409       1      0%      0%      0%  S             3184  nfsdcld               
+   408       1      0%      0%      0%  S             2500  rpc.idmapd            
+   404    3947      0%      0%      0%  S             6388  pman                  
+   394     387      0%      0%      0%  S             1920  audisp-syslog         
+   387       1      0%      0%      0%  S             2584  auditd                
+   320       2      0%      0%      0%  I                0  kworker/9:1H          
+   304       2      0%      0%      0%  I                0  kworker/2:2-events    
+   301       1      0%      0%      0%  S            10968  systemd-udevd         
+   287       2      0%      0%      0%  I                0  kworker/15:1H         
+   229       2      0%      0%      0%  I                0  kworker/4:1H          
+   220       2      0%      0%      0%  I                0  kworker/14:2-events   
+   219       2      0%      0%      0%  I                0  kworker/11:1H         
+   215       2      0%      0%      0%  I                0  kworker/14:1H         
+   211       2      0%      0%      0%  I                0  kworker/7:1H          
+   202       1      0%      0%      0%  S             7928  systemd-journal       
+   201       2      0%      0%      0%  I                0  kworker/5:1H          
+   200       2      0%      0%      0%  I                0  kworker/12:1H         
+   198       2      0%      0%      0%  I                0  kworker/3:1H          
+   196       2      0%      0%      0%  I                0  kworker/2:1H          
+   195       2      0%      0%      0%  I                0  kworker/1:1H          
+   184       2      0%      0%      0%  S                0  usb-storage           
+   183       2      0%      0%      0%  I                0  kworker/R-scsi_       
+   182       2      0%      0%      0%  S                0  scsi_eh_6             
+   180       2      0%      0%      0%  I                0  kworker/13:1H         
+   173       2      0%      0%      0%  I                0  kworker/R-ipv6_       
+   172       2      0%      0%      0%  I                0  kworker/10:1H         
+   171       2      0%      0%      0%  I                0  kworker/R-mld         
+   170       2      0%      0%      0%  I                0  kworker/R-kvub3       
+   169       2      0%      0%      0%  I                0  kworker/R-kvub3       
+   168       2      0%      0%      0%  I                0  kworker/R-kvub3       
+   167       2      0%      0%      0%  I                0  kworker/R-dm_bu       
+   166       2      0%      0%      0%  I                0  kworker/u32:4-edac-p  
+   165       2      0%      0%      0%  I                0  kworker/u32:3-events  
+   164       2      0%      0%      0%  I                0  kworker/R-scsi_       
+   163       2      0%      0%      0%  S                0  scsi_eh_5             
+   162       2      0%      0%      0%  I                0  kworker/R-scsi_       
+   161       2      0%      0%      0%  S                0  scsi_eh_4             
+   160       2      0%      0%      0%  I                0  kworker/R-scsi_       
+   159       2      0%      0%      0%  S                0  scsi_eh_3             
+   158       2      0%      0%      0%  I                0  kworker/R-scsi_       
+   157       2      0%      0%      0%  S                0  scsi_eh_2             
+   156       2      0%      0%      0%  I                0  kworker/R-scsi_       
+   155       2      0%      0%      0%  S                0  scsi_eh_1             
+   154       2      0%      0%      0%  I                0  kworker/R-scsi_       
+   153       2      0%      0%      0%  S                0  scsi_eh_0             
+   152       2      0%      0%      0%  I                0  kworker/R-nbd15       
+   151       2      0%      0%      0%  I                0  kworker/R-nbd14       
+   150       2      0%      0%      0%  I                0  kworker/R-nbd13       
+   149       2      0%      0%      0%  I                0  kworker/R-nbd12       
+   148       2      0%      0%      0%  I                0  kworker/R-nbd11       
+   147       2      0%      0%      0%  I                0  kworker/R-nbd10       
+   146       2      0%      0%      0%  I                0  kworker/R-nbd9-       
+   145       2      0%      0%      0%  I                0  kworker/R-nbd8-       
+   144       2      0%      0%      0%  I                0  kworker/R-nbd7-       
+   143       2      0%      0%      0%  I                0  kworker/R-nbd6-       
+   142       2      0%      0%      0%  I                0  kworker/R-nbd5-       
+   141       2      0%      0%      0%  I                0  kworker/R-nbd4-       
+   140       2      0%      0%      0%  I                0  kworker/R-nbd3-       
+   139       2      0%      0%      0%  I                0  kworker/R-nbd2-       
+   138       2      0%      0%      0%  I                0  kworker/R-nbd1-       
+   137       2      0%      0%      0%  I                0  kworker/R-nbd0-       
+   136       2      0%      0%      0%  I                0  kworker/u33:0         
+   135       2      0%      0%      0%  I                0  kworker/R-tpm-v       
+   134       2      0%      0%      0%  I                0  kworker/R-acpi_       
+   133       2      0%      0%      0%  I                0  kworker/15:1-events   
+   132       2      0%      0%      0%  I                0  kworker/14:1          
+   131       2      0%      0%      0%  I                0  kworker/13:1-events   
+   130       2      0%      0%      0%  I                0  kworker/11:1-events   
+   129       2      0%      0%      0%  I                0  kworker/10:1-events   
+   127       2      0%      0%      0%  I                0  kworker/7:1-cgroup_d  
+   125       2      0%      0%      0%  I                0  kworker/5:1-mm_percp  
+   124       2      0%      0%      0%  I                0  kworker/4:1-events    
+   123       2      0%      0%      0%  I                0  kworker/3:1           
+   121       2      0%      0%      0%  S                0  irq/31-aerdrv         
+   120       2      0%      0%      0%  S                0  irq/29-aerdrv         
+   119       2      0%      0%      0%  S                0  irq/28-aerdrv         
+   118       2      0%      0%      0%  S                0  irq/27-aerdrv         
+   117       2      0%      0%      0%  S                0  irq/25-aerdrv         
+   116       2      0%      0%      0%  I                0  kworker/R-kthro       
+   115       2      0%      0%      0%  I                0  kworker/12:1-events   
+   114       2      0%      0%      0%  I                0  kworker/R-nfsio       
+   113       2      0%      0%      0%  S                0  kswapd0               
+   112       2      0%      0%      0%  I                0  kworker/8:1-mm_percp  
+   111       2      0%      0%      0%  I                0  kworker/R-xprti       
+   109       2      0%      0%      0%  I                0  kworker/R-rpcio       
+   108       2      0%      0%      0%  S                0  watchdogd             
+   107       2      0%      0%      0%  I                0  kworker/R-md_bi       
+   106       2      0%      0%      0%  I                0  kworker/R-md          
+   105       2      0%      0%      0%  I                0  kworker/R-tpm_d       
+   104       2      0%      0%      0%  I                0  kworker/R-kbloc       
+   103       2      0%      0%      0%  S                0  kcompactd0            
+   102       2      0%      0%      0%  I                0  kworker/R-write       
+   100       2      0%      0%      0%  S                0  oom_reaper            
+    98       2      0%      0%      0%  S                0  khungtaskd            
+    96       2      0%      0%      0%  S                0  kauditd               
+    95       2      0%      0%      0%  I                0  kworker/R-inet_       
+    94       2      0%      0%      0%  S                0  kdevtmpfs             
+    93       2      0%      0%      0%  I                0  kworker/15:0H-kblock  
+    91       2      0%      0%      0%  T                0  ksoftirqd/15          
+    90       2      0%      0%      0%  T                0  migration/15          
+    89       2      0%      0%      0%  T                0  cpuhp/15              
+    88       2      0%      0%      0%  I                0  kworker/14:0H-kblock  
+    86       2      0%      0%      0%  T                0  ksoftirqd/14          
+    85       2      0%      0%      0%  T                0  migration/14          
+    84       2      0%      0%      0%  T                0  cpuhp/14              
+    83       2      0%      0%      0%  I                0  kworker/13:0H-kblock  
+    82       2      0%      0%      0%  I                0  kworker/13:0-events   
+    81       2      0%      0%      0%  T                0  ksoftirqd/13          
+    80       2      0%      0%      0%  T                0  migration/13          
+    79       2      0%      0%      0%  T                0  cpuhp/13              
+    78       2      0%      0%      0%  I                0  kworker/12:0H-kblock  
+    76       2      0%      0%      0%  T                0  ksoftirqd/12          
+    75       2      0%      0%      0%  T                0  migration/12          
+    74       2      0%      0%      0%  T                0  cpuhp/12              
+    73       2      0%      0%      0%  I                0  kworker/11:0H-kblock  
+    72       2      0%      0%      0%  I                0  kworker/11:0-cgroup_  
+    71       2      0%      0%      0%  T                0  ksoftirqd/11          
+    70       2      0%      0%      0%  T                0  migration/11          
+    69       2      0%      0%      0%  T                0  cpuhp/11              
+    68       2      0%      0%      0%  I                0  kworker/10:0H-kblock  
+    67       2      0%      0%      0%  I                0  kworker/10:0-events_  
+    66       2      0%      0%      0%  S                0  ksoftirqd/10          
+    65       2      0%      0%      0%  S                0  migration/10          
+    64       2      0%      0%      0%  S                0  cpuhp/10              
+    63       2      0%      0%      0%  I                0  kworker/9:0H-kblockd  
+    62       2      0%      0%      0%  I                0  kworker/9:0-mm_percp  
+    61       2      0%      0%      0%  S                0  ksoftirqd/9           
+    60       2      0%      0%      0%  S                0  migration/9           
+    59       2      0%      0%      0%  S                0  cpuhp/9               
+    58       2      0%      0%      0%  I                0  kworker/8:0H-kblockd  
+    57       2      0%      0%      0%  I                0  kworker/8:0-cgroup_d  
+    56       2      0%      0%      0%  S                0  ksoftirqd/8           
+    55       2      0%      0%      0%  S                0  migration/8           
+    54       2      0%      0%      0%  S                0  cpuhp/8               
+    53       2      0%      0%      0%  I                0  kworker/7:0H-kblockd  
+    52       2      0%      0%      0%  I                0  kworker/7:0-mm_percp  
+    51       2      0%      0%      0%  S                0  ksoftirqd/7           
+    50       2      0%      0%      0%  S                0  migration/7           
+    49       2      0%      0%      0%  S                0  cpuhp/7               
+    48       2      0%      0%      0%  I                0  kworker/6:0H-kblockd  
+    47       2      0%      0%      0%  I                0  kworker/6:0-mm_percp  
+    46       2      0%      0%      0%  S                0  ksoftirqd/6           
+    45       2      0%      0%      0%  S                0  migration/6           
+    44       2      0%      0%      0%  S                0  cpuhp/6               
+    43       2      0%      0%      0%  I                0  kworker/5:0H-kblockd  
+    42       2      0%      0%      0%  I                0  kworker/5:0-events    
+    41       2      0%      0%      0%  S                0  ksoftirqd/5           
+    40       2      0%      0%      0%  S                0  migration/5           
+    39       2      0%      0%      0%  S                0  cpuhp/5               
+    38       2      0%      0%      0%  I                0  kworker/4:0H-kblockd  
+    37       2      0%      0%      0%  I                0  kworker/4:0-events    
+    36       2      0%      0%      0%  S                0  ksoftirqd/4           
+    35       2      0%      0%      0%  S                0  migration/4           
+    34       2      0%      0%      0%  S                0  cpuhp/4               
+    33       2      0%      0%      0%  I                0  kworker/3:0H-kblockd  
+    32       2      0%      0%      0%  I                0  kworker/3:0-mm_percp  
+    31       2      0%      0%      0%  S                0  ksoftirqd/3           
+    30       2      0%      0%      0%  S                0  migration/3           
+    29       2      0%      0%      0%  S                0  cpuhp/3               
+    28       2      0%      0%      0%  I                0  kworker/2:0H-kblockd  
+    27       2      0%      0%      0%  I                0  kworker/2:0-mm_percp  
+    26       2      0%      0%      0%  S                0  ksoftirqd/2           
+    25       2      0%      0%      0%  S                0  migration/2           
+    24       2      0%      0%      0%  S                0  cpuhp/2               
+    22       2      0%      0%      0%  I                0  kworker/1:0-events_f  
+    21       2      0%      0%      0%  S                0  ksoftirqd/1           
+    20       2      0%      0%      0%  S                0  migration/1           
+    19       2      0%      0%      0%  S                0  cpuhp/1               
+    18       2      0%      0%      0%  S                0  cpuhp/0               
+    17       2      0%      0%      0%  S                0  migration/0           
+    16       2      0%      0%      0%  I                0  rcu_sched             
+    15       2      0%      0%      0%  S                0  ksoftirqd/0           
+    14       2      0%      0%      0%  I                0  rcu_tasks_trace_kthr  
+    13       2      0%      0%      0%  I                0  rcu_tasks_rude_kthre  
+    12       2      0%      0%      0%  I                0  kworker/R-mm_pe       
+    10       2      0%      0%      0%  I                0  kworker/0:1-events    
+     9       2      0%      0%      0%  I                0  kworker/0:0H-kblockd  
+     8       2      0%      0%      0%  I                0  kworker/0:0-cgroup_d  
+     7       2      0%      0%      0%  I                0  kworker/R-netns       
+     6       2      0%      0%      0%  I                0  kworker/R-slub_       
+     5       2      0%      0%      0%  I                0  kworker/R-rcu_p       
+     4       2      0%      0%      0%  I                0  kworker/R-rcu_g       
+     3       2      0%      0%      0%  S                0  pool_workqueue_relea  
+     2       0      0%      0%      0%  S                0  kthreadd              
+     1       0      0%      0%      0%  S            18664  systemd               
+
+
+=== show platform software object-manager chassis active F0 childless-delete-object ===
+Load for five secs: 6%/2%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:29.662 IST Tue Jun 16 2026
+
+
+=== show platform software object-manager chassis active F0 pending-issue-update ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:30.244 IST Tue Jun 16 2026
+
+
+=== show wireless stats ap mac 7872.5d1c.4fa0 discovery detailed ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:30.794 IST Tue Jun 16 2026
+
+AP Radio MAC   7872.5d1c.4fa0
+==========================================================================
+AP Ethernet MAC                            : 7872.5d1c.2c10
+IP Address                                 : 192.168.0.213
+Discovery requests received                : 6
+Discovery response sent                    : 6
+Unsuccessful requests processed            : 0
+Last discovery failure type                : None
+Last successful discovery attempt time     : 06/16/26 10:30:45
+Last unsuccessful discovery attempt time   : NA
+Last successful discovery Meraki attempt time     : NA
+Last unsuccessful discovery Meraki attempt time   : NA
+Last successful discovery Meraki L2 attempt time     : NA
+Last unsuccessful discovery Meraki L2 attempt time   : NA
+
+
+=== show wireless stats ap mac 7872.5d1c.4fa0 join detailed ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:31.390 IST Tue Jun 16 2026
+
+Discovery phase statistics
+  Discovery requests received                             : 6
+  Successful discovery responses sent                     : 6
+  Unsuccessful discovery request processing               : 0
+  Reason for last unsuccessful discovery attempt          : NA
+  Time at last successful discovery attempt               : 06/16/2026 10:30:45
+  Time at last unsuccessful discovery attempt             : NA
+
+Control Dtls phase statistics
+  Dtls session requests received                          : 2
+  Established Dtls session                                : 1
+  Unsuccessful Dtls session                               : 0
+  Reason for last unsuccessful dtls session               : NA
+  Time at last successful dtls session                    : 06/16/2026 10:30:55
+  Time at last unsuccessful dtls session                  : NA
+
+Join phase statistics
+  Join requests received                                  : 1
+  Successful join responses sent                          : 1
+  Unsuccessful join request processing                    : 0
+  Reason for last unsuccessful join attempt               : NA
+  Time at last successful join attempt                    : 06/16/2026 10:30:58
+  Time at last unsuccessful join attempt                  : NA
+
+Configuration phase statistics
+  Configuration requests received                         : 6
+  Successful configuration responses sent                 : 6
+  Unsuccessful configuration request processing           : 0
+  Reason for last unsuccessful configuration attempt      : NA
+  Time at last successful configuration attempt           : 06/16/2026 10:31:01
+  Time at last unsuccessful configuration attempt         : NA
+
+Data Dtls phase statistics
+  Dtls session requests received                          : 0
+  Established Dtls session                                : 0
+  Unsuccessful dtls session                               : 1
+  Reason for last unsuccessful dtls session               : DTLS Handshake alert from Peer
+  Time at last successful dtls session                    : NA
+  Time at last unsuccessful dtls session                  : 01/01/2017 05:35:44
+
+Last AP message decryption failure details
+  Reason for last message decryption failure              : NA
+
+AP reported disconnect detail
+  Disconnect reason from AP                               : NA
+AP reported reboot detail
+  Reboot reason from AP                                   : No reboot reason
+
+Last AP disconnect details
+  Last Disconnect Phase                                   : Run
+  Last Disconnect Reason                                  : Wtp reset config cmd sent
+  Last Disconnect Time                                    : 06/16/2026 12:05:55
+  Current Join Status                                     : Not Joined
+
+
+=== show logging profile wireless start last 15 min filter mac 7872.5d1c.4fa0 to-file harddisk:AP_DISCONNECT_ALWAYS_ON_LOG_20260616063551.log ===
+(skipped — unsupported or error response)
+
+=== show ap name Ap3800e_11StaticIp config general ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:33.099 IST Tue Jun 16 2026
+Invalid AP Name
+
+
+=== show ap name Ap3800e_11StaticIp uptime ===
+(skipped — unsupported or error response)
+
+
+── WLC AP TELEMETRY ──
+
+=== show ap uptime ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:34.287 IST Tue Jun 16 2026
+
+Number of APs: 1
+
+
+AP Name                          Ethernet MAC    Radio MAC       AP Up Time                                          Association Up Time
+---------------------------------------------------------------------------------------------------------------------------------------------------
+CW9166                           6849.927a.3e30  fc58.9a19.1320  1 hour 40 minutes 48 seconds                        1 hour 36 minutes 57 seconds                 
+
+
+=== show ap summary ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:34.868 IST Tue Jun 16 2026
+Number of APs: 1
+
+CC = Country Code
+RD = Regulatory Domain
+
+AP Name                          Slots AP Model             Ethernet MAC   Radio MAC      CC   RD   IP Address                                State        Location
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CW9166                           3     CW9166D1-B           6849.927a.3e30 fc58.9a19.1320 US   -B   192.168.0.4                               Registered   AigleDen                        
+
+
+=== show ap crash-file ===
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:35.424 IST Tue Jun 16 2026
+
+File Location: BOOTFLASH
+AP Name                          Crash File                         Radio Slot 0                       Radio Slot 1                       Radio Slot 2                      Radio Slot 3
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+=== show ap name Ap3800e_11StaticIp config general ===
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:36.073 IST Tue Jun 16 2026
+Invalid AP Name
+
+
+=== show ap name Ap3800e_11StaticIp capwap retransmit ===
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:36.802 IST Tue Jun 16 2026
+
+Invalid AP Name 
+
+
+=== show ap name Ap3800e_11StaticIp ethernet statistics ===
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:37.402 IST Tue Jun 16 2026
+
+Ethernet Stats for AP 
+
+
+
+=== show ap name Ap3800e_11StaticIp environment ===
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:37.963 IST Tue Jun 16 2026
+
+Environment information for AP 
+Temperature(C/F)         :   NA
+Temperature state        :   NA
+Heater                   :   NA
+Battery                  :   NA
+Orientation              :   NA
+Ethernet : 
+
+
+=== show platform resources ===
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:38.616 IST Tue Jun 16 2026
+**State Acronym: H - Healthy, W - Warning, C - Critical                                             
+Resource                 Usage                 Max             Warning         Critical        State
+----------------------------------------------------------------------------------------------------
+RP0 (ok, active)                                                                               H    
+ Control Processor       9.02%                 100%            80%             90%             H    
+  DRAM                   5080MB(32%)           15458MB         88%             93%             H    
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:38.691 IST Tue Jun 16 2026
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:38.707 IST Tue Jun 16 2026
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:38.721 IST Tue Jun 16 2026
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:38.736 IST Tue Jun 16 2026
+Load for five secs: 3%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:38.752 IST Tue Jun 16 2026
+ESP0(ok, active)                                                                               H    
+ QFP                                                                                           H    
+  DRAM                   175055KB(9%)          1835008KB       85%             95%             H    
+  IRAM                   414KB(20%)            2048KB          85%             95%             H    
+  CPU Utilization        0.00%                 100%            60%             80%             H    
+
+
+=== show processes cpu platform | include wncd ===
+ 23175   23151      0%      0%      0%  S           395260  wncd_0                
+
+=== show ap image summary ===
+Load for five secs: 1%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:43.591 IST Tue Jun 16 2026
+
+Total number of APs  : 1
+
+
+Number of APs 
+        Initiated                  : 0
+        Downloading                : 0
+        Predownloading             : 0
+        Completed downloading      : 0
+        Completed predownloading   : 0
+        Not Supported              : 0
+        Failed to Predownload      : 0
+        Predownload in progress    : No
+
+
+=== show logging | include AP_JOIN_DISJOIN ===
+Jan  1 00:05:23.651: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac:  Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:23.651: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac:  Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:44.594: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac:  Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:44.594: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac:  Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined DTLS close alert from peer
+Jan  1 00:05:55.353: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac:  Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Certificate verify failed
+Jan  1 00:05:55.353: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac:  Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Certificate verify failed
+Jun 16 05:00:38.367: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: CW9166 Mac: fc58.9a19.1320 Session-IP: 192.168.0.4[5256] 192.168.0.100[5246] Ethernet MAC: 6849.927a.3e30  Joined
+Jun 16 05:01:01.165: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac: 7872.5d1c.4fa0 Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Ethernet MAC: 7872.5d1c.2c10  Joined
+Jun 16 05:01:06.674: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac: cc7f.755a.e740 Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Ethernet MAC: 6c41.0ecc.ad80  Joined
+Jun 16 06:16:31.345: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9105 Mac: 3c41.0e3a.ca00 Session-IP: 192.168.0.212[5276] 192.168.0.100[5246] Ethernet MAC: 5c71.0dec.f340  Joined
+Jun 16 06:35:34.600: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9115D Mac: cc7f.755a.e740 Session-IP: 192.168.0.48[5261] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+Jun 16 06:35:44.689: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap9105 Mac: 3c41.0e3a.ca00 Session-IP: 192.168.0.212[5276] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+Jun 16 06:35:55.459: %CAPWAPAC_SMGR_TRACE_MESSAGE-5-AP_JOIN_DISJOIN: Chassis 1 R0/0: wncd: AP Event: AP Name: Ap3800e_11StaticIp Mac: 7872.5d1c.4fa0 Session-IP: 192.168.0.213[5256] 192.168.0.100[5246] Disjoined Wtp reset config cmd sent
+
+=== show wireless stats ap history ===
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:45.604 IST Tue Jun 16 2026
+
+AP Name                          Radio MAC       Event      Time               Recent Disconnect Time   Disconnect Reason          Disconnect Count
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ap9105                           3c41.0e3a.ca00  Disjoined  06/16/26 12:05:44  NA                       Wtp reset config cmd sent  1 
+Ap9105                           3c41.0e3a.ca00  Joined     06/16/26 11:46:31  NA                       NA                         NA
+CW9166                           fc58.9a19.1320  Joined     06/16/26 10:30:38  NA                       NA                         NA
+CW9166                           fc58.9a19.1320  Disjoined  01/01/17 05:35:23  NA                       DTLS close alert from peer 1 
+Ap9115D                          cc7f.755a.e740  Disjoined  06/16/26 12:05:34  NA                       Wtp reset config cmd sent  1 
+Ap9115D                          cc7f.755a.e740  Joined     06/16/26 10:31:06  NA                       NA                         NA
+Ap9115D                          cc7f.755a.e740  Disjoined  01/01/17 05:35:55  NA                       Certificate verify failed  1 
+Ap3800e_11StaticIp               7872.5d1c.4fa0  Disjoined  06/16/26 12:05:55  NA                       Wtp reset config cmd sent  1 
+Ap3800e_11StaticIp               7872.5d1c.4fa0  Joined     06/16/26 10:31:01  NA                       NA                         NA
+Ap3800e_11StaticIp               7872.5d1c.4fa0  Disjoined  01/01/17 05:35:44  NA                       DTLS close alert from peer 1 
+
+
+=== dir all | include crash ===
+40      -rw-            14027  Apr 21 2026 05:50:54 +05:30  :A:p:3800e_11StaticIp_78725d1c4fa0.crash
+36      -rw-           100604  Aug 30 2024 19:08:34 +05:30  Ap9120_d4e880198660.crash
+32      -rw-            82292  Nov 28 2023 16:18:49 +05:30  AP5C71.0DEC.F1EC_3c410e3abf60.crash
+
+=== show processes cpu platform sorted | exclude      0%      0%      0% ===
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:49.473 IST Tue Jun 16 2026
+CPU utilization for five seconds:  9%, one minute:  6%, five minutes:  5%
+Core 0: CPU utilization for five seconds: 28%, one minute:  8%, five minutes:  3%
+Core 1: CPU utilization for five seconds:  8%, one minute:  9%, five minutes:  3%
+Core 2: CPU utilization for five seconds:  3%, one minute:  4%, five minutes:  3%
+Core 3: CPU utilization for five seconds:  5%, one minute:  5%, five minutes:  6%
+Core 4: CPU utilization for five seconds:  2%, one minute:  1%, five minutes:  1%
+Core 5: CPU utilization for five seconds:  5%, one minute:  5%, five minutes:  5%
+Core 6: CPU utilization for five seconds:  1%, one minute:  1%, five minutes:  1%
+Core 7: CPU utilization for five seconds: 43%, one minute: 38%, five minutes: 38%
+Core 8: CPU utilization for five seconds:  0%, one minute:  0%, five minutes:  0%
+Core 9: CPU utilization for five seconds:  0%, one minute:  0%, five minutes:  0%
+Core 10: CPU utilization for five seconds:  0%, one minute:  0%, five minutes:  0%
+   Pid    PPid    5Sec    1Min    5Min  Status        Size  Name                  
+--------------------------------------------------------------------------------
+ 22329   22305     61%     58%     57%  S           352896  ucode_pkt_PPE0        
+ 26116   26108     33%      8%      1%  S           133056  smand                 
+  4548    4405      3%      2%      1%  S          1527868  linux_iosd-imag       
+ 24163   24142      1%      1%      1%  S           240768  fman_fp_image         
+ 32605   32563      0%      3%      1%  S           290676  confd.smp             
+
+
+=== show platform software object-manager chassis active F0 childless-delete-object ===
+Load for five secs: 5%/1%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:53.128 IST Tue Jun 16 2026
+
+
+=== show platform software object-manager chassis active F0 pending-issue-update ===
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:55.640 IST Tue Jun 16 2026
+
+
+=== show wireless stats ap mac 7872.5d1c.4fa0 discovery detailed ===
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:56.206 IST Tue Jun 16 2026
+
+AP Radio MAC   7872.5d1c.4fa0
+==========================================================================
+AP Ethernet MAC                            : 7872.5d1c.2c10
+IP Address                                 : 192.168.0.213
+Discovery requests received                : 6
+Discovery response sent                    : 6
+Unsuccessful requests processed            : 0
+Last discovery failure type                : None
+Last successful discovery attempt time     : 06/16/26 10:30:45
+Last unsuccessful discovery attempt time   : NA
+Last successful discovery Meraki attempt time     : NA
+Last unsuccessful discovery Meraki attempt time   : NA
+Last successful discovery Meraki L2 attempt time     : NA
+Last unsuccessful discovery Meraki L2 attempt time   : NA
+
+
+=== show wireless stats ap mac 7872.5d1c.4fa0 join detailed ===
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:56.763 IST Tue Jun 16 2026
+
+Discovery phase statistics
+  Discovery requests received                             : 6
+  Successful discovery responses sent                     : 6
+  Unsuccessful discovery request processing               : 0
+  Reason for last unsuccessful discovery attempt          : NA
+  Time at last successful discovery attempt               : 06/16/2026 10:30:45
+  Time at last unsuccessful discovery attempt             : NA
+
+Control Dtls phase statistics
+  Dtls session requests received                          : 2
+  Established Dtls session                                : 1
+  Unsuccessful Dtls session                               : 0
+  Reason for last unsuccessful dtls session               : NA
+  Time at last successful dtls session                    : 06/16/2026 10:30:55
+  Time at last unsuccessful dtls session                  : NA
+
+Join phase statistics
+  Join requests received                                  : 1
+  Successful join responses sent                          : 1
+  Unsuccessful join request processing                    : 0
+  Reason for last unsuccessful join attempt               : NA
+  Time at last successful join attempt                    : 06/16/2026 10:30:58
+  Time at last unsuccessful join attempt                  : NA
+
+Configuration phase statistics
+  Configuration requests received                         : 6
+  Successful configuration responses sent                 : 6
+  Unsuccessful configuration request processing           : 0
+  Reason for last unsuccessful configuration attempt      : NA
+  Time at last successful configuration attempt           : 06/16/2026 10:31:01
+  Time at last unsuccessful configuration attempt         : NA
+
+Data Dtls phase statistics
+  Dtls session requests received                          : 0
+  Established Dtls session                                : 0
+  Unsuccessful dtls session                               : 1
+  Reason for last unsuccessful dtls session               : DTLS Handshake alert from Peer
+  Time at last successful dtls session                    : NA
+  Time at last unsuccessful dtls session                  : 01/01/2017 05:35:44
+
+Last AP message decryption failure details
+  Reason for last message decryption failure              : NA
+
+AP reported disconnect detail
+  Disconnect reason from AP                               : NA
+AP reported reboot detail
+  Reboot reason from AP                                   : No reboot reason
+
+Last AP disconnect details
+  Last Disconnect Phase                                   : Run
+  Last Disconnect Reason                                  : Wtp reset config cmd sent
+  Last Disconnect Time                                    : 06/16/2026 12:05:55
+  Current Join Status                                     : Not Joined
+
+
+=== show logging profile wireless start last 15 min filter mac 7872.5d1c.4fa0 to-file flash:ALWAYS_ON_7872.5d1c.4fa0.log ===
+Load for five secs: 0%/0%; one minute: 1%; five minutes: 0%
+Time source is NTP, 12:07:57.411 IST Tue Jun 16 2026
+Logging display requested on 2026/06/16 12:07:57 (IST) for Hostname: [WLC], Model: [C9800-L-F-K9        ], Version: [17.24.01], SN: [FOC24521J3A], MD_SN: [FCL245200HY]
+
+Displaying logs from the last 0 days, 0 hours, 15 minutes, 0 seconds
+executing cmd on chassis: 1; rp slot: 0;  location: local ...
+Files being merged in the background, please check [/bootflash/ALWAYS_ON_7872.5d1c.4fa0.log] output file
+Unified Decoder Library Init .. DONE
+
+unified trace decoder estimates: [1] number of files, [44114] number of messages
+	 that may be processed. Use CTRL+SHIFT+6 to break.
+Found 1 UTF Streams
+	 2026-06-16 12:07:58.121495 - unified trace decoder estimate: processed 6%
+	 2026-06-16 12:07:58.124071 - unified trace decoder estimate: processed 11%
+	 2026-06-16 12:07:58.128279 - unified trace decoder estimate: processed 18%
+	 2026-06-16 12:07:58.132382 - unified trace decoder estimate: processed 24%
+	 2026-06-16 12:07:58.135098 - unified trace decoder estimate: processed 29%
+	 2026-06-16 12:07:58.137917 - unified trace decoder estimate: processed 34%
+	 2026-06-16 12:07:58.142196 - unified trace decoder estimate: processed 40%
+	 2026-06-16 12:07:58.145436 - unified trace decoder estimate: processed 45%
+	 2026-06-16 12:07:58.149632 - unified trace decoder estimate: processed 52%
+	 2026-06-16 12:07:58.156247 - unified trace decoder estimate: processed 58%
+	 2026-06-16 12:07:58.161285 - unified trace decoder estimate: processed 63%
+	 2026-06-16 12:07:58.165952 - unified trace decoder estimate: processed 68%
+	 2026-06-16 12:07:58.173197 - unified trace decoder estimate: processed 74%
+	 2026-06-16 12:07:58.259903 - unified trace decoder estimate: processed 79%
+	 2026-06-16 12:07:58.267355 - unified trace decoder estimate: processed 86%
+	 2026-06-16 12:07:59.178977 - unified trace decoder estimate: processed 92%
+	 2026-06-16 12:07:59.182844 - unified trace decoder estimate: processed 97%
+	 2026-06-16 12:07:59.187145 - unified trace decoder estimate: processed 100%
+	 2026-06-16 12:07:59.187160 - unified trace decoder : processing complete Result:[Success]
+
+===========================================================
+======= Unified Trace Decoder Information/Statistics ======
+===========================================================
+----------------- Decoder Input Information ---------------
+===========================================================
+ Num of Unique Streams .. 1
+ Total UTF To Process ... 1
+ Total UTM To Process ... 44114
+ UTM Process Filter ..... cpp_cp,fman_fp,fman_rp,fman-rp,fman-fp,fed,mobilityd,nmspd,odm_proxy,rogued,rrm,repm,wncd,wncmgrd,wncd_x,IOSRP,smd,odm,wstatsd,linux-iosd-image,wncloudm,locationd,wdad,cwcd,cwcmgrd,cwc_mobilityd
+ MRST Filter Rules ...... 29
+===========================================================
+----------------- Decoder Output Information --------------
+===========================================================
+ First UTM TimeStamp ............... 2026/06/16 11:31:03.271226434
+ Last UTM TimeStamp ................ 2026/06/16 12:07:56.920066051
+ UTM [Skipped / Rendered / Total] .. 39980 / 4134 / 44114
+ UTM [ENCODED] ..................... 244
+ UTM [PLAIN TEXT] .................. 59
+ UTM [DYN LIB] ..................... 0
+ UTM [MODULE ID] ................... 0
+ UTM [TDL TAN] ..................... 18
+ UTM [APP CONTEXT] ................. 9998
+ UTM [MARKER] ...................... 0
+ UTM [PCAP] ........................ 0
+ UTM [LUID NOT FOUND] .............. 0
+ UTM Level [EMERGENCY / ALERT / CRITICAL / ERROR] .. 0 / 0 / 0 / 27
+ UTM Level [WARNING / NOTICE / INFO / DEBUG] ....... 1 / 264 / 5 / 6
+ UTM Level [VERBOSE / NOISE / INVALID] ............. 0 / 0 / 3831
+===========================================================
+

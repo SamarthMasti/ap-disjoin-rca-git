@@ -1,0 +1,12 @@
+{
+  "3c:41:0e:3a:ca:00": {
+    "ap_mac": "3c:41:0e:3a:ca:00",
+    "ap_name": "Ap9105",
+    "disjoin_count": 1,
+    "ip": "192.168.0.212",
+    "last_disjoin_time": "2026-06-15T13:36:14.990538+00:00",
+    "workflow_active": true,
+    "workflow_expiry_time": "2026-06-15T14:06:14.990561+00:00",
+    "workflow_start_time": "2026-06-15T13:36:14.990538+00:00"
+  }
+}

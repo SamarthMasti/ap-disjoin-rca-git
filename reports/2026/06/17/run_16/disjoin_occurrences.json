@@ -1,0 +1,26 @@
+[
+  {
+    "ap_name": "Ap3800e_11StaticIp",
+    "mac": "78:72:5d:1c:4f:a0",
+    "ip": "192.168.0.213",
+    "timestamp": 1781697483.5901132,
+    "event_time": "2026-06-17 11:58:03 UTC",
+    "used": false
+  },
+  {
+    "ap_name": "Ap9115D",
+    "mac": "cc:7f:75:5a:e7:40",
+    "ip": "192.168.0.15",
+    "timestamp": 1781697621.596388,
+    "event_time": "2026-06-17 12:00:21 UTC",
+    "used": false
+  },
+  {
+    "ap_name": "Ap9105",
+    "mac": "3c:41:0e:3a:ca:00",
+    "ip": "192.168.0.212",
+    "timestamp": 1781697748.9007154,
+    "event_time": "2026-06-17 12:02:28 UTC",
+    "used": false
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "last_updated": "2026-06-17T06:25:23.039439+00:00",
+  "per_ap": {
+    "78:72:5d:1c:4f:a0": {
+      "ap_name": "Ap3800e_11StaticIp",
+      "disjoin_count": 2,
+      "last_disjoin": "2026-06-17T06:22:57.562029+00:00"
+    },
+    "cc:7f:75:5a:e7:40": {
+      "ap_name": "Ap9115D",
+      "disjoin_count": 1,
+      "last_disjoin": "2026-06-17T06:25:23.008419+00:00"
+    }
+  },
+  "total_disjoins": 3,
+  "total_events": 0
+}

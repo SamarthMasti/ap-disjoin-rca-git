@@ -1,0 +1,39 @@
+AP Disjoin Session — 192.168.0.100
+==================================================
+
+AP  : Ap9115D  [cc:7f:75:5a:e7:40]
+Time: 2026-06-17T07:42:19.781186+00:00
+
+  [WLC CONTROLLER DIAGNOSTICS]
+  Confidence : HIGH
+  Cause      : AP watchdog / kernel panic triggered reboot → disjoin
+  Action     : Check AP hardware health and firmware version
+  Commands   : 31 collected
+  File       : C:\AP_DIJSOIN\reports\2026\06\17\run_4\wlc_telemetry_192_168_0_15_20260617074219.txt
+
+  [WLC AP TELEMETRY]
+  Confidence : MEDIUM
+  Cause      : Crash file exists but AP uptime suggests it predates this disjoin event. May be a prior unrelated crash.
+  Action     : Check crash-file timestamp vs disjoin timestamp. If timestamps align, open TAC case.
+  Commands   : 19 collected via WLC CLI
+  File       : C:\AP_DIJSOIN\reports\2026\06\17\run_4\wlc_telemetry_192_168_0_15_20260617074219.txt
+
+  [DIRECT AP SSH TELEMETRY]
+  No output collected (AP SSH unreachable or no IP available)
+  File       : C:\AP_DIJSOIN\reports\2026\06\17\run_4\ap_telemetry_192_168_0_15_20260617074219.txt
+
+
+==========================
+AP DISJOIN HISTORY
+==========================
+
+AP Name : Ap9115D
+MAC     : cc:7f:75:5a:e7:40
+IP      : 192.168.0.15
+
+Total Disjoins : 3
+
+Disjoin Timeline:
+  1. 2026-06-17 07:42:22 UTC
+  2. 2026-06-17 07:42:22 UTC
+  3. 2026-06-17 07:47:51 UTC
