@@ -1522,16 +1522,30 @@ static const char* const __pyx_f[] = {
 /* #### Code section: type_declarations ### */
 
 /*--- Type declarations ---*/
-struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler;
+struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start;
+struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler;
 
-/* "backend/snmp/trap_receiver.py":13
+/* "backend/snmp/trap_receiver.py":71
+ *         self._thread: threading.Thread | None = None
+ * 
+ *     def start(self) -> None:             # <<<<<<<<<<<<<<
+ *         receiver = self
+ * 
+*/
+struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start {
+  PyObject_HEAD
+  PyObject *__pyx_v_receiver;
+};
+
+
+/* "backend/snmp/trap_receiver.py":145
  * 
  * 
  * def make_snmp_trap_handler(             # <<<<<<<<<<<<<<
  *     ts: Callable[[], str],
  *     on_eem_trigger: Callable[[str, str], None],
 */
-struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler {
+struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler {
   PyObject_HEAD
   PyObject *__pyx_v_on_eem_trigger;
   PyObject *__pyx_v_ts;
@@ -1870,6 +1884,14 @@ static CYTHON_INLINE int __Pyx_ParseKeywords(
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
 
+/* ArgTypeTestFunc.export */
+static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact);
+
+/* ArgTypeTest.proto */
+#define __Pyx_ArgTypeTest(obj, type, none_allowed, name, exact)\
+    ((likely(__Pyx_IS_TYPE(obj, type) | (none_allowed && (obj == Py_None)))) ? 1 :\
+        __Pyx__ArgTypeTest(obj, type, name, exact))
+
 /* GetItemInt.proto */
 #define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck, has_gil, unsafe_shared)\
     (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
@@ -1891,6 +1913,24 @@ static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize
 static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
 static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
                                                      int is_list, int wraparound, int boundscheck, int unsafe_shared);
+
+/* ObjectGetItem.proto */
+#if CYTHON_USE_TYPE_SLOTS
+static CYTHON_INLINE PyObject *__Pyx_PyObject_GetItem(PyObject *obj, PyObject *key);
+#else
+#define __Pyx_PyObject_GetItem(obj, key)  PyObject_GetItem(obj, key)
+#endif
+
+/* PyLongCompare.proto */
+static CYTHON_INLINE int __Pyx_PyLong_BoolEqObjC(PyObject *op1, PyObject *op2, long intval, long inplace);
+
+/* PyLongBinop.proto */
+#if !CYTHON_COMPILING_IN_PYPY
+static CYTHON_INLINE PyObject* __Pyx_PyLong_AddObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check);
+#else
+#define __Pyx_PyLong_AddObjC(op1, op2, intval, inplace, zerodivision_check)\
+    (inplace ? PyNumber_InPlaceAdd(op1, op2) : PyNumber_Add(op1, op2))
+#endif
 
 /* PyObjectVectorCallKwBuilder.proto (used by PyObjectVectorCallMethodKwBuilder) */
 CYTHON_UNUSED static int __Pyx_VectorcallBuilder_AddArg_Check(PyObject *key, PyObject *value, PyObject *builder, PyObject **args, int n);
@@ -1917,81 +1957,41 @@ static int __Pyx_VectorcallBuilder_AddArgStr(const char *key, PyObject *value, P
 static PyObject *__Pyx_Object_VectorcallMethod_CallFromBuilder(PyObject *name, PyObject *const *args, size_t nargsf, PyObject *kwnames);
 #endif
 
-/* GetTopmostException.proto (used by SaveResetException) */
-#if CYTHON_USE_EXC_INFO_STACK && CYTHON_FAST_THREAD_STATE
-static _PyErr_StackItem * __Pyx_PyErr_GetTopmostException(PyThreadState *tstate);
-#endif
-
-/* SaveResetException.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_ExceptionSave(type, value, tb)  __Pyx__ExceptionSave(__pyx_tstate, type, value, tb)
-static CYTHON_INLINE void __Pyx__ExceptionSave(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
-#define __Pyx_ExceptionReset(type, value, tb)  __Pyx__ExceptionReset(__pyx_tstate, type, value, tb)
-static CYTHON_INLINE void __Pyx__ExceptionReset(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
+/* PyObjectFastCallMethod.proto */
+#if CYTHON_VECTORCALL && PY_VERSION_HEX >= 0x03090000
+#define __Pyx_PyObject_FastCallMethod(name, args, nargsf) PyObject_VectorcallMethod(name, args, nargsf, NULL)
 #else
-#define __Pyx_ExceptionSave(type, value, tb)   PyErr_GetExcInfo(type, value, tb)
-#define __Pyx_ExceptionReset(type, value, tb)  PyErr_SetExcInfo(type, value, tb)
+static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *args, size_t nargsf);
 #endif
 
-/* GetException.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_GetException(type, value, tb)  __Pyx__GetException(__pyx_tstate, type, value, tb)
-static int __Pyx__GetException(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
+/* ListAppend.proto */
+#if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
+static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len) & likely(len > (L->allocated >> 1))) {
+        Py_INCREF(x);
+        #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030d0000
+        L->ob_item[len] = x;
+        #else
+        PyList_SET_ITEM(list, len, x);
+        #endif
+        __Pyx_SET_SIZE(list, len + 1);
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
 #else
-static int __Pyx_GetException(PyObject **type, PyObject **value, PyObject **tb);
+#define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
 #endif
 
-/* RaiseClosureNameError.proto */
-static void __Pyx_RaiseClosureNameError(const char *varname);
-
-/* PyObjectCallNoArg.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
-
-/* PyObjectFormatSimple.proto */
-#if CYTHON_COMPILING_IN_PYPY
-    #define __Pyx_PyObject_FormatSimple(s, f) (\
-        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
-        PyObject_Format(s, f))
-#elif CYTHON_USE_TYPE_SLOTS
-    #define __Pyx_PyObject_FormatSimple(s, f) (\
-        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
-        likely(PyLong_CheckExact(s)) ? PyLong_Type.tp_repr(s) :\
-        likely(PyFloat_CheckExact(s)) ? PyFloat_Type.tp_repr(s) :\
-        PyObject_Format(s, f))
+/* PyLongBinop.proto */
+#if !CYTHON_COMPILING_IN_PYPY
+static CYTHON_INLINE PyObject* __Pyx_PyLong_AddCObj(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check);
 #else
-    #define __Pyx_PyObject_FormatSimple(s, f) (\
-        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
-        PyObject_Format(s, f))
+#define __Pyx_PyLong_AddCObj(op1, op2, intval, inplace, zerodivision_check)\
+    (inplace ? PyNumber_InPlaceAdd(op1, op2) : PyNumber_Add(op1, op2))
 #endif
-
-/* BuildPyUnicode.proto (used by COrdinalToPyUnicode) */
-static PyObject* __Pyx_PyUnicode_BuildFromAscii(Py_ssize_t ulength, const char* chars, int clength,
-                                                int prepend_sign, char padding_char);
-
-/* COrdinalToPyUnicode.proto (used by CIntToPyUnicode) */
-static CYTHON_INLINE int __Pyx_CheckUnicodeValue(int value);
-static CYTHON_INLINE PyObject* __Pyx_PyUnicode_FromOrdinal_Padded(int value, Py_ssize_t width, char padding_char);
-
-/* GCCDiagnostics.proto (used by CIntToPyUnicode) */
-#if !defined(__INTEL_COMPILER) && defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
-#define __Pyx_HAS_GCC_DIAGNOSTIC
-#endif
-
-/* IncludeStdlibH.proto (used by CIntToPyUnicode) */
-#include <stdlib.h>
-
-/* CIntToPyUnicode.proto */
-#define __Pyx_PyUnicode_From_Py_ssize_t(value, width, padding_char, format_char) (\
-    ((format_char) == ('c')) ?\
-        __Pyx_uchar___Pyx_PyUnicode_From_Py_ssize_t(value, width, padding_char) :\
-        __Pyx____Pyx_PyUnicode_From_Py_ssize_t(value, width, padding_char, format_char)\
-    )
-static CYTHON_INLINE PyObject* __Pyx_uchar___Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char);
-static CYTHON_INLINE PyObject* __Pyx____Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char, char format_char);
-
-/* JoinPyUnicode.export */
-static PyObject* __Pyx_PyUnicode_Join(PyObject** values, Py_ssize_t value_count, Py_ssize_t result_ulength,
-                                      Py_UCS4 max_char);
 
 /* PyDictVersioning.proto (used by GetModuleGlobalName) */
 #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
@@ -2040,11 +2040,30 @@ static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_ve
 static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name);
 #endif
 
-/* PySequenceContains.proto */
-static CYTHON_INLINE int __Pyx_PySequence_ContainsTF(PyObject* item, PyObject* seq, int eq) {
-    int result = PySequence_Contains(seq, item);
-    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
-}
+/* RaiseKeywordRequired.proto */
+static void __Pyx_RaiseKeywordRequired(const char* func_name, PyObject* kw_name);
+
+/* pyint_simplify.proto */
+static CYTHON_INLINE int __Pyx_PyInt_FromNumber(PyObject **number_var, const char *argname, int accept_none);
+
+/* PyObjectDelAttr.proto (used by PyObjectSetAttrStr) */
+#if CYTHON_COMPILING_IN_LIMITED_API && __PYX_LIMITED_VERSION_HEX < 0x030d0000
+#define __Pyx_PyObject_DelAttr(o, n) PyObject_SetAttr(o, n, NULL)
+#else
+#define __Pyx_PyObject_DelAttr(o, n) PyObject_DelAttr(o, n)
+#endif
+
+/* PyObjectSetAttrStr.proto */
+#if CYTHON_USE_TYPE_SLOTS
+#define __Pyx_PyObject_DelAttrStr(o,n) __Pyx_PyObject_SetAttrStr(o, n, NULL)
+static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr_name, PyObject* value);
+#else
+#define __Pyx_PyObject_DelAttrStr(o,n)   __Pyx_PyObject_DelAttr(o,n)
+#define __Pyx_PyObject_SetAttrStr(o,n,v) PyObject_SetAttr(o,n,v)
+#endif
+
+/* RaiseClosureNameError.proto */
+static void __Pyx_RaiseClosureNameError(const char *varname);
 
 /* Py3UpdateBases.proto */
 static PyObject* __Pyx_PEP560_update_bases(PyObject *bases);
@@ -2226,6 +2245,67 @@ static PyObject *__Pyx_Py3MetaclassPrepare(PyObject *metaclass, PyObject *bases,
                                            PyObject *mkw, PyObject *modname, PyObject *doc);
 static PyObject *__Pyx_Py3ClassCreate(PyObject *metaclass, PyObject *name, PyObject *bases, PyObject *dict,
                                       PyObject *mkw, int calculate_metaclass, int allow_py2_metaclass);
+
+/* PyObjectCallNoArg.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
+
+/* PyObjectFormatSimple.proto */
+#if CYTHON_COMPILING_IN_PYPY
+    #define __Pyx_PyObject_FormatSimple(s, f) (\
+        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
+        PyObject_Format(s, f))
+#elif CYTHON_USE_TYPE_SLOTS
+    #define __Pyx_PyObject_FormatSimple(s, f) (\
+        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
+        likely(PyLong_CheckExact(s)) ? PyLong_Type.tp_repr(s) :\
+        likely(PyFloat_CheckExact(s)) ? PyFloat_Type.tp_repr(s) :\
+        PyObject_Format(s, f))
+#else
+    #define __Pyx_PyObject_FormatSimple(s, f) (\
+        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
+        PyObject_Format(s, f))
+#endif
+
+/* JoinPyUnicode.export */
+static PyObject* __Pyx_PyUnicode_Join(PyObject** values, Py_ssize_t value_count, Py_ssize_t result_ulength,
+                                      Py_UCS4 max_char);
+
+/* PySequenceContains.proto */
+static CYTHON_INLINE int __Pyx_PySequence_ContainsTF(PyObject* item, PyObject* seq, int eq) {
+    int result = PySequence_Contains(seq, item);
+    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
+}
+
+/* SliceObject.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(
+        PyObject* obj, Py_ssize_t cstart, Py_ssize_t cstop,
+        PyObject** py_start, PyObject** py_stop, PyObject** py_slice,
+        int has_cstart, int has_cstop, int wraparound);
+
+/* BuildPyUnicode.proto (used by COrdinalToPyUnicode) */
+static PyObject* __Pyx_PyUnicode_BuildFromAscii(Py_ssize_t ulength, const char* chars, int clength,
+                                                int prepend_sign, char padding_char);
+
+/* COrdinalToPyUnicode.proto (used by CIntToPyUnicode) */
+static CYTHON_INLINE int __Pyx_CheckUnicodeValue(int value);
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_FromOrdinal_Padded(int value, Py_ssize_t width, char padding_char);
+
+/* GCCDiagnostics.proto (used by CIntToPyUnicode) */
+#if !defined(__INTEL_COMPILER) && defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
+#define __Pyx_HAS_GCC_DIAGNOSTIC
+#endif
+
+/* IncludeStdlibH.proto (used by CIntToPyUnicode) */
+#include <stdlib.h>
+
+/* CIntToPyUnicode.proto */
+#define __Pyx_PyUnicode_From_Py_ssize_t(value, width, padding_char, format_char) (\
+    ((format_char) == ('c')) ?\
+        __Pyx_uchar___Pyx_PyUnicode_From_Py_ssize_t(value, width, padding_char) :\
+        __Pyx____Pyx_PyUnicode_From_Py_ssize_t(value, width, padding_char, format_char)\
+    )
+static CYTHON_INLINE PyObject* __Pyx_uchar___Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char);
+static CYTHON_INLINE PyObject* __Pyx____Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char, char format_char);
 
 /* RaiseUnexpectedTypeError.proto */
 static int __Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj);
@@ -2436,11 +2516,19 @@ int __pyx_module_is_main_backend__snmp__trap_receiver = 0;
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_print;
 /* #### Code section: string_decls ### */
-static const char __pyx_k_SNMP_trap_receiver_extracted_fr[] = "\nSNMP trap receiver \342\200\224 extracted from LiveMonitor.listen() SNMP branch.\nPreserves exact trap detection and dispatch semantics.\n";
+static const char __pyx_k_SNMP_trap_receiver_for_AP_disjo[] = "\nSNMP trap receiver for AP disjoin detection.\n\nThe receiver only detects, parses, validates, and forwards disjoin events.\nIt does not own event counting, RCA launch, recurrence, cooldown, or workflow\nstate.\n";
 /* #### Code section: decls ### */
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver__extract_octet_strings(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_data); /* proto */
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_2_trap_text(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_data); /* proto */
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_port, PyObject *__pyx_v_ts, PyObject *__pyx_v_normalise_mac, PyObject *__pyx_v_process_disjoin_event, PyObject *__pyx_v_on_eem_trigger); /* proto */
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_handle(PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_2start(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_4shutdown(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_6_handle_packet(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_data, PyObject *__pyx_v_sender); /* proto */
 static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_22make_snmp_trap_handler_16_SnmpTrapHandler_handle(PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
-static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_handler(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_ts, PyObject *__pyx_v_on_eem_trigger); /* proto */
-static PyObject *__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_4make_snmp_trap_handler(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_ts, PyObject *__pyx_v_on_eem_trigger); /* proto */
+static PyObject *__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__start(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 /* #### Code section: late_includes ### */
 /* #### Code section: module_state ### */
 /* SmallCodeConfig */
@@ -2461,13 +2549,17 @@ typedef struct {
   PyObject *__pyx_empty_tuple;
   PyObject *__pyx_empty_bytes;
   PyObject *__pyx_empty_unicode;
-  PyObject *__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler;
-  PyTypeObject *__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler;
+  PyObject *__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start;
+  PyObject *__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler;
+  PyTypeObject *__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start;
+  PyTypeObject *__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_items;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_pop;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values;
-  PyObject *__pyx_codeobj_tab[2];
-  PyObject *__pyx_string_tab[61];
+  PyObject *__pyx_slice[1];
+  PyObject *__pyx_codeobj_tab[9];
+  PyObject *__pyx_string_tab[154];
+  PyObject *__pyx_number_tab[6];
 /* #### Code section: module_state_contents ### */
 /* CommonTypesMetaclass.module_state_decls */
 PyTypeObject *__pyx_CommonTypesMetaclassType;
@@ -2482,8 +2574,13 @@ PyTypeObject *__pyx_CyFunctionType;
 
 
 #if CYTHON_USE_FREELISTS
-struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler[8];
-int __pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler;
+struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct__start[8];
+int __pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__start;
+#endif
+
+#if CYTHON_USE_FREELISTS
+struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler[8];
+int __pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler;
 #endif
 /* CodeObjectCache.module_state_decls */
 struct __Pyx_CodeObjectCache __pyx_code_cache;
@@ -2514,66 +2611,165 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #endif
 /* #### Code section: constant_name_defines ### */
 #define __pyx_kp_u_ __pyx_string_tab[0]
-#define __pyx_kp_u_Callable_str __pyx_string_tab[1]
-#define __pyx_kp_u_Callable_str_str_None __pyx_string_tab[2]
-#define __pyx_kp_u_SNMP_Raw_trap_received __pyx_string_tab[3]
-#define __pyx_kp_u__2 __pyx_string_tab[4]
-#define __pyx_kp_u__3 __pyx_string_tab[5]
-#define __pyx_kp_u_backend_snmp_trap_receiver_py __pyx_string_tab[6]
-#define __pyx_kp_u_bytes __pyx_string_tab[7]
-#define __pyx_kp_u_disable __pyx_string_tab[8]
-#define __pyx_kp_u_enable __pyx_string_tab[9]
-#define __pyx_kp_u_gc __pyx_string_tab[10]
-#define __pyx_kp_u_isenabled __pyx_string_tab[11]
-#define __pyx_kp_u_latin_1 __pyx_string_tab[12]
-#define __pyx_n_u_AP_JOIN_DISJOIN __pyx_string_tab[13]
-#define __pyx_n_u_BaseRequestHandler __pyx_string_tab[14]
-#define __pyx_n_u_Callable __pyx_string_tab[15]
-#define __pyx_n_u_Disjoined __pyx_string_tab[16]
-#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[17]
-#define __pyx_n_u_SnmpTrapHandler __pyx_string_tab[18]
-#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[19]
-#define __pyx_n_u_backend_snmp_trap_receiver __pyx_string_tab[20]
-#define __pyx_n_u_cline_in_traceback __pyx_string_tab[21]
-#define __pyx_n_u_data __pyx_string_tab[22]
-#define __pyx_n_u_decode __pyx_string_tab[23]
-#define __pyx_n_u_doc __pyx_string_tab[24]
-#define __pyx_n_u_errors __pyx_string_tab[25]
-#define __pyx_n_u_file __pyx_string_tab[26]
-#define __pyx_n_u_func __pyx_string_tab[27]
-#define __pyx_n_u_handle __pyx_string_tab[28]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[29]
-#define __pyx_n_u_items __pyx_string_tab[30]
-#define __pyx_n_u_main __pyx_string_tab[31]
-#define __pyx_n_u_make_snmp_trap_handler __pyx_string_tab[32]
-#define __pyx_n_u_make_snmp_trap_handler_locals__S __pyx_string_tab[33]
-#define __pyx_n_u_make_snmp_trap_handler_locals__S_2 __pyx_string_tab[34]
-#define __pyx_n_u_metaclass __pyx_string_tab[35]
-#define __pyx_n_u_module __pyx_string_tab[36]
-#define __pyx_n_u_mro_entries __pyx_string_tab[37]
-#define __pyx_n_u_name __pyx_string_tab[38]
-#define __pyx_n_u_on_eem_trigger __pyx_string_tab[39]
-#define __pyx_n_u_pop __pyx_string_tab[40]
-#define __pyx_n_u_prepare __pyx_string_tab[41]
-#define __pyx_n_u_print __pyx_string_tab[42]
-#define __pyx_n_u_qualname __pyx_string_tab[43]
-#define __pyx_n_u_replace __pyx_string_tab[44]
-#define __pyx_n_u_request __pyx_string_tab[45]
-#define __pyx_n_u_return __pyx_string_tab[46]
-#define __pyx_n_u_self __pyx_string_tab[47]
-#define __pyx_n_u_set_name __pyx_string_tab[48]
-#define __pyx_n_u_setdefault __pyx_string_tab[49]
-#define __pyx_n_u_socketserver __pyx_string_tab[50]
-#define __pyx_n_u_stderr __pyx_string_tab[51]
-#define __pyx_n_u_sys __pyx_string_tab[52]
-#define __pyx_n_u_test __pyx_string_tab[53]
-#define __pyx_n_u_text __pyx_string_tab[54]
-#define __pyx_n_u_ts __pyx_string_tab[55]
-#define __pyx_n_u_type __pyx_string_tab[56]
-#define __pyx_n_u_typing __pyx_string_tab[57]
-#define __pyx_n_u_values __pyx_string_tab[58]
-#define __pyx_kp_b_iso88591_4xq_t7_gQ_t1A_1B_5Qc_S_E_A_avRq __pyx_string_tab[59]
-#define __pyx_kp_b_iso88591_q_1 __pyx_string_tab[60]
+#define __pyx_kp_u_0_0_0_0 __pyx_string_tab[1]
+#define __pyx_kp_u_AP_Name __pyx_string_tab[2]
+#define __pyx_kp_u_Callable_str __pyx_string_tab[3]
+#define __pyx_kp_u_Callable_str_str __pyx_string_tab[4]
+#define __pyx_kp_u_Callable_str_str_None __pyx_string_tab[5]
+#define __pyx_kp_u_Callable_str_str_None_None __pyx_string_tab[6]
+#define __pyx_kp_u_Callable_str_str_None_str_None_s __pyx_string_tab[7]
+#define __pyx_kp_u_Disjoined_2 __pyx_string_tab[8]
+#define __pyx_kp_u_IP __pyx_string_tab[9]
+#define __pyx_kp_u_MAC __pyx_string_tab[10]
+#define __pyx_kp_u_Mac_0_9a_fA_F_4_0_9a_fA_F_4_0_9a __pyx_string_tab[11]
+#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[12]
+#define __pyx_kp_u_SNMP_Raw_trap_received __pyx_string_tab[13]
+#define __pyx_kp_u_SNMP_TRAP_AP __pyx_string_tab[14]
+#define __pyx_kp_u_SNMP_TRAP_Could_not_extract_MAC __pyx_string_tab[15]
+#define __pyx_kp_u_SNMP_TRAP_Disjoin_trap_from __pyx_string_tab[16]
+#define __pyx_kp_u_SNMP_TRAP_EEM_batch_trigger_rec __pyx_string_tab[17]
+#define __pyx_kp_u_SNMP_trap_listener_started_on_U __pyx_string_tab[18]
+#define __pyx_kp_u_Session_IP_d_1_3_d_1_3_3 __pyx_string_tab[19]
+#define __pyx_kp_u__2 __pyx_string_tab[20]
+#define __pyx_kp_u__3 __pyx_string_tab[21]
+#define __pyx_kp_u__4 __pyx_string_tab[22]
+#define __pyx_kp_u__5 __pyx_string_tab[23]
+#define __pyx_kp_u_add_note __pyx_string_tab[24]
+#define __pyx_kp_u_backend_snmp_trap_receiver_py __pyx_string_tab[25]
+#define __pyx_kp_u_bytes __pyx_string_tab[26]
+#define __pyx_kp_u_disable __pyx_string_tab[27]
+#define __pyx_kp_u_enable __pyx_string_tab[28]
+#define __pyx_kp_u_gc __pyx_string_tab[29]
+#define __pyx_kp_u_isenabled __pyx_string_tab[30]
+#define __pyx_kp_u_latin_1 __pyx_string_tab[31]
+#define __pyx_kp_u_list_str __pyx_string_tab[32]
+#define __pyx_kp_u_mode_snmp __pyx_string_tab[33]
+#define __pyx_kp_u_reason __pyx_string_tab[34]
+#define __pyx_kp_u_utf_8 __pyx_string_tab[35]
+#define __pyx_n_u_APIP_RE __pyx_string_tab[36]
+#define __pyx_n_u_APMAC_RE __pyx_string_tab[37]
+#define __pyx_n_u_APNAME_RE __pyx_string_tab[38]
+#define __pyx_n_u_AP_JOIN_DISJOIN __pyx_string_tab[39]
+#define __pyx_n_u_BaseRequestHandler __pyx_string_tab[40]
+#define __pyx_n_u_Callable __pyx_string_tab[41]
+#define __pyx_n_u_Disjoined __pyx_string_tab[42]
+#define __pyx_n_u_EEM_BATCH_TRIGGER __pyx_string_tab[43]
+#define __pyx_n_u_IGNORECASE __pyx_string_tab[44]
+#define __pyx_n_u_None __pyx_string_tab[45]
+#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[46]
+#define __pyx_n_u_REASON_RE __pyx_string_tab[47]
+#define __pyx_n_u_SNMPTrapReceiver __pyx_string_tab[48]
+#define __pyx_n_u_SNMPTrapReceiver___init __pyx_string_tab[49]
+#define __pyx_n_u_SNMPTrapReceiver__handle_packet __pyx_string_tab[50]
+#define __pyx_n_u_SNMPTrapReceiver_shutdown __pyx_string_tab[51]
+#define __pyx_n_u_SNMPTrapReceiver_start __pyx_string_tab[52]
+#define __pyx_n_u_SNMPTrapReceiver_start_locals__S __pyx_string_tab[53]
+#define __pyx_n_u_SNMPTrapReceiver_start_locals__S_2 __pyx_string_tab[54]
+#define __pyx_n_u_SnmpTrapHandler __pyx_string_tab[55]
+#define __pyx_n_u_Thread __pyx_string_tab[56]
+#define __pyx_n_u_UDPServer __pyx_string_tab[57]
+#define __pyx_n_u_ap_name __pyx_string_tab[58]
+#define __pyx_n_u_args __pyx_string_tab[59]
+#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[60]
+#define __pyx_n_u_backend_snmp_trap_receiver __pyx_string_tab[61]
+#define __pyx_n_u_bytes_2 __pyx_string_tab[62]
+#define __pyx_n_u_class_getitem __pyx_string_tab[63]
+#define __pyx_n_u_client_address __pyx_string_tab[64]
+#define __pyx_n_u_cline_in_traceback __pyx_string_tab[65]
+#define __pyx_n_u_combined_text __pyx_string_tab[66]
+#define __pyx_n_u_compile __pyx_string_tab[67]
+#define __pyx_n_u_daemon __pyx_string_tab[68]
+#define __pyx_n_u_data __pyx_string_tab[69]
+#define __pyx_n_u_decode __pyx_string_tab[70]
+#define __pyx_n_u_doc __pyx_string_tab[71]
+#define __pyx_n_u_errors __pyx_string_tab[72]
+#define __pyx_n_u_extract_octet_strings __pyx_string_tab[73]
+#define __pyx_n_u_file __pyx_string_tab[74]
+#define __pyx_n_u_func __pyx_string_tab[75]
+#define __pyx_n_u_group __pyx_string_tab[76]
+#define __pyx_n_u_handle __pyx_string_tab[77]
+#define __pyx_n_u_handle_packet __pyx_string_tab[78]
+#define __pyx_n_u_host __pyx_string_tab[79]
+#define __pyx_n_u_i __pyx_string_tab[80]
+#define __pyx_n_u_ignore __pyx_string_tab[81]
+#define __pyx_n_u_init __pyx_string_tab[82]
+#define __pyx_n_u_int __pyx_string_tab[83]
+#define __pyx_n_u_ip __pyx_string_tab[84]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[85]
+#define __pyx_n_u_items __pyx_string_tab[86]
+#define __pyx_n_u_length __pyx_string_tab[87]
+#define __pyx_n_u_m_ip __pyx_string_tab[88]
+#define __pyx_n_u_m_mac __pyx_string_tab[89]
+#define __pyx_n_u_m_name __pyx_string_tab[90]
+#define __pyx_n_u_m_reason __pyx_string_tab[91]
+#define __pyx_n_u_mac __pyx_string_tab[92]
+#define __pyx_n_u_main __pyx_string_tab[93]
+#define __pyx_n_u_make_snmp_trap_handler __pyx_string_tab[94]
+#define __pyx_n_u_make_snmp_trap_handler_locals__S __pyx_string_tab[95]
+#define __pyx_n_u_make_snmp_trap_handler_locals__S_2 __pyx_string_tab[96]
+#define __pyx_n_u_metaclass __pyx_string_tab[97]
+#define __pyx_n_u_module __pyx_string_tab[98]
+#define __pyx_n_u_mro_entries __pyx_string_tab[99]
+#define __pyx_n_u_name __pyx_string_tab[100]
+#define __pyx_n_u_normalise_mac __pyx_string_tab[101]
+#define __pyx_n_u_now __pyx_string_tab[102]
+#define __pyx_n_u_on_eem_trigger __pyx_string_tab[103]
+#define __pyx_n_u_pop __pyx_string_tab[104]
+#define __pyx_n_u_port __pyx_string_tab[105]
+#define __pyx_n_u_prepare __pyx_string_tab[106]
+#define __pyx_n_u_print __pyx_string_tab[107]
+#define __pyx_n_u_process_disjoin_event __pyx_string_tab[108]
+#define __pyx_n_u_qualname __pyx_string_tab[109]
+#define __pyx_n_u_re __pyx_string_tab[110]
+#define __pyx_n_u_reason_2 __pyx_string_tab[111]
+#define __pyx_n_u_receiver __pyx_string_tab[112]
+#define __pyx_n_u_replace __pyx_string_tab[113]
+#define __pyx_n_u_request __pyx_string_tab[114]
+#define __pyx_n_u_return __pyx_string_tab[115]
+#define __pyx_n_u_search __pyx_string_tab[116]
+#define __pyx_n_u_self __pyx_string_tab[117]
+#define __pyx_n_u_sender __pyx_string_tab[118]
+#define __pyx_n_u_serve_forever __pyx_string_tab[119]
+#define __pyx_n_u_server __pyx_string_tab[120]
+#define __pyx_n_u_server_close __pyx_string_tab[121]
+#define __pyx_n_u_set_name __pyx_string_tab[122]
+#define __pyx_n_u_setdefault __pyx_string_tab[123]
+#define __pyx_n_u_shutdown __pyx_string_tab[124]
+#define __pyx_n_u_snmp __pyx_string_tab[125]
+#define __pyx_n_u_socketserver __pyx_string_tab[126]
+#define __pyx_n_u_start __pyx_string_tab[127]
+#define __pyx_n_u_stderr __pyx_string_tab[128]
+#define __pyx_n_u_str __pyx_string_tab[129]
+#define __pyx_n_u_strings __pyx_string_tab[130]
+#define __pyx_n_u_strip __pyx_string_tab[131]
+#define __pyx_n_u_sys __pyx_string_tab[132]
+#define __pyx_n_u_target __pyx_string_tab[133]
+#define __pyx_n_u_test __pyx_string_tab[134]
+#define __pyx_n_u_text __pyx_string_tab[135]
+#define __pyx_n_u_thread __pyx_string_tab[136]
+#define __pyx_n_u_threading __pyx_string_tab[137]
+#define __pyx_n_u_trap_text __pyx_string_tab[138]
+#define __pyx_n_u_ts __pyx_string_tab[139]
+#define __pyx_n_u_type __pyx_string_tab[140]
+#define __pyx_n_u_typing __pyx_string_tab[141]
+#define __pyx_n_u_unknown __pyx_string_tab[142]
+#define __pyx_n_u_val __pyx_string_tab[143]
+#define __pyx_n_u_values __pyx_string_tab[144]
+#define __pyx_kp_b_iso88591_1_Bc_4q_3e4r_2Rs_1_T_Ba_ar_3b_B __pyx_string_tab[145]
+#define __pyx_kp_b_iso88591_4q_Q_1 __pyx_string_tab[146]
+#define __pyx_kp_b_iso88591_A_4xq_Qa_1B_5Qc_S_E_A_avRq __pyx_string_tab[147]
+#define __pyx_kp_b_iso88591_A_a_a_HA_HA_F_Q_Q_a_6a_0 __pyx_string_tab[148]
+#define __pyx_kp_b_iso88591_Zq_AQ_q_s_q_4wa __pyx_string_tab[149]
+#define __pyx_kp_b_iso88591_d_Q_1_q_WN_5Gwa_Q_q_5Ya_Ba_A_s __pyx_string_tab[150]
+#define __pyx_kp_b_iso88591_q_1_1_K_Rt7_ha_Ky_q_t8_K7RS_HF __pyx_string_tab[151]
+#define __pyx_kp_b_iso88591_q_A_1 __pyx_string_tab[152]
+#define __pyx_kp_b_iso88591_q_HAT__AQ __pyx_string_tab[153]
+#define __pyx_int_0 __pyx_number_tab[0]
+#define __pyx_int_1 __pyx_number_tab[1]
+#define __pyx_int_2 __pyx_number_tab[2]
+#define __pyx_int_4 __pyx_number_tab[3]
+#define __pyx_int_120 __pyx_number_tab[4]
+#define __pyx_int_162 __pyx_number_tab[5]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
 static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
@@ -2588,10 +2784,14 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   __Pyx_State_RemoveModule(NULL);
   #endif
-  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler);
-  Py_CLEAR(clear_module_state->__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler);
-  for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<61; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start);
+  Py_CLEAR(clear_module_state->__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start);
+  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler);
+  Py_CLEAR(clear_module_state->__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler);
+  for (int i=0; i<1; ++i) { Py_CLEAR(clear_module_state->__pyx_slice[i]); }
+  for (int i=0; i<9; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<154; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
 Py_CLEAR(clear_module_state->__pyx_CommonTypesMetaclassType);
@@ -2614,10 +2814,14 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_tuple);
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_bytes);
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_unicode);
-  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler);
-  Py_VISIT(traverse_module_state->__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler);
-  for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<61; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start);
+  Py_VISIT(traverse_module_state->__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start);
+  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler);
+  Py_VISIT(traverse_module_state->__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler);
+  for (int i=0; i<1; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_slice[i]); }
+  for (int i=0; i<9; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<154; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
 Py_VISIT(traverse_module_state->__pyx_CommonTypesMetaclassType);
@@ -2631,7 +2835,2786 @@ return 0;
 #endif
 /* #### Code section: module_code ### */
 
-/* "backend/snmp/trap_receiver.py":13
+/* "backend/snmp/trap_receiver.py":27
+ * 
+ * 
+ * def _extract_octet_strings(data: bytes) -> list[str]:             # <<<<<<<<<<<<<<
+ *     strings: list[str] = []
+ *     i = 0
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_1_extract_octet_strings(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_1_extract_octet_strings = {"_extract_octet_strings", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_1_extract_octet_strings, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_1_extract_octet_strings(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_data = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("_extract_octet_strings (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_data,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 27, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 27, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_extract_octet_strings", 0) < (0)) __PYX_ERR(0, 27, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_extract_octet_strings", 1, 1, 1, i); __PYX_ERR(0, 27, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 27, __pyx_L3_error)
+    }
+    __pyx_v_data = ((PyObject*)values[0]);
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("_extract_octet_strings", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 27, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.snmp.trap_receiver._extract_octet_strings", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_data), (&PyBytes_Type), 0, "data", 2))) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver__extract_octet_strings(__pyx_self, __pyx_v_data);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  goto __pyx_L7_cleaned_up;
+  __pyx_L0:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __pyx_L7_cleaned_up:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver__extract_octet_strings(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_data) {
+  PyObject *__pyx_v_strings = 0;
+  PyObject *__pyx_v_i = NULL;
+  PyObject *__pyx_v_length = NULL;
+  PyObject *__pyx_v_val = NULL;
+  PyObject *__pyx_v_text = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  Py_ssize_t __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  Py_ssize_t __pyx_t_7;
+  Py_ssize_t __pyx_t_8;
+  PyObject *__pyx_t_9 = NULL;
+  size_t __pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
+  int __pyx_t_12;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_extract_octet_strings", 0);
+
+  /* "backend/snmp/trap_receiver.py":28
+ * 
+ * def _extract_octet_strings(data: bytes) -> list[str]:
+ *     strings: list[str] = []             # <<<<<<<<<<<<<<
+ *     i = 0
+ *     while i < len(data):
+*/
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_strings = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":29
+ * def _extract_octet_strings(data: bytes) -> list[str]:
+ *     strings: list[str] = []
+ *     i = 0             # <<<<<<<<<<<<<<
+ *     while i < len(data):
+ *         if data[i] == 0x04 and i + 1 < len(data):
+*/
+  __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
+  __pyx_v_i = __pyx_mstate_global->__pyx_int_0;
+
+  /* "backend/snmp/trap_receiver.py":30
+ *     strings: list[str] = []
+ *     i = 0
+ *     while i < len(data):             # <<<<<<<<<<<<<<
+ *         if data[i] == 0x04 and i + 1 < len(data):
+ *             length = data[i + 1]
+*/
+  while (1) {
+    __pyx_t_2 = __Pyx_PyBytes_GET_SIZE(__pyx_v_data); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = PyLong_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = PyObject_RichCompare(__pyx_v_i, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 30, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (!__pyx_t_4) break;
+
+    /* "backend/snmp/trap_receiver.py":31
+ *     i = 0
+ *     while i < len(data):
+ *         if data[i] == 0x04 and i + 1 < len(data):             # <<<<<<<<<<<<<<
+ *             length = data[i + 1]
+ *             val = data[i + 2: i + 2 + length]
+*/
+    __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_data, __pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_5 = (__Pyx_PyLong_BoolEqObjC(__pyx_t_3, __pyx_mstate_global->__pyx_int_4, 0x04, 0)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (__pyx_t_5) {
+    } else {
+      __pyx_t_4 = __pyx_t_5;
+      goto __pyx_L6_bool_binop_done;
+    }
+    __pyx_t_3 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_2 = __Pyx_PyBytes_GET_SIZE(__pyx_v_data); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 31, __pyx_L1_error)
+    __pyx_t_1 = PyLong_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_6 = PyObject_RichCompare(__pyx_t_3, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_4 = __pyx_t_5;
+    __pyx_L6_bool_binop_done:;
+    if (__pyx_t_4) {
+
+      /* "backend/snmp/trap_receiver.py":32
+ *     while i < len(data):
+ *         if data[i] == 0x04 and i + 1 < len(data):
+ *             length = data[i + 1]             # <<<<<<<<<<<<<<
+ *             val = data[i + 2: i + 2 + length]
+ *             if len(val) == length:
+*/
+      __pyx_t_6 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 32, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_data, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_length, __pyx_t_1);
+      __pyx_t_1 = 0;
+
+      /* "backend/snmp/trap_receiver.py":33
+ *         if data[i] == 0x04 and i + 1 < len(data):
+ *             length = data[i + 1]
+ *             val = data[i + 2: i + 2 + length]             # <<<<<<<<<<<<<<
+ *             if len(val) == length:
+ *                 text = val.decode("utf-8", errors="ignore").strip()
+*/
+      __pyx_t_1 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_2, 2, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_4 = (__pyx_t_1 == Py_None);
+      if (__pyx_t_4) {
+        __pyx_t_2 = 0;
+      } else {
+        __pyx_t_7 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_7 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
+        __pyx_t_2 = __pyx_t_7;
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_1 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_2, 2, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_6 = PyNumber_Add(__pyx_t_1, __pyx_v_length); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_4 = (__pyx_t_6 == Py_None);
+      if (__pyx_t_4) {
+        __pyx_t_7 = PY_SSIZE_T_MAX;
+      } else {
+        __pyx_t_8 = __Pyx_PyIndex_AsSsize_t(__pyx_t_6); if (unlikely((__pyx_t_8 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
+        __pyx_t_7 = __pyx_t_8;
+      }
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = PySequence_GetSlice(__pyx_v_data, __pyx_t_2, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_XDECREF_SET(__pyx_v_val, ((PyObject*)__pyx_t_6));
+      __pyx_t_6 = 0;
+
+      /* "backend/snmp/trap_receiver.py":34
+ *             length = data[i + 1]
+ *             val = data[i + 2: i + 2 + length]
+ *             if len(val) == length:             # <<<<<<<<<<<<<<
+ *                 text = val.decode("utf-8", errors="ignore").strip()
+ *                 if text:
+*/
+      __pyx_t_7 = __Pyx_PyBytes_GET_SIZE(__pyx_v_val); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 34, __pyx_L1_error)
+      __pyx_t_6 = PyLong_FromSsize_t(__pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 34, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_1 = PyObject_RichCompare(__pyx_t_6, __pyx_v_length, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 34, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      if (__pyx_t_4) {
+
+        /* "backend/snmp/trap_receiver.py":35
+ *             val = data[i + 2: i + 2 + length]
+ *             if len(val) == length:
+ *                 text = val.decode("utf-8", errors="ignore").strip()             # <<<<<<<<<<<<<<
+ *                 if text:
+ *                     strings.append(text)
+*/
+        __pyx_t_9 = __pyx_v_val;
+        __Pyx_INCREF(__pyx_t_9);
+        __pyx_t_10 = 0;
+        {
+          PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_9, __pyx_mstate_global->__pyx_kp_u_utf_8};
+          __pyx_t_11 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 35, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_11);
+          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_errors, __pyx_mstate_global->__pyx_n_u_ignore, __pyx_t_11, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 35, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_decode, __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_11);
+          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_3);
+        }
+        __pyx_t_6 = __pyx_t_3;
+        __Pyx_INCREF(__pyx_t_6);
+        __pyx_t_10 = 0;
+        {
+          PyObject *__pyx_callargs[2] = {__pyx_t_6, NULL};
+          __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_10, (1-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+          __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+          __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_1);
+        }
+        __Pyx_XDECREF_SET(__pyx_v_text, ((PyObject*)__pyx_t_1));
+        __pyx_t_1 = 0;
+
+        /* "backend/snmp/trap_receiver.py":36
+ *             if len(val) == length:
+ *                 text = val.decode("utf-8", errors="ignore").strip()
+ *                 if text:             # <<<<<<<<<<<<<<
+ *                     strings.append(text)
+ *             i += 2 + length
+*/
+        {
+          Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_text);
+          if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 36, __pyx_L1_error)
+          __pyx_t_4 = (__pyx_temp != 0);
+        }
+
+        if (__pyx_t_4) {
+
+          /* "backend/snmp/trap_receiver.py":37
+ *                 text = val.decode("utf-8", errors="ignore").strip()
+ *                 if text:
+ *                     strings.append(text)             # <<<<<<<<<<<<<<
+ *             i += 2 + length
+ *             continue
+*/
+          __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_strings, __pyx_v_text); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 37, __pyx_L1_error)
+
+          /* "backend/snmp/trap_receiver.py":36
+ *             if len(val) == length:
+ *                 text = val.decode("utf-8", errors="ignore").strip()
+ *                 if text:             # <<<<<<<<<<<<<<
+ *                     strings.append(text)
+ *             i += 2 + length
+*/
+        }
+
+        /* "backend/snmp/trap_receiver.py":34
+ *             length = data[i + 1]
+ *             val = data[i + 2: i + 2 + length]
+ *             if len(val) == length:             # <<<<<<<<<<<<<<
+ *                 text = val.decode("utf-8", errors="ignore").strip()
+ *                 if text:
+*/
+      }
+
+      /* "backend/snmp/trap_receiver.py":38
+ *                 if text:
+ *                     strings.append(text)
+ *             i += 2 + length             # <<<<<<<<<<<<<<
+ *             continue
+ *         i += 1
+*/
+      __pyx_t_1 = __Pyx_PyLong_AddCObj(__pyx_mstate_global->__pyx_int_2, __pyx_v_length, 2, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_i, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF_SET(__pyx_v_i, __pyx_t_3);
+      __pyx_t_3 = 0;
+
+      /* "backend/snmp/trap_receiver.py":39
+ *                     strings.append(text)
+ *             i += 2 + length
+ *             continue             # <<<<<<<<<<<<<<
+ *         i += 1
+ *     return strings
+*/
+      goto __pyx_L3_continue;
+
+      /* "backend/snmp/trap_receiver.py":31
+ *     i = 0
+ *     while i < len(data):
+ *         if data[i] == 0x04 and i + 1 < len(data):             # <<<<<<<<<<<<<<
+ *             length = data[i + 1]
+ *             val = data[i + 2: i + 2 + length]
+*/
+    }
+
+    /* "backend/snmp/trap_receiver.py":40
+ *             i += 2 + length
+ *             continue
+ *         i += 1             # <<<<<<<<<<<<<<
+ *     return strings
+ * 
+*/
+    __pyx_t_3 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF_SET(__pyx_v_i, __pyx_t_3);
+    __pyx_t_3 = 0;
+    __pyx_L3_continue:;
+  }
+
+  /* "backend/snmp/trap_receiver.py":41
+ *             continue
+ *         i += 1
+ *     return strings             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_strings);
+  __pyx_r = __pyx_v_strings;
+  goto __pyx_L0;
+
+  /* "backend/snmp/trap_receiver.py":27
+ * 
+ * 
+ * def _extract_octet_strings(data: bytes) -> list[str]:             # <<<<<<<<<<<<<<
+ *     strings: list[str] = []
+ *     i = 0
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_AddTraceback("backend.snmp.trap_receiver._extract_octet_strings", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_strings);
+  __Pyx_XDECREF(__pyx_v_i);
+  __Pyx_XDECREF(__pyx_v_length);
+  __Pyx_XDECREF(__pyx_v_val);
+  __Pyx_XDECREF(__pyx_v_text);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":44
+ * 
+ * 
+ * def _trap_text(data: bytes) -> str:             # <<<<<<<<<<<<<<
+ *     strings = _extract_octet_strings(data)
+ *     if strings:
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_3_trap_text(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_3_trap_text = {"_trap_text", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_3_trap_text, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_3_trap_text(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_data = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("_trap_text (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_data,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 44, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 44, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_trap_text", 0) < (0)) __PYX_ERR(0, 44, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_trap_text", 1, 1, 1, i); __PYX_ERR(0, 44, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 44, __pyx_L3_error)
+    }
+    __pyx_v_data = ((PyObject*)values[0]);
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("_trap_text", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 44, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.snmp.trap_receiver._trap_text", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_data), (&PyBytes_Type), 0, "data", 2))) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_2_trap_text(__pyx_self, __pyx_v_data);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  goto __pyx_L7_cleaned_up;
+  __pyx_L0:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __pyx_L7_cleaned_up:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_2_trap_text(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_data) {
+  PyObject *__pyx_v_strings = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_trap_text", 0);
+
+  /* "backend/snmp/trap_receiver.py":45
+ * 
+ * def _trap_text(data: bytes) -> str:
+ *     strings = _extract_octet_strings(data)             # <<<<<<<<<<<<<<
+ *     if strings:
+ *         return " ".join(strings)
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_extract_octet_strings); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_data};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_strings = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":46
+ * def _trap_text(data: bytes) -> str:
+ *     strings = _extract_octet_strings(data)
+ *     if strings:             # <<<<<<<<<<<<<<
+ *         return " ".join(strings)
+ *     return data.decode("latin-1", errors="replace")
+*/
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_strings); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 46, __pyx_L1_error)
+  if (__pyx_t_5) {
+
+    /* "backend/snmp/trap_receiver.py":47
+ *     strings = _extract_octet_strings(data)
+ *     if strings:
+ *         return " ".join(strings)             # <<<<<<<<<<<<<<
+ *     return data.decode("latin-1", errors="replace")
+ * 
+*/
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_1 = PyUnicode_Join(__pyx_mstate_global->__pyx_kp_u_, __pyx_v_strings); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_r = ((PyObject*)__pyx_t_1);
+    __pyx_t_1 = 0;
+    goto __pyx_L0;
+
+    /* "backend/snmp/trap_receiver.py":46
+ * def _trap_text(data: bytes) -> str:
+ *     strings = _extract_octet_strings(data)
+ *     if strings:             # <<<<<<<<<<<<<<
+ *         return " ".join(strings)
+ *     return data.decode("latin-1", errors="replace")
+*/
+  }
+
+  /* "backend/snmp/trap_receiver.py":48
+ *     if strings:
+ *         return " ".join(strings)
+ *     return data.decode("latin-1", errors="replace")             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = __pyx_v_data;
+  __Pyx_INCREF(__pyx_t_3);
+  __pyx_t_4 = 0;
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_3, __pyx_mstate_global->__pyx_kp_u_latin_1};
+    __pyx_t_2 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_errors, __pyx_mstate_global->__pyx_n_u_replace, __pyx_t_2, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_decode, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_2);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_r = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "backend/snmp/trap_receiver.py":44
+ * 
+ * 
+ * def _trap_text(data: bytes) -> str:             # <<<<<<<<<<<<<<
+ *     strings = _extract_octet_strings(data)
+ *     if strings:
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("backend.snmp.trap_receiver._trap_text", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_strings);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":52
+ * 
+ * class SNMPTrapReceiver:
+ *     def __init__(             # <<<<<<<<<<<<<<
+ *         self,
+ *         *,
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_1__init__(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_1__init__ = {"__init__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_1__init__(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_self = 0;
+  PyObject *__pyx_v_host = 0;
+  PyObject *__pyx_v_port = 0;
+  PyObject *__pyx_v_ts = 0;
+  PyObject *__pyx_v_normalise_mac = 0;
+  PyObject *__pyx_v_process_disjoin_event = 0;
+  PyObject *__pyx_v_on_eem_trigger = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[7] = {0,0,0,0,0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_self,&__pyx_mstate_global->__pyx_n_u_ts,&__pyx_mstate_global->__pyx_n_u_normalise_mac,&__pyx_mstate_global->__pyx_n_u_process_disjoin_event,&__pyx_mstate_global->__pyx_n_u_host,&__pyx_mstate_global->__pyx_n_u_port,&__pyx_mstate_global->__pyx_n_u_on_eem_trigger,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 52, __pyx_L3_error)
+    if (likely(__pyx_kwds_len > 0)) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 52, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "__init__", 0) < (0)) __PYX_ERR(0, 52, __pyx_L3_error)
+      if (!values[4]) values[4] = __Pyx_NewRef(((PyObject*)((PyObject*)__pyx_mstate_global->__pyx_kp_u_0_0_0_0)));
+      if (!values[5]) values[5] = __Pyx_NewRef(((PyObject*)((PyObject*)__pyx_mstate_global->__pyx_int_162)));
+
+      /* "backend/snmp/trap_receiver.py":60
+ *         normalise_mac: Callable[[str], str],
+ *         process_disjoin_event: Callable[[str, str | None, str | None, str, str], None],
+ *         on_eem_trigger: Callable[[str, str], None] | None = None,             # <<<<<<<<<<<<<<
+ *     ) -> None:
+ *         self.host = host
+*/
+      if (!values[6]) values[6] = __Pyx_NewRef(((PyObject *)Py_None));
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, i); __PYX_ERR(0, 52, __pyx_L3_error) }
+      }
+      for (Py_ssize_t i = 1; i < 4; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseKeywordRequired("__init__", *(__pyx_pyargnames[i - 0])); __PYX_ERR(0, 52, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      __Pyx_RaiseKeywordRequired("__init__", __pyx_mstate_global->__pyx_n_u_ts); __PYX_ERR(0, 52, __pyx_L3_error)
+    }
+    __pyx_v_self = values[0];
+    __pyx_v_ts = values[1];
+    __pyx_v_normalise_mac = values[2];
+    __pyx_v_process_disjoin_event = values[3];
+    __pyx_v_host = ((PyObject*)values[4]);
+    if (__Pyx_PyInt_FromNumber(&values[5], "port", 0) < (0)) __PYX_ERR(0, 56, __pyx_L3_error)
+    __pyx_v_port = ((PyObject*)values[5]);
+    __pyx_v_on_eem_trigger = values[6];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 52, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_host), (&PyUnicode_Type), 0, "host", 2))) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_port), (&PyLong_Type), 0, "port", 2))) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver___init__(__pyx_self, __pyx_v_self, __pyx_v_host, __pyx_v_port, __pyx_v_ts, __pyx_v_normalise_mac, __pyx_v_process_disjoin_event, __pyx_v_on_eem_trigger);
+
+  /* "backend/snmp/trap_receiver.py":52
+ * 
+ * class SNMPTrapReceiver:
+ *     def __init__(             # <<<<<<<<<<<<<<
+ *         self,
+ *         *,
+*/
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  goto __pyx_L7_cleaned_up;
+  __pyx_L0:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __pyx_L7_cleaned_up:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_port, PyObject *__pyx_v_ts, PyObject *__pyx_v_normalise_mac, PyObject *__pyx_v_process_disjoin_event, PyObject *__pyx_v_on_eem_trigger) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__init__", 0);
+
+  /* "backend/snmp/trap_receiver.py":62
+ *         on_eem_trigger: Callable[[str, str], None] | None = None,
+ *     ) -> None:
+ *         self.host = host             # <<<<<<<<<<<<<<
+ *         self.port = port
+ *         self.ts = ts
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_host, __pyx_v_host) < (0)) __PYX_ERR(0, 62, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":63
+ *     ) -> None:
+ *         self.host = host
+ *         self.port = port             # <<<<<<<<<<<<<<
+ *         self.ts = ts
+ *         self.normalise_mac = normalise_mac
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_port, __pyx_v_port) < (0)) __PYX_ERR(0, 63, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":64
+ *         self.host = host
+ *         self.port = port
+ *         self.ts = ts             # <<<<<<<<<<<<<<
+ *         self.normalise_mac = normalise_mac
+ *         self.process_disjoin_event = process_disjoin_event
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ts, __pyx_v_ts) < (0)) __PYX_ERR(0, 64, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":65
+ *         self.port = port
+ *         self.ts = ts
+ *         self.normalise_mac = normalise_mac             # <<<<<<<<<<<<<<
+ *         self.process_disjoin_event = process_disjoin_event
+ *         self.on_eem_trigger = on_eem_trigger
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_normalise_mac, __pyx_v_normalise_mac) < (0)) __PYX_ERR(0, 65, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":66
+ *         self.ts = ts
+ *         self.normalise_mac = normalise_mac
+ *         self.process_disjoin_event = process_disjoin_event             # <<<<<<<<<<<<<<
+ *         self.on_eem_trigger = on_eem_trigger
+ *         self._server: socketserver.UDPServer | None = None
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_process_disjoin_event, __pyx_v_process_disjoin_event) < (0)) __PYX_ERR(0, 66, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":67
+ *         self.normalise_mac = normalise_mac
+ *         self.process_disjoin_event = process_disjoin_event
+ *         self.on_eem_trigger = on_eem_trigger             # <<<<<<<<<<<<<<
+ *         self._server: socketserver.UDPServer | None = None
+ *         self._thread: threading.Thread | None = None
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_on_eem_trigger, __pyx_v_on_eem_trigger) < (0)) __PYX_ERR(0, 67, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":68
+ *         self.process_disjoin_event = process_disjoin_event
+ *         self.on_eem_trigger = on_eem_trigger
+ *         self._server: socketserver.UDPServer | None = None             # <<<<<<<<<<<<<<
+ *         self._thread: threading.Thread | None = None
+ * 
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_server, Py_None) < (0)) __PYX_ERR(0, 68, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":69
+ *         self.on_eem_trigger = on_eem_trigger
+ *         self._server: socketserver.UDPServer | None = None
+ *         self._thread: threading.Thread | None = None             # <<<<<<<<<<<<<<
+ * 
+ *     def start(self) -> None:
+*/
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_thread, Py_None) < (0)) __PYX_ERR(0, 69, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":52
+ * 
+ * class SNMPTrapReceiver:
+ *     def __init__(             # <<<<<<<<<<<<<<
+ *         self,
+ *         *,
+*/
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":71
+ *         self._thread: threading.Thread | None = None
+ * 
+ *     def start(self) -> None:             # <<<<<<<<<<<<<<
+ *         receiver = self
+ * 
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_3start(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_3start = {"start", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_3start, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_3start(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_self = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("start (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_self,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 71, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 71, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "start", 0) < (0)) __PYX_ERR(0, 71, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("start", 1, 1, 1, i); __PYX_ERR(0, 71, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 71, __pyx_L3_error)
+    }
+    __pyx_v_self = values[0];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("start", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 71, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.start", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_2start(__pyx_self, __pyx_v_self);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":75
+ * 
+ *         class _SnmpTrapHandler(socketserver.BaseRequestHandler):
+ *             def handle(self) -> None:             # <<<<<<<<<<<<<<
+ *                 receiver._handle_packet(self.request[0], self.client_address[0])
+ * 
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_1handle(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_1handle = {"handle", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_1handle, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_1handle(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_self = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("handle (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_self,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 75, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 75, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "handle", 0) < (0)) __PYX_ERR(0, 75, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("handle", 1, 1, 1, i); __PYX_ERR(0, 75, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 75, __pyx_L3_error)
+    }
+    __pyx_v_self = values[0];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("handle", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 75, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.start._SnmpTrapHandler.handle", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_handle(__pyx_self, __pyx_v_self);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_handle(PyObject *__pyx_self, PyObject *__pyx_v_self) {
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *__pyx_cur_scope;
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *__pyx_outer_scope;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  size_t __pyx_t_6;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("handle", 0);
+  __pyx_outer_scope = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *) __Pyx_CyFunction_GetClosure(__pyx_self);
+  __pyx_cur_scope = __pyx_outer_scope;
+
+  /* "backend/snmp/trap_receiver.py":76
+ *         class _SnmpTrapHandler(socketserver.BaseRequestHandler):
+ *             def handle(self) -> None:
+ *                 receiver._handle_packet(self.request[0], self.client_address[0])             # <<<<<<<<<<<<<<
+ * 
+ *         self._server = socketserver.UDPServer((self.host, self.port), _SnmpTrapHandler)
+*/
+  if (unlikely(!__pyx_cur_scope->__pyx_v_receiver)) { __Pyx_RaiseClosureNameError("receiver"); __PYX_ERR(0, 76, __pyx_L1_error) }
+  __pyx_t_2 = __pyx_cur_scope->__pyx_v_receiver;
+  __Pyx_INCREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_request); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_client_address); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_6 = 0;
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_2, __pyx_t_4, __pyx_t_5};
+    __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_handle_packet, __pyx_callargs+__pyx_t_6, (3-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":75
+ * 
+ *         class _SnmpTrapHandler(socketserver.BaseRequestHandler):
+ *             def handle(self) -> None:             # <<<<<<<<<<<<<<
+ *                 receiver._handle_packet(self.request[0], self.client_address[0])
+ * 
+*/
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.start._SnmpTrapHandler.handle", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":71
+ *         self._thread: threading.Thread | None = None
+ * 
+ *     def start(self) -> None:             # <<<<<<<<<<<<<<
+ *         receiver = self
+ * 
+*/
+
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_2start(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self) {
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *__pyx_cur_scope;
+  PyObject *__pyx_v__SnmpTrapHandler = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  size_t __pyx_t_7;
+  PyObject *__pyx_t_8[5];
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("start", 0);
+  __pyx_cur_scope = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *)__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__start(__pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start, __pyx_mstate_global->__pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __pyx_cur_scope = ((struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *)Py_None);
+    __Pyx_INCREF(Py_None);
+    __PYX_ERR(0, 71, __pyx_L1_error)
+  } else {
+    __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
+  }
+
+  /* "backend/snmp/trap_receiver.py":72
+ * 
+ *     def start(self) -> None:
+ *         receiver = self             # <<<<<<<<<<<<<<
+ * 
+ *         class _SnmpTrapHandler(socketserver.BaseRequestHandler):
+*/
+  __Pyx_INCREF(__pyx_v_self);
+  __Pyx_GIVEREF(__pyx_v_self);
+  __pyx_cur_scope->__pyx_v_receiver = __pyx_v_self;
+
+  /* "backend/snmp/trap_receiver.py":74
+ *         receiver = self
+ * 
+ *         class _SnmpTrapHandler(socketserver.BaseRequestHandler):             # <<<<<<<<<<<<<<
+ *             def handle(self) -> None:
+ *                 receiver._handle_packet(self.request[0], self.client_address[0])
+*/
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_socketserver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_BaseRequestHandler); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2) != (0)) __PYX_ERR(0, 74, __pyx_L1_error);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PEP560_update_bases(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_Py3MetaclassPrepare(__pyx_t_3, __pyx_t_2, __pyx_mstate_global->__pyx_n_u_SnmpTrapHandler, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver_start_locals__S, (PyObject *) NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, (PyObject *) NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (__pyx_t_2 != __pyx_t_1) {
+    if (unlikely((PyDict_SetItemString(__pyx_t_4, "__orig_bases__", __pyx_t_1) < 0))) __PYX_ERR(0, 74, __pyx_L1_error)
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":75
+ * 
+ *         class _SnmpTrapHandler(socketserver.BaseRequestHandler):
+ *             def handle(self) -> None:             # <<<<<<<<<<<<<<
+ *                 receiver._handle_packet(self.request[0], self.client_address[0])
+ * 
+*/
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5start_16_SnmpTrapHandler_1handle, 0, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver_start_locals__S_2, ((PyObject*)__pyx_cur_scope), __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_1);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_handle, __pyx_t_5) < (0)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+  /* "backend/snmp/trap_receiver.py":74
+ *         receiver = self
+ * 
+ *         class _SnmpTrapHandler(socketserver.BaseRequestHandler):             # <<<<<<<<<<<<<<
+ *             def handle(self) -> None:
+ *                 receiver._handle_packet(self.request[0], self.client_address[0])
+*/
+  __pyx_t_5 = __Pyx_Py3ClassCreate(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_SnmpTrapHandler, __pyx_t_2, __pyx_t_4, NULL, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_v__SnmpTrapHandler = __pyx_t_5;
+  __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":78
+ *                 receiver._handle_packet(self.request[0], self.client_address[0])
+ * 
+ *         self._server = socketserver.UDPServer((self.host, self.port), _SnmpTrapHandler)             # <<<<<<<<<<<<<<
+ *         self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
+ *         self._thread.start()
+*/
+  __pyx_t_3 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_socketserver); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_UDPServer); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_host); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_port); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_GIVEREF(__pyx_t_4);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4) != (0)) __PYX_ERR(0, 78, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_1);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 78, __pyx_L1_error);
+  __pyx_t_4 = 0;
+  __pyx_t_1 = 0;
+  __pyx_t_7 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_5))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_5);
+    assert(__pyx_t_3);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
+    __Pyx_INCREF(__pyx_t_3);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
+    __pyx_t_7 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_3, __pyx_t_6, __pyx_v__SnmpTrapHandler};
+    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_7, (3-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_server, __pyx_t_2) < (0)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":79
+ * 
+ *         self._server = socketserver.UDPServer((self.host, self.port), _SnmpTrapHandler)
+ *         self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)             # <<<<<<<<<<<<<<
+ *         self._thread.start()
+ *         print(
+*/
+  __pyx_t_5 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_threading); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_Thread); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_server); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_serve_forever); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_7 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_5);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_5);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_7 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_5, NULL};
+    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_target, __pyx_t_1, __pyx_t_6, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 79, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_daemon, Py_True, __pyx_t_6, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_7, (1-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_thread, __pyx_t_2) < (0)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":80
+ *         self._server = socketserver.UDPServer((self.host, self.port), _SnmpTrapHandler)
+ *         self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
+ *         self._thread.start()             # <<<<<<<<<<<<<<
+ *         print(
+ *             f"[{self.ts()}] SNMP trap listener started on UDP {self.port} (mode=snmp)",
+*/
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_thread); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_3 = __pyx_t_6;
+  __Pyx_INCREF(__pyx_t_3);
+  __pyx_t_7 = 0;
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_2 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_start, __pyx_callargs+__pyx_t_7, (1-__pyx_t_7) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":81
+ *         self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
+ *         self._thread.start()
+ *         print(             # <<<<<<<<<<<<<<
+ *             f"[{self.ts()}] SNMP trap listener started on UDP {self.port} (mode=snmp)",
+ *             file=sys.stderr,
+*/
+  __pyx_t_6 = NULL;
+
+  /* "backend/snmp/trap_receiver.py":82
+ *         self._thread.start()
+ *         print(
+ *             f"[{self.ts()}] SNMP trap listener started on UDP {self.port} (mode=snmp)",             # <<<<<<<<<<<<<<
+ *             file=sys.stderr,
+ *         )
+*/
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ts); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_port); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_8[0] = __pyx_mstate_global->__pyx_kp_u__2;
+  __pyx_t_8[1] = __pyx_t_3;
+  __pyx_t_8[2] = __pyx_mstate_global->__pyx_kp_u_SNMP_trap_listener_started_on_U;
+  __pyx_t_8[3] = __pyx_t_5;
+  __pyx_t_8[4] = __pyx_mstate_global->__pyx_kp_u_mode_snmp;
+  __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_8, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_3) + 36 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 12, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+  /* "backend/snmp/trap_receiver.py":83
+ *         print(
+ *             f"[{self.ts()}] SNMP trap listener started on UDP {self.port} (mode=snmp)",
+ *             file=sys.stderr,             # <<<<<<<<<<<<<<
+ *         )
+ * 
+*/
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_7 = 1;
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_6, __pyx_t_1};
+    __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_3, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":71
+ *         self._thread: threading.Thread | None = None
+ * 
+ *     def start(self) -> None:             # <<<<<<<<<<<<<<
+ *         receiver = self
+ * 
+*/
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.start", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v__SnmpTrapHandler);
+  __Pyx_DECREF((PyObject *)__pyx_cur_scope);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":86
+ *         )
+ * 
+ *     def shutdown(self) -> None:             # <<<<<<<<<<<<<<
+ *         if self._server:
+ *             self._server.shutdown()
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5shutdown(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5shutdown = {"shutdown", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5shutdown, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5shutdown(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_self = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("shutdown (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_self,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 86, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 86, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "shutdown", 0) < (0)) __PYX_ERR(0, 86, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("shutdown", 1, 1, 1, i); __PYX_ERR(0, 86, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 86, __pyx_L3_error)
+    }
+    __pyx_v_self = values[0];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("shutdown", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 86, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.shutdown", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_4shutdown(__pyx_self, __pyx_v_self);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_4shutdown(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  size_t __pyx_t_5;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("shutdown", 0);
+
+  /* "backend/snmp/trap_receiver.py":87
+ * 
+ *     def shutdown(self) -> None:
+ *         if self._server:             # <<<<<<<<<<<<<<
+ *             self._server.shutdown()
+ *             self._server.server_close()
+*/
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_server); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 87, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__pyx_t_2) {
+
+    /* "backend/snmp/trap_receiver.py":88
+ *     def shutdown(self) -> None:
+ *         if self._server:
+ *             self._server.shutdown()             # <<<<<<<<<<<<<<
+ *             self._server.server_close()
+ *             self._server = None
+*/
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_server); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_3 = __pyx_t_4;
+    __Pyx_INCREF(__pyx_t_3);
+    __pyx_t_5 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+      __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_shutdown, __pyx_callargs+__pyx_t_5, (1-__pyx_t_5) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "backend/snmp/trap_receiver.py":89
+ *         if self._server:
+ *             self._server.shutdown()
+ *             self._server.server_close()             # <<<<<<<<<<<<<<
+ *             self._server = None
+ * 
+*/
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_server); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __pyx_t_3;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_5 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
+      __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_server_close, __pyx_callargs+__pyx_t_5, (1-__pyx_t_5) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "backend/snmp/trap_receiver.py":90
+ *             self._server.shutdown()
+ *             self._server.server_close()
+ *             self._server = None             # <<<<<<<<<<<<<<
+ * 
+ *     def _handle_packet(self, data: bytes, sender: str) -> None:
+*/
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_server, Py_None) < (0)) __PYX_ERR(0, 90, __pyx_L1_error)
+
+    /* "backend/snmp/trap_receiver.py":87
+ * 
+ *     def shutdown(self) -> None:
+ *         if self._server:             # <<<<<<<<<<<<<<
+ *             self._server.shutdown()
+ *             self._server.server_close()
+*/
+  }
+
+  /* "backend/snmp/trap_receiver.py":86
+ *         )
+ * 
+ *     def shutdown(self) -> None:             # <<<<<<<<<<<<<<
+ *         if self._server:
+ *             self._server.shutdown()
+*/
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver.shutdown", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":92
+ *             self._server = None
+ * 
+ *     def _handle_packet(self, data: bytes, sender: str) -> None:             # <<<<<<<<<<<<<<
+ *         now = self.ts()
+ *         combined_text = _trap_text(data)
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_7_handle_packet(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_7_handle_packet = {"_handle_packet", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_7_handle_packet, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_7_handle_packet(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_self = 0;
+  PyObject *__pyx_v_data = 0;
+  PyObject *__pyx_v_sender = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("_handle_packet (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_self,&__pyx_mstate_global->__pyx_n_u_data,&__pyx_mstate_global->__pyx_n_u_sender,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 92, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 92, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 92, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 92, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_handle_packet", 0) < (0)) __PYX_ERR(0, 92, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 3; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_handle_packet", 1, 3, 3, i); __PYX_ERR(0, 92, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 92, __pyx_L3_error)
+      values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 92, __pyx_L3_error)
+      values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 92, __pyx_L3_error)
+    }
+    __pyx_v_self = values[0];
+    __pyx_v_data = ((PyObject*)values[1]);
+    __pyx_v_sender = ((PyObject*)values[2]);
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("_handle_packet", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 92, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver._handle_packet", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_data), (&PyBytes_Type), 0, "data", 2))) __PYX_ERR(0, 92, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_sender), (&PyUnicode_Type), 0, "sender", 2))) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_6_handle_packet(__pyx_self, __pyx_v_self, __pyx_v_data, __pyx_v_sender);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  goto __pyx_L7_cleaned_up;
+  __pyx_L0:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __pyx_L7_cleaned_up:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_6_handle_packet(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_data, PyObject *__pyx_v_sender) {
+  PyObject *__pyx_v_now = NULL;
+  PyObject *__pyx_v_combined_text = NULL;
+  PyObject *__pyx_v_m_name = NULL;
+  PyObject *__pyx_v_m_mac = NULL;
+  PyObject *__pyx_v_m_ip = NULL;
+  PyObject *__pyx_v_m_reason = NULL;
+  PyObject *__pyx_v_ap_name = NULL;
+  PyObject *__pyx_v_mac = NULL;
+  PyObject *__pyx_v_ip = NULL;
+  PyObject *__pyx_v_reason = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  size_t __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9[6];
+  PyObject *__pyx_t_10[3];
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *__pyx_t_13 = NULL;
+  PyObject *__pyx_t_14[10];
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_handle_packet", 0);
+
+  /* "backend/snmp/trap_receiver.py":93
+ * 
+ *     def _handle_packet(self, data: bytes, sender: str) -> None:
+ *         now = self.ts()             # <<<<<<<<<<<<<<
+ *         combined_text = _trap_text(data)
+ * 
+*/
+  __pyx_t_2 = __pyx_v_self;
+  __Pyx_INCREF(__pyx_t_2);
+  __pyx_t_3 = 0;
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_ts, __pyx_callargs+__pyx_t_3, (1-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_now = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":94
+ *     def _handle_packet(self, data: bytes, sender: str) -> None:
+ *         now = self.ts()
+ *         combined_text = _trap_text(data)             # <<<<<<<<<<<<<<
+ * 
+ *         if (
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_trap_text); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_4);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_4, __pyx__function);
+    __pyx_t_3 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_data};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_combined_text = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":97
+ * 
+ *         if (
+ *             "EEM_BATCH_TRIGGER" not in combined_text             # <<<<<<<<<<<<<<
+ *             and ("Disjoined" not in combined_text or "AP_JOIN_DISJOIN" not in combined_text)
+ *         ):
+*/
+  __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_EEM_BATCH_TRIGGER, __pyx_v_combined_text, Py_NE)); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 97, __pyx_L1_error)
+  if (__pyx_t_6) {
+  } else {
+    __pyx_t_5 = __pyx_t_6;
+    goto __pyx_L4_bool_binop_done;
+  }
+
+  /* "backend/snmp/trap_receiver.py":98
+ *         if (
+ *             "EEM_BATCH_TRIGGER" not in combined_text
+ *             and ("Disjoined" not in combined_text or "AP_JOIN_DISJOIN" not in combined_text)             # <<<<<<<<<<<<<<
+ *         ):
+ *             return
+*/
+  __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_Disjoined, __pyx_v_combined_text, Py_NE)); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 98, __pyx_L1_error)
+  if (!__pyx_t_6) {
+  } else {
+    __pyx_t_5 = __pyx_t_6;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_AP_JOIN_DISJOIN, __pyx_v_combined_text, Py_NE)); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_5 = __pyx_t_6;
+  __pyx_L4_bool_binop_done:;
+
+  /* "backend/snmp/trap_receiver.py":96
+ *         combined_text = _trap_text(data)
+ * 
+ *         if (             # <<<<<<<<<<<<<<
+ *             "EEM_BATCH_TRIGGER" not in combined_text
+ *             and ("Disjoined" not in combined_text or "AP_JOIN_DISJOIN" not in combined_text)
+*/
+  if (__pyx_t_5) {
+
+    /* "backend/snmp/trap_receiver.py":100
+ *             and ("Disjoined" not in combined_text or "AP_JOIN_DISJOIN" not in combined_text)
+ *         ):
+ *             return             # <<<<<<<<<<<<<<
+ * 
+ *         print(
+*/
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+
+    /* "backend/snmp/trap_receiver.py":96
+ *         combined_text = _trap_text(data)
+ * 
+ *         if (             # <<<<<<<<<<<<<<
+ *             "EEM_BATCH_TRIGGER" not in combined_text
+ *             and ("Disjoined" not in combined_text or "AP_JOIN_DISJOIN" not in combined_text)
+*/
+  }
+
+  /* "backend/snmp/trap_receiver.py":102
+ *             return
+ * 
+ *         print(             # <<<<<<<<<<<<<<
+ *             f"[{now}] [SNMP_TRAP] Disjoin trap from {sender}: {combined_text[:120]}",
+ *             file=sys.stderr,
+*/
+  __pyx_t_4 = NULL;
+
+  /* "backend/snmp/trap_receiver.py":103
+ * 
+ *         print(
+ *             f"[{now}] [SNMP_TRAP] Disjoin trap from {sender}: {combined_text[:120]}",             # <<<<<<<<<<<<<<
+ *             file=sys.stderr,
+ *         )
+*/
+  __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_now, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_7 = __Pyx_PyObject_GetSlice(__pyx_v_combined_text, 0, 0x78, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 0, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_7, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_9[0] = __pyx_mstate_global->__pyx_kp_u__2;
+  __pyx_t_9[1] = __pyx_t_2;
+  __pyx_t_9[2] = __pyx_mstate_global->__pyx_kp_u_SNMP_TRAP_Disjoin_trap_from;
+  __pyx_t_9[3] = __pyx_v_sender;
+  __pyx_t_9[4] = __pyx_mstate_global->__pyx_kp_u__3;
+  __pyx_t_9[5] = __pyx_t_8;
+  __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_9, 6, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2) + 32 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_sender) + 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_sender) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8));
+  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+
+  /* "backend/snmp/trap_receiver.py":104
+ *         print(
+ *             f"[{now}] [SNMP_TRAP] Disjoin trap from {sender}: {combined_text[:120]}",
+ *             file=sys.stderr,             # <<<<<<<<<<<<<<
+ *         )
+ * 
+*/
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_3 = 1;
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_7};
+    __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_2, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 102, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":107
+ *         )
+ * 
+ *         if "EEM_BATCH_TRIGGER" in combined_text:             # <<<<<<<<<<<<<<
+ *             if self.on_eem_trigger:
+ *                 print(
+*/
+  __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_EEM_BATCH_TRIGGER, __pyx_v_combined_text, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (__pyx_t_5) {
+
+    /* "backend/snmp/trap_receiver.py":108
+ * 
+ *         if "EEM_BATCH_TRIGGER" in combined_text:
+ *             if self.on_eem_trigger:             # <<<<<<<<<<<<<<
+ *                 print(
+ *                     f"[{now}] [SNMP_TRAP] EEM batch trigger received via SNMP trap",
+*/
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_on_eem_trigger); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (__pyx_t_5) {
+
+      /* "backend/snmp/trap_receiver.py":109
+ *         if "EEM_BATCH_TRIGGER" in combined_text:
+ *             if self.on_eem_trigger:
+ *                 print(             # <<<<<<<<<<<<<<
+ *                     f"[{now}] [SNMP_TRAP] EEM batch trigger received via SNMP trap",
+ *                     file=sys.stderr,
+*/
+      __pyx_t_8 = NULL;
+
+      /* "backend/snmp/trap_receiver.py":110
+ *             if self.on_eem_trigger:
+ *                 print(
+ *                     f"[{now}] [SNMP_TRAP] EEM batch trigger received via SNMP trap",             # <<<<<<<<<<<<<<
+ *                     file=sys.stderr,
+ *                 )
+*/
+      __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_now, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __pyx_t_10[0] = __pyx_mstate_global->__pyx_kp_u__2;
+      __pyx_t_10[1] = __pyx_t_2;
+      __pyx_t_10[2] = __pyx_mstate_global->__pyx_kp_u_SNMP_TRAP_EEM_batch_trigger_rec;
+      __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_10, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2) + 54, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2));
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+      /* "backend/snmp/trap_receiver.py":111
+ *                 print(
+ *                     f"[{now}] [SNMP_TRAP] EEM batch trigger received via SNMP trap",
+ *                     file=sys.stderr,             # <<<<<<<<<<<<<<
+ *                 )
+ *                 threading.Thread(
+*/
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_3 = 1;
+      {
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_7};
+        __pyx_t_2 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_2, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 109, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_2);
+        __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/snmp/trap_receiver.py":113
+ *                     file=sys.stderr,
+ *                 )
+ *                 threading.Thread(             # <<<<<<<<<<<<<<
+ *                     target=self.on_eem_trigger,
+ *                     args=(combined_text, now),
+*/
+      __pyx_t_7 = NULL;
+      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_threading); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 113, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_Thread); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 113, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+
+      /* "backend/snmp/trap_receiver.py":114
+ *                 )
+ *                 threading.Thread(
+ *                     target=self.on_eem_trigger,             # <<<<<<<<<<<<<<
+ *                     args=(combined_text, now),
+ *                     daemon=True,
+*/
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_on_eem_trigger); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 114, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+
+      /* "backend/snmp/trap_receiver.py":115
+ *                 threading.Thread(
+ *                     target=self.on_eem_trigger,
+ *                     args=(combined_text, now),             # <<<<<<<<<<<<<<
+ *                     daemon=True,
+ *                 ).start()
+*/
+      __pyx_t_12 = PyTuple_New(2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 115, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_INCREF(__pyx_v_combined_text);
+      __Pyx_GIVEREF(__pyx_v_combined_text);
+      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_v_combined_text) != (0)) __PYX_ERR(0, 115, __pyx_L1_error);
+      __Pyx_INCREF(__pyx_v_now);
+      __Pyx_GIVEREF(__pyx_v_now);
+      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_12, 1, __pyx_v_now) != (0)) __PYX_ERR(0, 115, __pyx_L1_error);
+
+      /* "backend/snmp/trap_receiver.py":116
+ *                     target=self.on_eem_trigger,
+ *                     args=(combined_text, now),
+ *                     daemon=True,             # <<<<<<<<<<<<<<
+ *                 ).start()
+ *             return
+*/
+      __pyx_t_3 = 1;
+      #if CYTHON_UNPACK_METHODS
+      if (unlikely(PyMethod_Check(__pyx_t_11))) {
+        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_11);
+        assert(__pyx_t_7);
+        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_11);
+        __Pyx_INCREF(__pyx_t_7);
+        __Pyx_INCREF(__pyx__function);
+        __Pyx_DECREF_SET(__pyx_t_11, __pyx__function);
+        __pyx_t_3 = 0;
+      }
+      #endif
+      {
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 3 : 0)] = {__pyx_t_7, NULL};
+        __pyx_t_13 = __Pyx_MakeVectorcallBuilderKwds(3); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 113, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_13);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_target, __pyx_t_8, __pyx_t_13, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 113, __pyx_L1_error)
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_args, __pyx_t_12, __pyx_t_13, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 113, __pyx_L1_error)
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_daemon, Py_True, __pyx_t_13, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 113, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_3, (1-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_13);
+        __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+      }
+      __pyx_t_2 = __pyx_t_4;
+      __Pyx_INCREF(__pyx_t_2);
+      __pyx_t_3 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_start, __pyx_callargs+__pyx_t_3, (1-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/snmp/trap_receiver.py":108
+ * 
+ *         if "EEM_BATCH_TRIGGER" in combined_text:
+ *             if self.on_eem_trigger:             # <<<<<<<<<<<<<<
+ *                 print(
+ *                     f"[{now}] [SNMP_TRAP] EEM batch trigger received via SNMP trap",
+*/
+    }
+
+    /* "backend/snmp/trap_receiver.py":118
+ *                     daemon=True,
+ *                 ).start()
+ *             return             # <<<<<<<<<<<<<<
+ * 
+ *         m_name = APNAME_RE.search(combined_text)
+*/
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+
+    /* "backend/snmp/trap_receiver.py":107
+ *         )
+ * 
+ *         if "EEM_BATCH_TRIGGER" in combined_text:             # <<<<<<<<<<<<<<
+ *             if self.on_eem_trigger:
+ *                 print(
+*/
+  }
+
+  /* "backend/snmp/trap_receiver.py":120
+ *             return
+ * 
+ *         m_name = APNAME_RE.search(combined_text)             # <<<<<<<<<<<<<<
+ *         m_mac = APMAC_RE.search(combined_text)
+ *         m_ip = APIP_RE.search(combined_text)
+*/
+  __pyx_t_4 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_APNAME_RE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_11))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_11);
+    assert(__pyx_t_4);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_11);
+    __Pyx_INCREF(__pyx_t_4);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_11, __pyx__function);
+    __pyx_t_3 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_combined_text};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_m_name = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":121
+ * 
+ *         m_name = APNAME_RE.search(combined_text)
+ *         m_mac = APMAC_RE.search(combined_text)             # <<<<<<<<<<<<<<
+ *         m_ip = APIP_RE.search(combined_text)
+ *         m_reason = REASON_RE.search(combined_text)
+*/
+  __pyx_t_11 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_APMAC_RE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_3 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_2);
+    assert(__pyx_t_11);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+    __Pyx_INCREF(__pyx_t_11);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+    __pyx_t_3 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_11, __pyx_v_combined_text};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_m_mac = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":122
+ *         m_name = APNAME_RE.search(combined_text)
+ *         m_mac = APMAC_RE.search(combined_text)
+ *         m_ip = APIP_RE.search(combined_text)             # <<<<<<<<<<<<<<
+ *         m_reason = REASON_RE.search(combined_text)
+ * 
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_mstate_global->__pyx_n_u_APIP_RE); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+  __pyx_t_3 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_4);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_4, __pyx__function);
+    __pyx_t_3 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_combined_text};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_m_ip = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":123
+ *         m_mac = APMAC_RE.search(combined_text)
+ *         m_ip = APIP_RE.search(combined_text)
+ *         m_reason = REASON_RE.search(combined_text)             # <<<<<<<<<<<<<<
+ * 
+ *         ap_name = m_name.group(1) if m_name else None
+*/
+  __pyx_t_4 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_REASON_RE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_11))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_11);
+    assert(__pyx_t_4);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_11);
+    __Pyx_INCREF(__pyx_t_4);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_11, __pyx__function);
+    __pyx_t_3 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_combined_text};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_m_reason = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":125
+ *         m_reason = REASON_RE.search(combined_text)
+ * 
+ *         ap_name = m_name.group(1) if m_name else None             # <<<<<<<<<<<<<<
+ *         mac = self.normalise_mac(m_mac.group(1)) if m_mac else None
+ *         ip = m_ip.group(1) if m_ip else None
+*/
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_m_name); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 125, __pyx_L1_error)
+  if (__pyx_t_5) {
+    __pyx_t_4 = __pyx_v_m_name;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_3 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_mstate_global->__pyx_int_1};
+      __pyx_t_11 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_group, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 125, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+    }
+    __pyx_t_1 = __pyx_t_11;
+    __pyx_t_11 = 0;
+  } else {
+    __Pyx_INCREF(Py_None);
+    __pyx_t_1 = Py_None;
+  }
+  __pyx_v_ap_name = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":126
+ * 
+ *         ap_name = m_name.group(1) if m_name else None
+ *         mac = self.normalise_mac(m_mac.group(1)) if m_mac else None             # <<<<<<<<<<<<<<
+ *         ip = m_ip.group(1) if m_ip else None
+ *         reason = m_reason.group(1).strip() if m_reason else "unknown"
+*/
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_m_mac); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 126, __pyx_L1_error)
+  if (__pyx_t_5) {
+    __pyx_t_4 = __pyx_v_self;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_13 = __pyx_v_m_mac;
+    __Pyx_INCREF(__pyx_t_13);
+    __pyx_t_3 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_13, __pyx_mstate_global->__pyx_int_1};
+      __pyx_t_2 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_group, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_13); __pyx_t_13 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+    }
+    __pyx_t_3 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_t_2};
+      __pyx_t_11 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_normalise_mac, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+    }
+    __pyx_t_1 = __pyx_t_11;
+    __pyx_t_11 = 0;
+  } else {
+    __Pyx_INCREF(Py_None);
+    __pyx_t_1 = Py_None;
+  }
+  __pyx_v_mac = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":127
+ *         ap_name = m_name.group(1) if m_name else None
+ *         mac = self.normalise_mac(m_mac.group(1)) if m_mac else None
+ *         ip = m_ip.group(1) if m_ip else None             # <<<<<<<<<<<<<<
+ *         reason = m_reason.group(1).strip() if m_reason else "unknown"
+ * 
+*/
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_m_ip); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 127, __pyx_L1_error)
+  if (__pyx_t_5) {
+    __pyx_t_2 = __pyx_v_m_ip;
+    __Pyx_INCREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_mstate_global->__pyx_int_1};
+      __pyx_t_11 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_group, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 127, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+    }
+    __pyx_t_1 = __pyx_t_11;
+    __pyx_t_11 = 0;
+  } else {
+    __Pyx_INCREF(Py_None);
+    __pyx_t_1 = Py_None;
+  }
+  __pyx_v_ip = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":128
+ *         mac = self.normalise_mac(m_mac.group(1)) if m_mac else None
+ *         ip = m_ip.group(1) if m_ip else None
+ *         reason = m_reason.group(1).strip() if m_reason else "unknown"             # <<<<<<<<<<<<<<
+ * 
+ *         if not mac:
+*/
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_m_reason); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 128, __pyx_L1_error)
+  if (__pyx_t_5) {
+    __pyx_t_13 = __pyx_v_m_reason;
+    __Pyx_INCREF(__pyx_t_13);
+    __pyx_t_3 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_13, __pyx_mstate_global->__pyx_int_1};
+      __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_group, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_13); __pyx_t_13 = 0;
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 128, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+    }
+    __pyx_t_2 = __pyx_t_4;
+    __Pyx_INCREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+      __pyx_t_11 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_3, (1-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 128, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+    }
+    __pyx_t_1 = __pyx_t_11;
+    __pyx_t_11 = 0;
+  } else {
+    __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_unknown);
+    __pyx_t_1 = __pyx_mstate_global->__pyx_n_u_unknown;
+  }
+  __pyx_v_reason = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":130
+ *         reason = m_reason.group(1).strip() if m_reason else "unknown"
+ * 
+ *         if not mac:             # <<<<<<<<<<<<<<
+ *             print(f"[{now}] [SNMP_TRAP] Could not extract MAC - ignoring trap.", file=sys.stderr)
+ *             return
+*/
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_mac); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_6 = (!__pyx_t_5);
+  if (__pyx_t_6) {
+
+    /* "backend/snmp/trap_receiver.py":131
+ * 
+ *         if not mac:
+ *             print(f"[{now}] [SNMP_TRAP] Could not extract MAC - ignoring trap.", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             return
+ * 
+*/
+    __pyx_t_11 = NULL;
+    __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_v_now, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_10[0] = __pyx_mstate_global->__pyx_kp_u__2;
+    __pyx_t_10[1] = __pyx_t_4;
+    __pyx_t_10[2] = __pyx_mstate_global->__pyx_kp_u_SNMP_TRAP_Could_not_extract_MAC;
+    __pyx_t_2 = __Pyx_PyUnicode_Join(__pyx_t_10, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 52, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4));
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_13);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_3 = 1;
+    {
+      PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_11, __pyx_t_2};
+      __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_13, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 131, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
+      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "backend/snmp/trap_receiver.py":132
+ *         if not mac:
+ *             print(f"[{now}] [SNMP_TRAP] Could not extract MAC - ignoring trap.", file=sys.stderr)
+ *             return             # <<<<<<<<<<<<<<
+ * 
+ *         print(
+*/
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+
+    /* "backend/snmp/trap_receiver.py":130
+ *         reason = m_reason.group(1).strip() if m_reason else "unknown"
+ * 
+ *         if not mac:             # <<<<<<<<<<<<<<
+ *             print(f"[{now}] [SNMP_TRAP] Could not extract MAC - ignoring trap.", file=sys.stderr)
+ *             return
+*/
+  }
+
+  /* "backend/snmp/trap_receiver.py":134
+ *             return
+ * 
+ *         print(             # <<<<<<<<<<<<<<
+ *             f"[{now}] [SNMP_TRAP] AP={ap_name or '?'} MAC={mac} IP={ip or '?'} reason={reason}",
+ *             file=sys.stderr,
+*/
+  __pyx_t_4 = NULL;
+
+  /* "backend/snmp/trap_receiver.py":135
+ * 
+ *         print(
+ *             f"[{now}] [SNMP_TRAP] AP={ap_name or '?'} MAC={mac} IP={ip or '?'} reason={reason}",             # <<<<<<<<<<<<<<
+ *             file=sys.stderr,
+ *         )
+*/
+  __pyx_t_13 = __Pyx_PyObject_FormatSimple(__pyx_v_now, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_13);
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_ap_name); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (!__pyx_t_6) {
+  } else {
+    __Pyx_INCREF(__pyx_v_ap_name);
+    __pyx_t_2 = __pyx_v_ap_name;
+    goto __pyx_L10_bool_binop_done;
+  }
+  __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__4);
+  __pyx_t_2 = __pyx_mstate_global->__pyx_kp_u__4;
+  __pyx_L10_bool_binop_done:;
+  __pyx_t_11 = __Pyx_PyObject_FormatSimple(__pyx_t_2, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_mac, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_ip); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (!__pyx_t_6) {
+  } else {
+    __Pyx_INCREF(__pyx_v_ip);
+    __pyx_t_12 = __pyx_v_ip;
+    goto __pyx_L12_bool_binop_done;
+  }
+  __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__4);
+  __pyx_t_12 = __pyx_mstate_global->__pyx_kp_u__4;
+  __pyx_L12_bool_binop_done:;
+  __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_12, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __pyx_t_12 = __Pyx_PyObject_FormatSimple(__pyx_v_reason, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
+  __pyx_t_14[0] = __pyx_mstate_global->__pyx_kp_u__2;
+  __pyx_t_14[1] = __pyx_t_13;
+  __pyx_t_14[2] = __pyx_mstate_global->__pyx_kp_u_SNMP_TRAP_AP;
+  __pyx_t_14[3] = __pyx_t_11;
+  __pyx_t_14[4] = __pyx_mstate_global->__pyx_kp_u_MAC;
+  __pyx_t_14[5] = __pyx_t_2;
+  __pyx_t_14[6] = __pyx_mstate_global->__pyx_kp_u_IP;
+  __pyx_t_14[7] = __pyx_t_8;
+  __pyx_t_14[8] = __pyx_mstate_global->__pyx_kp_u_reason;
+  __pyx_t_14[9] = __pyx_t_12;
+  __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_14, 10, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_13) + 17 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_11) + 5 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2) + 4 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8) + 8 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_12), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_13) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_11) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_12));
+  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+  __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+
+  /* "backend/snmp/trap_receiver.py":136
+ *         print(
+ *             f"[{now}] [SNMP_TRAP] AP={ap_name or '?'} MAC={mac} IP={ip or '?'} reason={reason}",
+ *             file=sys.stderr,             # <<<<<<<<<<<<<<
+ *         )
+ *         threading.Thread(
+*/
+  __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __pyx_t_3 = 1;
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_7};
+    __pyx_t_12 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_12, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_12);
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":138
+ *             file=sys.stderr,
+ *         )
+ *         threading.Thread(             # <<<<<<<<<<<<<<
+ *             target=self.process_disjoin_event,
+ *             args=(mac, ap_name, ip, now, "snmp"),
+*/
+  __pyx_t_7 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_threading); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_Thread); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 138, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "backend/snmp/trap_receiver.py":139
+ *         )
+ *         threading.Thread(
+ *             target=self.process_disjoin_event,             # <<<<<<<<<<<<<<
+ *             args=(mac, ap_name, ip, now, "snmp"),
+ *             daemon=True,
+*/
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_process_disjoin_event); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+
+  /* "backend/snmp/trap_receiver.py":140
+ *         threading.Thread(
+ *             target=self.process_disjoin_event,
+ *             args=(mac, ap_name, ip, now, "snmp"),             # <<<<<<<<<<<<<<
+ *             daemon=True,
+ *         ).start()
+*/
+  __pyx_t_11 = PyTuple_New(5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 140, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __Pyx_INCREF(__pyx_v_mac);
+  __Pyx_GIVEREF(__pyx_v_mac);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_v_mac) != (0)) __PYX_ERR(0, 140, __pyx_L1_error);
+  __Pyx_INCREF(__pyx_v_ap_name);
+  __Pyx_GIVEREF(__pyx_v_ap_name);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_11, 1, __pyx_v_ap_name) != (0)) __PYX_ERR(0, 140, __pyx_L1_error);
+  __Pyx_INCREF(__pyx_v_ip);
+  __Pyx_GIVEREF(__pyx_v_ip);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_11, 2, __pyx_v_ip) != (0)) __PYX_ERR(0, 140, __pyx_L1_error);
+  __Pyx_INCREF(__pyx_v_now);
+  __Pyx_GIVEREF(__pyx_v_now);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_11, 3, __pyx_v_now) != (0)) __PYX_ERR(0, 140, __pyx_L1_error);
+  __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_snmp);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_n_u_snmp);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_11, 4, __pyx_mstate_global->__pyx_n_u_snmp) != (0)) __PYX_ERR(0, 140, __pyx_L1_error);
+
+  /* "backend/snmp/trap_receiver.py":141
+ *             target=self.process_disjoin_event,
+ *             args=(mac, ap_name, ip, now, "snmp"),
+ *             daemon=True,             # <<<<<<<<<<<<<<
+ *         ).start()
+ * 
+*/
+  __pyx_t_3 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_2);
+    assert(__pyx_t_7);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+    __Pyx_INCREF(__pyx_t_7);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+    __pyx_t_3 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 3 : 0)] = {__pyx_t_7, NULL};
+    __pyx_t_13 = __Pyx_MakeVectorcallBuilderKwds(3); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_13);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_target, __pyx_t_4, __pyx_t_13, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 138, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_args, __pyx_t_11, __pyx_t_13, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 138, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_daemon, Py_True, __pyx_t_13, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_3, (1-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_13);
+    __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+  }
+  __pyx_t_12 = __pyx_t_8;
+  __Pyx_INCREF(__pyx_t_12);
+  __pyx_t_3 = 0;
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_12, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_start, __pyx_callargs+__pyx_t_3, (1-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/snmp/trap_receiver.py":92
+ *             self._server = None
+ * 
+ *     def _handle_packet(self, data: bytes, sender: str) -> None:             # <<<<<<<<<<<<<<
+ *         now = self.ts()
+ *         combined_text = _trap_text(data)
+*/
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_XDECREF(__pyx_t_13);
+  __Pyx_AddTraceback("backend.snmp.trap_receiver.SNMPTrapReceiver._handle_packet", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_now);
+  __Pyx_XDECREF(__pyx_v_combined_text);
+  __Pyx_XDECREF(__pyx_v_m_name);
+  __Pyx_XDECREF(__pyx_v_m_mac);
+  __Pyx_XDECREF(__pyx_v_m_ip);
+  __Pyx_XDECREF(__pyx_v_m_reason);
+  __Pyx_XDECREF(__pyx_v_ap_name);
+  __Pyx_XDECREF(__pyx_v_mac);
+  __Pyx_XDECREF(__pyx_v_ip);
+  __Pyx_XDECREF(__pyx_v_reason);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/snmp/trap_receiver.py":145
  * 
  * 
  * def make_snmp_trap_handler(             # <<<<<<<<<<<<<<
@@ -2640,16 +5623,16 @@ return 0;
 */
 
 /* Python wrapper */
-static PyTypeObject *__pyx_pw_7backend_4snmp_13trap_receiver_1make_snmp_trap_handler(PyObject *__pyx_self, 
+static PyTypeObject *__pyx_pw_7backend_4snmp_13trap_receiver_5make_snmp_trap_handler(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_7backend_4snmp_13trap_receiver_make_snmp_trap_handler, "\n    Returns a socketserver.BaseRequestHandler subclass that handles SNMP traps.\n    Preserves exact original detection: AP_JOIN_DISJOIN + Disjoined in payload.\n    ");
-static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_1make_snmp_trap_handler = {"make_snmp_trap_handler", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_1make_snmp_trap_handler, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_7backend_4snmp_13trap_receiver_make_snmp_trap_handler};
-static PyTypeObject *__pyx_pw_7backend_4snmp_13trap_receiver_1make_snmp_trap_handler(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_7backend_4snmp_13trap_receiver_4make_snmp_trap_handler, "\n    Compatibility helper for older callers that expect a request handler class.\n    ");
+static PyMethodDef __pyx_mdef_7backend_4snmp_13trap_receiver_5make_snmp_trap_handler = {"make_snmp_trap_handler", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_4snmp_13trap_receiver_5make_snmp_trap_handler, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_7backend_4snmp_13trap_receiver_4make_snmp_trap_handler};
+static PyTypeObject *__pyx_pw_7backend_4snmp_13trap_receiver_5make_snmp_trap_handler(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -2680,39 +5663,39 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_ts,&__pyx_mstate_global->__pyx_n_u_on_eem_trigger,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 13, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 145, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 13, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 145, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 13, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 145, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "make_snmp_trap_handler", 0) < (0)) __PYX_ERR(0, 13, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "make_snmp_trap_handler", 0) < (0)) __PYX_ERR(0, 145, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("make_snmp_trap_handler", 1, 2, 2, i); __PYX_ERR(0, 13, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("make_snmp_trap_handler", 1, 2, 2, i); __PYX_ERR(0, 145, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 13, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 145, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 13, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 145, __pyx_L3_error)
     }
     __pyx_v_ts = values[0];
     __pyx_v_on_eem_trigger = values[1];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("make_snmp_trap_handler", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 13, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("make_snmp_trap_handler", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 145, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2723,7 +5706,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_handler(__pyx_self, __pyx_v_ts, __pyx_v_on_eem_trigger);
+  __pyx_r = __pyx_pf_7backend_4snmp_13trap_receiver_4make_snmp_trap_handler(__pyx_self, __pyx_v_ts, __pyx_v_on_eem_trigger);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -2733,12 +5716,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-/* "backend/snmp/trap_receiver.py":23
+/* "backend/snmp/trap_receiver.py":154
  * 
  *     class _SnmpTrapHandler(socketserver.BaseRequestHandler):
- *         def handle(self):             # <<<<<<<<<<<<<<
+ *         def handle(self) -> None:             # <<<<<<<<<<<<<<
  *             data = self.request[0]
- *             try:
+ *             text = _trap_text(data)
 */
 
 /* Python wrapper */
@@ -2780,32 +5763,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_self,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 23, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 154, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 23, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 154, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "handle", 0) < (0)) __PYX_ERR(0, 23, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "handle", 0) < (0)) __PYX_ERR(0, 154, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("handle", 1, 1, 1, i); __PYX_ERR(0, 23, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("handle", 1, 1, 1, i); __PYX_ERR(0, 154, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 23, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 154, __pyx_L3_error)
     }
     __pyx_v_self = values[0];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("handle", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 23, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("handle", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 154, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2827,8 +5810,8 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 }
 
 static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_22make_snmp_trap_handler_16_SnmpTrapHandler_handle(PyObject *__pyx_self, PyObject *__pyx_v_self) {
-  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *__pyx_cur_scope;
-  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *__pyx_outer_scope;
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *__pyx_cur_scope;
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *__pyx_outer_scope;
   PyObject *__pyx_v_data = NULL;
   PyObject *__pyx_v_text = NULL;
   PyObject *__pyx_r = NULL;
@@ -2836,292 +5819,210 @@ static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_22make_snmp_trap_handle
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
+  size_t __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  size_t __pyx_t_6;
-  PyObject *__pyx_t_7 = NULL;
-  int __pyx_t_8;
-  PyObject *__pyx_t_9 = NULL;
-  Py_ssize_t __pyx_t_10;
-  PyObject *__pyx_t_11[5];
-  PyObject *__pyx_t_12 = NULL;
-  int __pyx_t_13;
-  int __pyx_t_14;
-  PyObject *__pyx_t_15 = NULL;
+  Py_ssize_t __pyx_t_6;
+  PyObject *__pyx_t_7[5];
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("handle", 0);
-  __pyx_outer_scope = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *) __Pyx_CyFunction_GetClosure(__pyx_self);
+  __pyx_outer_scope = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *) __Pyx_CyFunction_GetClosure(__pyx_self);
   __pyx_cur_scope = __pyx_outer_scope;
 
-  /* "backend/snmp/trap_receiver.py":24
+  /* "backend/snmp/trap_receiver.py":155
  *     class _SnmpTrapHandler(socketserver.BaseRequestHandler):
- *         def handle(self):
+ *         def handle(self) -> None:
  *             data = self.request[0]             # <<<<<<<<<<<<<<
- *             try:
- *                 text = data.decode("latin-1", errors="replace")
+ *             text = _trap_text(data)
+ *             print(
 */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_request); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_request); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_data = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "backend/snmp/trap_receiver.py":25
- *         def handle(self):
+  /* "backend/snmp/trap_receiver.py":156
+ *         def handle(self) -> None:
  *             data = self.request[0]
- *             try:             # <<<<<<<<<<<<<<
- *                 text = data.decode("latin-1", errors="replace")
- *             except Exception:
-*/
-  {
-    __Pyx_PyThreadState_declare
-    __Pyx_PyThreadState_assign
-    __Pyx_ExceptionSave(&__pyx_t_3, &__pyx_t_4, &__pyx_t_5);
-    __Pyx_XGOTREF(__pyx_t_3);
-    __Pyx_XGOTREF(__pyx_t_4);
-    __Pyx_XGOTREF(__pyx_t_5);
-    /*try:*/ {
-
-      /* "backend/snmp/trap_receiver.py":26
- *             data = self.request[0]
- *             try:
- *                 text = data.decode("latin-1", errors="replace")             # <<<<<<<<<<<<<<
- *             except Exception:
- *                 text = repr(data)
-*/
-      __pyx_t_1 = __pyx_v_data;
-      __Pyx_INCREF(__pyx_t_1);
-      __pyx_t_6 = 0;
-      {
-        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_mstate_global->__pyx_kp_u_latin_1};
-        __pyx_t_7 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L3_error)
-        __Pyx_GOTREF(__pyx_t_7);
-        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_errors, __pyx_mstate_global->__pyx_n_u_replace, __pyx_t_7, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 26, __pyx_L3_error)
-        __pyx_t_2 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_decode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_7);
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L3_error)
-        __Pyx_GOTREF(__pyx_t_2);
-      }
-      __pyx_v_text = __pyx_t_2;
-      __pyx_t_2 = 0;
-
-      /* "backend/snmp/trap_receiver.py":25
- *         def handle(self):
- *             data = self.request[0]
- *             try:             # <<<<<<<<<<<<<<
- *                 text = data.decode("latin-1", errors="replace")
- *             except Exception:
-*/
-    }
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    goto __pyx_L8_try_end;
-    __pyx_L3_error:;
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-    /* "backend/snmp/trap_receiver.py":27
- *             try:
- *                 text = data.decode("latin-1", errors="replace")
- *             except Exception:             # <<<<<<<<<<<<<<
- *                 text = repr(data)
- *             print(
-*/
-    __pyx_t_8 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
-    if (__pyx_t_8) {
-      __Pyx_AddTraceback("backend.snmp.trap_receiver.make_snmp_trap_handler._SnmpTrapHandler.handle", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_7, &__pyx_t_1) < 0) __PYX_ERR(0, 27, __pyx_L5_except_error)
-      __Pyx_XGOTREF(__pyx_t_2);
-      __Pyx_XGOTREF(__pyx_t_7);
-      __Pyx_XGOTREF(__pyx_t_1);
-
-      /* "backend/snmp/trap_receiver.py":28
- *                 text = data.decode("latin-1", errors="replace")
- *             except Exception:
- *                 text = repr(data)             # <<<<<<<<<<<<<<
+ *             text = _trap_text(data)             # <<<<<<<<<<<<<<
  *             print(
  *                 f"[{ts()}] [SNMP] Raw trap received ({len(data)} bytes)",
 */
-      __pyx_t_9 = PyObject_Repr(__pyx_v_data); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 28, __pyx_L5_except_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_XDECREF_SET(__pyx_v_text, __pyx_t_9);
-      __pyx_t_9 = 0;
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      goto __pyx_L4_exception_handled;
-    }
-    goto __pyx_L5_except_error;
-
-    /* "backend/snmp/trap_receiver.py":25
- *         def handle(self):
- *             data = self.request[0]
- *             try:             # <<<<<<<<<<<<<<
- *                 text = data.decode("latin-1", errors="replace")
- *             except Exception:
-*/
-    __pyx_L5_except_error:;
-    __Pyx_XGIVEREF(__pyx_t_3);
-    __Pyx_XGIVEREF(__pyx_t_4);
-    __Pyx_XGIVEREF(__pyx_t_5);
-    __Pyx_ExceptionReset(__pyx_t_3, __pyx_t_4, __pyx_t_5);
-    goto __pyx_L1_error;
-    __pyx_L4_exception_handled:;
-    __Pyx_XGIVEREF(__pyx_t_3);
-    __Pyx_XGIVEREF(__pyx_t_4);
-    __Pyx_XGIVEREF(__pyx_t_5);
-    __Pyx_ExceptionReset(__pyx_t_3, __pyx_t_4, __pyx_t_5);
-    __pyx_L8_try_end:;
+  __pyx_t_1 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_trap_text); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_1);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_1);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
   }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_v_data};
+    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  __pyx_v_text = __pyx_t_2;
+  __pyx_t_2 = 0;
 
-  /* "backend/snmp/trap_receiver.py":29
- *             except Exception:
- *                 text = repr(data)
+  /* "backend/snmp/trap_receiver.py":157
+ *             data = self.request[0]
+ *             text = _trap_text(data)
  *             print(             # <<<<<<<<<<<<<<
  *                 f"[{ts()}] [SNMP] Raw trap received ({len(data)} bytes)",
  *                 file=sys.stderr,
 */
-  __pyx_t_7 = NULL;
+  __pyx_t_3 = NULL;
 
-  /* "backend/snmp/trap_receiver.py":30
- *                 text = repr(data)
+  /* "backend/snmp/trap_receiver.py":158
+ *             text = _trap_text(data)
  *             print(
  *                 f"[{ts()}] [SNMP] Raw trap received ({len(data)} bytes)",             # <<<<<<<<<<<<<<
  *                 file=sys.stderr,
  *             )
 */
-  if (unlikely(!__pyx_cur_scope->__pyx_v_ts)) { __Pyx_RaiseClosureNameError("ts"); __PYX_ERR(0, 30, __pyx_L1_error) }
-  __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_cur_scope->__pyx_v_ts); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_t_2, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_10 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_10 == ((Py_ssize_t)-1))) __PYX_ERR(0, 30, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_10, 0, ' ', 'd'); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_11[0] = __pyx_mstate_global->__pyx_kp_u_;
-  __pyx_t_11[1] = __pyx_t_9;
-  __pyx_t_11[2] = __pyx_mstate_global->__pyx_kp_u_SNMP_Raw_trap_received;
-  __pyx_t_11[3] = __pyx_t_2;
-  __pyx_t_11[4] = __pyx_mstate_global->__pyx_kp_u_bytes;
-  __pyx_t_12 = __Pyx_PyUnicode_Join(__pyx_t_11, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_9) + 28 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2) + 7, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9));
-  if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_12);
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_cur_scope->__pyx_v_ts)) { __Pyx_RaiseClosureNameError("ts"); __PYX_ERR(0, 158, __pyx_L1_error) }
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_cur_scope->__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_6 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_6, 0, ' ', 'd'); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
+  __pyx_t_7[1] = __pyx_t_5;
+  __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_SNMP_Raw_trap_received;
+  __pyx_t_7[3] = __pyx_t_1;
+  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_bytes;
+  __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 28 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + 7, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
+  if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/snmp/trap_receiver.py":31
+  /* "backend/snmp/trap_receiver.py":159
  *             print(
  *                 f"[{ts()}] [SNMP] Raw trap received ({len(data)} bytes)",
  *                 file=sys.stderr,             # <<<<<<<<<<<<<<
  *             )
  *             if "AP_JOIN_DISJOIN" in text and "Disjoined" in text:
 */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_6 = 1;
-  {
-    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_7, __pyx_t_12};
-    __pyx_t_2 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_9, __pyx_t_2, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 29, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_2);
-    __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_4 = 1;
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_3, __pyx_t_8};
+    __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "backend/snmp/trap_receiver.py":33
+  /* "backend/snmp/trap_receiver.py":161
  *                 file=sys.stderr,
  *             )
  *             if "AP_JOIN_DISJOIN" in text and "Disjoined" in text:             # <<<<<<<<<<<<<<
  *                 on_eem_trigger(text, ts())
  * 
 */
-  __pyx_t_14 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_AP_JOIN_DISJOIN, __pyx_v_text, Py_EQ)); if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 33, __pyx_L1_error)
-  if (__pyx_t_14) {
+  __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_AP_JOIN_DISJOIN, __pyx_v_text, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 161, __pyx_L1_error)
+  if (__pyx_t_10) {
   } else {
-    __pyx_t_13 = __pyx_t_14;
-    goto __pyx_L12_bool_binop_done;
+    __pyx_t_9 = __pyx_t_10;
+    goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_14 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_Disjoined, __pyx_v_text, Py_EQ)); if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 33, __pyx_L1_error)
-  __pyx_t_13 = __pyx_t_14;
-  __pyx_L12_bool_binop_done:;
-  if (__pyx_t_13) {
+  __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_n_u_Disjoined, __pyx_v_text, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_9 = __pyx_t_10;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_9) {
 
-    /* "backend/snmp/trap_receiver.py":34
+    /* "backend/snmp/trap_receiver.py":162
  *             )
  *             if "AP_JOIN_DISJOIN" in text and "Disjoined" in text:
  *                 on_eem_trigger(text, ts())             # <<<<<<<<<<<<<<
  * 
  *     return _SnmpTrapHandler
 */
-    __pyx_t_2 = NULL;
-    if (unlikely(!__pyx_cur_scope->__pyx_v_on_eem_trigger)) { __Pyx_RaiseClosureNameError("on_eem_trigger"); __PYX_ERR(0, 34, __pyx_L1_error) }
+    __pyx_t_1 = NULL;
+    if (unlikely(!__pyx_cur_scope->__pyx_v_on_eem_trigger)) { __Pyx_RaiseClosureNameError("on_eem_trigger"); __PYX_ERR(0, 162, __pyx_L1_error) }
     __Pyx_INCREF(__pyx_cur_scope->__pyx_v_on_eem_trigger);
-    __pyx_t_9 = __pyx_cur_scope->__pyx_v_on_eem_trigger; 
-    __pyx_t_7 = NULL;
-    if (unlikely(!__pyx_cur_scope->__pyx_v_ts)) { __Pyx_RaiseClosureNameError("ts"); __PYX_ERR(0, 34, __pyx_L1_error) }
+    __pyx_t_5 = __pyx_cur_scope->__pyx_v_on_eem_trigger; 
+    __pyx_t_3 = NULL;
+    if (unlikely(!__pyx_cur_scope->__pyx_v_ts)) { __Pyx_RaiseClosureNameError("ts"); __PYX_ERR(0, 162, __pyx_L1_error) }
     __Pyx_INCREF(__pyx_cur_scope->__pyx_v_ts);
-    __pyx_t_15 = __pyx_cur_scope->__pyx_v_ts; 
-    __pyx_t_6 = 1;
+    __pyx_t_11 = __pyx_cur_scope->__pyx_v_ts; 
+    __pyx_t_4 = 1;
     #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_15))) {
-      __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_15);
-      assert(__pyx_t_7);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_15);
-      __Pyx_INCREF(__pyx_t_7);
+    if (unlikely(PyMethod_Check(__pyx_t_11))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_11);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_11);
+      __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_15, __pyx__function);
-      __pyx_t_6 = 0;
+      __Pyx_DECREF_SET(__pyx_t_11, __pyx__function);
+      __pyx_t_4 = 0;
     }
     #endif
     {
-      PyObject *__pyx_callargs[2] = {__pyx_t_7, NULL};
-      __pyx_t_12 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 34, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+      __pyx_t_8 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 162, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
     }
-    __pyx_t_6 = 1;
+    __pyx_t_4 = 1;
     #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_9))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_9);
-      assert(__pyx_t_2);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_9);
-      __Pyx_INCREF(__pyx_t_2);
+    if (unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_5);
+      assert(__pyx_t_1);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_1);
       __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_9, __pyx__function);
-      __pyx_t_6 = 0;
+      __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
+      __pyx_t_4 = 0;
     }
     #endif
     {
-      PyObject *__pyx_callargs[3] = {__pyx_t_2, __pyx_v_text, __pyx_t_12};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_9, __pyx_callargs+__pyx_t_6, (3-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      PyObject *__pyx_callargs[3] = {__pyx_t_1, __pyx_v_text, __pyx_t_8};
+      __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_4, (3-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
     }
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "backend/snmp/trap_receiver.py":33
+    /* "backend/snmp/trap_receiver.py":161
  *                 file=sys.stderr,
  *             )
  *             if "AP_JOIN_DISJOIN" in text and "Disjoined" in text:             # <<<<<<<<<<<<<<
@@ -3130,12 +6031,12 @@ static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_22make_snmp_trap_handle
 */
   }
 
-  /* "backend/snmp/trap_receiver.py":23
+  /* "backend/snmp/trap_receiver.py":154
  * 
  *     class _SnmpTrapHandler(socketserver.BaseRequestHandler):
- *         def handle(self):             # <<<<<<<<<<<<<<
+ *         def handle(self) -> None:             # <<<<<<<<<<<<<<
  *             data = self.request[0]
- *             try:
+ *             text = _trap_text(data)
 */
 
   /* function exit code */
@@ -3144,10 +6045,10 @@ static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_22make_snmp_trap_handle
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_XDECREF(__pyx_t_15);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_AddTraceback("backend.snmp.trap_receiver.make_snmp_trap_handler._SnmpTrapHandler.handle", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -3158,7 +6059,7 @@ static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_22make_snmp_trap_handle
   return __pyx_r;
 }
 
-/* "backend/snmp/trap_receiver.py":13
+/* "backend/snmp/trap_receiver.py":145
  * 
  * 
  * def make_snmp_trap_handler(             # <<<<<<<<<<<<<<
@@ -3166,8 +6067,8 @@ static PyObject *__pyx_pf_7backend_4snmp_13trap_receiver_22make_snmp_trap_handle
  *     on_eem_trigger: Callable[[str, str], None],
 */
 
-static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_handler(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_ts, PyObject *__pyx_v_on_eem_trigger) {
-  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *__pyx_cur_scope;
+static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_4make_snmp_trap_handler(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_ts, PyObject *__pyx_v_on_eem_trigger) {
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *__pyx_cur_scope;
   PyObject *__pyx_v__SnmpTrapHandler = NULL;
   PyTypeObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3175,15 +6076,16 @@ static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_hand
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("make_snmp_trap_handler", 0);
-  __pyx_cur_scope = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *)__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler(__pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler, __pyx_mstate_global->__pyx_empty_tuple, NULL);
+  __pyx_cur_scope = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *)__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler(__pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler, __pyx_mstate_global->__pyx_empty_tuple, NULL);
   if (unlikely(!__pyx_cur_scope)) {
-    __pyx_cur_scope = ((struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *)Py_None);
+    __pyx_cur_scope = ((struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 13, __pyx_L1_error)
+    __PYX_ERR(0, 145, __pyx_L1_error)
   } else {
     __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
   }
@@ -3194,62 +6096,67 @@ static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_hand
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_on_eem_trigger);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_on_eem_trigger);
 
-  /* "backend/snmp/trap_receiver.py":22
+  /* "backend/snmp/trap_receiver.py":153
  *     """
  * 
  *     class _SnmpTrapHandler(socketserver.BaseRequestHandler):             # <<<<<<<<<<<<<<
- *         def handle(self):
+ *         def handle(self) -> None:
  *             data = self.request[0]
 */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_socketserver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_socketserver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_BaseRequestHandler); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_BaseRequestHandler); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2) != (0)) __PYX_ERR(0, 22, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2) != (0)) __PYX_ERR(0, 153, __pyx_L1_error);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PEP560_update_bases(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PEP560_update_bases(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3MetaclassPrepare(__pyx_t_3, __pyx_t_2, __pyx_mstate_global->__pyx_n_u_SnmpTrapHandler, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler_locals__S, (PyObject *) NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, (PyObject *) NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3MetaclassPrepare(__pyx_t_3, __pyx_t_2, __pyx_mstate_global->__pyx_n_u_SnmpTrapHandler, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler_locals__S, (PyObject *) NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, (PyObject *) NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (__pyx_t_2 != __pyx_t_1) {
-    if (unlikely((PyDict_SetItemString(__pyx_t_4, "__orig_bases__", __pyx_t_1) < 0))) __PYX_ERR(0, 22, __pyx_L1_error)
+    if (unlikely((PyDict_SetItemString(__pyx_t_4, "__orig_bases__", __pyx_t_1) < 0))) __PYX_ERR(0, 153, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/snmp/trap_receiver.py":23
+  /* "backend/snmp/trap_receiver.py":154
  * 
  *     class _SnmpTrapHandler(socketserver.BaseRequestHandler):
- *         def handle(self):             # <<<<<<<<<<<<<<
+ *         def handle(self) -> None:             # <<<<<<<<<<<<<<
  *             data = self.request[0]
- *             try:
+ *             text = _trap_text(data)
 */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_22make_snmp_trap_handler_16_SnmpTrapHandler_1handle, 0, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler_locals__S_2, ((PyObject*)__pyx_cur_scope), __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_handle, __pyx_t_1) < (0)) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_22make_snmp_trap_handler_16_SnmpTrapHandler_1handle, 0, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler_locals__S_2, ((PyObject*)__pyx_cur_scope), __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_handle, __pyx_t_5) < (0)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "backend/snmp/trap_receiver.py":22
+  /* "backend/snmp/trap_receiver.py":153
  *     """
  * 
  *     class _SnmpTrapHandler(socketserver.BaseRequestHandler):             # <<<<<<<<<<<<<<
- *         def handle(self):
+ *         def handle(self) -> None:
  *             data = self.request[0]
 */
-  __pyx_t_1 = __Pyx_Py3ClassCreate(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_SnmpTrapHandler, __pyx_t_2, __pyx_t_4, NULL, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v__SnmpTrapHandler = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_5 = __Pyx_Py3ClassCreate(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_SnmpTrapHandler, __pyx_t_2, __pyx_t_4, NULL, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_v__SnmpTrapHandler = __pyx_t_5;
+  __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "backend/snmp/trap_receiver.py":36
+  /* "backend/snmp/trap_receiver.py":164
  *                 on_eem_trigger(text, ts())
  * 
  *     return _SnmpTrapHandler             # <<<<<<<<<<<<<<
@@ -3257,12 +6164,12 @@ static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_hand
   __Pyx_XDECREF((PyObject *)__pyx_r);
   __pyx_t_2 = __pyx_v__SnmpTrapHandler;
   __Pyx_INCREF(__pyx_t_2);
-  if (!(likely(PyType_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("type", __pyx_t_2))) __PYX_ERR(0, 36, __pyx_L1_error)
+  if (!(likely(PyType_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("type", __pyx_t_2))) __PYX_ERR(0, 164, __pyx_L1_error)
   __pyx_r = ((PyTypeObject*)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "backend/snmp/trap_receiver.py":13
+  /* "backend/snmp/trap_receiver.py":145
  * 
  * 
  * def make_snmp_trap_handler(             # <<<<<<<<<<<<<<
@@ -3276,6 +6183,7 @@ static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_hand
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_AddTraceback("backend.snmp.trap_receiver.make_snmp_trap_handler", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -3287,16 +6195,16 @@ static PyTypeObject *__pyx_pf_7backend_4snmp_13trap_receiver_make_snmp_trap_hand
 }
 /* #### Code section: module_exttypes ### */
 
-static PyObject *__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__start(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
   #if CYTHON_USE_FREELISTS
-  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler))))
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__start > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start))))
   {
-    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler[--__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler];
+    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct__start[--__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__start];
     #if CYTHON_USE_TYPE_SPECS
     Py_DECREF(Py_TYPE(o));
     #endif
-    memset(o, 0, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler));
+    memset(o, 0, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start));
     #if CYTHON_COMPILING_IN_LIMITED_API
     (void) PyObject_Init(o, t);
     #else
@@ -3312,22 +6220,21 @@ static PyObject *__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct_
   return o;
 }
 
-static void __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler(PyObject *o) {
-  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *)o;
+static void __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__start(PyObject *o) {
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(__Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && !__Pyx_PyObject_GC_IsFinalized(o)) {
-    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__start) {
       if (PyObject_CallFinalizerFromDealloc(o)) return;
     }
   }
   #endif
   PyObject_GC_UnTrack(o);
-  Py_CLEAR(p->__pyx_v_on_eem_trigger);
-  Py_CLEAR(p->__pyx_v_ts);
+  Py_CLEAR(p->__pyx_v_receiver);
   #if CYTHON_USE_FREELISTS
-  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler))))
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__start < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start))))
   {
-    __pyx_mstate_global->__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler[__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler++] = ((struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *)o);
+    __pyx_mstate_global->__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct__start[__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct__start++] = ((struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *)o);
   } else
   #endif
   {
@@ -3346,56 +6253,50 @@ static void __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__
   }
 }
 
-static int __pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct__start(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *)o;
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *)o;
   {
     e = __Pyx_call_type_traverse(o, 1, v, a);
     if (e) return e;
   }
-  if (p->__pyx_v_on_eem_trigger) {
-    e = (*v)(p->__pyx_v_on_eem_trigger, a); if (e) return e;
-  }
-  if (p->__pyx_v_ts) {
-    e = (*v)(p->__pyx_v_ts, a); if (e) return e;
+  if (p->__pyx_v_receiver) {
+    e = (*v)(p->__pyx_v_receiver, a); if (e) return e;
   }
   return 0;
 }
 
-static int __pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler(PyObject *o) {
+static int __pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct__start(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler *)o;
-  tmp = ((PyObject*)p->__pyx_v_on_eem_trigger);
-  p->__pyx_v_on_eem_trigger = Py_None; Py_INCREF(Py_None);
-  Py_XDECREF(tmp);
-  tmp = ((PyObject*)p->__pyx_v_ts);
-  p->__pyx_v_ts = Py_None; Py_INCREF(Py_None);
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start *)o;
+  tmp = ((PyObject*)p->__pyx_v_receiver);
+  p->__pyx_v_receiver = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   return 0;
 }
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler_slots[] = {
-  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler},
-  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler},
-  {Py_tp_clear, (void *)__pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler},
-  {Py_tp_new, (void *)__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler},
+static PyType_Slot __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__start},
+  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct__start},
+  {Py_tp_clear, (void *)__pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct__start},
+  {Py_tp_new, (void *)__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__start},
   {0, 0},
 };
-static PyType_Spec __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler_spec = {
-  "backend.snmp.trap_receiver.__pyx_scope_struct__make_snmp_trap_handler",
-  sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler),
+static PyType_Spec __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start_spec = {
+  "backend.snmp.trap_receiver.__pyx_scope_struct__start",
+  sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC,
-  __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler_slots,
+  __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler = {
+static PyTypeObject __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start = {
   PyVarObject_HEAD_INIT(0, 0)
-  "backend.snmp.trap_receiver.""__pyx_scope_struct__make_snmp_trap_handler", /*tp_name*/
-  sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler), /*tp_basicsize*/
+  "backend.snmp.trap_receiver.""__pyx_scope_struct__start", /*tp_name*/
+  sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct__start), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler, /*tp_dealloc*/
+  __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct__start, /*tp_dealloc*/
   0, /*tp_vectorcall_offset*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -3412,8 +6313,8 @@ static PyTypeObject __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler, /*tp_traverse*/
-  __pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler, /*tp_clear*/
+  __pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct__start, /*tp_traverse*/
+  __pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct__start, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
@@ -3430,7 +6331,183 @@ static PyTypeObject __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct
   #endif
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler, /*tp_new*/
+  __pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct__start, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if CYTHON_USE_TP_FINALIZE
+  0, /*tp_finalize*/
+  #else
+  NULL, /*tp_finalize*/
+  #endif
+  #if !CYTHON_COMPILING_IN_PYPY || PYPY_VERSION_NUM >= 0x07030800
+  0, /*tp_vectorcall*/
+  #endif
+  #if __PYX_NEED_TP_PRINT_SLOT == 1
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030C0000
+  0, /*tp_watched*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030d00A4
+  0, /*tp_versions_used*/
+  #endif
+  #if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX >= 0x03090000 && PY_VERSION_HEX < 0x030a0000
+  0, /*tp_pypy_flags*/
+  #endif
+};
+#endif
+
+static PyObject *__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler))))
+  {
+    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler[--__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler];
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(Py_TYPE(o));
+    #endif
+    memset(o, 0, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler));
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    (void) PyObject_Init(o, t);
+    #else
+    (void) PyObject_INIT(o, t);
+    #endif
+    PyObject_GC_Track(o);
+  } else
+  #endif
+  {
+    o = __Pyx_AllocateExtensionType(t, 1);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler(PyObject *o) {
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *)o;
+  #if CYTHON_USE_TP_FINALIZE
+  if (unlikely(__Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && !__Pyx_PyObject_GC_IsFinalized(o)) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler) {
+      if (PyObject_CallFinalizerFromDealloc(o)) return;
+    }
+  }
+  #endif
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_v_on_eem_trigger);
+  Py_CLEAR(p->__pyx_v_ts);
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler, sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler))))
+  {
+    __pyx_mstate_global->__pyx_freelist_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler[__pyx_mstate_global->__pyx_freecount_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler++] = ((struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *)o);
+  } else
+  #endif
+  {
+    PyTypeObject *tp = Py_TYPE(o);
+    #if CYTHON_USE_TYPE_SLOTS
+    (*tp->tp_free)(o);
+    #else
+    {
+      freefunc tp_free = (freefunc)PyType_GetSlot(tp, Py_tp_free);
+      if (tp_free) tp_free(o);
+    }
+    #endif
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(tp);
+    #endif
+  }
+}
+
+static int __pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *)o;
+  {
+    e = __Pyx_call_type_traverse(o, 1, v, a);
+    if (e) return e;
+  }
+  if (p->__pyx_v_on_eem_trigger) {
+    e = (*v)(p->__pyx_v_on_eem_trigger, a); if (e) return e;
+  }
+  if (p->__pyx_v_ts) {
+    e = (*v)(p->__pyx_v_ts, a); if (e) return e;
+  }
+  return 0;
+}
+
+static int __pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler(PyObject *o) {
+  PyObject* tmp;
+  struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *p = (struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler *)o;
+  tmp = ((PyObject*)p->__pyx_v_on_eem_trigger);
+  p->__pyx_v_on_eem_trigger = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_ts);
+  p->__pyx_v_ts = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  return 0;
+}
+#if CYTHON_USE_TYPE_SPECS
+static PyType_Slot __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler},
+  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler},
+  {Py_tp_clear, (void *)__pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler},
+  {Py_tp_new, (void *)__pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler},
+  {0, 0},
+};
+static PyType_Spec __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler_spec = {
+  "backend.snmp.trap_receiver.__pyx_scope_struct_1_make_snmp_trap_handler",
+  sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler),
+  0,
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC,
+  __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler_slots,
+};
+#else
+
+static PyTypeObject __pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "backend.snmp.trap_receiver.""__pyx_scope_struct_1_make_snmp_trap_handler", /*tp_name*/
+  sizeof(struct __pyx_obj_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler, /*tp_dealloc*/
+  0, /*tp_vectorcall_offset*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  0, /*tp_as_async*/
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler, /*tp_traverse*/
+  __pyx_tp_clear_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  #if !CYTHON_USE_TYPE_SPECS
+  0, /*tp_dictoffset*/
+  #endif
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -3517,22 +6594,41 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler)) __PYX_ERR(0, 13, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler_spec, __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler) < (0)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start)) __PYX_ERR(0, 71, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start_spec, __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start) < (0)) __PYX_ERR(0, 71, __pyx_L1_error)
   #else
-  __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler = &__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler;
+  __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start = &__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct__start;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler) < (0)) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start) < (0)) __PYX_ERR(0, 71, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler);
+  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start);
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__make_snmp_trap_handler->tp_getattro = PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct__start->tp_getattro = PyObject_GenericGetAttr;
+  }
+  #endif
+  #if CYTHON_USE_TYPE_SPECS
+  __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler)) __PYX_ERR(0, 145, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler_spec, __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler) < (0)) __PYX_ERR(0, 145, __pyx_L1_error)
+  #else
+  __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler = &__pyx_type_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler;
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  #endif
+  #if !CYTHON_USE_TYPE_SPECS
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler) < (0)) __PYX_ERR(0, 145, __pyx_L1_error)
+  #endif
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler);
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_mstate->__pyx_ptype_7backend_4snmp_13trap_receiver___pyx_scope_struct_1_make_snmp_trap_handler->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
   __Pyx_RefNannyFinishContext();
@@ -3594,7 +6690,7 @@ namespace {
   {
       PyModuleDef_HEAD_INIT,
       "trap_receiver",
-      __pyx_k_SNMP_trap_receiver_extracted_fr, /* m_doc */
+      __pyx_k_SNMP_trap_receiver_for_AP_disjo, /* m_doc */
     #if CYTHON_USE_MODULE_STATE
       sizeof(__pyx_mstatetype), /* m_size */
     #else
@@ -3751,6 +6847,10 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_trap_receiver(PyObject *__pyx_pyin
   PyObject *__pyx_t_2 = NULL;
   Py_ssize_t __pyx_t_3;
   PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  size_t __pyx_t_8;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3837,87 +6937,424 @@ __Pyx_RefNannySetupContext("PyInit_trap_receiver", 0);
   (void)__Pyx_modinit_function_import_code(__pyx_mstate);
   /*--- Execution code ---*/
 
-  /* "backend/snmp/trap_receiver.py":8
+  /* "backend/snmp/trap_receiver.py":11
  * from __future__ import annotations
  * 
+ * import re             # <<<<<<<<<<<<<<
+ * import socketserver
+ * import sys
+*/
+  __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_re, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __pyx_t_2 = __pyx_t_1;
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_re, __pyx_t_2) < (0)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":12
+ * 
+ * import re
  * import socketserver             # <<<<<<<<<<<<<<
  * import sys
- * from typing import Callable
+ * import threading
 */
-  __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_socketserver, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_socketserver, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 12, __pyx_L1_error)
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_socketserver, __pyx_t_2) < (0)) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_socketserver, __pyx_t_2) < (0)) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "backend/snmp/trap_receiver.py":9
- * 
+  /* "backend/snmp/trap_receiver.py":13
+ * import re
  * import socketserver
  * import sys             # <<<<<<<<<<<<<<
+ * import threading
+ * from typing import Callable
+*/
+  __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_sys, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_2 = __pyx_t_1;
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_sys, __pyx_t_2) < (0)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":14
+ * import socketserver
+ * import sys
+ * import threading             # <<<<<<<<<<<<<<
  * from typing import Callable
  * 
 */
-  __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_sys, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_threading, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_sys, __pyx_t_2) < (0)) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_threading, __pyx_t_2) < (0)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "backend/snmp/trap_receiver.py":10
- * import socketserver
+  /* "backend/snmp/trap_receiver.py":15
  * import sys
+ * import threading
  * from typing import Callable             # <<<<<<<<<<<<<<
  * 
  * 
 */
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_Callable};
-    __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_typing, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_typing, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
   }
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_Callable};
     __pyx_t_3 = 0; {
-      __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_2, __pyx_imported_names[__pyx_t_3]); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 10, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_2, __pyx_imported_names[__pyx_t_3]); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_imported_names[__pyx_t_3], __pyx_t_4) < (0)) __PYX_ERR(0, 10, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_imported_names[__pyx_t_3], __pyx_t_4) < (0)) __PYX_ERR(0, 15, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "backend/snmp/trap_receiver.py":13
+  /* "backend/snmp/trap_receiver.py":18
  * 
  * 
- * def make_snmp_trap_handler(             # <<<<<<<<<<<<<<
- *     ts: Callable[[], str],
- *     on_eem_trigger: Callable[[str, str], None],
+ * APNAME_RE = re.compile(r"AP Name: ([^ ]+)", re.IGNORECASE)             # <<<<<<<<<<<<<<
+ * APMAC_RE = re.compile(
+ *     r"Mac: ([0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4})",
 */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_4 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_8 = 1;
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_AP_Name, __pyx_t_7};
+    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_6, __pyx_callargs+__pyx_t_8, (3-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_APNAME_RE, __pyx_t_2) < (0)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":19
+ * 
+ * APNAME_RE = re.compile(r"AP Name: ([^ ]+)", re.IGNORECASE)
+ * APMAC_RE = re.compile(             # <<<<<<<<<<<<<<
+ *     r"Mac: ([0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4})",
+ *     re.IGNORECASE,
+*/
+  __pyx_t_6 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+  /* "backend/snmp/trap_receiver.py":21
+ * APMAC_RE = re.compile(
+ *     r"Mac: ([0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4})",
+ *     re.IGNORECASE,             # <<<<<<<<<<<<<<
+ * )
+ * APIP_RE = re.compile(r"Session-IP: (\d{1,3}(?:\.\d{1,3}){3})", re.IGNORECASE)
+*/
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_8 = 1;
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_6, __pyx_mstate_global->__pyx_kp_u_Mac_0_9a_fA_F_4_0_9a_fA_F_4_0_9a, __pyx_t_5};
+    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_8, (3-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_APMAC_RE, __pyx_t_2) < (0)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":23
+ *     re.IGNORECASE,
+ * )
+ * APIP_RE = re.compile(r"Session-IP: (\d{1,3}(?:\.\d{1,3}){3})", re.IGNORECASE)             # <<<<<<<<<<<<<<
+ * REASON_RE = re.compile(r"Disjoined (.*)", re.IGNORECASE)
+ * 
+*/
+  __pyx_t_4 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_8 = 1;
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_Session_IP_d_1_3_d_1_3_3, __pyx_t_7};
+    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_6, __pyx_callargs+__pyx_t_8, (3-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_APIP_RE, __pyx_t_2) < (0)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":24
+ * )
+ * APIP_RE = re.compile(r"Session-IP: (\d{1,3}(?:\.\d{1,3}){3})", re.IGNORECASE)
+ * REASON_RE = re.compile(r"Disjoined (.*)", re.IGNORECASE)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+  __pyx_t_6 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_8 = 1;
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_6, __pyx_mstate_global->__pyx_kp_u_Disjoined_2, __pyx_t_5};
+    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_8, (3-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_REASON_RE, __pyx_t_2) < (0)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":27
+ * 
+ * 
+ * def _extract_octet_strings(data: bytes) -> list[str]:             # <<<<<<<<<<<<<<
+ *     strings: list[str] = []
+ *     i = 0
+*/
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_ts, __pyx_mstate_global->__pyx_kp_u_Callable_str) < (0)) __PYX_ERR(0, 13, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_on_eem_trigger, __pyx_mstate_global->__pyx_kp_u_Callable_str_str_None) < (0)) __PYX_ERR(0, 13, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_type) < (0)) __PYX_ERR(0, 13, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_1make_snmp_trap_handler, 0, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_data, __pyx_mstate_global->__pyx_n_u_bytes_2) < (0)) __PYX_ERR(0, 27, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_kp_u_list_str) < (0)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_1_extract_octet_strings, 0, __pyx_mstate_global->__pyx_n_u_extract_octet_strings, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
   __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler, __pyx_t_4) < (0)) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_extract_octet_strings, __pyx_t_4) < (0)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "backend/snmp/trap_receiver.py":44
+ * 
+ * 
+ * def _trap_text(data: bytes) -> str:             # <<<<<<<<<<<<<<
+ *     strings = _extract_octet_strings(data)
+ *     if strings:
+*/
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_data, __pyx_mstate_global->__pyx_n_u_bytes_2) < (0)) __PYX_ERR(0, 44, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_3_trap_text, 0, __pyx_mstate_global->__pyx_n_u_trap_text, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
+  #endif
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_2, __pyx_t_4);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_trap_text, __pyx_t_2) < (0)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":51
+ * 
+ * 
+ * class SNMPTrapReceiver:             # <<<<<<<<<<<<<<
+ *     def __init__(
+ *         self,
+*/
+  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_mstate_global->__pyx_empty_tuple, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver, (PyObject *) NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, (PyObject *) NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+
+  /* "backend/snmp/trap_receiver.py":52
+ * 
+ * class SNMPTrapReceiver:
+ *     def __init__(             # <<<<<<<<<<<<<<
+ *         self,
+ *         *,
+*/
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_host, ((PyObject*)__pyx_mstate_global->__pyx_kp_u_0_0_0_0)) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_port, ((PyObject*)__pyx_mstate_global->__pyx_int_162)) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":60
+ *         normalise_mac: Callable[[str], str],
+ *         process_disjoin_event: Callable[[str, str | None, str | None, str, str], None],
+ *         on_eem_trigger: Callable[[str, str], None] | None = None,             # <<<<<<<<<<<<<<
+ *     ) -> None:
+ *         self.host = host
+*/
+  if (PyDict_SetItem(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_on_eem_trigger, Py_None) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+
+  /* "backend/snmp/trap_receiver.py":52
+ * 
+ * class SNMPTrapReceiver:
+ *     def __init__(             # <<<<<<<<<<<<<<
+ *         self,
+ *         *,
+*/
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_host, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_port, __pyx_mstate_global->__pyx_n_u_int) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_ts, __pyx_mstate_global->__pyx_kp_u_Callable_str) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_normalise_mac, __pyx_mstate_global->__pyx_kp_u_Callable_str_str) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_process_disjoin_event, __pyx_mstate_global->__pyx_kp_u_Callable_str_str_None_str_None_s) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_on_eem_trigger, __pyx_mstate_global->__pyx_kp_u_Callable_str_str_None_None) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_1__init__, 0, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver___init, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_6);
+  #endif
+  __Pyx_CyFunction_SetDefaultsKwDict(__pyx_t_6, __pyx_t_4);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_6, __pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_init, __pyx_t_6) < (0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+  /* "backend/snmp/trap_receiver.py":71
+ *         self._thread: threading.Thread | None = None
+ * 
+ *     def start(self) -> None:             # <<<<<<<<<<<<<<
+ *         receiver = self
+ * 
+*/
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_3start, 0, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver_start, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_5);
+  #endif
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_6);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_start, __pyx_t_5) < (0)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+  /* "backend/snmp/trap_receiver.py":86
+ *         )
+ * 
+ *     def shutdown(self) -> None:             # <<<<<<<<<<<<<<
+ *         if self._server:
+ *             self._server.shutdown()
+*/
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_5shutdown, 0, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver_shutdown, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_6);
+  #endif
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_6, __pyx_t_5);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_shutdown, __pyx_t_6) < (0)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+  /* "backend/snmp/trap_receiver.py":92
+ *             self._server = None
+ * 
+ *     def _handle_packet(self, data: bytes, sender: str) -> None:             # <<<<<<<<<<<<<<
+ *         now = self.ts()
+ *         combined_text = _trap_text(data)
+*/
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_data, __pyx_mstate_global->__pyx_n_u_bytes_2) < (0)) __PYX_ERR(0, 92, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sender, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 92, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_16SNMPTrapReceiver_7_handle_packet, 0, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver__handle_packet, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_5);
+  #endif
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_6);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_handle_packet, __pyx_t_5) < (0)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+  /* "backend/snmp/trap_receiver.py":51
+ * 
+ * 
+ * class SNMPTrapReceiver:             # <<<<<<<<<<<<<<
+ *     def __init__(
+ *         self,
+*/
+  __pyx_t_5 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver, __pyx_mstate_global->__pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_5);
+  #endif
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_SNMPTrapReceiver, __pyx_t_5) < (0)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "backend/snmp/trap_receiver.py":145
+ * 
+ * 
+ * def make_snmp_trap_handler(             # <<<<<<<<<<<<<<
+ *     ts: Callable[[], str],
+ *     on_eem_trigger: Callable[[str, str], None],
+*/
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_ts, __pyx_mstate_global->__pyx_kp_u_Callable_str) < (0)) __PYX_ERR(0, 145, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_on_eem_trigger, __pyx_mstate_global->__pyx_kp_u_Callable_str_str_None) < (0)) __PYX_ERR(0, 145, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_type) < (0)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_4snmp_13trap_receiver_5make_snmp_trap_handler, 0, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler, NULL, __pyx_mstate_global->__pyx_n_u_backend_snmp_trap_receiver, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[8])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_5);
+  #endif
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_2);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_make_snmp_trap_handler, __pyx_t_5) < (0)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "backend/snmp/trap_receiver.py":1
  * # backend/snmp/trap_receiver.py             # <<<<<<<<<<<<<<
  * """
- * SNMP trap receiver  extracted from LiveMonitor.listen() SNMP branch.
+ * SNMP trap receiver for AP disjoin detection.
 */
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_test, __pyx_t_4) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_test, __pyx_t_5) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /*--- Wrapped vars code ---*/
 
@@ -3925,6 +7362,9 @@ __Pyx_RefNannySetupContext("PyInit_trap_receiver", 0);
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
   if (__pyx_m) {
     if (__pyx_mstate->__pyx_d && stringtab_initialized) {
       __Pyx_AddTraceback("init backend.snmp.trap_receiver", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -3956,7 +7396,7 @@ __Pyx_RefNannySetupContext("PyInit_trap_receiver", 0);
 
 static int __Pyx_InitCachedBuiltins(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_print); if (!__pyx_builtin_print) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_print); if (!__pyx_builtin_print) __PYX_ERR(0, 81, __pyx_L1_error)
 
   /* Cached unbound methods */
   __pyx_mstate->__pyx_umethod_PyDict_Type_items.type = (PyObject*)&PyDict_Type;
@@ -3975,50 +7415,83 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
   __Pyx_RefNannyDeclarations
   CYTHON_UNUSED_VAR(__pyx_mstate);
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
+
+  /* "backend/snmp/trap_receiver.py":103
+ * 
+ *         print(
+ *             f"[{now}] [SNMP_TRAP] Disjoin trap from {sender}: {combined_text[:120]}",             # <<<<<<<<<<<<<<
+ *             file=sys.stderr,
+ *         )
+*/
+  __pyx_mstate_global->__pyx_slice[0] = PySlice_New(Py_None, __pyx_mstate_global->__pyx_int_120, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[0])) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[0]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[0]);
+  #if CYTHON_IMMORTAL_CONSTANTS
+  {
+    PyObject **table = __pyx_mstate->__pyx_slice;
+    for (Py_ssize_t i=0; i<1; ++i) {
+      #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
+      #if PY_VERSION_HEX < 0x030E0000
+      if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
+      #else
+      if (PyUnstable_Object_IsUniquelyReferenced(table[i]))
+      #endif
+      {
+        Py_SET_REFCNT(table[i], _Py_IMMORTAL_REFCNT_LOCAL);
+      }
+      #else
+      Py_SET_REFCNT(table[i], _Py_IMMORTAL_INITIAL_REFCNT);
+      #endif
+    }
+  }
+  #endif
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 /* #### Code section: init_constants ### */
 
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 7; } index[] = {{1},{17},{26},{28},{1},{1},{29},{7},{7},{6},{2},{9},{7},{15},{18},{8},{9},{20},{16},{18},{26},{18},{4},{6},{7},{6},{4},{8},{6},{13},{5},{8},{22},{48},{55},{13},{10},{15},{8},{14},{3},{11},{5},{12},{7},{7},{6},{4},{12},{10},{12},{6},{3},{8},{4},{2},{4},{6},{6},{102},{30}};
-    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (538 bytes) */
-const char* const cstring = "(\265/\375`!\002\205\020\000\246_i7P\217:0\345\345(\252\252i\203)\3077w\024\263\362\210\332\226\221vK\271\"\013\211M\"\345h\347\";\311y3l\003@\017=\003P\313\242D\004\0332\230\240\330F\\\000Q\000N\000OA\330\353\264q#\277s+\037\371G\014\022\007\250C\034\037\035-\372x\036,\315\261\316\2472e\375\351lx\317\335\t\353\266\0147\304\246\331\207\230\326U2\236.2\006l:\213\272t\214m\021g\254$\2160\223\310#D*a&\223\333\0332\341\374\230\203\251T\362z\212\265\306\214R\256u\226Y|\215\362\326\212\014w\273\312\322\250u\277\346\231\366\323\036\351\226\226Cu{\245\250\307\027c\357\226wv\373\274\322g\314q\272lK\333-\2552\313>s\027_\231]*m\367q\2138\204\324(\037\345\226\207:K\nju\242\356\351\226^\222\254\224\245\276u\371sn\345\367\334\375\335c\374\330Y\330?\273J\336\317\225\213(\237\331\277\033U\375-\346\262c\3542\326\032\271Uw\266\324q\334\034o\335\333\335\260\247R\255\271\267\275\335\256E\353\024g\353}\261Wn^\255\273\373?V\031s\236\023\314\005 ae\005V|\n\027\000\314J\300%4\340\204\003\002\241\305d\005\216@\326\027\277\205L\370ym^\".\216K\003\334\200\235\202\224\002\214\212\345#y\006\231\260\363\322\274$\n\010\212\304A\n\206\347\3616\231P\343i0\341\347\363p6!\010J\312E\001v\300\211/{\010\231\220\000\\}-/\302\333`B\313\311;Wc-(@\002\343\240\225\007\001A\007\341\314\322\326\263\376o\022\210\353B?\367\214\331\t\3515^)\324j\232\317\240\205t\020-\351>\017G/\326\224\334s*(\361\230\373\223;\334}\303H\2207q\204k|\013p\3228|\036s5B\036\n\013\242\260*\363*\237\025\316\331~\016\306\274\267\222\013A\001\253\260\201X\003$\3010";
-    PyObject *data = __Pyx_DecompressString(cstring, 538, 3);
+    const struct { const unsigned int length: 9; } index[] = {{1},{7},{16},{17},{20},{26},{33},{55},{14},{4},{5},{53},{179},{28},{17},{52},{32},{54},{36},{37},{1},{2},{1},{1},{8},{29},{7},{7},{6},{2},{9},{7},{9},{12},{8},{5},{7},{8},{9},{15},{18},{8},{9},{17},{10},{4},{20},{9},{16},{25},{31},{25},{22},{48},{55},{16},{6},{9},{7},{4},{18},{26},{5},{17},{14},{18},{13},{7},{6},{4},{6},{7},{6},{22},{4},{8},{5},{6},{14},{4},{1},{6},{8},{3},{2},{13},{5},{6},{4},{5},{6},{8},{3},{8},{22},{48},{55},{13},{10},{15},{8},{13},{3},{14},{3},{4},{11},{5},{21},{12},{2},{6},{8},{7},{7},{6},{6},{4},{6},{13},{7},{12},{12},{10},{8},{4},{12},{5},{6},{3},{7},{5},{3},{6},{8},{4},{7},{9},{10},{2},{4},{6},{7},{3},{6},{163},{37},{84},{92},{48},{388},{109},{32},{28}};
+    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (1779 bytes) */
+const char* const cstring = "(\265/\375`\213\nM7\000\nVX\022:\000\271\016\374\377\367\326q\235\372W\365\333o\277\324\361}\325\361\372\367\030\266S\322\232\222\242\213\226$I\211\230R\242\316\005\214\204\324\214\251ls*\341\241\t'\214\304\016\347\260\010\013\013\001\003\001\027\001y\247\261i\346\231\315\215I\222\022\231)\305\330\204P\251\224\320\244L\245[\217I\357Zwo9C\236g\256\267\366\375D\357\322\315\347\023\327\275\336\351+}\336]\240Z\355\376R\316\233\361t\367\316kr}\031\245\3575Qa\212Cs#\311\234\020\326\027\230\271\277P9w\227n@6]\322]\232\351\216f\035\375t\362\323\274 \275}\342\235\236>\373t\357\014r\275\356wk\237\357\031xS\257\367\025\246\303\313\353\271\263\256\201C\177\367\351\321S\270\273\274\364v\335{F\313\235\260\337\356K\335\244\3715w\276+/+&\267\332\355n\256}y\016Q\3553\327\273\023\325\346\355\347\335\251\317\017q\256\317>\177\265Om\"3%\252\025\251%\035\023\222g\222aLP\312\014D\203C\002]\232[\317\025\031\231\205\\S\3573m\352g\316\324\325;\265-q\337o\311RR\222Fw\031E3\216\010\311\322eJ\n\2711\372\227m\367F\316Pn\030{\236\002\201)P\343\235B\245[\247zk\234ra\366\372\2079\306\332i\237\370W\346\037\376\001O\374\363\371\336\326h\307\375\304\300\323\353\323\367\324\007\354m!\017=y\335w\354\265/S\214;O9\327\030\227\251i\246\2456\263\317\346N\177:\233\032=\201\036\357~i\211\365\356]s\354\267>\177\332\237^\3670\306\263Y\327\373\364\302\224\247\345,=\313=\354\271\367x\326\277\274\365\023\327:3k\356\023\232\351\360\254\246L\321\231\331\206JM/\364u\017\304>\214\375\271O\214g9![\220\216\247s6\234\0235\274a\\\323\2218\265\\\220\255\266\263\323\303\203#D\336`\256Qsg\036\337\2650\250s\272\347\033]O\016\266\365\004\371\340\032\020i\273\221\265\034\276\365\334\310\027\023\236\027\322\354\264g\021\032m\246\277\220K3\311\250\331\317\262\267u?M\221\256\375pw\207\300\031\307'\300\337\356'\346\326Ne\257\366j\264\023\022\n\2576\023\027\014\000\010\262\310\252\340\323\317?\203\241%\217\016G\245\342C\261\266:\254\262\005v\001\206\325\372:\025\202\241\225\035c\307\322\2103\262D\2607j\376\270\037\323Z\203?J]Q\035`""-\371/^,\355#\340\326\204\330j\360_*\003\254\375\025.\226FDp\2658b\302\253M\200\26585EmPc\253lu\371\026\017-Mu`hcV-G\021\243KQd\215\255 \277\253\022\014-\355\013|\026U\246v\342\302z\263n\254\001\353\356\253\374\206\317\325\254v\250\r\2606\377\233\277\361c_H\205\200\311\212}\315\255)k\303\312\377\312\327\252\212*\240\006\211+D\204W+ScjI\274!n\020\017\\m\213\370r\265\261O\341ji\305\212U\006\300\242\371i;ma\367\036w\355qo\330\201\234\367\264{T\230y\332\364)\307\232\247<\334\271\356<Tw_\311\263\356\233\013\275\346\034\325\034\315\302 ~\322\330\324e\312\201\232g\240\346\300\270+\362\n\037\037\216BF\322\310St-\374\t\206\0266\000\360\2205\363/\006\000\016\262\010\006Z\210\207\266UE\263\362\307|\254\221`qT\227\252\243\313\261.W?2\354KAqh\345;v\034]\214\276\230+\306\254S\352\0171\241E+N}\r\227\201k\0356H\030\025\261EDl\311U\267\302\261\242Y\275\034eG\ncY\364\255-\322\021{D\304\022\341X\\\004{\334E\202\342G\360G\374\211\266Ul\n\252\021\252P\360\370c,*\222E\336\n\261\266\326Y\314\250D\360?\324\206\027\026\271\322\326\235\017\243:\274z\005\024j\254\215\305\212'\277\342a\245\265J|\n\006,\362;|\212\007\211\007\232\352ek\377\032\010,Lu\270\272\271\242:\346\343\221\221\205\201\rb%\300\260\362\025\224\325\016\013\313a\264\255E\377\"\270\026\254\027\326\032\274\260\016p*\207j\206\030mV\016\027\033+\202\254RP?\250z\274\332`U\301J\256\035\n\254\202\253\r~$\025\002\200m\031Q\214-\253\007\356c\300X\231\252C\252<D\330\253=0h[\177\"\201\034\250!\261b\210\021\231\221 \2224\205B\0071\010\202\201\030\264\252\017R\033UJ#\"A(H\n\n5\226\275\003\344\371\003e\324\240{;\036\336N\202\025\257K\016\326\004fF6\035j\342p\002\366\270\210D/\330E\226\352m\2259M\2756\3555\024D\3324O\004\"\377\n\007\000\205\261\010\222\320\333\023g\034P\205\005\222v.\224\305\336\345\271\200CW3\260Z\216E\303\210\323y\242\343\271K\321\177\027R\221E]S\020>ncV\362%\2300\330\3432\024A\031\3716\342E\305\230\314\364\246r\260(\304\3031\036\321\252Lg-\242\310\344\350V\342\240\003*d\212\3761^\253M\337Ed\250\263\350\267\252\317\313u-""\030\304\"A\223\306\241V\231*U\177^\325\254\245\021^\344\202\260Z\226\254v\330n\354\266\222\255\340M\315\214\210\352A\377\226\370K\310\347[r\355\275\331\231\244\341\212\357\240'f\277\315)\341\221\2241\364^\"\024\246r\232k\357\321\205\347\322\315\rVEp\323\005\217\262Oh\033\260\212\213\345\203n\361B\230\250\314\252\242\372\203U\353,P\177\033ns8\333\342\201jZb\316\005B\031\264M\265j\232V\226\212Q\30284H1/\372f\025\216\236\226\202\240\243\220\225\257\001;<\304`N\221\377\266\201\327\365\305W\231\200\372\330\2456\357\312\205\273a\320XpT\266\025\317>\371\021\357\010#\022\226\\*\004\346\226\0000O\004N\334\344`\350\317:\n\"6M\266\367\t)\314\244Hj\3719\207vE\270\016\004\013L\276\222 \022\333\341\034A\276\226/\241\2638\247\306No\355Hrgo\276\000\033\240\rS\217Z\030!r)\236\335\246\274A\214\201\221Av4N\223\r\031\261\322\202\236\035Q\322X\014$\371\023\271\004\333y\372\304\315\004\001\213o\307\206\025F\036\373\354o\006\234\"!G\341\273\303B\213\021w\334\215O:v&\360\374\357qA\257O\334\022\210\376&Z`\202\201)8\013\005H\310\207\275*\351<\034[\205\"'\373_\377`o\257\234\004G9\013\377b\262\326I\377\3153!\r\367R!\005\020\322\354\333\006`";
+    PyObject *data = __Pyx_DecompressString(cstring, 1779, 3);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (619 bytes) */
-const char* const cstring = "BZh91AY&SY\036\244\t\250\000\000G\177\373\343f\357\225`g\246\215\276s\374\016\277\377\377\340@@@@@@@@@@@\000@\000@\001\343\225\243Pji\242\t=\244\365\036\251\223j4h\000\320\000\000\r14\000`\236\236\250EOQ\231A\275M@4\032\000\000\000d\000\000\000\000\003\214\230&\206C##&\206\2004\031\030@4\0324\310b\032\0001M\t<\206\220)\372\241\344COQ\210\000\304\006@\003A\215CF\233Q\260\363#\357\007\356\t\342\024\022$\017K\310+)\344h\004\371\316\242\230\265d\255\004\321\244I\224\233\232\266\206O\323\023\3505\272\330\243\304X\022,\362\214&(\312E\275c:\301m%\273\3414BxN\237\214L\274\355y\276\031K\031\013\203\303\322&[2:\367\005\333J\017\013\222Yc\245\n\034\324U\216!\000\263z\245U\022\346rF\232\237\233Jq\353#\257$\264\244\356\313\014jjJ\014\252\216\207\032\214C\214P\014\021b\204\030\363s\026\300\260\267\350\310D\017\271\347\240\325#\375\003H\n\262\005\274\226\266D\272\375\234\267~b\010\261Y\244\016\004\021\343J\024L\\\331\277\332\352\214\026H\343\256>\227\002\000\241\003\232\203\326T5\356A\355a\317\003\034\361\214\325\360s\3523\262\216ubU\211\251\032\320Rp:*H\265l\344Ud@@\344L`F3\203\220\311\2618\214\225\n\001HAT\237\"* \r\314\364\267\272x@\304\325\224k2u[\006\374l\030\242e\014\000r\204*O\262\320\230\257\206P\002\205c\022pjF^(\t\0200`#\010\360\224lh\247]X\205\331\271\351\233,\004\215*\010\243G\020\343m\301BC\244\230w\364.\233\020\200\377\024C\204\364T(\237\002i\025Y$\241H\"I\007\007%m\250\r\225\216F\n\007N\372\220\270b\020\356R\006\265\254\331\334\276\326x\212u\264\260C\030\201k\021\245\317\233\347\212\3524W\200j1\317M\211^4d=\014\360\324`d\333\315\220\026\231\322;\277WG\037\337\340\303\261 \277\006\n\371r\341\306L\341\342\337\237\346y\364\262n\276i=\373s\277\234V\312\027Qz\330\370^\237\361w$S\205\t\001\352@\232\200";
-    PyObject *data = __Pyx_DecompressString(cstring, 619, 2);
+    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1880 bytes) */
+const char* const cstring = "BZh91AY&SY\202\030\251\r\000\000\235\377\377\377\377\377\377\377\377\377\377\277\373\377\377\277\377\377\356@@@@@@@@@@@@@\000@\000`\006]\362\262\264\356\\n\200\0004\355\307\326\rM\023D\324i<&\nzzMO\023\032\247\265C\312yM\251\232\231<Sd\324\036\247\250\365\000\006\214\203j44\033S\322~\243&\024\3654\032I=Q\274\250~\251\223\322?H\214 z\200\000\320d\000\000h\000\000\0004\310\000\000\000 \311\200\023\000\0010\004i\204`\000\000\000\2314\304\320`\004`\000\000\000\006\232\n2\214\244\332\232b4\365\032\r4h\000\001\240\r\003@\000\003\324\000\000\000\006\230\206\232\034\320\t\200\023\r\000\004\311\204\320`\002`\230\002a2`\214\004`\000\000\2311\032\006$\004\320#Bi\246\231\010\302!\243C@\032\000\r\000hi\240\000\000h\000\000\r\251\236\263$\376\213\211\223\227\372\312\311|\266\n\t%2\3270$\311\014\360\365\214\324\244=\345\343R\037\216e \n\010\224\220@Q4h]B\247\260+\213\263\324\350\0259\032\220)\020\004\n\010\331\022$\210H\211\350\"\01654\036\221zPi\0035\021\007F!\025\014\305\025\214\313\246\264\355\037\345\244I\351\243\006\014(&\022\"wvQ&\323\023\307,\367\n\353\243\237\217v\222\225\301\316\340\214\236\374o}h\345\230\215\323V\353\207S\251\320+\345\350\373O@\300A\272u\224\360ne6\311\270\227\037\204\241\006\034_\233\177\013\277\3346]`\266\344\370\271\253\024\010\t\304\242\307|\000r\340#A\312\016\262\317\262q\236\372\211{\230 \3075\2315gL\023\347\246q\021\324\005\250\204(&\316=Y0\354-if\362\250\034\335TE=-\316\224\006\245(\3636\000\317\254\"\303\324\034v\352\334\325\352\237\204\276i\235\372Ri9\304W\314\351\376\350\n\013\235\003\201,\214\230\210;\027\314\372\021\242\362\211\313\304\255/0\231Ja\203@.A\330H\263\371'\t0 @\306^\226%z\272+\303\302\334WC\252X\312\267\207\177n\037\274\202\003\245\251\222\362t\200\256\304\234\326MH\327YV.\370\274\001:-\367\331\261!\304P?`\035T\036\321\373\316\344!W\013M\031\337\303\265M\212\006\200\032]\323b\242UZ\021\202&\363\003r.\253\025\360\230e\340\273Z\360{\315?b-\014H*\t\221\342\024\247}\2542\371\"\213\261r\241\020\250A\021\343\036r\\\021-\207IQ\201\236""\356\217\310Ue\270\364\211\330\037Da\002X\004\236\300V7\371\273b\334\272\273ggPxqsp\201Q\353\2633\261\327\217Q:\371\025\215\314\271d8\254\233.m\235\231\023\3279\221\207\"\016\"\216\2109\"\233r\322[x2\214\365\347\227\231\320\341>\266b\033j!<Ag1>5\360\315: ;id/\342\214E\256\263H\0252\203\370F\300MF\246\253Y\260\332\375-\017ZY4\001\220\350\363T\305b:k\276&KCa\260bJ\024\244Z\220X\306Uj\031L\232\371\013%\206,\3117v\302x\014\217\001l\020\351\n(\206\232\247&M\213\373\310L\300\217to\351\272\217\342Y\025@\200\277\026(8b\211\031\301\351e\003O\030\321\214\216\226\264N\320+\247\214\000n\303\023\"<&2\037\201\005\306|\005\322\275\032\r\t\303DlME\002&\217\252D\365\341@`H\213\3370\n\014\365\321)\206`\025@\024\331c\016\030\021\005\311\331\n\344\341WV\217\340\205\351U!\223\257\314\341\245^\202\n{l\034\3410\254\310\236\347v7J\000\226\210\234\247\347\013F\344x*\0316h\353\336\210b\222r\316\240\312\n/\213\330f1.\213\036*\230n\204\210B\213\253J\343\2038X\026\rUL\372\000id(,\257\007_\027\336\031\365\335\236\373\005\353k\024\346&\020D$\202;J8\336$\372\261\206\026\016\365\001M\373\232\332\354\226\270!<V\263\362\263\336\245]\315\312\230\322\366\337\323\335;\301;\"\331Oa\267\362\230\342\027C0\t\240\005\331\255\344\014$C\201\347\241\013\305\274Z1w\32727\341N]\333Y\3367[\035\030k\200\256z\3304\213a\204C\337\033\\\324\225\356A\303`Oe\"\r\000\342\235\345\021\031\003k\200\246+\301f\301\200N4q\002\261\021N\216&'\374\001\354ETa,\213\223l\234/\310r\204\2450]\333\364\345\"DS\235\027\206\260\260\365\231\220N\020\313Q\273\241TD\223\002X\231\201\215=\002\221\213\362\236\022\020\022\336\024\252\346\340\302\2541\334.\t\271\232C\341\243 \r\212\316+\025\374\260\"\360\355\024\235\255>Q/\033Y7P\240\255\367W\0015\243\235#\214<l\233R\010\002\210@\\\200c\200\315\205\006\324\030>T\277=Cbq\341|\307\007Z9G|\2708\267\027\223\010(\006hD\326\n$\242PD\362\300(\006E\014\227-\223\226\3300a\233\023\260\311\030\354W]a\200d$\242\035\261\232\032i\275\021 \0223}E\350<\2140\275\322\324\307l\006`\366\2515\036\350UH\341\221\255""\240\302\312\014\216\026\350\204&\006\035\334?\211\233r\342#\004\220V*-\272\215\327\337\034\0369\345$R\023V\313\032\233\305\226\351\031\363\351\347Y-\353\335P\257z\314\321h5\354B\254\032\014\240$\225\335\355\210\022\242b%z/\024\244\263\240_B\275Q\236\252\352\n\371WXt\2103\274<\206:44\004`\347\001)\327\213f\267\316Sv~\001\275\233\216A\0139\217\313\223w;\361o\r\327\n\263mfC\004\000fL\020\313\250[02\207\357\322\n\014%\\50\310\014,7(\200\320\262\214N\022Fg\3478\300\302\006$\036}\331;\372f\003\321P{\302x|\034B+`\010(M\221p\rw\240&\330\201l\343\234\017\203\220\277\021\244!\270\016/\221\255\002\025\376H\3001\360\201\206\264r\305sl\204=3\235L\252\026\207\032\247\263\273\221\014\205H\264pk\022\013\2224dFRd\\1\212\221b\021\313\243\355\257\271\21591\026\360\237\244\245\033Rye\006\345\002\267\034S\226U\221`#\3421\312\243\220\277\325Y\227\2246\213\253\txijk\263\2573\202\225\202\331\271P\271\365\032\336\260\325\302E\204\256@I\206\230\010[\236;'\334\3330yRbT\266\314\021\355m\354\220\022Bh\304\200\346\210h\350\321/\367\220\004\342\272\340\357\275?\307\260\036\340\205\247\316\333\325e\177\237\014N\247\242\242\33570\313h\304F\332\352\244/!\337]\362\"\3626\313\tt\360\345U\336+i\205\350\306\271\202\363\n8\ra\226\313M\212\277\036\226z\2329\260\310\324\264\235^\201\232\254LJ\263@\307p\263/\013\023ziX\252\342\311\201%lC\002w'\376.\344\212p\241!\0041R\032";
+    PyObject *data = __Pyx_DecompressString(cstring, 1880, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (531 bytes) */
-const char* const cstring = "x\332\225\2221o\323@\024\307\233!\010\244\240&J\013\022B\310\331@*\256\"\201\030\250@)A\242H\2044a\013\321\323\345\374\022\256=\3379w\347\220l\214\035=z\364\2301c>FG\217|\204~\004\236\223\000\002\2610\334\363\273\337{~\377\277\3177x\303\244d#\211\203\301\360\310\263\316\014\177\003\332m\321\221\327\321\n\207Co\320\357|\350\016\275\036\373\3529\303\"\317 G1\303\300{\354\277\0361~\211*8\266*\214\216\213*\354\252\306\217\026\336h\341\320>\t\204-F\243*\342\204\013\273\315\002\311\234PO\233\255.\274\377x\326\201\366Y\277x\2362\213=\234\306h\335;\246\002\211\346\247\267\266\260\027Z(\014\000\272\2139\255\266\340\016:8w=\034C\237\034|\"\003\273\227\230](.\264\317\265\3211\351\240\335Y\365\013\253\376\037V\271\244:\010\005D9\026}\001s,@\256\003\004\0104\007@c\264\261c!\t\214cE\344\313F\007\204\205_\022\302ah\001BF\243(^\"\024Z\260\321\332\266\233\177S\377Dj\316\244}\345\377\375\031\377\333\357\357lA\210\216q\311,\371\241\215\016\342\002Rf4\240rF\340\246\240XHX+@\014IAL&h\"\035\001D\006#f\260H\204r\000\323\230\311m3\025$\235\222\331\376\"\203.6\312\242\034\003Xt\273\201\224\0058f\261tV\323\241;\213\206\216\331\0224\306.H\231\256\205+\342\3349\353\026\021\322\022j2c\222f^\225\362J=y\226\314\323iF\351\335\274z?q\351\213\254\221\275\\NV\347y\375`K\232i+\257\324\222Z^\255'\315\344\364\372\336\363\325\371\212\257k\353F^=L\372i\351{e\377z\277\221\325\263\267\313\203\345\347u}\335\312\253\217R\226\316\262^6\375V\312o\337\311\017\016\363\362\255\233\312^\371az\222M\211\334<\330+W\256\232?\000\207d8\371";
-    PyObject *data = __Pyx_DecompressString(cstring, 531, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1767 bytes) */
+const char* const cstring = "x\332\225UKw\0239\026N\272Mp\300!q\036\2040\314 \363h\222\031bp\023\032:\323iN%\030\310pb\374\310\300\320IFG\251\222\355\202r\225]\222\023|\200sXz\251\245\226\265\364\322K/\263\314\262\226\265\314O\340'\314UU\205\356t\230>\247\343X\217\253+\335{\277\357\223\214\356f\303\217VD\005\322\240\313h~\353\277h\347\037\013k\304\262\310\256E\267\266vn#\306\335\235_\rj\366\025[d\272\215\n\216M\377`\005}\010\373\323\016\361\302\251\361\211\335\217M\366\3061mj\240\371\354\337\027\320zq\005mhk+\033DW\231\337]\374\221,V\265\305';\357\227>ng\377x\276Pp8E\274N8Z\353\360\272c#\223!\203Z\346.u\t\247VG\3055uN]\345d\243b\276\270\270\364p\t\021\333@.}Cu\316\020k\357\352\026a\2142\344T\321n\333\264\270i#\336iR\226E\353U\324q\332\310\246\220-wP\023\374~\273\201\327\251\215\030\345j\200n\021\333v8\341\246cc\330n\332\265[\3100]\010b\356Q\265\373\t\261\030\315\356\240\255Ja\243\270\203\312d\037q\2274!\023\235\202\013\340\021\257\341\315\262\006\016Zq\345\244a\315i[\006\202 \210\276\203\235:W\300\241Ed\326l\307\205x\341q\331\223{b\264\243HU\327i\240\223\353\371\374\006\332%\\\257\203\207Y\253\001R_\322\3313\tR\236\341\336\235_\207\3102\031\2476\2702N\\\016\236\000\374\277\037\027Q\2052\006\325/\256\027\201\311m\343}\356\366\275\217\363\217\226\267\263\361x\341=|\267\226\321\243,1\014\014u\320]\242\277\245\266q\207\331\215\346\035u6\216\243\273\331f\007\355v8e\013\206\311\224\312\250\255\332\232n\262hdX\000\265\275\230S\311\204zF\363\r\307\240+\352\250\005(\2020\307^i\363\352\342C\255\270^\304\345\274V\004\264\302\276\240m\344\303\001\376\327\213\365\002~\274^Q\375*a\264L[m\312\3703\020\210E\335c\201\177Q,\200\205W\265\315\265g\000\336\372\323\247yh\n/\312\3715\255\222W\322\306\270\330y\007\337\307 9\\\000\216\312\264\na*/\n\020M\301\267\t\025\226\343\002\177?\317bl\332&\307\370\364B=L\0077\025X\374\3242\253\267\271\341\354\333\247\027\024;_\267f\177\262\034\035\344\370s\026W\000/\345\020\327\374g\375\263qr\2773o\326\201\001\003DQ\241.\234\002\304\332\3604\021\267\306\010\353\330\272\351du\307u""\332\300 e\261\010\262\212\271\354\t\021\204\002\3008\274n\270F\271\311iCMMjs\014\032rAp0\003\344M\270sp#BA\351NcW\261\2059P\000\223\246\tj!\264\341\330\006\341\304\240:\310\004c\303\3211\246\256\353\270\014\307\327\t;\360Tp\254\336\014\273\306\252\260\r\343j\333\006\277\032\344\332\214+=\301F\335a\334\014\357\037=\346\317\264\271\331\304&\303_*Ti3\213\3325^o`\263\331\300\r\2427B@\0328\022*\0300X\241\nh\337R\254\240\300!\024Q4\367\353\326\377O\313\237\365?\246\0217('\021\336\360\007\027\252\255\2140r\035\014\240\273&\r\027T\356\320:\020\007\356\037U\005\331\316><|\024J\212\037\222\246\323l:.\000\322ti\223(|\232\200+o\272\216\016\264a#\272T\230\356)2q\253M\254\350T\227F\230\034\213\000v[\300\254\033]M\227\362\266k3\220\222^g\324\252\302k`P\227)\225\341*\260\000\033p8\213l.\250\305\201\004\301\306\343\254ad\320*i[\374\370\346(\234\230\243\350\214w*\3113\360ra\350\306rP]\223u\324\032(\021\203\270X\330\276\343\230\207b\217Zp\215 W+p\010\374\216D?\006m\373-@d\357\021\013\376\241\022\177(\343]\356\345\202\304\234L\007\211dw8H\234\353^\353\256vu\221\026\231 y\276\273\324m\211o\305=A\345\222t\275I\357{\257\354\261^\006\366\244f\304\246L\313krU\222 5)n\010\"\\9)\357\311]\357\033\357\232\267\352\201y\274\313DF\334\227\337\312\\01+\230\274\345\245\275\205\336\203\376\302\340\207\203t01%r\301\364_\344\003/\343\301\211i1)\276\027\245 5\026$\307\272\245 q\276\233\363\023\227\345q&AjB$\345\250\227\216\006c^I\r\316\313\234\237\274\"\265 5%\226\304;\331\362\206\325pY\226Tbi\021\205\021\253\376\305\373\375R_\037\244\007\231`bFT\344\360Qj\334\037\317xS^\2767\335\333\036L\r\264`\342o\222\310=(\262\365I\373<24:\336%A\362\0024\220\323\354\245\340*\n\222\227\344p0z.H\246\272\317\204\366\233\356\211B,\345\247\376*Ka\177\323\213z81\354\177\350G\375\335\376\260?4#~\221\255 q\301\277p\303\323\3001q\366S+H*\270n\212\026\004H\250\202\367\001\322\367\336\255^\332O\\\367\036\365\347!q\310\305\020\327\001#H\343\234B\355(9\032\244\220w\326k\251Z\257\310W^\241\177\335\277\377\364`\377\220\034\245""\306\216B \201\207\226?q\277\377z@\006\037\017W\017C\\\246DXa\312?\177U2/\243\2348\320\001\320\224\202\351\3310\213\35199%\265\243\21199\013\240\002QK\220\364\364ey\247\227V\263\\\220\006\277@EI\213\271\220[\310PQs6d\001\352\331\027\265\220\207\344\224\370Q>\365r\236v\224\234\024\337\311\221\020\346\355~:\252(\353\r{3^\265\247\365^\365\237\017Z\212\376Mq\021r\030\221ozpPZ\\\222\027\341\314o\274\357z#={\000\247\304\212\000~\025\036\376\305\222_z\351\277|\355\277\376%8Y6\360\340\325{z\177n\220\031<<\310\035\254\035\260\303\333\376\313W\376\253\377\3040\250\364g\345p$\240\226\022\363M\321\361\022 \213\264\262\345\202QuPB\325\nu\000\344W\345\007u\003\2207\254\020\034\353>\027\037\274\345^\271\307\373\017\0067\006\365\003E4\030;\212\226\336Y0?\364\377\371\374\360\201_\256Dzy\242$}\234\241H\2105\177\366g\240\206\037\344\342\214>A\315\243\301\364Lpf\344\363\271\2413W\344O\300\257\022\371\347\351\2413)\270\025*v0qI\216C\200D\357Y_\353o\016\246\007\370P;,\375\017\336V[I";
+    PyObject *data = __Pyx_DecompressString(cstring, 1767, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (801 bytes) */
-const char* const bytes = "[Callable[[], str]Callable[[str, str], None]] [SNMP] Raw trap received (.?backend/snmp/trap_receiver.py bytes)disableenablegcisenabledlatin-1AP_JOIN_DISJOINBaseRequestHandlerCallableDisjoined__Pyx_PyDict_NextRef_SnmpTrapHandlerasyncio.coroutinesbackend.snmp.trap_receivercline_in_tracebackdatadecode__doc__errorsfile__func__handle_is_coroutineitems__main__make_snmp_trap_handlermake_snmp_trap_handler.<locals>._SnmpTrapHandlermake_snmp_trap_handler.<locals>._SnmpTrapHandler.handle__metaclass____module____mro_entries____name__on_eem_triggerpop__prepare__print__qualname__replacerequestreturnself__set_name__setdefaultsocketserverstderrsys__test__texttstypetypingvalues\210\001\330\014\023\2204\220x\230q\240\001\330\014\r\330\020\027\220t\2307\240!\240;\250g\260Q\330\023\024\330\020\027\220t\2301\230A\330\014\021\220\021\330\020\023\2201\220B\320\0265\260Q\260c\270\021\270!\330\020\025\220S\230\001\340\014\017\320\017!\240\023\240E\250\024\250\\\270\023\270A\330\020\036\230a\230v\240R\240q\200\001\330\010\t\330\024\025\330\005\006\360\014\000\005\034\230<\240q\330\010\t\360\032\000\005\014\2101";
+    #else /* compression: none (2955 bytes) */
+const char* const bytes = " 0.0.0.0AP Name: ([^ ]+)Callable[[], str]Callable[[str], str]Callable[[str, str], None]Callable[[str, str], None] | NoneCallable[[str, str | None, str | None, str, str], None]Disjoined (.*) IP= MAC=Mac: ([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.] [SNMP] Raw trap received (] [SNMP_TRAP] AP=] [SNMP_TRAP] Could not extract MAC - ignoring trap.] [SNMP_TRAP] Disjoin trap from ] [SNMP_TRAP] EEM batch trigger received via SNMP trap] SNMP trap listener started on UDP Session-IP: (\\d{1,3}(?:\\.\\d{1,3}){3})[: ?.add_notebackend/snmp/trap_receiver.py bytes)disableenablegcisenabledlatin-1list[str] (mode=snmp) reason=utf-8APIP_REAPMAC_REAPNAME_REAP_JOIN_DISJOINBaseRequestHandlerCallableDisjoinedEEM_BATCH_TRIGGERIGNORECASENone__Pyx_PyDict_NextRefREASON_RESNMPTrapReceiverSNMPTrapReceiver.__init__SNMPTrapReceiver._handle_packetSNMPTrapReceiver.shutdownSNMPTrapReceiver.startSNMPTrapReceiver.start.<locals>._SnmpTrapHandlerSNMPTrapReceiver.start.<locals>._SnmpTrapHandler.handle_SnmpTrapHandlerThreadUDPServerap_nameargsasyncio.coroutinesbackend.snmp.trap_receiverbytes__class_getitem__client_addresscline_in_tracebackcombined_textcompiledaemondatadecode__doc__errors_extract_octet_stringsfile__func__grouphandle_handle_packethostiignore__init__intip_is_coroutineitemslengthm_ipm_macm_namem_reasonmac__main__make_snmp_trap_handlermake_snmp_trap_handler.<locals>._SnmpTrapHandlermake_snmp_trap_handler.<locals>._SnmpTrapHandler.handle__metaclass____module____mro_entries____name__normalise_macnowon_eem_triggerpopport__prepare__printprocess_disjoin_event__qualname__rereasonreceiverreplacerequestreturnsearchselfsenderserve_forever_serverserver_close__set_name__setdefaultshutdownsnmpsocketserverstartstderrstrstringsstripsystarget__test__text_threadthreading_trap_texttstypetypingunknownvalvalues\320\000!\240\032""\2501\330\004\031\230\021\330\004\010\210\001\330\004\n\210\"\210B\210c\220\021\220!\330\010\013\2104\210q\220\003\2203\220e\2304\230r\240\022\2402\240R\240s\250!\2501\330\014\025\220T\230\021\230\"\230B\230a\330\014\022\220$\220a\220r\230\022\2303\230b\240\002\240\"\240B\240a\330\014\017\210s\220!\2205\230\003\2301\330\020\027\220s\230'\240\021\240)\2507\260)\2706\300\021\330\020\023\2201\330\024\033\2307\240!\2401\330\014\021\220\022\2202\220Q\330\014\r\330\010\r\210Q\330\004\013\2101\320\004\032\230!\330\010\013\2104\210q\330\014\020\220\010\230\t\240\021\330\014\020\220\010\230\r\240Q\330\014\020\220\013\2301\320\010\034\230A\330\014\023\2204\220x\230q\240\001\330\014\023\220:\230Q\230a\330\014\021\220\021\330\020\023\2201\220B\320\0265\260Q\260c\270\021\270!\330\020\025\220S\230\001\340\014\017\320\017!\240\023\240E\250\024\250\\\270\023\270A\330\020\036\230a\230v\240R\240q\200A\360\006\000\t\017\210a\330\010\016\210a\330\014\r\330\027\030\330\037 \330\010\030\230\001\330\t\n\330\010\014\210H\220A\330\010\014\210H\220A\330\010\014\210F\220!\330\010\014\320\014\035\230Q\330\010\014\320\014%\240Q\330\010\014\320\014\036\230a\330\010\014\320\0146\260a\330\010\014\320\0140\260\001\320\000\025\220Z\230q\330\004\016\320\016$\240A\240Q\330\004\007\200q\330\010\017\210s\220%\220q\230\001\330\004\013\2104\210w\220a\220{\240'\250\021\320\004#\240?\260(\270!\330\010\016\210d\220#\220Q\330\010\030\230\n\240!\2401\340\010\t\330\014 \240\007\240q\330\014\021\220\034\230W\240N\260#\3205G\300w\310a\340\014\r\340\010\r\210Q\330\014\017\210q\320\0205\260Y\270a\270}\310B\310a\330\014\021\220\023\220A\360\006\000\t\014\320\013\037\230s\240!\330\014\017\210t\2201\330\020\025\220Q\330\024\027\220q\230\001\330\024\031\230\023\230A\340\020\031\230\027\240\001\330\024\033\2304\230q\330\024\032\230/\250\021\330\024\033\2301\330\021\027\220q\330\014\r\340\010\021\220\031\230'\240\021\240!\330\010\020\220\010\230\007\230q\240\001\330\010\017\210w\220g\230Q\230a\330\010\023\2209\230G\2401""\240A\340\010\022\220&\230\006\230a\230v\240\\\260\021\330\010\016\210d\220.\240\001\240\025\240f\250A\250W\260K\270q\330\010\r\210T\220\026\220q\230\006\230j\250\001\330\010\021\220\030\230\026\230q\240\002\240&\250\006\250n\270A\340\010\013\2104\210q\330\014\021\220\021\220#\220Q\320\026Q\320QV\320VY\320YZ\330\014\r\340\010\r\210Q\330\014\017\210q\320\020%\240Q\240h\250c\260\031\270!\2708\3001\300C\300s\310,\320VW\320WX\330\014\021\220\023\220A\340\010\021\220\027\230\001\330\014\023\2204\220q\330\014\022\220%\220y\240\004\240E\250\021\330\014\023\2201\330\t\017\210q\320\004\027\220q\330\010\023\2201\340\010\037\230|\2501\330\014 \240\001\360\006\000\t\r\210K\220|\240:\250R\250t\2607\270$\270h\300a\330\010\014\210K\220y\240\007\240q\250\007\250t\2608\320;K\3107\320RS\330\010\014\210H\220F\230!\330\010\r\210Q\330\014\017\210q\220\004\220C\320\027>\270a\270t\3001\330\014\021\220\023\220A\200\001\330\010\t\330\024\025\330\005\006\360\n\000\005\034\230<\240q\330\010\034\230A\360\024\000\005\014\2101\320\014 \240\001\330\020\030\230\017\240q\250\004\250H\260A\260T\270\024\270_\310A\310Q";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 59; i++) {
+    for (int i = 0; i < 145; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
-      if (likely(string) && i >= 13) PyUnicode_InternInPlace(&string);
+      if (likely(string) && i >= 36) PyUnicode_InternInPlace(&string);
       if (unlikely(!string)) {
         Py_XDECREF(data);
         __PYX_ERR(0, 1, __pyx_L1_error)
@@ -4026,7 +7499,7 @@ const char* const bytes = "[Callable[[], str]Callable[[str, str], None]] [SNMP] 
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 59; i < 61; i++) {
+    for (int i = 145; i < 154; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -4037,15 +7510,15 @@ const char* const bytes = "[Callable[[], str]Callable[[str, str], None]] [SNMP] 
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 61; i++) {
+    for (Py_ssize_t i = 0; i < 154; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 59;
-      for (Py_ssize_t i=0; i<2; ++i) {
+      PyObject **table = stringtab + 145;
+      for (Py_ssize_t i=0; i<9; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -4062,6 +7535,34 @@ const char* const bytes = "[Callable[[], str]Callable[[str, str], None]] [SNMP] 
     }
     #endif
   }
+  {
+    PyObject **numbertab = __pyx_mstate->__pyx_number_tab + 0;
+    int8_t const cint_constants_1[] = {0,1,2,4,120};
+    int16_t const cint_constants_2[] = {162};
+    for (int i = 0; i < 6; i++) {
+      numbertab[i] = PyLong_FromLong((i < 5 ? cint_constants_1[i - 0] : cint_constants_2[i - 5]));
+      if (unlikely(!numbertab[i])) __PYX_ERR(0, 1, __pyx_L1_error)
+    }
+  }
+  #if CYTHON_IMMORTAL_CONSTANTS
+  {
+    PyObject **table = __pyx_mstate->__pyx_number_tab;
+    for (Py_ssize_t i=0; i<6; ++i) {
+      #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
+      #if PY_VERSION_HEX < 0x030E0000
+      if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
+      #else
+      if (PyUnstable_Object_IsUniquelyReferenced(table[i]))
+      #endif
+      {
+        Py_SET_REFCNT(table[i], _Py_IMMORTAL_REFCNT_LOCAL);
+      }
+      #else
+      Py_SET_REFCNT(table[i], _Py_IMMORTAL_INITIAL_REFCNT);
+      #endif
+    }
+  }
+  #endif
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -4070,10 +7571,10 @@ const char* const bytes = "[Callable[[], str]Callable[[str, str], None]] [SNMP] 
 typedef struct {
     unsigned int argcount : 2;
     unsigned int num_posonly_args : 1;
-    unsigned int num_kwonly_args : 1;
-    unsigned int nlocals : 2;
+    unsigned int num_kwonly_args : 3;
+    unsigned int nlocals : 4;
     unsigned int flags : 10;
-    unsigned int first_line : 5;
+    unsigned int first_line : 8;
 } __Pyx_PyCode_New_function_description;
 /* NewCodeObj.proto */
 static PyObject* __Pyx_PyCode_New(
@@ -4090,14 +7591,49 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 23};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_text};
-    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_handle, __pyx_mstate->__pyx_kp_b_iso88591_4xq_t7_gQ_t1A_1B_5Qc_S_E_A_avRq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 75};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
+    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_handle, __pyx_mstate->__pyx_kp_b_iso88591_q_HAT__AQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 13};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 154};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_text};
+    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_handle, __pyx_mstate->__pyx_kp_b_iso88591_A_4xq_Qa_1B_5Qc_S_E_A_avRq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 27};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_strings, __pyx_mstate->__pyx_n_u_i, __pyx_mstate->__pyx_n_u_length, __pyx_mstate->__pyx_n_u_val, __pyx_mstate->__pyx_n_u_text};
+    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_extract_octet_strings, __pyx_mstate->__pyx_kp_b_iso88591_1_Bc_4q_3e4r_2Rs_1_T_Ba_ar_3b_B, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 44};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_strings};
+    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_trap_text, __pyx_mstate->__pyx_kp_b_iso88591_Zq_AQ_q_s_q_4wa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 6, 7, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 52};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_host, __pyx_mstate->__pyx_n_u_port, __pyx_mstate->__pyx_n_u_ts, __pyx_mstate->__pyx_n_u_normalise_mac, __pyx_mstate->__pyx_n_u_process_disjoin_event, __pyx_mstate->__pyx_n_u_on_eem_trigger};
+    __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_init, __pyx_mstate->__pyx_kp_b_iso88591_A_a_a_HA_HA_F_Q_Q_a_6a_0, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 71};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_receiver, __pyx_mstate->__pyx_n_u_SnmpTrapHandler};
+    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_start, __pyx_mstate->__pyx_kp_b_iso88591_q_1_1_K_Rt7_ha_Ky_q_t8_K7RS_HF, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 86};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
+    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_shutdown, __pyx_mstate->__pyx_kp_b_iso88591_4q_Q_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 13, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 92};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_sender, __pyx_mstate->__pyx_n_u_now, __pyx_mstate->__pyx_n_u_combined_text, __pyx_mstate->__pyx_n_u_m_name, __pyx_mstate->__pyx_n_u_m_mac, __pyx_mstate->__pyx_n_u_m_ip, __pyx_mstate->__pyx_n_u_m_reason, __pyx_mstate->__pyx_n_u_ap_name, __pyx_mstate->__pyx_n_u_mac, __pyx_mstate->__pyx_n_u_ip, __pyx_mstate->__pyx_n_u_reason_2};
+    __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_handle_packet, __pyx_mstate->__pyx_kp_b_iso88591_d_Q_1_q_WN_5Gwa_Q_q_5Ya_Ba_A_s, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 145};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_ts, __pyx_mstate->__pyx_n_u_on_eem_trigger, __pyx_mstate->__pyx_n_u_SnmpTrapHandler};
-    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_make_snmp_trap_handler, __pyx_mstate->__pyx_kp_b_iso88591_q_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[8] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_snmp_trap_receiver_py, __pyx_mstate->__pyx_n_u_make_snmp_trap_handler, __pyx_mstate->__pyx_kp_b_iso88591_q_A_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[8])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;
@@ -5354,6 +8890,54 @@ static void __Pyx_RaiseArgtupleInvalid(
                  (num_expected == 1) ? "" : "s", num_found);
 }
 
+/* ArgTypeTestFunc (used by ArgTypeTest) */
+static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact)
+{
+    __Pyx_TypeName type_name;
+    __Pyx_TypeName obj_type_name;
+    PyObject *extra_info = __pyx_mstate_global->__pyx_empty_unicode;
+    int from_annotation_subclass = 0;
+    if (unlikely(!type)) {
+        PyErr_SetString(PyExc_SystemError, "Missing type object");
+        return 0;
+    }
+    else if (!exact) {
+        if (likely(__Pyx_TypeCheck(obj, type))) return 1;
+    } else if (exact == 2) {
+        if (__Pyx_TypeCheck(obj, type)) {
+            from_annotation_subclass = 1;
+            extra_info = __pyx_mstate_global->__pyx_kp_u_Note_that_Cython_is_deliberately;
+        }
+    }
+    type_name = __Pyx_PyType_GetFullyQualifiedName(type);
+    obj_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(obj));
+    PyErr_Format(PyExc_TypeError,
+        "Argument '%.200s' has incorrect type (expected " __Pyx_FMT_TYPENAME
+        ", got " __Pyx_FMT_TYPENAME ")"
+#if __PYX_LIMITED_VERSION_HEX < 0x030C0000
+        "%s%U"
+#endif
+        , name, type_name, obj_type_name
+#if __PYX_LIMITED_VERSION_HEX < 0x030C0000
+        , (from_annotation_subclass ? ". " : ""), extra_info
+#endif
+        );
+#if __PYX_LIMITED_VERSION_HEX >= 0x030C0000
+    if (exact == 2 && from_annotation_subclass) {
+        PyObject *res;
+        PyObject *vargs[2];
+        vargs[0] = PyErr_GetRaisedException();
+        vargs[1] = extra_info;
+        res = PyObject_VectorcallMethod(__pyx_mstate_global->__pyx_kp_u_add_note, vargs, 2, NULL);
+        Py_XDECREF(res);
+        PyErr_SetRaisedException(vargs[0]);
+    }
+#endif
+    __Pyx_DECREF_TypeName(type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+    return 0;
+}
+
 /* GetItemInt */
 static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j) {
     PyObject *r;
@@ -5457,6 +9041,216 @@ static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, 
     return __Pyx_GetItemInt_Generic(o, PyLong_FromSsize_t(i));
 }
 
+/* ObjectGetItem */
+#if CYTHON_USE_TYPE_SLOTS
+static PyObject *__Pyx_PyObject_GetIndex(PyObject *obj, PyObject *index) {
+    PyObject *runerr = NULL;
+    Py_ssize_t key_value;
+    key_value = __Pyx_PyIndex_AsSsize_t(index);
+    if (likely(key_value != -1 || !(runerr = PyErr_Occurred()))) {
+        return __Pyx_GetItemInt_Fast(obj, key_value, 0, 1, 1, 1);
+    }
+    if (PyErr_GivenExceptionMatches(runerr, PyExc_OverflowError)) {
+        __Pyx_TypeName index_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(index));
+        PyErr_Clear();
+        PyErr_Format(PyExc_IndexError,
+            "cannot fit '" __Pyx_FMT_TYPENAME "' into an index-sized integer", index_type_name);
+        __Pyx_DECREF_TypeName(index_type_name);
+    }
+    return NULL;
+}
+static PyObject *__Pyx_PyObject_GetItem_Slow(PyObject *obj, PyObject *key) {
+    __Pyx_TypeName obj_type_name;
+    if (likely(PyType_Check(obj))) {
+        PyObject *meth = __Pyx_PyObject_GetAttrStrNoError(obj, __pyx_mstate_global->__pyx_n_u_class_getitem);
+        if (!meth) {
+            PyErr_Clear();
+        } else {
+            PyObject *result = __Pyx_PyObject_CallOneArg(meth, key);
+            Py_DECREF(meth);
+            return result;
+        }
+    }
+    obj_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(obj));
+    PyErr_Format(PyExc_TypeError,
+        "'" __Pyx_FMT_TYPENAME "' object is not subscriptable", obj_type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+    return NULL;
+}
+static PyObject *__Pyx_PyObject_GetItem(PyObject *obj, PyObject *key) {
+    PyTypeObject *tp = Py_TYPE(obj);
+    PyMappingMethods *mm = tp->tp_as_mapping;
+    PySequenceMethods *sm = tp->tp_as_sequence;
+    if (likely(mm && mm->mp_subscript)) {
+        return mm->mp_subscript(obj, key);
+    }
+    if (likely(sm && sm->sq_item)) {
+        return __Pyx_PyObject_GetIndex(obj, key);
+    }
+    return __Pyx_PyObject_GetItem_Slow(obj, key);
+}
+#endif
+
+/* PyLongCompare */
+static CYTHON_INLINE int __Pyx_PyLong_BoolEqObjC(PyObject *op1, PyObject *op2, long intval, long inplace) {
+    CYTHON_MAYBE_UNUSED_VAR(intval);
+    CYTHON_UNUSED_VAR(inplace);
+    if (op1 == op2) {
+        return 1;
+    }
+    #if CYTHON_USE_PYLONG_INTERNALS
+    if (likely(PyLong_CheckExact(op1))) {
+        int unequal;
+        unsigned long uintval;
+        Py_ssize_t size = __Pyx_PyLong_DigitCount(op1);
+        const digit* digits = __Pyx_PyLong_Digits(op1);
+        if (intval == 0) {
+            return (__Pyx_PyLong_IsZero(op1) == 1);
+        } else if (intval < 0) {
+            if (__Pyx_PyLong_IsNonNeg(op1))
+                return 0;
+            intval = -intval;
+        } else {
+            if (__Pyx_PyLong_IsNeg(op1))
+                return 0;
+        }
+        uintval = (unsigned long) intval;
+#if PyLong_SHIFT * 4 < SIZEOF_LONG*8
+        if (uintval >> (PyLong_SHIFT * 4)) {
+            unequal = (size != 5) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
+                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[2] != ((uintval >> (2 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[3] != ((uintval >> (3 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[4] != ((uintval >> (4 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
+        } else
+#endif
+#if PyLong_SHIFT * 3 < SIZEOF_LONG*8
+        if (uintval >> (PyLong_SHIFT * 3)) {
+            unequal = (size != 4) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
+                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[2] != ((uintval >> (2 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[3] != ((uintval >> (3 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
+        } else
+#endif
+#if PyLong_SHIFT * 2 < SIZEOF_LONG*8
+        if (uintval >> (PyLong_SHIFT * 2)) {
+            unequal = (size != 3) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
+                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[2] != ((uintval >> (2 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
+        } else
+#endif
+#if PyLong_SHIFT * 1 < SIZEOF_LONG*8
+        if (uintval >> (PyLong_SHIFT * 1)) {
+            unequal = (size != 2) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
+                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
+        } else
+#endif
+            unequal = (size != 1) || (((unsigned long) digits[0]) != (uintval & (unsigned long) PyLong_MASK));
+        return (unequal == 0);
+    }
+    #endif
+    if (PyFloat_CheckExact(op1)) {
+        const long b = intval;
+        double a = __Pyx_PyFloat_AS_DOUBLE(op1);
+        return ((double)a == (double)b);
+    }
+    return __Pyx_PyObject_IsTrueAndDecref(
+        PyObject_RichCompare(op1, op2, Py_EQ));
+}
+
+/* PyLongBinop */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_Fallback___Pyx_PyLong_AddObjC(PyObject *op1, PyObject *op2, int inplace) {
+    return (inplace ? PyNumber_InPlaceAdd : PyNumber_Add)(op1, op2);
+}
+#if CYTHON_USE_PYLONG_INTERNALS
+static PyObject* __Pyx_Unpacked___Pyx_PyLong_AddObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check) {
+    CYTHON_MAYBE_UNUSED_VAR(inplace);
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    const long b = intval;
+    long a;
+    const PY_LONG_LONG llb = intval;
+    PY_LONG_LONG lla;
+    if (unlikely(__Pyx_PyLong_IsZero(op1))) {
+        return __Pyx_NewRef(op2);
+    }
+    const int is_positive = __Pyx_PyLong_IsPos(op1);
+    const digit* digits = __Pyx_PyLong_Digits(op1);
+    const Py_ssize_t size = __Pyx_PyLong_DigitCount(op1);
+    if (likely(size == 1)) {
+        a = (long) digits[0];
+        if (!is_positive) a *= -1;
+    } else {
+        switch (size) {
+            case 2:
+                if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                    a = (long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                    if (!is_positive) a *= -1;
+                    goto calculate_long;
+                } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                    lla = (PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                    if (!is_positive) lla *= -1;
+                    goto calculate_long_long;
+                }
+                break;
+            case 3:
+                if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                    a = (long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                    if (!is_positive) a *= -1;
+                    goto calculate_long;
+                } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                    lla = (PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                    if (!is_positive) lla *= -1;
+                    goto calculate_long_long;
+                }
+                break;
+            case 4:
+                if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                    a = (long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                    if (!is_positive) a *= -1;
+                    goto calculate_long;
+                } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                    lla = (PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                    if (!is_positive) lla *= -1;
+                    goto calculate_long_long;
+                }
+                break;
+        }
+        return PyLong_Type.tp_as_number->nb_add(op1, op2);
+    }
+    calculate_long:
+        {
+            long x;
+            x = a + b;
+            return PyLong_FromLong(x);
+        }
+    calculate_long_long:
+        {
+            PY_LONG_LONG llx;
+            llx = lla + llb;
+            return PyLong_FromLongLong(llx);
+        }
+    
+}
+#endif
+static PyObject* __Pyx_Float___Pyx_PyLong_AddObjC(PyObject *float_val, long intval, int zerodivision_check) {
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    const long b = intval;
+    double a = __Pyx_PyFloat_AS_DOUBLE(float_val);
+        double result;
+        
+        result = ((double)a) + (double)b;
+        return PyFloat_FromDouble(result);
+}
+static CYTHON_INLINE PyObject* __Pyx_PyLong_AddObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check) {
+    CYTHON_MAYBE_UNUSED_VAR(intval);
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    #if CYTHON_USE_PYLONG_INTERNALS
+    if (likely(PyLong_CheckExact(op1))) {
+        return __Pyx_Unpacked___Pyx_PyLong_AddObjC(op1, op2, intval, inplace, zerodivision_check);
+    }
+    #endif
+    if (PyFloat_CheckExact(op1)) {
+        return __Pyx_Float___Pyx_PyLong_AddObjC(op1, intval, zerodivision_check);
+    }
+    return __Pyx_Fallback___Pyx_PyLong_AddObjC(op1, op2, inplace);
+}
+#endif
+
 /* PyObjectVectorCallKwBuilder (used by PyObjectVectorCallMethodKwBuilder) */
 #if CYTHON_VECTORCALL
 static int __Pyx_VectorcallBuilder_AddArg(PyObject *key, PyObject *value, PyObject *builder, PyObject **args, int n) {
@@ -5502,523 +9296,117 @@ static PyObject *__Pyx_Object_VectorcallMethod_CallFromBuilder(PyObject *name, P
 }
 #endif
 
-/* GetTopmostException (used by SaveResetException) */
-#if CYTHON_USE_EXC_INFO_STACK && CYTHON_FAST_THREAD_STATE
-static _PyErr_StackItem *
-__Pyx_PyErr_GetTopmostException(PyThreadState *tstate)
-{
-    _PyErr_StackItem *exc_info = tstate->exc_info;
-    while ((exc_info->exc_value == NULL || exc_info->exc_value == Py_None) &&
-           exc_info->previous_item != NULL)
-    {
-        exc_info = exc_info->previous_item;
-    }
-    return exc_info;
-}
-#endif
-
-/* SaveResetException */
-#if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx__ExceptionSave(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-  #if CYTHON_USE_EXC_INFO_STACK && PY_VERSION_HEX >= 0x030B00a4
-    _PyErr_StackItem *exc_info = __Pyx_PyErr_GetTopmostException(tstate);
-    PyObject *exc_value = exc_info->exc_value;
-    if (exc_value == NULL || exc_value == Py_None) {
-        *value = NULL;
-        *type = NULL;
-        *tb = NULL;
-    } else {
-        *value = exc_value;
-        Py_INCREF(*value);
-        *type = (PyObject*) Py_TYPE(exc_value);
-        Py_INCREF(*type);
-        *tb = PyException_GetTraceback(exc_value);
-    }
-  #elif CYTHON_USE_EXC_INFO_STACK
-    _PyErr_StackItem *exc_info = __Pyx_PyErr_GetTopmostException(tstate);
-    *type = exc_info->exc_type;
-    *value = exc_info->exc_value;
-    *tb = exc_info->exc_traceback;
-    Py_XINCREF(*type);
-    Py_XINCREF(*value);
-    Py_XINCREF(*tb);
-  #else
-    *type = tstate->exc_type;
-    *value = tstate->exc_value;
-    *tb = tstate->exc_traceback;
-    Py_XINCREF(*type);
-    Py_XINCREF(*value);
-    Py_XINCREF(*tb);
-  #endif
-}
-static CYTHON_INLINE void __Pyx__ExceptionReset(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-  #if CYTHON_USE_EXC_INFO_STACK && PY_VERSION_HEX >= 0x030B00a4
-    _PyErr_StackItem *exc_info = tstate->exc_info;
-    PyObject *tmp_value = exc_info->exc_value;
-    exc_info->exc_value = value;
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(type);
-    Py_XDECREF(tb);
-  #else
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    #if CYTHON_USE_EXC_INFO_STACK
-    _PyErr_StackItem *exc_info = tstate->exc_info;
-    tmp_type = exc_info->exc_type;
-    tmp_value = exc_info->exc_value;
-    tmp_tb = exc_info->exc_traceback;
-    exc_info->exc_type = type;
-    exc_info->exc_value = value;
-    exc_info->exc_traceback = tb;
-    #else
-    tmp_type = tstate->exc_type;
-    tmp_value = tstate->exc_value;
-    tmp_tb = tstate->exc_traceback;
-    tstate->exc_type = type;
-    tstate->exc_value = value;
-    tstate->exc_traceback = tb;
-    #endif
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-  #endif
-}
-#endif
-
-/* GetException */
-#if CYTHON_FAST_THREAD_STATE
-static int __Pyx__GetException(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb)
-#else
-static int __Pyx_GetException(PyObject **type, PyObject **value, PyObject **tb)
-#endif
-{
-    PyObject *local_type = NULL, *local_value, *local_tb = NULL;
-#if CYTHON_FAST_THREAD_STATE
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-  #if PY_VERSION_HEX >= 0x030C0000
-    local_value = tstate->current_exception;
-    tstate->current_exception = 0;
-  #else
-    local_type = tstate->curexc_type;
-    local_value = tstate->curexc_value;
-    local_tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-  #endif
-#elif __PYX_LIMITED_VERSION_HEX > 0x030C0000
-    local_value = PyErr_GetRaisedException();
-#else
-    PyErr_Fetch(&local_type, &local_value, &local_tb);
-#endif
-#if __PYX_LIMITED_VERSION_HEX > 0x030C0000
-    if (likely(local_value)) {
-        local_type = (PyObject*) Py_TYPE(local_value);
-        Py_INCREF(local_type);
-        local_tb = PyException_GetTraceback(local_value);
-    }
-#else
-    PyErr_NormalizeException(&local_type, &local_value, &local_tb);
-#if CYTHON_FAST_THREAD_STATE
-    if (unlikely(tstate->curexc_type))
-#else
-    if (unlikely(PyErr_Occurred()))
-#endif
-        goto bad;
-    if (local_tb) {
-        if (unlikely(PyException_SetTraceback(local_value, local_tb) < 0))
-            goto bad;
-    }
-#endif // __PYX_LIMITED_VERSION_HEX > 0x030C0000
-    Py_XINCREF(local_tb);
-    Py_XINCREF(local_type);
-    Py_XINCREF(local_value);
-    *type = local_type;
-    *value = local_value;
-    *tb = local_tb;
-#if CYTHON_FAST_THREAD_STATE
-    #if CYTHON_USE_EXC_INFO_STACK
-    {
-        _PyErr_StackItem *exc_info = tstate->exc_info;
-      #if PY_VERSION_HEX >= 0x030B00a4
-        tmp_value = exc_info->exc_value;
-        exc_info->exc_value = local_value;
-        tmp_type = NULL;
-        tmp_tb = NULL;
-        Py_XDECREF(local_type);
-        Py_XDECREF(local_tb);
-      #else
-        tmp_type = exc_info->exc_type;
-        tmp_value = exc_info->exc_value;
-        tmp_tb = exc_info->exc_traceback;
-        exc_info->exc_type = local_type;
-        exc_info->exc_value = local_value;
-        exc_info->exc_traceback = local_tb;
-      #endif
-    }
-    #else
-    tmp_type = tstate->exc_type;
-    tmp_value = tstate->exc_value;
-    tmp_tb = tstate->exc_traceback;
-    tstate->exc_type = local_type;
-    tstate->exc_value = local_value;
-    tstate->exc_traceback = local_tb;
-    #endif
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-#elif __PYX_LIMITED_VERSION_HEX >= 0x030b0000
-    PyErr_SetHandledException(local_value);
-    Py_XDECREF(local_value);
-    Py_XDECREF(local_type);
-    Py_XDECREF(local_tb);
-#else
-    PyErr_SetExcInfo(local_type, local_value, local_tb);
-#endif
-    return 0;
-#if __PYX_LIMITED_VERSION_HEX <= 0x030C0000
-bad:
-    *type = 0;
-    *value = 0;
-    *tb = 0;
-    Py_XDECREF(local_type);
-    Py_XDECREF(local_value);
-    Py_XDECREF(local_tb);
-    return -1;
-#endif
-}
-
-/* RaiseClosureNameError */
-static void __Pyx_RaiseClosureNameError(const char *varname) {
-    PyErr_Format(PyExc_NameError, "free variable '%s' referenced before assignment in enclosing scope", varname);
-}
-
-/* PyObjectCallNoArg */
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
-    PyObject *arg[2] = {NULL, NULL};
-    return __Pyx_PyObject_FastCall(func, arg + 1, 0 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET);
-}
-
-/* CIntToDigits (used by CIntToPyUnicode) */
-static const char DIGIT_PAIRS_10[2*10*10+1] = {
-    "00010203040506070809"
-    "10111213141516171819"
-    "20212223242526272829"
-    "30313233343536373839"
-    "40414243444546474849"
-    "50515253545556575859"
-    "60616263646566676869"
-    "70717273747576777879"
-    "80818283848586878889"
-    "90919293949596979899"
-};
-static const char DIGIT_PAIRS_8[2*8*8+1] = {
-    "0001020304050607"
-    "1011121314151617"
-    "2021222324252627"
-    "3031323334353637"
-    "4041424344454647"
-    "5051525354555657"
-    "6061626364656667"
-    "7071727374757677"
-};
-static const char DIGITS_HEX[2*16+1] = {
-    "0123456789abcdef"
-    "0123456789ABCDEF"
-};
-
-/* BuildPyUnicode (used by COrdinalToPyUnicode) */
-static PyObject* __Pyx_PyUnicode_BuildFromAscii(Py_ssize_t ulength, const char* chars, int clength,
-                                                int prepend_sign, char padding_char) {
-    PyObject *uval;
-    Py_ssize_t uoffset = ulength - clength;
-#if CYTHON_USE_UNICODE_INTERNALS
-    Py_ssize_t i;
-    void *udata;
-    uval = PyUnicode_New(ulength, 127);
-    if (unlikely(!uval)) return NULL;
-    udata = PyUnicode_DATA(uval);
-    if (uoffset > 0) {
-        i = 0;
-        if (prepend_sign) {
-            __Pyx_PyUnicode_WRITE(PyUnicode_1BYTE_KIND, udata, 0, '-');
-            i++;
-        }
-        for (; i < uoffset; i++) {
-            __Pyx_PyUnicode_WRITE(PyUnicode_1BYTE_KIND, udata, i, padding_char);
-        }
-    }
-    for (i=0; i < clength; i++) {
-        __Pyx_PyUnicode_WRITE(PyUnicode_1BYTE_KIND, udata, uoffset+i, chars[i]);
-    }
-#else
-    {
-        PyObject *sign = NULL, *padding = NULL;
-        uval = NULL;
-        if (uoffset > 0) {
-            prepend_sign = !!prepend_sign;
-            if (uoffset > prepend_sign) {
-                padding = PyUnicode_FromOrdinal(padding_char);
-                if (likely(padding) && uoffset > prepend_sign + 1) {
-                    PyObject *tmp = PySequence_Repeat(padding, uoffset - prepend_sign);
-                    Py_DECREF(padding);
-                    padding = tmp;
-                }
-                if (unlikely(!padding)) goto done_or_error;
-            }
-            if (prepend_sign) {
-                sign = PyUnicode_FromOrdinal('-');
-                if (unlikely(!sign)) goto done_or_error;
-            }
-        }
-        uval = PyUnicode_DecodeASCII(chars, clength, NULL);
-        if (likely(uval) && padding) {
-            PyObject *tmp = PyUnicode_Concat(padding, uval);
-            Py_DECREF(uval);
-            uval = tmp;
-        }
-        if (likely(uval) && sign) {
-            PyObject *tmp = PyUnicode_Concat(sign, uval);
-            Py_DECREF(uval);
-            uval = tmp;
-        }
-done_or_error:
-        Py_XDECREF(padding);
-        Py_XDECREF(sign);
-    }
-#endif
-    return uval;
-}
-
-/* COrdinalToPyUnicode (used by CIntToPyUnicode) */
-static CYTHON_INLINE int __Pyx_CheckUnicodeValue(int value) {
-    return value <= 1114111;
-}
-static PyObject* __Pyx_PyUnicode_FromOrdinal_Padded(int value, Py_ssize_t ulength, char padding_char) {
-    Py_ssize_t padding_length = ulength - 1;
-    if (likely((padding_length <= 250) && (value < 0xD800 || value > 0xDFFF))) {
-        char chars[256];
-        if (value <= 255) {
-            memset(chars, padding_char, (size_t) padding_length);
-            chars[ulength-1] = (char) value;
-            return PyUnicode_DecodeLatin1(chars, ulength, NULL);
-        }
-        char *cpos = chars + sizeof(chars);
-        if (value < 0x800) {
-            *--cpos = (char) (0x80 | (value & 0x3f));
-            value >>= 6;
-            *--cpos = (char) (0xc0 | (value & 0x1f));
-        } else if (value < 0x10000) {
-            *--cpos = (char) (0x80 | (value & 0x3f));
-            value >>= 6;
-            *--cpos = (char) (0x80 | (value & 0x3f));
-            value >>= 6;
-            *--cpos = (char) (0xe0 | (value & 0x0f));
-        } else {
-            *--cpos = (char) (0x80 | (value & 0x3f));
-            value >>= 6;
-            *--cpos = (char) (0x80 | (value & 0x3f));
-            value >>= 6;
-            *--cpos = (char) (0x80 | (value & 0x3f));
-            value >>= 6;
-            *--cpos = (char) (0xf0 | (value & 0x07));
-        }
-        cpos -= padding_length;
-        memset(cpos, padding_char, (size_t) padding_length);
-        return PyUnicode_DecodeUTF8(cpos, chars + sizeof(chars) - cpos, NULL);
-    }
-    if (value <= 127 && CYTHON_USE_UNICODE_INTERNALS) {
-        const char chars[1] = {(char) value};
-        return __Pyx_PyUnicode_BuildFromAscii(ulength, chars, 1, 0, padding_char);
-    }
-    {
-        PyObject *uchar, *padding_uchar, *padding, *result;
-        padding_uchar = PyUnicode_FromOrdinal(padding_char);
-        if (unlikely(!padding_uchar)) return NULL;
-        padding = PySequence_Repeat(padding_uchar, padding_length);
-        Py_DECREF(padding_uchar);
-        if (unlikely(!padding)) return NULL;
-        uchar = PyUnicode_FromOrdinal(value);
-        if (unlikely(!uchar)) {
-            Py_DECREF(padding);
-            return NULL;
-        }
-        result = PyUnicode_Concat(padding, uchar);
-        Py_DECREF(padding);
-        Py_DECREF(uchar);
-        return result;
-    }
-}
-
-/* CIntToPyUnicode */
-static CYTHON_INLINE PyObject* __Pyx_uchar___Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const Py_ssize_t neg_one = (Py_ssize_t) -1, const_zero = (Py_ssize_t) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (unlikely(!(is_unsigned || value == 0 || value > 0) ||
-                    !(sizeof(value) <= 2 || value & ~ (Py_ssize_t) 0x01fffff || __Pyx_CheckUnicodeValue((int) value)))) {
-        PyErr_SetString(PyExc_OverflowError, "%c arg not in range(0x110000)");
+/* PyObjectFastCallMethod */
+#if !CYTHON_VECTORCALL || PY_VERSION_HEX < 0x03090000
+static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *args, size_t nargsf) {
+    PyObject *result;
+    PyObject *attr = PyObject_GetAttr(args[0], name);
+    if (unlikely(!attr))
         return NULL;
-    }
-    if (width <= 1) {
-        return PyUnicode_FromOrdinal((int) value);
-    }
-    return __Pyx_PyUnicode_FromOrdinal_Padded((int) value, width, padding_char);
-}
-static CYTHON_INLINE PyObject* __Pyx____Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char, char format_char) {
-    char digits[sizeof(Py_ssize_t)*3+2];
-    char *dpos, *end = digits + sizeof(Py_ssize_t)*3+2;
-    const char *hex_digits = DIGITS_HEX;
-    Py_ssize_t length, ulength;
-    int prepend_sign, last_one_off;
-    Py_ssize_t remaining;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const Py_ssize_t neg_one = (Py_ssize_t) -1, const_zero = (Py_ssize_t) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (format_char == 'X') {
-        hex_digits += 16;
-        format_char = 'x';
-    }
-    remaining = value;
-    last_one_off = 0;
-    dpos = end;
-    do {
-        int digit_pos;
-        switch (format_char) {
-        case 'o':
-            digit_pos = abs((int)(remaining % (8*8)));
-            remaining = (Py_ssize_t) (remaining / (8*8));
-            dpos -= 2;
-            memcpy(dpos, DIGIT_PAIRS_8 + digit_pos * 2, 2);
-            last_one_off = (digit_pos < 8);
-            break;
-        case 'd':
-            digit_pos = abs((int)(remaining % (10*10)));
-            remaining = (Py_ssize_t) (remaining / (10*10));
-            dpos -= 2;
-            memcpy(dpos, DIGIT_PAIRS_10 + digit_pos * 2, 2);
-            last_one_off = (digit_pos < 10);
-            break;
-        case 'x':
-            *(--dpos) = hex_digits[abs((int)(remaining % 16))];
-            remaining = (Py_ssize_t) (remaining / 16);
-            break;
-        default:
-            assert(0);
-            break;
-        }
-    } while (unlikely(remaining != 0));
-    assert(!last_one_off || *dpos == '0');
-    dpos += last_one_off;
-    length = end - dpos;
-    ulength = length;
-    prepend_sign = 0;
-    if (!is_unsigned && value <= neg_one) {
-        if (padding_char == ' ' || width <= length + 1) {
-            *(--dpos) = '-';
-            ++length;
-        } else {
-            prepend_sign = 1;
-        }
-        ++ulength;
-    }
-    if (width > ulength) {
-        ulength = width;
-    }
-    if (ulength == 1) {
-        return PyUnicode_FromOrdinal(*dpos);
-    }
-    return __Pyx_PyUnicode_BuildFromAscii(ulength, dpos, (int) length, prepend_sign, padding_char);
-}
-
-/* JoinPyUnicode */
-static PyObject* __Pyx_PyUnicode_Join(PyObject** values, Py_ssize_t value_count, Py_ssize_t result_ulength,
-                                      Py_UCS4 max_char) {
-#if CYTHON_USE_UNICODE_INTERNALS && CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    PyObject *result_uval;
-    int result_ukind, kind_shift;
-    Py_ssize_t i, char_pos;
-    void *result_udata;
-    if (max_char > 1114111) max_char = 1114111;
-    result_uval = PyUnicode_New(result_ulength, max_char);
-    if (unlikely(!result_uval)) return NULL;
-    result_ukind = (max_char <= 255) ? PyUnicode_1BYTE_KIND : (max_char <= 65535) ? PyUnicode_2BYTE_KIND : PyUnicode_4BYTE_KIND;
-    kind_shift = (result_ukind == PyUnicode_4BYTE_KIND) ? 2 : result_ukind - 1;
-    result_udata = PyUnicode_DATA(result_uval);
-    assert(kind_shift == 2 || kind_shift == 1 || kind_shift == 0);
-    if (unlikely((PY_SSIZE_T_MAX >> kind_shift) - result_ulength < 0))
-        goto overflow;
-    char_pos = 0;
-    for (i=0; i < value_count; i++) {
-        int ukind;
-        Py_ssize_t ulength;
-        void *udata;
-        PyObject *uval = values[i];
-        #if !CYTHON_COMPILING_IN_LIMITED_API
-        if (__Pyx_PyUnicode_READY(uval) == (-1))
-            goto bad;
-        #endif
-        ulength = __Pyx_PyUnicode_GET_LENGTH(uval);
-        #if !CYTHON_ASSUME_SAFE_SIZE
-        if (unlikely(ulength < 0)) goto bad;
-        #endif
-        if (unlikely(!ulength))
-            continue;
-        if (unlikely((PY_SSIZE_T_MAX >> kind_shift) - ulength < char_pos))
-            goto overflow;
-        ukind = __Pyx_PyUnicode_KIND(uval);
-        udata = __Pyx_PyUnicode_DATA(uval);
-        if (ukind == result_ukind) {
-            memcpy((char *)result_udata + (char_pos << kind_shift), udata, (size_t) (ulength << kind_shift));
-        } else {
-            #if PY_VERSION_HEX >= 0x030d0000
-            if (unlikely(PyUnicode_CopyCharacters(result_uval, char_pos, uval, 0, ulength) < 0)) goto bad;
-            #elif CYTHON_COMPILING_IN_CPYTHON || defined(_PyUnicode_FastCopyCharacters)
-            _PyUnicode_FastCopyCharacters(result_uval, char_pos, uval, 0, ulength);
-            #else
-            Py_ssize_t j;
-            for (j=0; j < ulength; j++) {
-                Py_UCS4 uchar = __Pyx_PyUnicode_READ(ukind, udata, j);
-                __Pyx_PyUnicode_WRITE(result_ukind, result_udata, char_pos+j, uchar);
-            }
-            #endif
-        }
-        char_pos += ulength;
-    }
-    return result_uval;
-overflow:
-    PyErr_SetString(PyExc_OverflowError, "join() result is too long for a Python string");
-bad:
-    Py_DECREF(result_uval);
-    return NULL;
-#else
-    Py_ssize_t i;
-    PyObject *result = NULL;
-    PyObject *value_tuple = PyTuple_New(value_count);
-    if (unlikely(!value_tuple)) return NULL;
-    CYTHON_UNUSED_VAR(max_char);
-    CYTHON_UNUSED_VAR(result_ulength);
-    for (i=0; i<value_count; i++) {
-        Py_INCREF(values[i]);
-        if (__Pyx_PyTuple_SET_ITEM(value_tuple, i, values[i]) != (0)) goto bad;
-    }
-    result = PyUnicode_Join(__pyx_mstate_global->__pyx_empty_unicode, value_tuple);
-bad:
-    Py_DECREF(value_tuple);
+    result = __Pyx_PyObject_FastCall(attr, args+1, nargsf - 1);
+    Py_DECREF(attr);
     return result;
-#endif
 }
+#endif
+
+/* PyLongBinop */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_Fallback___Pyx_PyLong_AddCObj(PyObject *op1, PyObject *op2, int inplace) {
+    return (inplace ? PyNumber_InPlaceAdd : PyNumber_Add)(op1, op2);
+}
+#if CYTHON_USE_PYLONG_INTERNALS
+static PyObject* __Pyx_Unpacked___Pyx_PyLong_AddCObj(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check) {
+    CYTHON_MAYBE_UNUSED_VAR(inplace);
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    const long a = intval;
+    long b;
+    const PY_LONG_LONG lla = intval;
+    PY_LONG_LONG llb;
+    if (unlikely(__Pyx_PyLong_IsZero(op2))) {
+        return __Pyx_NewRef(op1);
+    }
+    const int is_positive = __Pyx_PyLong_IsPos(op2);
+    const digit* digits = __Pyx_PyLong_Digits(op2);
+    const Py_ssize_t size = __Pyx_PyLong_DigitCount(op2);
+    if (likely(size == 1)) {
+        b = (long) digits[0];
+        if (!is_positive) b *= -1;
+    } else {
+        switch (size) {
+            case 2:
+                if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                    b = (long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                    if (!is_positive) b *= -1;
+                    goto calculate_long;
+                } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                    llb = (PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                    if (!is_positive) llb *= -1;
+                    goto calculate_long_long;
+                }
+                break;
+            case 3:
+                if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                    b = (long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                    if (!is_positive) b *= -1;
+                    goto calculate_long;
+                } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                    llb = (PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                    if (!is_positive) llb *= -1;
+                    goto calculate_long_long;
+                }
+                break;
+            case 4:
+                if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                    b = (long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                    if (!is_positive) b *= -1;
+                    goto calculate_long;
+                } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                    llb = (PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                    if (!is_positive) llb *= -1;
+                    goto calculate_long_long;
+                }
+                break;
+        }
+        return PyLong_Type.tp_as_number->nb_add(op1, op2);
+    }
+    calculate_long:
+        {
+            long x;
+            x = a + b;
+            return PyLong_FromLong(x);
+        }
+    calculate_long_long:
+        {
+            PY_LONG_LONG llx;
+            llx = lla + llb;
+            return PyLong_FromLongLong(llx);
+        }
+    
+}
+#endif
+static PyObject* __Pyx_Float___Pyx_PyLong_AddCObj(PyObject *float_val, long intval, int zerodivision_check) {
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    const long a = intval;
+    double b = __Pyx_PyFloat_AS_DOUBLE(float_val);
+        double result;
+        
+        result = ((double)a) + (double)b;
+        return PyFloat_FromDouble(result);
+}
+static CYTHON_INLINE PyObject* __Pyx_PyLong_AddCObj(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check) {
+    CYTHON_MAYBE_UNUSED_VAR(intval);
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    #if CYTHON_USE_PYLONG_INTERNALS
+    if (likely(PyLong_CheckExact(op2))) {
+        return __Pyx_Unpacked___Pyx_PyLong_AddCObj(op1, op2, intval, inplace, zerodivision_check);
+    }
+    #endif
+    if (PyFloat_CheckExact(op2)) {
+        return __Pyx_Float___Pyx_PyLong_AddCObj(op2, intval, zerodivision_check);
+    }
+    return __Pyx_Fallback___Pyx_PyLong_AddCObj(op1, op2, inplace);
+}
+#endif
 
 /* PyDictVersioning (used by GetModuleGlobalName) */
 #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
@@ -6080,6 +9468,67 @@ static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name)
     PyErr_Clear();
 #endif
     return __Pyx_GetBuiltinName(name);
+}
+
+/* RaiseKeywordRequired */
+static void __Pyx_RaiseKeywordRequired(const char* func_name, PyObject* kw_name) {
+    PyErr_Format(PyExc_TypeError,
+        "%s() needs keyword-only argument %U", func_name, kw_name);
+}
+
+/* pybuiltin_invalid (used by pyint_simplify) */
+static void __Pyx_PyBuiltin_Invalid(PyObject *obj, const char *type_name, const char *argname) {
+    __Pyx_TypeName obj_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(obj));
+    if (argname) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument '%.200s' has incorrect type (expected %.200s, got " __Pyx_FMT_TYPENAME ")",
+            argname, type_name, obj_type_name
+        );
+    } else {
+        PyErr_Format(PyExc_TypeError,
+            "Expected %.200s, got " __Pyx_FMT_TYPENAME,
+            type_name, obj_type_name
+        );
+    }
+    __Pyx_DECREF_TypeName(obj_type_name);
+}
+
+/* pyint_simplify */
+static CYTHON_INLINE int __Pyx_PyInt_FromNumber(PyObject **number_var, const char *argname, int accept_none) {
+    PyObject *number = *number_var;
+    if (likely((accept_none && number == Py_None) || PyLong_CheckExact(number))) {
+        return 0;
+    }
+    PyObject *int_object;
+    if (likely(PyNumber_Check(number))) {
+        int_object = PyNumber_Long(number);
+        if (unlikely(!int_object)) goto bad;
+    } else {
+        __Pyx_PyBuiltin_Invalid(number, "int", argname);
+        goto bad;
+    }
+    *number_var = int_object;
+    Py_DECREF(number);
+    return 0;
+bad:
+    *number_var = NULL;
+    Py_DECREF(number);
+    return -1;
+}
+
+/* PyObjectSetAttrStr */
+#if CYTHON_USE_TYPE_SLOTS
+static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr_name, PyObject* value) {
+    PyTypeObject* tp = Py_TYPE(obj);
+    if (likely(tp->tp_setattro))
+        return tp->tp_setattro(obj, attr_name, value);
+    return PyObject_SetAttr(obj, attr_name, value);
+}
+#endif
+
+/* RaiseClosureNameError */
+static void __Pyx_RaiseClosureNameError(const char *varname) {
+    PyErr_Format(PyExc_NameError, "free variable '%s' referenced before assignment in enclosing scope", varname);
 }
 
 /* Py3UpdateBases */
@@ -7844,6 +11293,396 @@ static PyObject *__Pyx_Py3ClassCreate(PyObject *metaclass, PyObject *name, PyObj
     return result;
 }
 
+/* PyObjectCallNoArg */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
+    PyObject *arg[2] = {NULL, NULL};
+    return __Pyx_PyObject_FastCall(func, arg + 1, 0 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET);
+}
+
+/* JoinPyUnicode */
+static PyObject* __Pyx_PyUnicode_Join(PyObject** values, Py_ssize_t value_count, Py_ssize_t result_ulength,
+                                      Py_UCS4 max_char) {
+#if CYTHON_USE_UNICODE_INTERNALS && CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    PyObject *result_uval;
+    int result_ukind, kind_shift;
+    Py_ssize_t i, char_pos;
+    void *result_udata;
+    if (max_char > 1114111) max_char = 1114111;
+    result_uval = PyUnicode_New(result_ulength, max_char);
+    if (unlikely(!result_uval)) return NULL;
+    result_ukind = (max_char <= 255) ? PyUnicode_1BYTE_KIND : (max_char <= 65535) ? PyUnicode_2BYTE_KIND : PyUnicode_4BYTE_KIND;
+    kind_shift = (result_ukind == PyUnicode_4BYTE_KIND) ? 2 : result_ukind - 1;
+    result_udata = PyUnicode_DATA(result_uval);
+    assert(kind_shift == 2 || kind_shift == 1 || kind_shift == 0);
+    if (unlikely((PY_SSIZE_T_MAX >> kind_shift) - result_ulength < 0))
+        goto overflow;
+    char_pos = 0;
+    for (i=0; i < value_count; i++) {
+        int ukind;
+        Py_ssize_t ulength;
+        void *udata;
+        PyObject *uval = values[i];
+        #if !CYTHON_COMPILING_IN_LIMITED_API
+        if (__Pyx_PyUnicode_READY(uval) == (-1))
+            goto bad;
+        #endif
+        ulength = __Pyx_PyUnicode_GET_LENGTH(uval);
+        #if !CYTHON_ASSUME_SAFE_SIZE
+        if (unlikely(ulength < 0)) goto bad;
+        #endif
+        if (unlikely(!ulength))
+            continue;
+        if (unlikely((PY_SSIZE_T_MAX >> kind_shift) - ulength < char_pos))
+            goto overflow;
+        ukind = __Pyx_PyUnicode_KIND(uval);
+        udata = __Pyx_PyUnicode_DATA(uval);
+        if (ukind == result_ukind) {
+            memcpy((char *)result_udata + (char_pos << kind_shift), udata, (size_t) (ulength << kind_shift));
+        } else {
+            #if PY_VERSION_HEX >= 0x030d0000
+            if (unlikely(PyUnicode_CopyCharacters(result_uval, char_pos, uval, 0, ulength) < 0)) goto bad;
+            #elif CYTHON_COMPILING_IN_CPYTHON || defined(_PyUnicode_FastCopyCharacters)
+            _PyUnicode_FastCopyCharacters(result_uval, char_pos, uval, 0, ulength);
+            #else
+            Py_ssize_t j;
+            for (j=0; j < ulength; j++) {
+                Py_UCS4 uchar = __Pyx_PyUnicode_READ(ukind, udata, j);
+                __Pyx_PyUnicode_WRITE(result_ukind, result_udata, char_pos+j, uchar);
+            }
+            #endif
+        }
+        char_pos += ulength;
+    }
+    return result_uval;
+overflow:
+    PyErr_SetString(PyExc_OverflowError, "join() result is too long for a Python string");
+bad:
+    Py_DECREF(result_uval);
+    return NULL;
+#else
+    Py_ssize_t i;
+    PyObject *result = NULL;
+    PyObject *value_tuple = PyTuple_New(value_count);
+    if (unlikely(!value_tuple)) return NULL;
+    CYTHON_UNUSED_VAR(max_char);
+    CYTHON_UNUSED_VAR(result_ulength);
+    for (i=0; i<value_count; i++) {
+        Py_INCREF(values[i]);
+        if (__Pyx_PyTuple_SET_ITEM(value_tuple, i, values[i]) != (0)) goto bad;
+    }
+    result = PyUnicode_Join(__pyx_mstate_global->__pyx_empty_unicode, value_tuple);
+bad:
+    Py_DECREF(value_tuple);
+    return result;
+#endif
+}
+
+/* SliceObject */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(PyObject* obj,
+        Py_ssize_t cstart, Py_ssize_t cstop,
+        PyObject** _py_start, PyObject** _py_stop, PyObject** _py_slice,
+        int has_cstart, int has_cstop, CYTHON_UNUSED int wraparound) {
+    __Pyx_TypeName obj_type_name;
+#if CYTHON_USE_TYPE_SLOTS
+    PyMappingMethods* mp = Py_TYPE(obj)->tp_as_mapping;
+    if (likely(mp && mp->mp_subscript))
+#endif
+    {
+        PyObject* result;
+        PyObject *py_slice, *py_start, *py_stop;
+        if (_py_slice) {
+            py_slice = *_py_slice;
+        } else {
+            PyObject* owned_start = NULL;
+            PyObject* owned_stop = NULL;
+            if (_py_start) {
+                py_start = *_py_start;
+            } else {
+                if (has_cstart) {
+                    owned_start = py_start = PyLong_FromSsize_t(cstart);
+                    if (unlikely(!py_start)) goto bad;
+                } else
+                    py_start = Py_None;
+            }
+            if (_py_stop) {
+                py_stop = *_py_stop;
+            } else {
+                if (has_cstop) {
+                    owned_stop = py_stop = PyLong_FromSsize_t(cstop);
+                    if (unlikely(!py_stop)) {
+                        Py_XDECREF(owned_start);
+                        goto bad;
+                    }
+                } else
+                    py_stop = Py_None;
+            }
+            py_slice = PySlice_New(py_start, py_stop, Py_None);
+            Py_XDECREF(owned_start);
+            Py_XDECREF(owned_stop);
+            if (unlikely(!py_slice)) goto bad;
+        }
+#if CYTHON_USE_TYPE_SLOTS
+        result = mp->mp_subscript(obj, py_slice);
+#else
+        result = PyObject_GetItem(obj, py_slice);
+#endif
+        if (!_py_slice) {
+            Py_DECREF(py_slice);
+        }
+        return result;
+    }
+    obj_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(obj));
+    PyErr_Format(PyExc_TypeError,
+        "'" __Pyx_FMT_TYPENAME "' object is unsliceable", obj_type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+bad:
+    return NULL;
+}
+
+/* CIntToDigits (used by CIntToPyUnicode) */
+static const char DIGIT_PAIRS_10[2*10*10+1] = {
+    "00010203040506070809"
+    "10111213141516171819"
+    "20212223242526272829"
+    "30313233343536373839"
+    "40414243444546474849"
+    "50515253545556575859"
+    "60616263646566676869"
+    "70717273747576777879"
+    "80818283848586878889"
+    "90919293949596979899"
+};
+static const char DIGIT_PAIRS_8[2*8*8+1] = {
+    "0001020304050607"
+    "1011121314151617"
+    "2021222324252627"
+    "3031323334353637"
+    "4041424344454647"
+    "5051525354555657"
+    "6061626364656667"
+    "7071727374757677"
+};
+static const char DIGITS_HEX[2*16+1] = {
+    "0123456789abcdef"
+    "0123456789ABCDEF"
+};
+
+/* BuildPyUnicode (used by COrdinalToPyUnicode) */
+static PyObject* __Pyx_PyUnicode_BuildFromAscii(Py_ssize_t ulength, const char* chars, int clength,
+                                                int prepend_sign, char padding_char) {
+    PyObject *uval;
+    Py_ssize_t uoffset = ulength - clength;
+#if CYTHON_USE_UNICODE_INTERNALS
+    Py_ssize_t i;
+    void *udata;
+    uval = PyUnicode_New(ulength, 127);
+    if (unlikely(!uval)) return NULL;
+    udata = PyUnicode_DATA(uval);
+    if (uoffset > 0) {
+        i = 0;
+        if (prepend_sign) {
+            __Pyx_PyUnicode_WRITE(PyUnicode_1BYTE_KIND, udata, 0, '-');
+            i++;
+        }
+        for (; i < uoffset; i++) {
+            __Pyx_PyUnicode_WRITE(PyUnicode_1BYTE_KIND, udata, i, padding_char);
+        }
+    }
+    for (i=0; i < clength; i++) {
+        __Pyx_PyUnicode_WRITE(PyUnicode_1BYTE_KIND, udata, uoffset+i, chars[i]);
+    }
+#else
+    {
+        PyObject *sign = NULL, *padding = NULL;
+        uval = NULL;
+        if (uoffset > 0) {
+            prepend_sign = !!prepend_sign;
+            if (uoffset > prepend_sign) {
+                padding = PyUnicode_FromOrdinal(padding_char);
+                if (likely(padding) && uoffset > prepend_sign + 1) {
+                    PyObject *tmp = PySequence_Repeat(padding, uoffset - prepend_sign);
+                    Py_DECREF(padding);
+                    padding = tmp;
+                }
+                if (unlikely(!padding)) goto done_or_error;
+            }
+            if (prepend_sign) {
+                sign = PyUnicode_FromOrdinal('-');
+                if (unlikely(!sign)) goto done_or_error;
+            }
+        }
+        uval = PyUnicode_DecodeASCII(chars, clength, NULL);
+        if (likely(uval) && padding) {
+            PyObject *tmp = PyUnicode_Concat(padding, uval);
+            Py_DECREF(uval);
+            uval = tmp;
+        }
+        if (likely(uval) && sign) {
+            PyObject *tmp = PyUnicode_Concat(sign, uval);
+            Py_DECREF(uval);
+            uval = tmp;
+        }
+done_or_error:
+        Py_XDECREF(padding);
+        Py_XDECREF(sign);
+    }
+#endif
+    return uval;
+}
+
+/* COrdinalToPyUnicode (used by CIntToPyUnicode) */
+static CYTHON_INLINE int __Pyx_CheckUnicodeValue(int value) {
+    return value <= 1114111;
+}
+static PyObject* __Pyx_PyUnicode_FromOrdinal_Padded(int value, Py_ssize_t ulength, char padding_char) {
+    Py_ssize_t padding_length = ulength - 1;
+    if (likely((padding_length <= 250) && (value < 0xD800 || value > 0xDFFF))) {
+        char chars[256];
+        if (value <= 255) {
+            memset(chars, padding_char, (size_t) padding_length);
+            chars[ulength-1] = (char) value;
+            return PyUnicode_DecodeLatin1(chars, ulength, NULL);
+        }
+        char *cpos = chars + sizeof(chars);
+        if (value < 0x800) {
+            *--cpos = (char) (0x80 | (value & 0x3f));
+            value >>= 6;
+            *--cpos = (char) (0xc0 | (value & 0x1f));
+        } else if (value < 0x10000) {
+            *--cpos = (char) (0x80 | (value & 0x3f));
+            value >>= 6;
+            *--cpos = (char) (0x80 | (value & 0x3f));
+            value >>= 6;
+            *--cpos = (char) (0xe0 | (value & 0x0f));
+        } else {
+            *--cpos = (char) (0x80 | (value & 0x3f));
+            value >>= 6;
+            *--cpos = (char) (0x80 | (value & 0x3f));
+            value >>= 6;
+            *--cpos = (char) (0x80 | (value & 0x3f));
+            value >>= 6;
+            *--cpos = (char) (0xf0 | (value & 0x07));
+        }
+        cpos -= padding_length;
+        memset(cpos, padding_char, (size_t) padding_length);
+        return PyUnicode_DecodeUTF8(cpos, chars + sizeof(chars) - cpos, NULL);
+    }
+    if (value <= 127 && CYTHON_USE_UNICODE_INTERNALS) {
+        const char chars[1] = {(char) value};
+        return __Pyx_PyUnicode_BuildFromAscii(ulength, chars, 1, 0, padding_char);
+    }
+    {
+        PyObject *uchar, *padding_uchar, *padding, *result;
+        padding_uchar = PyUnicode_FromOrdinal(padding_char);
+        if (unlikely(!padding_uchar)) return NULL;
+        padding = PySequence_Repeat(padding_uchar, padding_length);
+        Py_DECREF(padding_uchar);
+        if (unlikely(!padding)) return NULL;
+        uchar = PyUnicode_FromOrdinal(value);
+        if (unlikely(!uchar)) {
+            Py_DECREF(padding);
+            return NULL;
+        }
+        result = PyUnicode_Concat(padding, uchar);
+        Py_DECREF(padding);
+        Py_DECREF(uchar);
+        return result;
+    }
+}
+
+/* CIntToPyUnicode */
+static CYTHON_INLINE PyObject* __Pyx_uchar___Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const Py_ssize_t neg_one = (Py_ssize_t) -1, const_zero = (Py_ssize_t) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (unlikely(!(is_unsigned || value == 0 || value > 0) ||
+                    !(sizeof(value) <= 2 || value & ~ (Py_ssize_t) 0x01fffff || __Pyx_CheckUnicodeValue((int) value)))) {
+        PyErr_SetString(PyExc_OverflowError, "%c arg not in range(0x110000)");
+        return NULL;
+    }
+    if (width <= 1) {
+        return PyUnicode_FromOrdinal((int) value);
+    }
+    return __Pyx_PyUnicode_FromOrdinal_Padded((int) value, width, padding_char);
+}
+static CYTHON_INLINE PyObject* __Pyx____Pyx_PyUnicode_From_Py_ssize_t(Py_ssize_t value, Py_ssize_t width, char padding_char, char format_char) {
+    char digits[sizeof(Py_ssize_t)*3+2];
+    char *dpos, *end = digits + sizeof(Py_ssize_t)*3+2;
+    const char *hex_digits = DIGITS_HEX;
+    Py_ssize_t length, ulength;
+    int prepend_sign, last_one_off;
+    Py_ssize_t remaining;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const Py_ssize_t neg_one = (Py_ssize_t) -1, const_zero = (Py_ssize_t) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (format_char == 'X') {
+        hex_digits += 16;
+        format_char = 'x';
+    }
+    remaining = value;
+    last_one_off = 0;
+    dpos = end;
+    do {
+        int digit_pos;
+        switch (format_char) {
+        case 'o':
+            digit_pos = abs((int)(remaining % (8*8)));
+            remaining = (Py_ssize_t) (remaining / (8*8));
+            dpos -= 2;
+            memcpy(dpos, DIGIT_PAIRS_8 + digit_pos * 2, 2);
+            last_one_off = (digit_pos < 8);
+            break;
+        case 'd':
+            digit_pos = abs((int)(remaining % (10*10)));
+            remaining = (Py_ssize_t) (remaining / (10*10));
+            dpos -= 2;
+            memcpy(dpos, DIGIT_PAIRS_10 + digit_pos * 2, 2);
+            last_one_off = (digit_pos < 10);
+            break;
+        case 'x':
+            *(--dpos) = hex_digits[abs((int)(remaining % 16))];
+            remaining = (Py_ssize_t) (remaining / 16);
+            break;
+        default:
+            assert(0);
+            break;
+        }
+    } while (unlikely(remaining != 0));
+    assert(!last_one_off || *dpos == '0');
+    dpos += last_one_off;
+    length = end - dpos;
+    ulength = length;
+    prepend_sign = 0;
+    if (!is_unsigned && value <= neg_one) {
+        if (padding_char == ' ' || width <= length + 1) {
+            *(--dpos) = '-';
+            ++length;
+        } else {
+            prepend_sign = 1;
+        }
+        ++ulength;
+    }
+    if (width > ulength) {
+        ulength = width;
+    }
+    if (ulength == 1) {
+        return PyUnicode_FromOrdinal(*dpos);
+    }
+    return __Pyx_PyUnicode_BuildFromAscii(ulength, dpos, (int) length, prepend_sign, padding_char);
+}
+
 /* RaiseUnexpectedTypeError */
 static int
 __Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj)
@@ -8313,7 +12152,7 @@ static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name) {
         if (unlikely(!module_name_str)) { goto modbad; }
         module_name = PyUnicode_FromString(module_name_str);
         if (unlikely(!module_name)) { goto modbad; }
-        module_dot = PyUnicode_Concat(module_name, __pyx_mstate_global->__pyx_kp_u__2);
+        module_dot = PyUnicode_Concat(module_name, __pyx_mstate_global->__pyx_kp_u__5);
         if (unlikely(!module_dot)) { goto modbad; }
         full_name = PyUnicode_Concat(module_dot, name);
         if (unlikely(!full_name)) { goto modbad; }
@@ -8735,7 +12574,7 @@ __Pyx_PyType_GetFullyQualifiedName(PyTypeObject* tp)
         result = name;
         name = NULL;
     } else {
-        result = __Pyx_NewRef(__pyx_mstate_global->__pyx_kp_u__3);
+        result = __Pyx_NewRef(__pyx_mstate_global->__pyx_kp_u__4);
     }
     goto done;
 }

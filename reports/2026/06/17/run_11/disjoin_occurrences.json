@@ -1,0 +1,26 @@
+[
+  {
+    "ap_name": "Ap9105",
+    "mac": "3c:41:0e:3a:ca:00",
+    "ip": "192.168.0.212",
+    "timestamp": 1781689314.50252,
+    "event_time": "2026-06-17 09:41:54 UTC",
+    "used": false
+  },
+  {
+    "ap_name": "Ap9115D",
+    "mac": "cc:7f:75:5a:e7:40",
+    "ip": "192.168.0.15",
+    "timestamp": 1781689530.7518318,
+    "event_time": "2026-06-17 09:45:30 UTC",
+    "used": false
+  },
+  {
+    "ap_name": "Ap9105",
+    "mac": "3c:41:0e:3a:ca:00",
+    "ip": "192.168.0.212",
+    "timestamp": 1781689567.1736,
+    "event_time": "2026-06-17 09:46:07 UTC",
+    "used": false
+  }
+]

@@ -1,0 +1,10 @@
+Direct AP SSH Telemetry — 192.168.0.211
+AP MAC  : 2c:33:11:2b:32:80
+AP Name : Ap2802Den
+AP IP   : 192.168.0.211
+Event   : 2026-06-18T10:16:04.741383+00:00
+============================================================
+
+── DIRECT AP SSH TELEMETRY ──
+
+No direct AP SSH output collected.

@@ -1,0 +1,28 @@
+{
+  "completed_count": 1,
+  "events": [
+    {
+      "aps": [
+        {
+          "ap_name": "Ap9115D",
+          "ip": "192.168.0.59",
+          "mac": "cc:7f:75:5a:e7:40"
+        },
+        {
+          "ap_name": "Ap3800e_11StaticIp",
+          "ip": "192.168.0.213",
+          "mac": "78:72:5d:1c:4f:a0"
+        },
+        {
+          "ap_name": "Ap9105",
+          "ip": "192.168.0.212",
+          "mac": "3c:41:0e:3a:ca:00"
+        }
+      ],
+      "event_id": 1,
+      "event_time": "2026-06-22T12:23:46Z",
+      "event_valid": true,
+      "window_duration_seconds": 114.89
+    }
+  ]
+}

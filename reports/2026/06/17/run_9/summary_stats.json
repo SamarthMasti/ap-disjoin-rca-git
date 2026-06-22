@@ -1,0 +1,12 @@
+{
+  "last_updated": "2026-06-17T09:17:52.448400+00:00",
+  "per_ap": {
+    "cc:7f:75:5a:e7:40": {
+      "ap_name": "Ap9115D",
+      "disjoin_count": 3,
+      "last_disjoin": "2026-06-17T09:17:52.428994+00:00"
+    }
+  },
+  "total_disjoins": 3,
+  "total_events": 0
+}

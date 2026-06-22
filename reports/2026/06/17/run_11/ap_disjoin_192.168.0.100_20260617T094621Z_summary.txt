@@ -1,0 +1,42 @@
+AP Disjoin Session — 192.168.0.100
+==================================================
+
+AP  : Ap9105  [3c:41:0e:3a:ca:00]
+Time: 2026-06-17T09:41:51.684619+00:00
+
+  [WLC CONTROLLER DIAGNOSTICS]
+  Confidence : HIGH
+  Cause      : AP crashed → stopped sending CAPWAP heartbeats → WLC disjoined it
+  Action     : Collect AP crashinfo; open TAC if recurring
+  Commands   : 17 collected
+  File       : C:\AP_DIJSOIN\reports\2026\06\17\run_11\wlc_telemetry_192_168_0_212_20260617094151.txt
+
+  [DIRECT AP SSH TELEMETRY]
+  Commands   : 25 collected directly from AP (192.168.0.212)
+  File       : C:\AP_DIJSOIN\reports\2026\06\17\run_11\ap_telemetry_192_168_0_212_20260617094151.txt
+
+
+==========================
+AP DISJOIN HISTORY
+==========================
+
+AP Name : Ap9105
+MAC     : 3c:41:0e:3a:ca:00
+IP      : 192.168.0.212
+
+Total Disjoins : 3
+
+Disjoin Timeline:
+  1. 2026-06-17 09:41:54 UTC
+  2. 2026-06-17 09:41:54 UTC
+  3. 2026-06-17 09:46:07 UTC
+
+
+AP Name : Ap9115D
+MAC     : cc:7f:75:5a:e7:40
+IP      : 192.168.0.15
+
+Total Disjoins : 1
+
+Disjoin Timeline:
+  1. 2026-06-17 09:45:30 UTC

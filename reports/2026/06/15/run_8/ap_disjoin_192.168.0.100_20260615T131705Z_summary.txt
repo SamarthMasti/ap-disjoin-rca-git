@@ -1,0 +1,38 @@
+AP Disjoin Session — 192.168.0.100
+==================================================
+
+AP  : Ap3800e_11StaticIp  [78:72:5d:1c:4f:a0]
+Time: 2026-06-15T13:09:45.913849+00:00
+
+  [WLC CONTROLLER DIAGNOSTICS]
+  Confidence : HIGH
+  Cause      : AP crashed → stopped sending CAPWAP heartbeats → WLC disjoined it
+  Action     : Collect AP crashinfo; open TAC if recurring
+  Commands   : 31 collected
+  File       : C:\AP_DIJSOIN\reports\2026\06\15\run_8\wlc_telemetry_192_168_0_213_20260615130945.txt
+
+  [WLC AP TELEMETRY]
+  Confidence : MEDIUM
+  Cause      : Crash file exists but AP uptime suggests it predates this disjoin event. May be a prior unrelated crash.
+  Action     : Check crash-file timestamp vs disjoin timestamp. If timestamps align, open TAC case.
+  Commands   : 19 collected via WLC CLI
+  File       : C:\AP_DIJSOIN\reports\2026\06\15\run_8\wlc_telemetry_192_168_0_213_20260615130945.txt
+
+  [DIRECT AP SSH TELEMETRY]
+  No output collected (AP SSH unreachable or no IP available)
+  File       : C:\AP_DIJSOIN\reports\2026\06\15\run_8\ap_telemetry_192_168_0_213_20260615130945.txt
+
+
+==========================
+AP DISJOIN HISTORY
+==========================
+
+AP Name : Ap3800e_11StaticIp
+MAC     : 78:72:5d:1c:4f:a0
+IP      : 192.168.0.213
+
+Total Disjoins : 2
+
+Disjoin Timeline:
+  1. 2026-06-15 13:09:49 UTC
+  2. 2026-06-15 13:09:49 UTC

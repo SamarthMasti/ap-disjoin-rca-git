@@ -1743,7 +1743,7 @@ class ConfigurationPage(QWidget):
             password=True,
         )
         self._f_secret.field.setMinimumWidth(0)
-        
+        form_device.addRow("Enable Secret:", self._f_secret)
 
         self._f_port = QSpinBox()
         self._f_port.setRange(1, 65535)

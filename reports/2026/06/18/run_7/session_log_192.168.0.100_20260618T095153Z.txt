@@ -1,0 +1,26 @@
+[2026-06-18T09:51:53.542855+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-18T09:51:53.543185+00:00] Trigger mode: EEM_BATCH
+[2026-06-18T09:51:53.543536+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-18T09:51:55.504798+00:00] EEM applet config sent.
+[2026-06-18T09:51:56.058237+00:00] EEM setup SSH session closed.
+[2026-06-18T09:51:56.186720+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+[2026-06-18T09:51:56.478651+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:58571
+[2026-06-18T10:08:20.984650+00:00] [MDT] Stream exception from ipv4:192.168.0.100:58571
+Traceback (most recent call last):
+  File "ap_disjoin_monitor_tool.py", line 2278, in ap_disjoin_monitor_tool.LiveMonitor.listen.MdtDialoutCollector.MdtDialout
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 542, in __next__
+    return self._next()
+           ~~~~~~~~~~^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 534, in _next
+    request = self._look_for_request()
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 516, in _look_for_request
+    _raise_rpc_error(self._state)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 220, in _raise_rpc_error
+    raise rpc_error
+grpc.RpcError
+
+[2026-06-18T10:08:21.047106+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:58571
+[2026-06-18T10:08:21.879922+00:00] Stop requested — shutting down gRPC listener.
+[2026-06-18T10:08:21.880239+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...
+[2026-06-18T10:08:23.292466+00:00] [CLEANUP] Telemetry subscription 12123 removed.

@@ -663,9 +663,7 @@ AP_ADVANCED_CAPWAP_CATALOG: list[dict] = [
     {"key": "dbg-dtls-error",      "cmd": "debug dtls client error",      "is_debug": True},
     {"key": "dbg-dtls-event",      "cmd": "debug dtls client event",      "is_debug": True},
     # ── Enable Terminal Monitor on AP ─────────────────
-    {"key": "terminal-monitor",      "cmd": "terminal monitor",      "is_debug": True},
-    # ── Final logging snapshot ────────────────────────
-    {"key": "show-logging-final",    "cmd": "show logging",          "is_debug": False},
+    
 ]
 
 
@@ -725,11 +723,15 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
         except Exception as _fp_exc:
             print(f"[{ts()}]   [AP] find_prompt() also failed: {_fp_exc} — AP SSH may be unusable", file=sys.stderr)
 
-    # Force Netmiko to rediscover the prompt in whatever mode we landed in
+    # Lock the prompt BEFORE any commands run — prevents syslog contamination
+    # from ever being mistaken for a prompt by Netmiko's auto-detection.
     try:
-        ap_conn.base_prompt = ap_conn.find_prompt().rstrip("#>")
+        _discovered = ap_conn.find_prompt()
+        ap_conn.base_prompt = _discovered.rstrip("#>")
+        # Pre-compute the expect pattern once — reused by show debug above
+        ap_conn._locked_expect = rf"{re.escape(ap_conn.base_prompt)}#"
     except Exception:
-        pass
+        ap_conn._locked_expect = r"\S+#"
     try:
         ap_conn.send_command_timing("terminal length 0", delay_factor=3, read_timeout=10)
         time.sleep(2)  # let AP settle
@@ -752,7 +754,11 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
                 if is_debug:
                     output = ap_conn.send_command_timing(cmd, delay_factor=2, read_timeout=15)
                 else:
-                    output = ap_conn.send_command(cmd, read_timeout=30)
+                     output = ap_conn.send_command(
+                            cmd,
+                            expect_string=getattr(ap_conn, "_locked_expect", None),
+                            read_timeout=30,
+                        )
 
                 if output is None or (output.strip().startswith("%")) or "Invalid input" in output or "Incomplete command" in output:
                     print(f"[{ts()}]   [AP] Skipped (unsupported/error): {cmd}",
@@ -770,15 +776,47 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
                 print(f"[{ts()}]   [AP] Error on '{cmd}': {exc}",
                       file=sys.stderr)
 
-        # ── show debug — snapshot active AP debugs ───────────────────
+        # ── show debug — snapshot active AP debugs BEFORE terminal monitor ──
+        # CRITICAL: send_command with explicit expect_string to prevent Netmiko
+        # from misidentifying a syslog line as the prompt.
         _ap_sd = "show debug"
         print(f"[{ts()}]   [AP] {_ap_sd}", file=sys.stderr)
         try:
-            sd_out = ap_conn.send_command(_ap_sd, read_timeout=15)
+            _base = ap_conn.base_prompt or ap_conn.find_prompt().rstrip("#>")
+            sd_out = ap_conn.send_command(
+                _ap_sd,
+                expect_string=rf"{re.escape(_base)}#",
+                read_timeout=15,
+            )
             if sd_out and not sd_out.strip().startswith("%") and "Invalid input" not in sd_out:
                 advanced[_ap_sd] = sd_out
         except Exception as exc:
             print(f"[{ts()}]   [AP] Error on '{_ap_sd}': {exc}", file=sys.stderr)
+
+        # ── terminal monitor — enable LAST, after all show commands ──────────
+        # Enabling earlier causes syslog lines to inject into the SSH stream
+        # and corrupt Netmiko's prompt detection for subsequent send_command calls.
+        print(f"[{ts()}]   [AP] (debug) terminal monitor", file=sys.stderr)
+        try:
+            ap_conn.send_command_timing("terminal monitor", delay_factor=2, read_timeout=10)
+            time.sleep(1)  # brief settle before final log snapshot
+        except Exception as exc:
+            print(f"[{ts()}]   [AP] Error on 'terminal monitor': {exc}", file=sys.stderr)
+
+        # ── Final logging snapshot — uses send_command_timing to avoid prompt ──
+        # Must use send_command_timing (not send_command) here because terminal
+        # monitor is now active and syslog output can appear at any point,
+        # making a stable prompt match impossible.
+        _log_final = "show logging"
+        print(f"[{ts()}]   [AP] {_log_final}", file=sys.stderr)
+        try:
+            log_out = ap_conn.send_command_timing(
+                _log_final, delay_factor=3, read_timeout=20
+            )
+            if log_out and not log_out.strip().startswith("%") and "Invalid input" not in log_out:
+                advanced[_log_final] = log_out
+        except Exception as exc:
+            print(f"[{ts()}]   [AP] Error on '{_log_final}': {exc}", file=sys.stderr)
 
         
 
@@ -2018,15 +2056,20 @@ class LiveMonitor:
             # only the export action differs: snmp-trap instead of export-to-telemetry.
             EEM_APPLET_CONFIG = [
                 f"snmp-server community {SNMP_COMMUNITY} RO",
-                f"snmp-server host {jumphost_ip} version 2c {SNMP_COMMUNITY}",
+                f"snmp-server host {jumphost_ip} version 2c public",
                 "snmp-server enable traps",
+                "snmp-server enable traps event-manager",
                 "no event manager applet AP_DISJOIN_BATCH_SNMP",
                 "event manager applet AP_DISJOIN_BATCH_SNMP",
                 ' event syslog occurs 3 pattern "AP_JOIN_DISJOIN.*Disjoined" period 600',
                 ' action 010 set trigger_msg "EEM_BATCH_TRIGGER"',
                 ' action 020 syslog msg "$trigger_msg"',
-                ' action 030 snmp-trap strdata "$trigger_msg"',
+                ' action 030 snmp-trap strdata1 "$trigger_msg"',
             ]
+            print(
+                f"[{ts()}] [DEBUG] TRIGGER_MODE={TRIGGER_MODE}",
+                file=sys.stderr
+            )
             EEM_TELEMETRY_CONFIG = []   # SNMP mode has no MDT subscription
         elif TRIGGER_MODE == "eem_batch":
             EEM_APPLET_CONFIG = [
@@ -2281,10 +2324,83 @@ class LiveMonitor:
         import mdt_grpc_dialout_pb2_grpc
         # ── SNMP trap listener — active only when TRIGGER_MODE == "snmp" ──
         if TRIGGER_MODE == "snmp":
-            import socketserver, struct
+            import socketserver
 
-            from backend.snmp.trap_receiver import make_snmp_trap_handler
-            _SnmpTrapHandler = make_snmp_trap_handler(ts=ts, on_eem_trigger=self._on_eem_trigger)
+            _monitor_self = self   # capture for closure
+
+            class _SnmpTrapHandler(socketserver.BaseRequestHandler):
+                def handle(self):
+                    data   = self.request[0]
+                    sender = self.client_address[0]
+                    now    = ts()
+
+                    print(f"[{now}] [SNMP_TRAP] RECEIVED — {len(data)} bytes from {sender}", file=sys.stderr)
+
+                    # ── Extract printable OCTET STRING varbinds from raw UDP payload ──
+                    strings = []
+                    i, raw = 0, data
+                    while i < len(raw):
+                        if raw[i] == 0x04 and i + 1 < len(raw):
+                            len_byte = raw[i + 1]
+                            if len_byte & 0x80:
+                                num_len_bytes = len_byte & 0x7f
+                                if i + 2 + num_len_bytes > len(raw):
+                                    break
+                                length = int.from_bytes(raw[i + 2:i + 2 + num_len_bytes], "big")
+                                val_start = i + 2 + num_len_bytes
+                            else:
+                                length = len_byte
+                                val_start = i + 2
+                            val = raw[val_start: val_start + length]
+                            try:
+                                strings.append(val.decode("utf-8", errors="ignore"))
+                            except Exception:
+                                pass
+                            i = val_start + length
+                            continue
+                        i += 1
+                    combined_text = " ".join(strings)
+                    print(f"[{now}] [SNMP_TRAP] PARSED STRINGS: {strings}", file=sys.stderr)
+
+                    if (
+                        "EEM_BATCH_TRIGGER" not in combined_text
+                        and ("Disjoined" not in combined_text or "AP_JOIN_DISJOIN" not in combined_text)
+                    ):
+                        return
+
+                    print(f"[{now}] [SNMP_TRAP] Disjoin trap from {sender}: {combined_text[:120]}", file=sys.stderr)
+
+                    if "EEM_BATCH_TRIGGER" in combined_text:
+                        print(
+                            f"[{now}] [SNMP_TRAP] EEM batch trigger received via SNMP trap",
+                            file=sys.stderr,
+                        )
+                        threading.Thread(
+                            target=_monitor_self._on_eem_trigger,
+                            args=(combined_text, now),
+                            daemon=True,
+                        ).start()
+                        return
+
+                    m_name   = APNAME_RE.search(combined_text)
+                    m_mac    = APMAC_RE.search(combined_text)
+                    m_ip     = APIP_RE.search(combined_text)
+
+                    ap_name  = m_name.group(1)                if m_name else None
+                    mac      = normalise_mac(m_mac.group(1))  if m_mac  else None
+                    ip       = m_ip.group(1)                  if m_ip   else None
+
+                    if not mac:
+                        print(f"[{now}] [SNMP_TRAP] Could not extract MAC — ignoring trap.", file=sys.stderr)
+                        return
+
+                    print(f"[{now}] [SNMP_TRAP] AP={ap_name or '?'} MAC={mac} IP={ip or '?'}", file=sys.stderr)
+
+                    threading.Thread(
+                        target=process_cgdc_event,
+                        args=(mac, ap_name, ip, _monitor_self),
+                        daemon=True,
+                    ).start()
             snmp_server = socketserver.UDPServer(("0.0.0.0", 162), _SnmpTrapHandler)
             snmp_thread = threading.Thread(target=snmp_server.serve_forever, daemon=True)
             snmp_thread.start()
@@ -2456,7 +2572,7 @@ class LiveMonitor:
                 print(f"[{trigger_ts}] [DEDUP] Duplicate but workflow active for {mac} — passing through for finalization.", file=sys.stderr)
         
 
-        print(f"[{trigger_ts}] DISJOIN payload | ap={ap_name or '?'} ip={ip or '?'} mac={mac or '?'} reason={reason}", file=sys.stderr)
+        #print(f"[{trigger_ts}] DISJOIN payload | ap={ap_name or '?'} ip={ip or '?'} mac={mac or '?'} reason={reason}", file=sys.stderr)
 
         # ── Guard: skip JOIN events — AP_JOIN_DISJOIN syslog covers both ──
         payload_lower = trigger_line.lower()
@@ -3363,11 +3479,11 @@ class LiveMonitor:
         now_iso = ts()
         WATCHER_GRACE_SECONDS = 60
 
-        print(
-            f"[{now_iso}] [4TH_WATCHER] Waiting up to {window_seconds}s for "
-            f"AP {locked_mac} to disjoin again (disjoin = finalization trigger).",
-            file=sys.stderr,
-        )
+        #print(
+          #  f"[{now_iso}] [4TH_WATCHER] Waiting up to {window_seconds}s for "
+           # f"AP {locked_mac} to disjoin again (disjoin = finalization trigger).",
+            #file=sys.stderr,
+        #)
 
         while time.monotonic() - start < window_seconds:
             elapsed = time.monotonic() - start
@@ -3783,7 +3899,6 @@ def main() -> None:
         print(json.dumps({"ok": False, "error": str(exc),
                           "type": type(exc).__name__}), file=sys.stderr)
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()

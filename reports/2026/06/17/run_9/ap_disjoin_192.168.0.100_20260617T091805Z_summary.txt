@@ -1,0 +1,32 @@
+AP Disjoin Session — 192.168.0.100
+==================================================
+
+AP  : Ap9115D  [cc:7f:75:5a:e7:40]
+Time: 2026-06-17T09:14:07.633264+00:00
+
+  [WLC CONTROLLER DIAGNOSTICS]
+  Confidence : HIGH
+  Cause      : AP watchdog / kernel panic triggered reboot → disjoin
+  Action     : Check AP hardware health and firmware version
+  Commands   : 17 collected
+  File       : C:\AP_DIJSOIN\reports\2026\06\17\run_9\wlc_telemetry_192_168_0_15_20260617091407.txt
+
+  [DIRECT AP SSH TELEMETRY]
+  No output collected (AP SSH unreachable or no IP available)
+  File       : C:\AP_DIJSOIN\reports\2026\06\17\run_9\ap_telemetry_192_168_0_15_20260617091407.txt
+
+
+==========================
+AP DISJOIN HISTORY
+==========================
+
+AP Name : Ap9115D
+MAC     : cc:7f:75:5a:e7:40
+IP      : 192.168.0.15
+
+Total Disjoins : 3
+
+Disjoin Timeline:
+  1. 2026-06-17 09:14:10 UTC
+  2. 2026-06-17 09:14:10 UTC
+  3. 2026-06-17 09:17:52 UTC

@@ -1,0 +1,14 @@
+[2026-06-22T11:06:15.300700+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-22T11:06:15.301192+00:00] Trigger mode: SNMP
+[2026-06-22T11:06:15.301584+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-22T11:06:17.212014+00:00] EEM applet config sent.
+[2026-06-22T11:06:17.785398+00:00] EEM setup SSH session closed.
+[2026-06-22T11:06:17.905333+00:00] SNMP trap listener started on UDP 162 (mode=snmp)
+Traceback (most recent call last):
+  File [35m"gui/controllers/monitor_controller.py"[0m, line [35m255[0m, in [35mgui.controllers.monitor_controller.MonitorController._drain_worker_queue[0m
+    ev = self._worker._event_queue.get_nowait()
+  File [35m"C:\Python314\Lib\queue.py"[0m, line [35m225[0m, in [35mget_nowait[0m
+    def get_nowait(self):
+    
+[1;35mKeyboardInterrupt[0m
+[2026-06-22T11:21:21.371744+00:00] Stop requested — shutting down gRPC listener.

@@ -1,0 +1,35 @@
+[2026-06-18T10:57:32.880089+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-18T10:57:32.880511+00:00] Trigger mode: EEM_BATCH
+[2026-06-18T10:57:32.880960+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-18T10:57:35.029143+00:00] EEM applet config sent.
+[2026-06-18T10:57:35.582986+00:00] EEM setup SSH session closed.
+[2026-06-18T10:57:35.721113+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+[2026-06-18T10:57:36.025088+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:57979
+[2026-06-18T10:57:47.466767+00:00] [AP_STATS] cc:7f:75:5a:e7:40 | count=1 ap=Ap9115D ip=192.168.0.53
+[2026-06-18T10:57:47.485556+00:00] [SUMMARY] total_disjoins=1 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\18\run_10\summary_stats.json[2026-06-18T10:57:47.482701+00:00] [AP_STATS] cc:7f:75:5a:e7:40 | count=2 ap=Ap9115D ip=192.168.0.53
+
+[2026-06-18T10:57:47.464230+00:00] [DISJOIN_DETECTED] AP=Ap9115D MAC=cc:7f:75:5a:e7:40 IP=192.168.0.53 (non-matching disjoin received — recorded)
+[2026-06-18T10:57:47.464230+00:00] [4TH_DISJOIN] Disjoin from cc:7f:75:5a:e7:40 (Ap9115D) does NOT match locked AP None — recording only, no finalization.
+[2026-06-18T10:57:47.500518+00:00] [SUMMARY] total_disjoins=2 total_events=0 → C:\AP_DIJSOIN\reports\2026\06\18\run_10\summary_stats.json
+[2026-06-18T10:57:47.465121+00:00] [DISJOIN_DETECTED] AP=Ap9115D MAC=cc:7f:75:5a:e7:40 IP=192.168.0.53 (non-matching disjoin received — recorded)
+[2026-06-18T10:57:47.465121+00:00] [4TH_DISJOIN] Disjoin from cc:7f:75:5a:e7:40 (Ap9115D) does NOT match locked AP None — recording only, no finalization.
+[2026-06-18T11:02:27.742274+00:00] [MDT] Stream exception from ipv4:192.168.0.100:57979
+Traceback (most recent call last):
+  File "ap_disjoin_monitor_tool.py", line 2322, in ap_disjoin_monitor_tool.LiveMonitor.listen.MdtDialoutCollector.MdtDialout
+    for dialout_args in request_iterator:
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 542, in __next__
+    return self._next()
+           ~~~~~~~~~~^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 534, in _next
+    request = self._look_for_request()
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 516, in _look_for_request
+    _raise_rpc_error(self._state)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AP_DIJSOIN\.venv\Lib\site-packages\grpc\_server.py", line 220, in _raise_rpc_error
+    raise rpc_error
+grpc.RpcError
+
+[2026-06-18T11:02:27.746316+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:57979
+[2026-06-18T11:02:27.854278+00:00] Stop requested — shutting down gRPC listener.
+[2026-06-18T11:02:27.854645+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...
+[2026-06-18T11:02:29.169486+00:00] [CLEANUP] Telemetry subscription 12123 removed.

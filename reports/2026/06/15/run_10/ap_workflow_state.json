@@ -1,0 +1,12 @@
+{
+  "78:72:5d:1c:4f:a0": {
+    "ap_mac": "78:72:5d:1c:4f:a0",
+    "ap_name": "Ap3800e_11StaticIp",
+    "disjoin_count": 1,
+    "ip": "192.168.0.213",
+    "last_disjoin_time": "2026-06-15T13:28:12.813948+00:00",
+    "workflow_active": true,
+    "workflow_expiry_time": "2026-06-15T13:58:12.813970+00:00",
+    "workflow_start_time": "2026-06-15T13:28:12.813948+00:00"
+  }
+}

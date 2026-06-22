@@ -1,0 +1,18 @@
+[2026-06-11T11:02:20.617397+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100[2026-06-11T11:02:20.617397+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+
+[2026-06-11T11:02:20.617821+00:00] Trigger mode: TELEMETRY[2026-06-11T11:02:20.617821+00:00] Trigger mode: TELEMETRY
+
+[2026-06-11T11:02:20.618338+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...[2026-06-11T11:02:20.618338+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+
+[2026-06-11T11:02:22.977174+00:00] EEM applet config sent.[2026-06-11T11:02:22.977174+00:00] EEM applet config sent.
+
+[2026-06-11T11:02:23.549872+00:00] EEM setup SSH session closed.[2026-06-11T11:02:23.549872+00:00] EEM setup SSH session closed.
+
+[2026-06-11T11:02:23.716650+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.[2026-06-11T11:02:23.716650+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
+
+[2026-06-11T11:02:24.122303+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:55019[2026-06-11T11:02:24.122303+00:00] [MDT] gRPC session opened from ipv4:192.168.0.100:55019
+
+[2026-06-11T11:03:22.558675+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:55019[2026-06-11T11:03:22.558675+00:00] [MDT] gRPC session closed from ipv4:192.168.0.100:55019
+
+[2026-06-11T11:03:30.705724+00:00] Stop requested — shutting down gRPC listener.[2026-06-11T11:03:30.705724+00:00] Stop requested — shutting down gRPC listener.
+

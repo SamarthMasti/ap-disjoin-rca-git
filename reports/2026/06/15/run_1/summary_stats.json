@@ -1,0 +1,12 @@
+{
+  "last_updated": "2026-06-15T10:52:29.632769+00:00",
+  "per_ap": {
+    "3c:41:0e:3a:ca:00": {
+      "ap_name": "Ap9105",
+      "disjoin_count": 2,
+      "last_disjoin": "2026-06-15T10:52:29.608139+00:00"
+    }
+  },
+  "total_disjoins": 2,
+  "total_events": 0
+}

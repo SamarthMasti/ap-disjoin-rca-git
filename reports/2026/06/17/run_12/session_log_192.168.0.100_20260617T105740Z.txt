@@ -1,0 +1,8 @@
+[2026-06-17T10:57:40.266409+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
+[2026-06-17T10:57:40.267208+00:00] Trigger mode: SNMP
+[2026-06-17T10:57:40.271566+00:00] [DEBUG_CMDS] Loaded WLC(start=17, stop=3)  AP(start=25, stop=3)
+[2026-06-17T10:57:40.272359+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
+[2026-06-17T10:57:41.475744+00:00] WARNING: EEM applet push failed mid-flight: local variable 'EEM_APPLET_CONFIG' referenced before assignment
+[2026-06-17T10:57:41.499135+00:00] EEM setup SSH session closed.
+[2026-06-17T10:57:41.677811+00:00] SNMP trap listener started on UDP 162 (mode=snmp)
+[2026-06-17T11:04:20.976135+00:00] Stop requested — shutting down gRPC listener.

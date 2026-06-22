@@ -1,0 +1,16 @@
+ap_password: Aigle123
+ap_username: admin
+device_name: WLC_1
+duration_minutes: null
+enable_secret: Cisco123
+grpc_port: 57500
+host: 192.168.0.100
+inventory_file: CONF\iosxe_devices.yaml
+jumphost_ip: 192.168.0.55
+password: Cisco123
+port: 22
+report_dir: C:\AP_DIJSOIN\reports
+snmp_community: public
+tftp_ip: 192.168.0.55
+trigger_mode: telemetry
+username: admin
