@@ -700,15 +700,42 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
             fast_cli=False,
             global_delay_factor=2,
         )
-        if ap_auth.get("secret"):
-            ap_conn.enable()
     except Exception as exc:
         print(f"[{ts()}]   [AP] AP SSH failed: {exc} — skipping AP-direct collection",
               file=sys.stderr)
         return advanced
 
-    # Set terminal length outside the catalog loop so a failure here
-    # doesn't cascade through the skip-on-error guard for every command.
+    # Detect actual prompt — AP may be user-mode only
+    # Detect actual prompt — AP may be user-mode only
+    try:
+        ap_conn.enable()
+        _prompt = ap_conn.find_prompt()
+        if not _prompt.endswith("#"):
+            ap_conn.base_prompt = _prompt.rstrip(">").rstrip("#")
+            ap_conn.RETURN = "\n"
+            print(f"[{ts()}]   [AP] Prompt after enable(): '{_prompt}' — staying in USER MODE", file=sys.stderr)
+        else:
+            print(f"[{ts()}]   [AP] Prompt after enable(): '{_prompt}' — ENABLE MODE confirmed", file=sys.stderr)
+    except Exception as _enable_exc:
+        print(f"[{ts()}]   [AP] enable() raised: {_enable_exc} — attempting prompt recovery", file=sys.stderr)
+        try:
+            _prompt = ap_conn.find_prompt()
+            ap_conn.base_prompt = _prompt.rstrip("#>")
+            print(f"[{ts()}]   [AP] Recovered prompt: '{_prompt}' — base_prompt='{ap_conn.base_prompt}'", file=sys.stderr)
+        except Exception as _fp_exc:
+            print(f"[{ts()}]   [AP] find_prompt() also failed: {_fp_exc} — AP SSH may be unusable", file=sys.stderr)
+
+    # Force Netmiko to rediscover the prompt in whatever mode we landed in
+    try:
+        ap_conn.base_prompt = ap_conn.find_prompt().rstrip("#>")
+    except Exception:
+        pass
+    try:
+        ap_conn.send_command_timing("terminal length 0", delay_factor=3, read_timeout=10)
+        time.sleep(2)  # let AP settle
+    except Exception:
+        pass
+
     try:
         ap_conn.send_command_timing("terminal length 0", delay_factor=1, read_timeout=5)
     except Exception:
@@ -723,16 +750,21 @@ def collect_advanced_capwap_on_ap(ap_ip: str, ap_auth: dict, ap_name: str | None
                   file=sys.stderr)
             try:
                 if is_debug:
-                    output = ap_conn.send_command_timing(cmd, delay_factor=1, read_timeout=10)
+                    output = ap_conn.send_command_timing(cmd, delay_factor=2, read_timeout=15)
                 else:
-                    output = ap_conn.send_command(cmd, read_timeout=10)
+                    output = ap_conn.send_command(cmd, read_timeout=30)
 
-                if not output or output.strip().startswith("%") or "Invalid input" in output:
+                if output is None or (output.strip().startswith("%")) or "Invalid input" in output or "Incomplete command" in output:
                     print(f"[{ts()}]   [AP] Skipped (unsupported/error): {cmd}",
                           file=sys.stderr)
                     continue
 
-                advanced[cmd] = output
+                if not output or not output.strip():
+                    print(f"[{ts()}]   [AP] Executed (no output returned): {cmd}",
+                          file=sys.stderr)
+                    advanced[cmd] = "(executed — no output)"
+                else:
+                    advanced[cmd] = output
 
             except Exception as exc:
                 print(f"[{ts()}]   [AP] Error on '{cmd}': {exc}",
@@ -2306,8 +2338,13 @@ class LiveMonitor:
                 self.live_buffer.append(f"{ts()} [MDT] {node_id} {path} {event_text}")
                 if "AP_JOIN_DISJOIN" in event_text and "Disjoined" in event_text:
                     self._last_disjoin_line = event_text
-                    if TRIGGER_MODE == "eem_batch" and not _is_duplicate(event_text):
-                        self._on_eem_trigger(event_text, ts())
+                    if TRIGGER_MODE == "eem_batch":
+                        _m = APMAC_RE.search(event_text)
+                        _dedup_key = normalise_mac(_m.group(1)) if _m else event_text
+                        if not _is_duplicate(_dedup_key):
+                            self._on_eem_trigger(event_text, ts())
+                        else:
+                            print(f"[{ts()}] [DEDUP] Duplicate individual disjoin suppressed: {_dedup_key}", file=sys.stderr)
                 if "EEM_BATCH_TRIGGER" in event_text:
                     print(f"[{ts()}] [EEM] EEM Batch Trigger fired — 3 disjoins detected", file=sys.stdout)
                     self._on_eem_trigger(event_text, ts())
@@ -2322,6 +2359,7 @@ class LiveMonitor:
                 peer = context.peer()
                 _err = sys.stderr
                 print(f"[{ts()}] [MDT] gRPC session opened from {peer}", file=_err)
+                print("Waiting for DISJOIN.......")
                 try:
                     for dialout_args in request_iterator:
                         raw = dialout_args.data
@@ -2455,16 +2493,19 @@ class LiveMonitor:
                 ).start()
             else:
                 # Individual disjoin — record only, WLC hasn't confirmed burst yet
-                if mac and not _is_duplicate(f"indiv_disjoin:{mac}:{ip or ''}"):
+                # Note: dedup already applied in _decode_and_dispatch using MAC key,
+                # so _on_eem_trigger is only reached once per MAC per DEDUP_CACHE_TTL.
+                if mac:
                     append_disjoin_occurrence(mac, ap_name, ip)
                     record_disjoin_event(mac, ap_name=ap_name, ip=ip)
                     _occ = load_disjoin_occurrences()
                     _seen = {e.get("mac") for e in _occ if e.get("mac")}
-                    print(
-                        f"[{trigger_ts}] [DISJOIN_DETECTED] AP={ap_name or '?'} "
-                        f"MAC={mac} IP={ip or '?'} | Total unique APs seen: {len(_seen)}",
-                        file=sys.stderr,
-                    )
+                    if "reset config cmd sent" not in (reason or "").lower():
+                        print(
+                            f"[{trigger_ts}] [DISJOIN_DETECTED] AP={ap_name or '?'} "
+                            f"MAC={mac} IP={ip or '?'} | Total unique APs seen: {len(_seen)}",
+                            file=sys.stderr,
+                        )
                     
         
 
@@ -2656,8 +2697,8 @@ class LiveMonitor:
                     f"monitor capture {mycap_name} control-plane both",
                     f"monitor capture {mycap_name} match ipv4 host {ip} any bidirectional" if ip else None,
                     f"monitor capture {mycap_name} start",
-                    f"ping 192.168.0.212",
-                    f"ping 192.168.0.1",
+                   
+                    
                 ]
                 _mycap_cmds = [c for c in _mycap_cmds if c is not None]
                 for cmd in _mycap_cmds:

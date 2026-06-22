@@ -1594,6 +1594,7 @@ class ConfigurationPage(QWidget):
         self._f_jumphost:       ValidatedLineEdit   | None = None
         self._f_ap_user:        QLineEdit           | None = None
         self._f_ap_pass:        QLineEdit           | None = None
+        self._f_ap_secret:      QLineEdit           | None = None
         
         self._summary:          SummaryCard         | None = None
         self._launch_btn:       QPushButton         | None = None
@@ -1685,10 +1686,14 @@ class ConfigurationPage(QWidget):
 
         form_grid = QGridLayout()
         form_grid.setHorizontalSpacing(16)
-        form_grid.setVerticalSpacing(12)
+        form_grid.setVerticalSpacing(8)
         form_grid.setColumnStretch(0, 1)
         form_grid.setColumnStretch(1, 1)
         form_grid.setContentsMargins(0, 0, 0, 0)
+        form_grid.setRowStretch(0, 0)
+        form_grid.setRowStretch(1, 0)
+        form_grid.setRowStretch(2, 0)
+        form_grid.setRowStretch(3, 1)
 
         # ── Device Selection ──────────────────────────────────────────
         device_section, device_layout = config_section()
@@ -1738,7 +1743,7 @@ class ConfigurationPage(QWidget):
             password=True,
         )
         self._f_secret.field.setMinimumWidth(0)
-        form_device.addRow("Enable Secret:", self._f_secret)
+        
 
         self._f_port = QSpinBox()
         self._f_port.setRange(1, 65535)
@@ -1747,7 +1752,7 @@ class ConfigurationPage(QWidget):
         form_device.addRow("SSH Port:", self._f_port)
 
         device_layout.addLayout(form_device)
-        form_grid.addWidget(device_section, 0, 0, 2, 1, Qt.AlignmentFlag.AlignTop)
+        form_grid.addWidget(device_section, 0, 0, 3, 1, Qt.AlignmentFlag.AlignTop)
 
         # ── Telemetry Section ─────────────────────────────────────────
         telemetry_section, telemetry_layout = config_section()
@@ -1778,8 +1783,8 @@ class ConfigurationPage(QWidget):
         self._rb_snmp.toggled.connect(self._on_any_change)
         self._rb_eem.toggled.connect(self._on_trigger_changed)
         trig_row.addWidget(self._rb_mdt)
-        trig_row.addWidget(self._rb_snmp)
         trig_row.addWidget(self._rb_eem)
+        trig_row.addWidget(self._rb_snmp)
         trig_row.addStretch()
         telemetry_layout.addLayout(trig_row)
 
@@ -1816,7 +1821,7 @@ class ConfigurationPage(QWidget):
 
         self._snmp_frame.setVisible(False)
         telemetry_layout.addWidget(self._snmp_frame)
-        form_grid.addWidget(telemetry_section, 0, 1, Qt.AlignmentFlag.AlignTop)
+        
 
         # ── Monitoring Section ────────────────────────────────────────
         monitoring_section, monitoring_layout = config_section()
@@ -1827,15 +1832,7 @@ class ConfigurationPage(QWidget):
         form_mon.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
         form_mon.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
-        self._f_grpc_port = QSpinBox()
-        self._f_grpc_port.setRange(1, 65535)
-        self._f_grpc_port.setValue(DEFAULT_GRPC_PORT)
-        self._f_grpc_port.setFixedWidth(100)
-        self._f_grpc_port.setReadOnly(True)
-        self._f_grpc_port.setButtonSymbols(QSpinBox.ButtonSymbols.NoButtons)
-        self._f_grpc_port.setStyleSheet("color: #8b95a7;")
-        self._f_grpc_port.valueChanged.connect(self._on_any_change)
-        form_mon.addRow("gRPC Port:", self._f_grpc_port)
+        
 
         
         self._f_tftp = ValidatedLineEdit(
@@ -1861,6 +1858,7 @@ class ConfigurationPage(QWidget):
         form_mon.addRow("Report Directory:", report_row)
 
         monitoring_layout.addLayout(form_mon)
+        form_grid.addWidget(telemetry_section, 0, 1, Qt.AlignmentFlag.AlignTop)
         form_grid.addWidget(monitoring_section, 1, 1, Qt.AlignmentFlag.AlignTop)
 
         # ── Advanced (collapsible) ────────────────────────────────────
@@ -1895,6 +1893,13 @@ class ConfigurationPage(QWidget):
         self._f_ap_pass.setMinimumWidth(0)
         self._f_ap_pass.setMaximumWidth(340)
         adv_form.addRow("AP Password:", self._f_ap_pass)
+
+        self._f_ap_secret = QLineEdit()
+        self._f_ap_secret.setPlaceholderText("AP enable secret (optional)")
+        self._f_ap_secret.setEchoMode(QLineEdit.EchoMode.Password)
+        self._f_ap_secret.setMinimumWidth(0)
+        self._f_ap_secret.setMaximumWidth(340)
+        adv_form.addRow("AP Secret:", self._f_ap_secret)
         # ── EEM Script attach — disabled for now ──────────────────────
         # eem_row = QHBoxLayout()
         # self._f_eem_script = QLineEdit()
@@ -1921,7 +1926,7 @@ class ConfigurationPage(QWidget):
         self._f_ap_debug_file   = type('_Stub', (), {'text': lambda self: ''})()
         adv_section = CollapsibleSection("Advanced Options", adv_content, collapsed=False)
         advanced_layout.addWidget(adv_section)
-        form_grid.addWidget(advanced_section, 2, 1, 1, 1, Qt.AlignmentFlag.AlignTop)
+        form_grid.addWidget(advanced_section, 2, 1, Qt.AlignmentFlag.AlignTop)
 
         
 
@@ -2072,6 +2077,7 @@ class ConfigurationPage(QWidget):
         _set(self._f_jumphost, "jumphost_ip")
         _set(self._f_ap_user,  "ap_username", "Cisco")
         _set(self._f_ap_pass,  "ap_password", "Cisco")
+        _set(self._f_ap_secret, "ap_secret", "")
 
         self._on_any_change()
 
@@ -2101,7 +2107,7 @@ class ConfigurationPage(QWidget):
 
     def _on_any_change(self, *_):
         self._summary.update("Target WLC",   self._f_host.text())
-        self._summary.update("gRPC Port",    str(self._f_grpc_port.value()))
+        self._summary.update("gRPC Port",    str(self._f_grpc_port.value()) if self._f_grpc_port else str(DEFAULT_GRPC_PORT))
         self._summary.update("SSH Port",     str(self._f_port.value()))
         self._summary.update("TFTP Server",  self._f_tftp.text())
         self._summary.update("Report Dir",   self._f_report_dir.text())
@@ -2146,13 +2152,14 @@ class ConfigurationPage(QWidget):
                                 ),
             "eem_window_seconds": self._f_eem_window.value() if self._rb_eem.isChecked() else 600,
             "snmp_community":   self._f_snmp_community.text().strip(),
-            "grpc_port":        self._f_grpc_port.value(),
+            "grpc_port":        self._f_grpc_port.value() if self._f_grpc_port else DEFAULT_GRPC_PORT,
             "duration_minutes": None,
             "tftp_ip":          self._f_tftp.text().strip(),
             "report_dir":       self._f_report_dir.text().strip(),
             "jumphost_ip":      self._f_jumphost.text().strip(),
             "ap_username":      self._f_ap_user.text().strip(),
             "ap_password":      self._f_ap_pass.text(),
+            "ap_secret":        self._f_ap_secret.text(),
             "inventory_file":   self._inventory_path,
             "eem_script_path":  self._f_eem_script.text().strip() or None if self._f_eem_script else None,
         }
@@ -2174,6 +2181,7 @@ class ConfigurationPage(QWidget):
                     dev["jumphost_ip"]  = config["jumphost_ip"]
                     dev["ap_username"]  = config["ap_username"]
                     dev["ap_password"]  = config["ap_password"]
+                    dev["ap_secret"]    = config["ap_secret"]
                     updated = True
                     break
             if not updated:
@@ -2189,6 +2197,7 @@ class ConfigurationPage(QWidget):
                     "jumphost_ip":  config["jumphost_ip"],
                     "ap_username":  config["ap_username"],
                     "ap_password":  config["ap_password"],
+                    "ap_secret":    config["ap_secret"],
                 })
                 raw["iosxe_devices"] = devices
             inv_path.write_text(
@@ -2225,7 +2234,7 @@ class ConfigurationPage(QWidget):
                                  "eem_batch" if self._rb_eem.isChecked() else "telemetry"
                                  ),
             "snmp_community":    self._f_snmp_community.text().strip(),
-            "grpc_port":         self._f_grpc_port.value(),
+            "grpc_port":         self._f_grpc_port.value() if self._f_grpc_port else DEFAULT_GRPC_PORT,
             "eem_window_seconds": self._f_eem_window.value() if self._rb_eem.isChecked() else 600,
             "rca_session_timeout_seconds": self._f_eem_window.value() * 3 if self._rb_eem.isChecked() else 1800,
             "eem_script_path":  self._f_eem_script.text().strip() or None if self._f_eem_script else None,
@@ -2239,7 +2248,7 @@ class ConfigurationPage(QWidget):
             "jumphost_ip":      self._f_jumphost.text().strip(),
             "ap_username":      self._f_ap_user.text().strip(),
             "ap_password":      self._f_ap_pass.text(),
-            
+            "ap_secret":        self._f_ap_secret.text(),
 
             # ── Inventory ────────────────────────────────────────────
             "inventory_file":   self._inventory_path,
@@ -2299,16 +2308,19 @@ class MonitorPage(QWidget):
 
     # Keyword → colour for plain (non-ANSI) log lines
     _KEYWORD_COLOURS: list[tuple[str, str]] = [
-        ("ERROR",    "#f87171"),
-        ("CRITICAL", "#f87171"),
-        ("WARNING",  "#fbbf24"),
-        ("WARN",     "#fbbf24"),
-        ("INFO",     "#60a5fa"),
-        ("DEBUG",    "#8b95a7"),
-        ("SUCCESS",  "#34d399"),
-        ("RCA",      "#2dd4bf"),
-        ("DISJOIN",  "#c084fc"),
-        ("AP ",      "#fbbf24"),
+        ("ERROR",       "#f87171"),
+        ("CRITICAL",    "#f87171"),
+        ("WARNING",     "#fbbf24"),
+        ("WARN",        "#fbbf24"),
+        ("FINALIZE",    "#f97316"),
+        ("FINALIZATION","#f97316"),
+        ("INFO",        "#60a5fa"),
+        ("DEBUG",       "#8b95a7"),
+        ("SUCCESS",     "#34d399"),
+        ("RCA",         "#2dd4bf"),
+        ("DISJOIN",     "#c084fc"),
+        ("[AP]",        "#60a5fa"),
+        ("AP ",         "#fbbf24"),
     ]
 
     def __init__(self, parent=None):
@@ -2607,16 +2619,15 @@ class MonitorPage(QWidget):
             line = event.get("line", "")
             self.append_log(line)
             self._update_bars_from_line(line)
-            # ── Event counter: increment on batch trigger ──────────────
-            if "EEM TRIGGER received" in line:
-                self._event_count += 1
-                self._stat_events.setText(str(self._event_count))
-                self._ap_count = 3
-                self._stat_aps.setText("3")
-            # ── APs Traced: increment on every DISJOIN line after event ─
-            elif self._event_count > 0 and "[4TH_DISJOIN] Disjoin from" in line:
-                self._ap_count += 1
-                self._stat_aps.setText(str(self._ap_count))
+        elif etype == "rca_start":
+            self.append_log(
+                f"[RCA] Starting RCA for AP {event.get('ap_name', '')}  "
+                f"MAC: {event.get('ap_mac', '')}"
+            )
+        elif etype == "rca_done":
+            ap = event.get("ap_name", "")
+            self.append_log(f"[RCA] Completed for AP {ap}")
+            
         elif etype == "rca_start":
             self._event_count += 1
             self._stat_events.setText(str(self._event_count))
@@ -2643,11 +2654,12 @@ class MonitorPage(QWidget):
         try:
             report_dir = Path(getattr(self, "_report_dir", "reports"))
 
-            # ── APs Traced: read from ap_traced_count.json ────────────────
-            count_path = report_dir / "ap_traced_count.json"
-            if count_path.exists():
-                data = _json.loads(count_path.read_text(encoding="utf-8"))
-                self._stat_aps.setText(str(data.get("count", 0)))
+            # ── APs Traced: unique MACs from disjoin_occurrences.json ─────
+            occ_path = report_dir / "disjoin_occurrences.json"
+            if occ_path.exists():
+                occ_data = _json.loads(occ_path.read_text(encoding="utf-8"))
+                unique_macs = {o.get("mac") for o in occ_data if o.get("mac")}
+                self._stat_aps.setText(str(len(unique_macs)))
 
             # ── Events counter ────────────────────────────────────────────
             hist_path = report_dir / "disjoin_event_history.json"
