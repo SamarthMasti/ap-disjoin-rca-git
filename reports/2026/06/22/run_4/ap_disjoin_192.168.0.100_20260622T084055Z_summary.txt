@@ -1,4 +1,0 @@
-AP Disjoin Session — 192.168.0.100
-==================================================
-
-No disjoin events with traceable MAC detected.

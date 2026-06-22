@@ -1,9 +1,0 @@
-[2026-06-15T12:15:01.967206+00:00] Minion AP Disjoin Monitor starting — WLC=192.168.0.100
-[2026-06-15T12:15:01.967619+00:00] Trigger mode: EEM_BATCH
-[2026-06-15T12:15:01.967994+00:00] Pushing EEM applet AP_DISJOIN to 192.168.0.100 ...
-[2026-06-15T12:15:04.416263+00:00] EEM applet config sent.
-[2026-06-15T12:15:04.982942+00:00] EEM setup SSH session closed.
-[2026-06-15T12:15:05.103289+00:00] MDT gRPC dial-out collector listening on port 57500. Ctrl+C to stop.
-[2026-06-15T12:15:22.111610+00:00] Stop requested — shutting down gRPC listener.
-[2026-06-15T12:15:22.112474+00:00] [CLEANUP] Removing telemetry subscription 12123 from 192.168.0.100 ...
-[2026-06-15T12:15:23.570283+00:00] [CLEANUP] Telemetry subscription 12123 removed.
