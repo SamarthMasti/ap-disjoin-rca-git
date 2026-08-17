@@ -4,13 +4,16 @@ iosxe_devices:
   ap_username: admin
   enable_secret: ''
   host: 192.168.0.100
-  jumphost_ip: 192.168.0.19
+  jumphost_ip: 192.168.0.4
   name: WLC_1
   os_version: 17.9.4
   password: Cisco123
   platform: C9800-CL
   port: 22
-  tftp_ip: 192.168.0.19
+  sftp_password: Cisco123!
+  sftp_username: sftpuser
+  tftp_ip: 192.168.0.4
+  transfer_proto: TFTP
   transport: ssh
   username: admin
 - name: SPARSHA_LABs
@@ -23,4 +26,17 @@ iosxe_devices:
   password: ''
   port: 22
   tftp_ip: ''
+  username: ''
+- ap_password: Cisco
+  ap_secret: ''
+  ap_username: Cisco
+  host: 192.168.0.2
+  jumphost_ip: ''
+  name: WLC2
+  password: ''
+  port: 22
+  sftp_password: ''
+  sftp_username: ''
+  tftp_ip: ''
+  transfer_proto: TFTP
   username: ''

@@ -40,6 +40,7 @@ from PySide6.QtWidgets import (
     QScrollArea, QFrame, QSizePolicy, QFileDialog,
     QToolButton, QStatusBar, QSplitter, QSpacerItem,
     QGraphicsOpacityEffect, QPlainTextEdit, QProgressBar,
+    QCompleter,
 )
 
 from backend.config import resolve_inventory_path
@@ -49,13 +50,19 @@ from gui.controllers import MonitorController
 # ── CONSTANTS ────────────────────────────────────────────────────────────────
 # ---------------------------------------------------------------------------
 
-APP_NAME    = "Network Automation Platform"
+APP_NAME    = "AP Disjoin RCA"
 APP_VERSION = "1.0.0"
 
 DEFAULT_INVENTORY = resolve_inventory_path(None)
 DEFAULT_REPORTS   = str(Path(sys.executable).parent / "reports" if getattr(sys, "frozen", False) else Path(__file__).parent / "reports")
 DEFAULT_GRPC_PORT = 57500
 DEFAULT_SSH_PORT  = 22
+
+APP_ICON_PATH = str(
+    Path(sys._MEIPASS) / "assets" / "ciscologo.ico"
+    if getattr(sys, "frozen", False)
+    else Path(__file__).parent / "assets" / "ciscologo.ico"
+)
 
 # ---------------------------------------------------------------------------
 # ── STYLESHEET — NOC dark theme, blue/cyan accent ────────────────────────────
@@ -1542,7 +1549,7 @@ class SummaryCard(QWidget):
             lbl.setFixedWidth(80)
             val = QLabel(default)
             val.setObjectName("SummaryValue")
-            val.setWordWrap(True)
+            val.setWordWrap(False)
             val.setMinimumWidth(0)
             grid.addWidget(lbl, i, 0)
             grid.addWidget(val, i, 1)
@@ -1552,7 +1559,11 @@ class SummaryCard(QWidget):
 
     def update(self, key: str, value: str):
         if key in self._fields:
-            self._fields[key].setText(value.strip() or "—")
+            text  = value.strip() or "—"
+            label = self._fields[key]
+            label.setToolTip(text)
+            width = label.width() or 140
+            label.setText(label.fontMetrics().elidedText(text, Qt.TextElideMode.ElideMiddle, width))
 
 
 class ConfigurationPage(QWidget):
@@ -1582,7 +1593,7 @@ class ConfigurationPage(QWidget):
         self._f_host:           ValidatedLineEdit   | None = None
         self._f_username:       ValidatedLineEdit   | None = None
         self._f_password:       ValidatedLineEdit   | None = None
-        self._f_secret:         ValidatedLineEdit   | None = None
+        
         self._f_port:           QSpinBox            | None = None
         self._rb_mdt:           QRadioButton        | None = None
         self._rb_snmp:          QRadioButton        | None = None
@@ -1591,6 +1602,9 @@ class ConfigurationPage(QWidget):
         self._f_duration:       QSpinBox            | None = None
         self._f_tftp:           ValidatedLineEdit   | None = None
         self._f_report_dir:     QLineEdit           | None = None
+        self._f_sftp_user:      QLineEdit           | None = None
+        self._f_sftp_pass:      QLineEdit           | None = None
+        self._transfer_proto:   str                        = "TFTP"
         self._f_jumphost:       ValidatedLineEdit   | None = None
         self._f_ap_user:        QLineEdit           | None = None
         self._f_ap_pass:        QLineEdit           | None = None
@@ -1648,8 +1662,9 @@ class ConfigurationPage(QWidget):
 
         left_pane = QWidget()
         left_pane.setObjectName("ContentArea")
+        left_pane.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         clayout = QVBoxLayout(left_pane)
-        clayout.setContentsMargins(32, 14, 16, 14)
+        clayout.setContentsMargins(32, 14, 24, 14)
         clayout.setSpacing(10)
 
         def config_section() -> tuple[QWidget, QVBoxLayout]:
@@ -1684,16 +1699,8 @@ class ConfigurationPage(QWidget):
         clayout.addLayout(inv_row)
         clayout.addWidget(h_rule())
 
-        form_grid = QGridLayout()
-        form_grid.setHorizontalSpacing(16)
-        form_grid.setVerticalSpacing(8)
-        form_grid.setColumnStretch(0, 1)
-        form_grid.setColumnStretch(1, 1)
-        form_grid.setContentsMargins(0, 0, 0, 0)
-        form_grid.setRowStretch(0, 0)
-        form_grid.setRowStretch(1, 0)
-        form_grid.setRowStretch(2, 0)
-        form_grid.setRowStretch(3, 1)
+        columns_row = QHBoxLayout()
+        columns_row.setSpacing(16)
 
         # ── Device Selection ──────────────────────────────────────────
         device_section, device_layout = config_section()
@@ -1705,12 +1712,21 @@ class ConfigurationPage(QWidget):
         form_device.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
         self._device_combo = QComboBox()
+        self._device_combo.setEditable(True)
+        self._device_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        _device_completer = QCompleter(self._device_combo.model(), self._device_combo)
+        _device_completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+        _device_completer.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
+        self._device_combo.setCompleter(_device_completer)
         self._device_combo.setMinimumContentsLength(14)
         self._device_combo.setSizeAdjustPolicy(
             QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon
         )
         self._device_combo.setPlaceholderText("Select device from inventory…")
-        self._device_combo.currentTextChanged.connect(self._on_device_selected)
+        self._device_combo.textActivated.connect(self._on_device_selected)
+        self._device_combo.lineEdit().editingFinished.connect(
+            lambda: self._on_device_selected(self._device_combo.currentText())
+        )
         form_device.addRow("Device Name:", self._device_combo)
 
         self._f_host = ValidatedLineEdit(
@@ -1738,12 +1754,7 @@ class ConfigurationPage(QWidget):
         self._f_password.value_changed.connect(self._on_any_change)
         form_device.addRow("Password:", self._f_password)
 
-        self._f_secret = ValidatedLineEdit(
-            placeholder="Enable secret (optional)",
-            password=True,
-        )
-        self._f_secret.field.setMinimumWidth(0)
-        form_device.addRow("Enable Secret:", self._f_secret)
+        
 
         self._f_port = QSpinBox()
         self._f_port.setRange(1, 65535)
@@ -1752,7 +1763,13 @@ class ConfigurationPage(QWidget):
         form_device.addRow("SSH Port:", self._f_port)
 
         device_layout.addLayout(form_device)
-        form_grid.addWidget(device_section, 0, 0, 3, 1, Qt.AlignmentFlag.AlignTop)
+
+        left_col_wrap = QWidget()
+        left_col_layout = QVBoxLayout(left_col_wrap)
+        left_col_layout.setContentsMargins(0, 0, 0, 0)
+        left_col_layout.setSpacing(0)
+        left_col_layout.addWidget(device_section)
+        columns_row.addWidget(left_col_wrap, 1, Qt.AlignmentFlag.AlignTop)
 
         # ── Telemetry Section ─────────────────────────────────────────
         telemetry_section, telemetry_layout = config_section()
@@ -1817,6 +1834,7 @@ class ConfigurationPage(QWidget):
         self._f_snmp_community = QLineEdit()
         self._f_snmp_community.setText("public")
         self._f_snmp_community.setPlaceholderText("SNMP community string")
+        self._f_snmp_community.setReadOnly(True)
         snmp_layout.addRow("SNMP Community:", self._f_snmp_community)
 
         self._snmp_frame.setVisible(False)
@@ -1832,16 +1850,49 @@ class ConfigurationPage(QWidget):
         form_mon.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
         form_mon.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
-        
+        # ── Transfer Protocol toggle ──────────────────────────────────
+        proto_row = QHBoxLayout()
+        proto_row.setSpacing(18)
+        self._rb_tftp = QRadioButton("TFTP")
+        self._rb_sftp = QRadioButton("SFTP")
+        self._rb_tftp.setChecked(True)
+        proto_grp = QButtonGroup(self)
+        proto_grp.addButton(self._rb_tftp)
+        proto_grp.addButton(self._rb_sftp)
+        self._rb_tftp.toggled.connect(self._on_transfer_proto_changed)
+        self._rb_sftp.toggled.connect(self._on_transfer_proto_changed)
+        proto_row.addWidget(self._rb_tftp)
+        proto_row.addWidget(self._rb_sftp)
+        proto_row.addStretch()
+        form_mon.addRow("Protocol:", proto_row)
 
-        
         self._f_tftp = ValidatedLineEdit(
             placeholder="e.g. 192.168.0.6",
             validator_fn=validate_optional_ip,
         )
-        self._f_tftp.field.setFixedWidth(180)
+        self._f_tftp.field.setMinimumWidth(0)
         self._f_tftp.value_changed.connect(self._on_any_change)
-        form_mon.addRow("TFTP Server IP:", self._f_tftp)
+        form_mon.addRow("Server IP:", self._f_tftp)
+
+        # ── SFTP credentials (hidden by default) ─────────────────────
+        self._f_sftp_user = QLineEdit()
+        self._f_sftp_user.setPlaceholderText("SFTP username")
+        self._f_sftp_user.setMinimumWidth(0)
+        self._sftp_user_label = QLabel("SFTP Username:")
+
+        self._f_sftp_pass = QLineEdit()
+        self._f_sftp_pass.setPlaceholderText("SFTP password")
+        self._f_sftp_pass.setEchoMode(QLineEdit.EchoMode.Password)
+        self._f_sftp_pass.setMinimumWidth(0)
+        self._sftp_pass_label = QLabel("SFTP Password:")
+
+        form_mon.addRow(self._sftp_user_label, self._f_sftp_user)
+        form_mon.addRow(self._sftp_pass_label, self._f_sftp_pass)
+
+        self._f_sftp_user.setVisible(False)
+        self._sftp_user_label.setVisible(False)
+        self._f_sftp_pass.setVisible(False)
+        self._sftp_pass_label.setVisible(False)
 
         report_row = QHBoxLayout()
         self._f_report_dir = QLineEdit()
@@ -1858,8 +1909,6 @@ class ConfigurationPage(QWidget):
         form_mon.addRow("Report Directory:", report_row)
 
         monitoring_layout.addLayout(form_mon)
-        form_grid.addWidget(telemetry_section, 0, 1, Qt.AlignmentFlag.AlignTop)
-        form_grid.addWidget(monitoring_section, 1, 1, Qt.AlignmentFlag.AlignTop)
 
         # ── Advanced (collapsible) ────────────────────────────────────
         advanced_section, advanced_layout = config_section()
@@ -1872,7 +1921,7 @@ class ConfigurationPage(QWidget):
         adv_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
         self._f_jumphost = ValidatedLineEdit(
-            placeholder="Jumphost / listener IP (optional)",
+            placeholder="Jumphost / listener IP ",
             validator_fn=validate_optional_ip,
         )
         self._f_jumphost.field.setMinimumWidth(0)
@@ -1880,14 +1929,12 @@ class ConfigurationPage(QWidget):
         adv_form.addRow("Jumphost IP:", self._f_jumphost)
 
         self._f_ap_user = QLineEdit()
-        self._f_ap_user.setText("Cisco")
         self._f_ap_user.setPlaceholderText("AP SSH username")
         self._f_ap_user.setMinimumWidth(0)
         self._f_ap_user.setMaximumWidth(340)
         adv_form.addRow("AP Username:", self._f_ap_user)
 
         self._f_ap_pass = QLineEdit()
-        self._f_ap_pass.setText("Cisco")
         self._f_ap_pass.setPlaceholderText("AP SSH password")
         self._f_ap_pass.setEchoMode(QLineEdit.EchoMode.Password)
         self._f_ap_pass.setMinimumWidth(0)
@@ -1926,11 +1973,18 @@ class ConfigurationPage(QWidget):
         self._f_ap_debug_file   = type('_Stub', (), {'text': lambda self: ''})()
         adv_section = CollapsibleSection("Advanced Options", adv_content, collapsed=False)
         advanced_layout.addWidget(adv_section)
-        form_grid.addWidget(advanced_section, 2, 1, Qt.AlignmentFlag.AlignTop)
+        left_col_layout.addWidget(monitoring_section)
 
-        
+        col1_wrap = QWidget()
+        col1_layout = QVBoxLayout(col1_wrap)
+        col1_layout.setContentsMargins(0, 0, 0, 0)
+        col1_layout.setSpacing(10)
+        col1_layout.addWidget(telemetry_section)
+        col1_layout.addWidget(advanced_section)
+        col1_layout.addStretch()
+        columns_row.addWidget(col1_wrap, 1, Qt.AlignmentFlag.AlignTop)
 
-        clayout.addLayout(form_grid)
+        clayout.addLayout(columns_row)
         clayout.addStretch()
 
         # ── Summary card ──────────────────────────────────────────────
@@ -1971,7 +2025,13 @@ class ConfigurationPage(QWidget):
         rlayout.addWidget(self._summary)
         rlayout.addStretch()
 
-        body_row.addWidget(left_pane, stretch=1)
+        left_scroll = QScrollArea()
+        left_scroll.setWidgetResizable(True)
+        left_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        left_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        left_scroll.setWidget(left_pane)
+
+        body_row.addWidget(left_scroll, stretch=1)
         body_row.addWidget(right_pane)
         root.addWidget(body, stretch=1)
 
@@ -2023,6 +2083,15 @@ class ConfigurationPage(QWidget):
             self._inventory_path = path
             self._load_inventory()
 
+    def _on_transfer_proto_changed(self, _checked: bool = True):
+        is_sftp = self._rb_sftp.isChecked()
+        self._transfer_proto = "SFTP" if is_sftp else "TFTP"
+        self._f_sftp_user.setVisible(is_sftp)
+        self._sftp_user_label.setVisible(is_sftp)
+        self._f_sftp_pass.setVisible(is_sftp)
+        self._sftp_pass_label.setVisible(is_sftp)
+        self._on_any_change()
+
     def _browse_reports(self):
         path = QFileDialog.getExistingDirectory(
             self, "Select Report Directory", self._f_report_dir.text()
@@ -2071,10 +2140,17 @@ class ConfigurationPage(QWidget):
         _set(self._f_host,     "host")
         _set(self._f_username, "username")
         _set(self._f_password, "password")
-        _set(self._f_secret,   "enable_secret")
+        
         _set(self._f_port,     "port", str(DEFAULT_SSH_PORT))
         _set(self._f_tftp,     "tftp_ip")
         _set(self._f_jumphost, "jumphost_ip")
+        _set(self._f_sftp_user, "sftp_username")
+        _set(self._f_sftp_pass, "sftp_password")
+        proto = device.get("transfer_proto", "TFTP")
+        if proto == "SFTP":
+            self._rb_sftp.setChecked(True)
+        else:
+            self._rb_tftp.setChecked(True)
         _set(self._f_ap_user,  "ap_username", "Cisco")
         _set(self._f_ap_pass,  "ap_password", "Cisco")
         _set(self._f_ap_secret, "ap_secret", "")
@@ -2111,7 +2187,9 @@ class ConfigurationPage(QWidget):
         self._summary.update("SSH Port",     str(self._f_port.value()))
         self._summary.update("TFTP Server",  self._f_tftp.text())
         self._summary.update("Report Dir",   self._f_report_dir.text())
-        mode = "MDT Telemetry" if self._rb_mdt.isChecked() else "SNMP Traps"
+        mode = "MDT Telemetry" if self._rb_mdt.isChecked() else (
+            "SNMP Traps" if self._rb_snmp.isChecked() else "Telemetry"
+        )
         self._summary.update("Trigger Mode", mode)
         self._validate_all()
 
@@ -2145,7 +2223,7 @@ class ConfigurationPage(QWidget):
             "host":             self._f_host.text().strip(),
             "username":         self._f_username.text().strip(),
             "password":         self._f_password.text(),
-            "enable_secret":    self._f_secret.text(),
+            
             "port":             self._f_port.value(),
             "trigger_mode":     "snmp" if self._rb_snmp.isChecked() else (
                                 "eem_batch" if self._rb_eem.isChecked() else "telemetry"
@@ -2155,6 +2233,9 @@ class ConfigurationPage(QWidget):
             "grpc_port":        self._f_grpc_port.value() if self._f_grpc_port else DEFAULT_GRPC_PORT,
             "duration_minutes": None,
             "tftp_ip":          self._f_tftp.text().strip(),
+            "transfer_proto":   self._transfer_proto,
+            "sftp_username":    self._f_sftp_user.text().strip(),
+            "sftp_password":    self._f_sftp_pass.text(),
             "report_dir":       self._f_report_dir.text().strip(),
             "jumphost_ip":      self._f_jumphost.text().strip(),
             "ap_username":      self._f_ap_user.text().strip(),
@@ -2175,13 +2256,16 @@ class ConfigurationPage(QWidget):
                     dev["host"]         = config["host"]
                     dev["username"]     = config["username"]
                     dev["password"]     = config["password"]
-                    dev["enable_secret"]= config["enable_secret"]
+                    
                     dev["port"]         = config["port"]
                     dev["tftp_ip"]      = config["tftp_ip"]
                     dev["jumphost_ip"]  = config["jumphost_ip"]
                     dev["ap_username"]  = config["ap_username"]
                     dev["ap_password"]  = config["ap_password"]
                     dev["ap_secret"]    = config["ap_secret"]
+                    dev["transfer_proto"]  = config["transfer_proto"]
+                    dev["sftp_username"]   = config["sftp_username"]
+                    dev["sftp_password"]   = config["sftp_password"]
                     updated = True
                     break
             if not updated:
@@ -2191,13 +2275,16 @@ class ConfigurationPage(QWidget):
                     "host":         config["host"],
                     "username":     config["username"],
                     "password":     config["password"],
-                    "enable_secret":config["enable_secret"],
+                    
                     "port":         config["port"],
                     "tftp_ip":      config["tftp_ip"],
                     "jumphost_ip":  config["jumphost_ip"],
                     "ap_username":  config["ap_username"],
                     "ap_password":  config["ap_password"],
                     "ap_secret":    config["ap_secret"],
+                    "transfer_proto":   config["transfer_proto"],
+                    "sftp_username":    config["sftp_username"],
+                    "sftp_password":    config["sftp_password"],
                 })
                 raw["iosxe_devices"] = devices
             inv_path.write_text(
@@ -2226,7 +2313,7 @@ class ConfigurationPage(QWidget):
             "host":           self._f_host.text().strip(),
             "username":       self._f_username.text().strip(),
             "password":       self._f_password.text(),
-            "enable_secret":  self._f_secret.text(),
+            
             "port":           self._f_port.value(),
 
             # ── Telemetry ────────────────────────────────────────────
@@ -2242,6 +2329,9 @@ class ConfigurationPage(QWidget):
             # ── Monitoring ───────────────────────────────────────────
             "duration_minutes": None,
             "tftp_ip":          self._f_tftp.text().strip(),
+            "transfer_proto":   self._transfer_proto,
+            "sftp_username":    self._f_sftp_user.text().strip(),
+            "sftp_password":    self._f_sftp_pass.text(),
             "report_dir":       self._f_report_dir.text().strip(),
 
             # ── Advanced ─────────────────────────────────────────────
@@ -2435,7 +2525,7 @@ class MonitorPage(QWidget):
         bars_grid.addWidget(self._wf_bar,        0, 1)
         bars_grid.addWidget(self._wf_phase_lbl,  0, 2)
 
-        self._tftp_label = QLabel("TFTP")
+        self._tftp_label = QLabel("Transfer")
         self._tftp_label.setStyleSheet("color: #8b95a7; font-size: 11px;")
         self._tftp_label.setFixedWidth(70)
         self._tftp_bar = QProgressBar()
@@ -2542,7 +2632,7 @@ class MonitorPage(QWidget):
         self._wf_phase_lbl.setText("Starting…")
         self._wf_phase_lbl.setStyleSheet("color: #8b95a7; font-size: 11px; min-width: 140px;")
         self._tftp_bar.setValue(0)
-        self._tftp_label.setText("TFTP")
+        self._tftp_label.setText("Transfer")
         self._tftp_status_lbl.setText("waiting…")
         self._tftp_status_lbl.setStyleSheet("color: #4b5563; font-size: 11px; min-width: 140px;")
         device = config.get("device_name") or config.get("host", "")
@@ -2658,8 +2748,7 @@ class MonitorPage(QWidget):
             occ_path = report_dir / "disjoin_occurrences.json"
             if occ_path.exists():
                 occ_data = _json.loads(occ_path.read_text(encoding="utf-8"))
-                unique_macs = {o.get("mac") for o in occ_data if o.get("mac")}
-                self._stat_aps.setText(str(len(unique_macs)))
+                self._stat_aps.setText(str(len(occ_data)))
 
             # ── Events counter ────────────────────────────────────────────
             hist_path = report_dir / "disjoin_event_history.json"
@@ -2885,35 +2974,97 @@ class MonitorPage(QWidget):
         # Startup — listener ready, no RCA active
         
 
-        # ── TFTP bar — unchanged ──────────────────────────────────────────────
+        # ── TFTP bar — unchanged; workflow bar now also runs alongside the
+        # copy so it doesn't sit idle while the pcap/log upload is in progress —
+        # it starts moving when the TFTP/SFTP copy starts and reaches 100 when
+        # the copy completes.
+        elif _re.search(r"\[EPC_TFTP_Upload\].*Protocol=(TFTP|SFTP)", line):
+            m_proto = _re.search(r"Protocol=(TFTP|SFTP)", line)
+            proto_label = m_proto.group(1) if m_proto else "Transfer"
+            self._tftp_label.setText(proto_label)
+            self._tftp_bar.setValue(10)
+            self._tftp_status_lbl.setText(f"{proto_label} upload starting…")
+            self._tftp_status_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(90)
+            self._wf_phase_lbl.setText(f"{proto_label} upload starting…")
+            self._wf_phase_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+
         elif _re.search(r"\[EPC_TFTP_Upload\].*copy flash:", line):
             m_file = _re.search(r"copy flash:(\S+)", line)
             if m_file:
-                self._tftp_label.setText(f"TFTP ({m_file.group(1)})")
+                self._tftp_label.setText(self._tftp_label.text() or "Transfer")
             self._tftp_bar.setValue(30)
             self._tftp_status_lbl.setText("Uploading pcap…")
             self._tftp_status_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(93)
+            self._wf_phase_lbl.setText("Uploading pcap…")
+            self._wf_phase_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
 
-        elif _re.search(r"\[EPC_TFTP_Upload\]", line):
-            # Any subsequent EPC_TFTP_Upload line (response, warning, success) = done
+        elif _re.search(r"\[EPC_TFTP_Upload\].*SFTP credentials configured", line):
+            self._tftp_bar.setValue(20)
+            self._tftp_status_lbl.setText("SFTP credentials configured…")
+            self._tftp_status_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(91)
+            self._wf_phase_lbl.setText("SFTP credentials configured…")
+            self._wf_phase_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+
+        elif _re.search(r"\[EPC_TFTP_Upload\].*Username prompt", line):
+            self._tftp_bar.setValue(35)
+            self._tftp_status_lbl.setText("SFTP — sending username…")
+            self._tftp_status_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(94)
+            self._wf_phase_lbl.setText("SFTP — sending username…")
+            self._wf_phase_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+
+        elif _re.search(r"\[EPC_TFTP_Upload\].*Password prompt", line):
+            self._tftp_bar.setValue(50)
+            self._tftp_status_lbl.setText("SFTP — sending password…")
+            self._tftp_status_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(96)
+            self._wf_phase_lbl.setText("SFTP — sending password…")
+            self._wf_phase_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+
+        elif _re.search(r"\[EPC_TFTP_Upload\].*Transfer complete", line):
             self._tftp_bar.setValue(100)
+            self._tftp_status_lbl.setText("SFTP transfer complete ✓")
+            self._tftp_status_lbl.setStyleSheet("color: #34d399; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(100)
+            self._wf_phase_lbl.setText("SFTP transfer complete ✓")
+            self._wf_phase_lbl.setStyleSheet("color: #34d399; font-size: 11px; min-width: 140px;")
+
+        elif _re.search(r"\[EPC_TFTP_Upload\].*(successfully|WARNING|failed)", line, _re.IGNORECASE):
+            # Only a genuine final success/warning confirmation line = done —
+            # NOT intermediate prompt/"!" progress lines, which also carry the
+            # [EPC_TFTP_Upload] tag but aren't completion signals.
+            self._tftp_bar.setValue(100)
+            self._wf_bar.setValue(100)
             if "WARNING" in line or "failed" in line.lower():
                 self._tftp_status_lbl.setText("Transfer warned ⚠")
                 self._tftp_status_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+                self._wf_phase_lbl.setText("Transfer warned ⚠")
+                self._wf_phase_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
             else:
                 self._tftp_status_lbl.setText("Transfer complete ✓")
                 self._tftp_status_lbl.setStyleSheet("color: #34d399; font-size: 11px; min-width: 140px;")
+                self._wf_phase_lbl.setText("Transfer complete ✓")
+                self._wf_phase_lbl.setStyleSheet("color: #34d399; font-size: 11px; min-width: 140px;")
 
         elif _re.search(r"\d+ bytes copied", line):
             self._tftp_bar.setValue(100)
             self._tftp_status_lbl.setText("Transfer complete ✓")
             self._tftp_status_lbl.setStyleSheet("color: #34d399; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(100)
+            self._wf_phase_lbl.setText("Transfer complete ✓")
+            self._wf_phase_lbl.setStyleSheet("color: #34d399; font-size: 11px; min-width: 140px;")
 
         elif _re.search(r"\[FINALIZE\] Finalization complete", line):
-            # RCA cycle fully done — reset TFTP bar
+            # RCA cycle fully done — reset TFTP bar and workflow bar
             self._tftp_bar.setValue(0)
             self._tftp_status_lbl.setText("waiting…")
             self._tftp_status_lbl.setStyleSheet("color: #4b5563; font-size: 11px; min-width: 140px;")
+            self._wf_bar.setValue(0)
+            self._wf_phase_lbl.setText("Listening for disjoin events…")
+            self._wf_phase_lbl.setStyleSheet("color: #4b5563; font-size: 11px; min-width: 140px;")
     def _on_view_reports(self):
         import os, subprocess
         from pathlib import Path
@@ -2948,7 +3099,7 @@ class Sidebar(QWidget):
         logo.setObjectName("SidebarLogo")
         layout.addWidget(logo)
 
-        sub = QLabel("NETWORK AUTOMATION")
+        sub = QLabel("Autonomous Fault Diagnosis")
         sub.setObjectName("SidebarSubtitle")
         layout.addWidget(sub)
 
@@ -3176,6 +3327,7 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName(APP_NAME)
     app.setApplicationVersion(APP_VERSION)
+    app.setWindowIcon(QIcon(APP_ICON_PATH))
     app.setStyleSheet(MODERN_STYLESHEET)
 
     # Use Fusion style as base (best dark-theme compatibility)

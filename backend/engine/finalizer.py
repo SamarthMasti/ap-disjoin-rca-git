@@ -19,6 +19,87 @@ SUCCESS_RE = re.compile(
 )
 
 
+def _run_transfer_interactive(
+    conn,
+    cmd: str,
+    sftp_user: str,
+    sftp_pass: str,
+    ts_fn,
+    timeout: int = 300,
+) -> str:
+    """
+    Send a copy/sftp command and handle IOS-XE interactive prompts —
+    username, password, destination filename, confirm — exactly like
+    PollerEngine.run_command_interactive does.
+    Returns the full accumulated output.
+    """
+    import time as _time
+    print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {cmd}", file=sys.stderr)
+    conn.write_channel(cmd + "\n")
+    buffer = ""
+    start = _time.time()
+
+    while True:
+        _time.sleep(1)
+        chunk = conn.read_channel()
+        if chunk:
+            buffer += chunk
+            if chunk.strip(): print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {chunk}", file=sys.stderr)
+
+
+        buf_lower = buffer.lower()
+
+        if ("username:" in buf_lower or "username [" in buf_lower) and sftp_user:
+            print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Username prompt — sending SFTP username", file=sys.stderr)
+            conn.write_channel(sftp_user + "\n")
+            buffer = ""
+            continue
+
+        if "password:" in buf_lower and sftp_pass:
+            print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Password prompt — sending SFTP password", file=sys.stderr)
+            conn.write_channel(sftp_pass + "\n")
+            buffer = ""
+            continue
+        if "address or name of remote host" in buf_lower:
+            conn.write_channel("\n")
+            buffer = ""
+            continue
+        if "destination filename" in buf_lower:
+            conn.write_channel("\n")
+            buffer = ""
+            continue
+
+        if "[confirm]" in buf_lower or "(yes/no)" in buf_lower:
+            conn.write_channel("\n")
+            buffer = ""
+            continue
+        if "(yes/no)" in buf_lower:
+            conn.write_channel("yes\n")
+            buffer = ""
+            continue
+
+        if any(p in buf_lower for p in (
+                    "bytes copied",
+                    "transfer complete",
+                    "upload complete",
+                    "successful file transfer",
+                )):
+                    print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Transfer complete ✓", file=sys.stderr)
+                    return buffer
+
+        if any(x in buf_lower for x in (
+            "error", "failed", "no such", "permission denied",
+            "connection refused", "timed out", "cannot open",
+            "invalid input",
+        )):
+            print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer error detected in output", file=sys.stderr)
+            return buffer
+
+        if _time.time() - start > timeout:
+            print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer timed out after {timeout}s", file=sys.stderr)
+            return buffer
+
+
 def run_finalization(
     *,
     wlc_host: str,
@@ -133,19 +214,39 @@ def run_finalization(
             except Exception as exc:
                 print(f"[{ts()}] [FINALIZE] WARNING: '{verify_cmd}' failed: {exc}", file=sys.stderr)
 
-            tftp_ip = auth.get("tftp_ip", "")
-            tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
-            print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+            tftp_ip       = auth.get("tftp_ip", "")
+            proto         = auth.get("transfer_proto", "TFTP").upper()
+            sftp_user     = auth.get("sftp_username", "")
+            sftp_pass     = auth.get("sftp_password", "")
+
+            # ── Build export commands depending on protocol ───────────
+            if proto == "SFTP" and tftp_ip:
+                tftp_export = f"copy flash:/{pcap_filename} sftp://{tftp_ip}/{pcap_filename}"
+                proto_label = "SFTP"
+            elif tftp_ip:
+                tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
+                proto_label = "TFTP"
+            else:
+                tftp_export = None
+                proto_label = "NONE"
+
+            print(f"[{ts()}] [EPC_TFTP_Upload] Protocol={proto_label}  Server={tftp_ip}", file=sys.stderr)
+            if not tftp_export:
+                print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: No server IP configured — skipping pcap transfer", file=sys.stderr)
+            else:
+                print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+                if proto == "SFTP":
+                    print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
             try:
-                export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)
-                print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
-                wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
-                confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
-                if SUCCESS_RE.search(confirm_out or ""):
-                    print(f"[{ts()}] [EPC_TFTP_Upload] ✓ ApDisjoinEpc.pcap transferred successfully.", file=sys.stderr)
+              if tftp_export:
+                transfer_out = _run_transfer_interactive(
+                    wlc_conn, tftp_export, sftp_user, sftp_pass, ts
+                )
+                if SUCCESS_RE.search(transfer_out or ""):
+                    print(f"[{ts()}] [EPC_TFTP_Upload] ✓ ApDisjoinEpc.pcap transferred via {proto_label} successfully.", file=sys.stderr)
                 else:
                     print(
-                        f"[{ts()}] [EPC_TFTP_Upload] WARNING: transfer may have failed. Response: {confirm_out!r}",
+                        f"[{ts()}] [EPC_TFTP_Upload] WARNING: pcap transfer may have failed. Output: {transfer_out!r}",
                         file=sys.stderr,
                     )
             except Exception as exc:
@@ -153,18 +254,24 @@ def run_finalization(
 
             digits  = re.sub(r"[^0-9a-fA-F]", "", mac)
             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
-            always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
-            print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+            if proto == "SFTP" and tftp_ip:
+                always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+            elif tftp_ip:
+                always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+            else:
+                always_on_export = None
+            if always_on_export:
+                print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
             try:
-                export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)
-                print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
-                wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
-                confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
-                if SUCCESS_RE.search(confirm_out or ""):
+              if always_on_export:
+                always_on_out = _run_transfer_interactive(
+                    wlc_conn, always_on_export, sftp_user, sftp_pass, ts
+                )
+                if SUCCESS_RE.search(always_on_out or ""):
                     print(f"[{ts()}] [EPC_TFTP_Upload] ✓ ALWAYS_ON log transferred successfully.", file=sys.stderr)
                 else:
                     print(
-                        f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Response: {confirm_out!r}",
+                        f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Output: {always_on_out!r}",
                         file=sys.stderr,
                     )
             except Exception as exc:
@@ -225,8 +332,10 @@ def run_finalization(
     reset_disjoin_counter(mac)
     print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)
     print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)
+    with active_rca_lock:
+        _session_snap = active_rca_sessions.get(mac, {})
     append_finalized_ap(
         mac=mac,
-        ap_name=active_rca_sessions.get(mac, {}).get("ap_name"),
+        ap_name=_session_snap.get("ap_name"),
         ip=ip,
     )

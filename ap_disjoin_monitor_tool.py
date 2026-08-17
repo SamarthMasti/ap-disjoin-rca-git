@@ -349,30 +349,11 @@ AP_REBOOT_REASON_RE = re.compile(r"reboot.*reason|reload.*reason|last.*reset|pow
 # Global commands (no ap_name substitution) use needs_ap_name=False.
 # Per-AP commands use needs_ap_name=True — skipped if AP name is unavailable.
 AP_SIDE_COMMAND_CATALOG: list[dict] = [
-    {
-        "key":           "uptime",
-        "cmd_template":  "show ap uptime",
-        "needs_ap_name": False,
-        "description":   "All AP uptimes — detect recent reboots across the controller",
-    },
-    {
-        "key":           "summary",
-        "cmd_template":  "show ap summary",
-        "needs_ap_name": False,
-        "description":   "AP join state and operational baseline",
-    },
-    {
-        "key":           "crash-file",
-        "cmd_template":  "show ap crash-file",
-        "needs_ap_name": False,
-        "description":   "AP crash files — watchdog, kernel panic, software exception evidence",
-    },
-    {
-        "key":           "config",
-        "cmd_template":  "show ap name {ap_name} config general",
-        "needs_ap_name": True,
-        "description":   "AP config — regulatory domain, mode, join parameters",
-    },
+    # NOTE: entries that duplicated CONF/wlc_commands.conf verbatim (uptime,
+    # summary, crash-file, config, platform-resources, cpu-wncd, ap-image,
+    # disjoin-log, wireless-stats-history, crash-dir, obj-mgr-delete,
+    # obj-mgr-pending, stats-discovery, stats-join) were removed — the CONF
+    # file already covers them, they were being sent to the WLC twice.
     {
         "key":           "capwap",
         "cmd_template":  "show ap name {ap_name} capwap retransmit",
@@ -394,81 +375,11 @@ AP_SIDE_COMMAND_CATALOG: list[dict] = [
     },
     # ── New WLC commands validated list ───────────────────
     {
-        "key":           "platform-resources",
-        "cmd_template":  "show platform resources",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "Controller CPU/memory utilization",
-    },
-    {
-        "key":           "cpu-wncd",
-        "cmd_template":  "show processes cpu platform | include wncd",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "wncd process CPU — high CPU delays CAPWAP keepalive handling",
-    },
-    {
-        "key":           "ap-image",
-        "cmd_template":  "show ap image summary",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "AP image versions — mismatch causes repeated disjoin/rejoin",
-    },
-    {
-        "key":           "disjoin-log",
-        "cmd_template":  "show logging | include AP_JOIN_DISJOIN",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "Historical AP_JOIN_DISJOIN syslog entries",
-    },
-    {
-        "key":           "wireless-stats-history",
-        "cmd_template":  "show wireless stats ap history",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "AP join/disjoin history counters across the controller",
-    },
-    {
-        "key":           "crash-dir",
-        "cmd_template":  "dir all | include crash",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "Filesystem-level crash file listing",
-    },
-    {
         "key":           "cpu-sorted",
         "cmd_template":  "show processes cpu platform sorted | exclude      0%      0%      0%",
         "needs_ap_name": False,
         "needs_mac":     False,
         "description":   "Top CPU consumers on controller platform",
-    },
-    {
-        "key":           "obj-mgr-delete",
-        "cmd_template":  "show platform software object-manager chassis active F0 childless-delete-object",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "Object manager delete queue — stale CAPWAP object buildup",
-    },
-    {
-        "key":           "obj-mgr-pending",
-        "cmd_template":  "show platform software object-manager chassis active F0 pending-issue-update",
-        "needs_ap_name": False,
-        "needs_mac":     False,
-        "description":   "Object manager pending updates — forwarding plane sync issues",
-    },
-    {
-        "key":           "stats-discovery",
-        "cmd_template":  "show wireless stats ap mac {mac} discovery detailed",
-        "needs_ap_name": False,
-        "needs_mac":     True,
-        "description":   "Per-AP CAPWAP discovery phase statistics",
-    },
-    {
-        "key":           "stats-join",
-        "cmd_template":  "show wireless stats ap mac {mac} join detailed",
-        "needs_ap_name": False,
-        "needs_mac":     True,
-        "description":   "Per-AP CAPWAP join phase failure counters",
     },
     {
         "key":           "always-on-log",
@@ -1256,7 +1167,10 @@ def save_ap_stats(stats: dict[str, dict]) -> None:
     """
     Atomically write AP statistics to disk using a temp-file + rename pattern.
     Thread-safe: caller must hold AP_STATS_LOCK.
+    Disabled — ap_disjoin_stats.json report output turned off; in-memory
+    callers are unaffected since nothing reads this file back for logic.
     """
+    return
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     tmp_path = AP_STATS_FILE.with_suffix(".json.tmp")
     try:
@@ -1419,6 +1333,9 @@ def update_summary_stats(mac: str) -> None:
         "per_ap":          per_ap,
     }
 
+    # Disabled — summary_stats.json report output turned off; nothing reads
+    # this file back for logic, so skipping the write is behavior-neutral.
+    return
     tmp = SUMMARY_STATS_FILE.with_suffix(".json.tmp")
     try:
         tmp.write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
@@ -1606,7 +1523,9 @@ def evaluate_disjoin_event(monitor: "LiveMonitor") -> None:
 
         # ── Valid event ───────────────────────────────────────────────
         print(f"[{ts()}] [EVENT] VALID EVENT DETECTED", file=sys.stderr)
-        set_ap_traced_count(3)
+        _all_occ = load_disjoin_occurrences()
+        _unique_seen = {o.get("mac") for o in _all_occ if o.get("mac")}
+        set_ap_traced_count(len(_unique_seen))
         # Mark A, B, C used — match by identity (index in unused list)
         marked = event_engine.mark_window_used(occurrences, window)
         save_disjoin_occurrences(occurrences)
@@ -1843,10 +1762,10 @@ def _eem_batch_on_disjoin(
         # ── STATE: IDLE — accumulate detection window ──────────────────
         window: list[dict] = session.get("detection_window", [])
 
-        # Prune entries older than EEM_BATCH_DETECTION_WINDOW_SECONDS
+        # Prune entries older than monitor._eem_window_seconds (GUI-configurable)
         window = [
             e for e in window
-            if now_epoch - e.get("timestamp_epoch", 0) <= EEM_BATCH_DETECTION_WINDOW_SECONDS
+            if now_epoch - e.get("timestamp_epoch", 0) <= monitor._eem_window_seconds
         ]
 
         # Append current disjoin
@@ -2209,7 +2128,7 @@ class LiveMonitor:
                 mycap_name = f"MYCAP_{digits}"
 
                 _auto_start = [
-                    f"monitor capture {mycap_name} clear",
+                    f"no monitor capture {mycap_name}",
                     f"monitor capture {mycap_name} buffer size 100 circular bidirectional interface Tw0/0/0 both",
                     f"monitor capture {mycap_name} control-plane both",
                 ]
@@ -2396,11 +2315,14 @@ class LiveMonitor:
 
                     print(f"[{now}] [SNMP_TRAP] AP={ap_name or '?'} MAC={mac} IP={ip or '?'}", file=sys.stderr)
 
-                    threading.Thread(
-                        target=process_cgdc_event,
-                        args=(mac, ap_name, ip, _monitor_self),
-                        daemon=True,
-                    ).start()
+                    if not _is_duplicate(mac):
+                        threading.Thread(
+                            target=_monitor_self._on_eem_trigger,
+                            args=(combined_text, now),
+                            daemon=True,
+                        ).start()
+                    else:
+                        print(f"[{now}] [DEDUP] Duplicate individual disjoin suppressed: {mac}", file=sys.stderr)
             snmp_server = socketserver.UDPServer(("0.0.0.0", 162), _SnmpTrapHandler)
             snmp_thread = threading.Thread(target=snmp_server.serve_forever, daemon=True)
             snmp_thread.start()
@@ -2572,7 +2494,7 @@ class LiveMonitor:
                 print(f"[{trigger_ts}] [DEDUP] Duplicate but workflow active for {mac} — passing through for finalization.", file=sys.stderr)
         
 
-        #print(f"[{trigger_ts}] DISJOIN payload | ap={ap_name or '?'} ip={ip or '?'} mac={mac or '?'} reason={reason}", file=sys.stderr)
+        print(f"[{trigger_ts}] DISJOIN payload | ap={ap_name or '?'} ip={ip or '?'} mac={mac or '?'}", file=sys.stderr)
 
         # ── Guard: skip JOIN events — AP_JOIN_DISJOIN syslog covers both ──
         payload_lower = trigger_line.lower()
@@ -2616,6 +2538,7 @@ class LiveMonitor:
                     record_disjoin_event(mac, ap_name=ap_name, ip=ip)
                     _occ = load_disjoin_occurrences()
                     _seen = {e.get("mac") for e in _occ if e.get("mac")}
+                    set_ap_traced_count(len(_seen))
                     if "reset config cmd sent" not in (reason or "").lower():
                         print(
                             f"[{trigger_ts}] [DISJOIN_DETECTED] AP={ap_name or '?'} "
@@ -2642,6 +2565,10 @@ class LiveMonitor:
                 f"— triggering finalization immediately.",
                 file=sys.stderr,
             )
+            # Update traced count — this disjoin is a new unique MAC event
+            _occ_now = load_disjoin_occurrences()
+            _seen_now = {e.get("mac") for e in _occ_now if e.get("mac")}
+            set_ap_traced_count(len(_seen_now))
             # Guard: only one finalization thread per MAC at a time.
             with self._finalizing_lock:
                 if mac in self._finalizing_macs:
@@ -2677,8 +2604,12 @@ class LiveMonitor:
             set_ap_workflow_active(mac, ap_name, ip)
 
         # ── Persistent disjoin counter ────────────────────────────────────
+        # NOTE: do NOT call record_disjoin_event() here — every caller of
+        # _react() (individual-disjoin handler, CGDC state machine, 4th-disjoin
+        # handler) already records this same physical disjoin to AP_STATS
+        # before launching _react(). Recording it again here double-counts
+        # total_disjoins for every AP that crosses the RCA threshold.
         disjoin_count = increment_disjoin_counter(mac)
-        record_disjoin_event(mac, ap_name=ap_name, ip=ip)
         print(
             f"[{ts()}] Disjoin counter for {ip or mac}: {disjoin_count} "
             f"(threshold={DISJOIN_THRESHOLD})",
@@ -2808,19 +2739,20 @@ class LiveMonitor:
                     if mac in ACTIVE_RCA_SESSIONS:
                         ACTIVE_RCA_SESSIONS[mac]["mycap_name"] = mycap_name
                 _mycap_cmds = [
-                    f"monitor capture {mycap_name} clear",
+                    f"no monitor capture {mycap_name}",
                     f"monitor capture {mycap_name} buffer size 100 circular bidirectional interface Tw0/0/0 both",
                     f"monitor capture {mycap_name} control-plane both",
                     f"monitor capture {mycap_name} match ipv4 host {ip} any bidirectional" if ip else None,
                     f"monitor capture {mycap_name} start",
-                   
-                    
                 ]
                 _mycap_cmds = [c for c in _mycap_cmds if c is not None]
                 for cmd in _mycap_cmds:
                     print(f"[{ts()}]   [MYCAP] {cmd}", file=sys.stderr)
                     try:
                         out = conn.send_command_timing(cmd, delay_factor=1, read_timeout=15)
+                        if "confirm" in out.lower():
+                            print(f"[{ts()}]   [MYCAP] Confirm prompt detected for '{cmd}' — sending ENTER.", file=sys.stderr)
+                            out += conn.send_command_timing("\n", delay_factor=1, read_timeout=15)
                         evidence[cmd] = out if out else "(no output)"
                     except Exception as exc:
                         print(f"[{ts()}]   [MYCAP] Error on '{cmd}': {exc}", file=sys.stderr)
@@ -2851,38 +2783,42 @@ class LiveMonitor:
                         print(f"[{ts()}]   [WLC-PING] Error on '{cmd}': {exc}", file=sys.stderr)
                         evidence[cmd] = f"ERROR: {exc}"
 
-                # ── PHASE 5: WLC evidence collection (externalized) ──────
-                _wlc_catalog = load_command_catalog(
-                    self.auth.get("wlc_evidence_cmd_file", "CONF/wlc_commands.conf")
-                )
-                _show_cmds: list[str] = []
-                for entry in _wlc_catalog:
-                    raw_cmd = entry["cmd"]
-                    if "{ap_name}" in raw_cmd and not ap_name:
-                        continue   # skip ap_name-dependent lines if AP name unknown
-                    cmd = raw_cmd.format(
-                        mac=dot_mac,
-                        event_ts=event_ts_safe,
-                        ap_name=ap_name or "",
-                    )
-                    _show_cmds.append(cmd)
-                if not _show_cmds:
-                    print(f"[{ts()}] [CMD_CATALOG] WLC command catalog empty — no evidence commands to run.", file=sys.stderr)
-                for cmd in _show_cmds:
-                    print(f"[{ts()}]   {cmd}", file=sys.stderr)
-                    try:
-                        output = conn.send_command(cmd, read_timeout=120)
-                        if not output or output.strip().startswith("%") or "Invalid input" in output:
-                            print(f"[{ts()}]   Skipped (unsupported/error): {cmd}", file=sys.stderr)
-                            evidence[cmd] = "(skipped — unsupported or error response)"
-                        else:
-                            evidence[cmd] = output
-                    except Exception as exc:
-                        print(f"[{ts()}]   Error on '{cmd}': {exc}", file=sys.stderr)
-                        evidence[cmd] = f"ERROR: {exc}"
-
-                # ── PHASE 6: parallel WLC AP telemetry + direct AP SSH ────
+                # ── PHASE 6: parallel WLC catalog + WLC AP telemetry (same thread,
+                # same conn — sequential between themselves) + direct AP SSH (own thread) ──
                 def _wlc_ap_worker() -> None:
+                    # ── PHASE 5: WLC evidence collection (externalized) ──────
+                    _wlc_catalog = load_command_catalog(
+                        self.auth.get("wlc_evidence_cmd_file", "CONF/wlc_commands.conf")
+                    )
+                    _show_cmds: list[str] = []
+                    for entry in _wlc_catalog:
+                        raw_cmd = entry["cmd"]
+                        if "{ap_name}" in raw_cmd and not ap_name:
+                            continue   # skip ap_name-dependent lines if AP name unknown
+                        cmd = raw_cmd.format(
+                            mac=dot_mac,
+                            event_ts=event_ts_safe,
+                            ap_name=ap_name or "",
+                        )
+                        _show_cmds.append(cmd)
+                    if not _show_cmds:
+                        print(f"[{ts()}] [CMD_CATALOG] WLC command catalog empty — no evidence commands to run.", file=sys.stderr)
+                    for cmd in _show_cmds:
+                        print(f"[{ts()}]   [WLC AP TELEMETRY] {cmd}", file=sys.stderr)
+                        try:
+                            output = conn.send_command(cmd, read_timeout=120)
+                            if not output or output.strip().startswith("%") or "Invalid input" in output:
+                                print(f"[{ts()}]   [WLC AP TELEMETRY] Skipped (unsupported/error): {cmd}", file=sys.stderr)
+                                evidence[cmd] = "(skipped — unsupported or error response)"
+                                wlc_ap_evidence[cmd] = "(skipped — unsupported or error response)"
+                            else:
+                                evidence[cmd] = output
+                                wlc_ap_evidence[cmd] = output
+                        except Exception as exc:
+                            print(f"[{ts()}]   [WLC AP TELEMETRY] Error on '{cmd}': {exc}", file=sys.stderr)
+                            evidence[cmd] = f"ERROR: {exc}"
+                            wlc_ap_evidence[cmd] = f"ERROR: {exc}"
+
                     print(f"[{ts()}] [WLC AP TELEMETRY] Starting collection ...", file=sys.stderr)
                     wlc_ap_evidence.update(collect_ap_side_evidence(conn, ap_name, mac))
                     print(f"[{ts()}] [WLC AP TELEMETRY] Done — {len(wlc_ap_evidence)} commands.",
@@ -3424,11 +3360,11 @@ class LiveMonitor:
                 ...
                 continue
 
-            append_disjoin_occurrence(ap_mac, ap_name, ap_ip)
-            record_disjoin_event(ap_mac, ap_name=ap_name, ip=ap_ip)
+            
             set_ap_workflow_active(ap_mac, ap_name, ap_ip)
-            set_ap_workflow_active(ap_mac, ap_name, ap_ip)
-
+            _all_occ_now = load_disjoin_occurrences()
+            _unique_now = {o.get("mac") for o in _all_occ_now if o.get("mac")}
+            set_ap_traced_count(len(_unique_now))
             # Pre-register in ACTIVE_RCA_SESSIONS so _finalize_all_active_on_4th
             # can find this MAC immediately, even before _react acquires SSH.
             with ACTIVE_RCA_LOCK:
@@ -3584,7 +3520,7 @@ class LiveMonitor:
                 f"AP  : {r['ap_name'] or 'unknown'}  [{mac}]",
                 f"Time: {r['event_timestamp']}",
                 "",
-                f"  [WLC CONTROLLER DIAGNOSTICS]",
+                f"  [WLC TELEMETRY]",
                 f"  Confidence : {c['confidence'].upper()}",
                 f"  Cause      : {c['probable_cause']}",
                 f"  Action     : {c['action']}",
@@ -3651,7 +3587,10 @@ class LiveMonitor:
                     lines.append(f"  {idx}. {readable}")
                 lines.append("")
 
-        txt_path.write_text("\n".join(lines), encoding="utf-8")
+        # Disabled — ap_disjoin_..._summary.txt report output turned off.
+        # json_path/txt_path are still returned so callers that log/print
+        # these paths keep working unchanged.
+        # txt_path.write_text("\n".join(lines), encoding="utf-8")
         return json_path, txt_path
 
 # ---------------------------------------------------------------------------
@@ -3713,10 +3652,16 @@ def resolve_auth(args: argparse.Namespace) -> dict[str, Any]:
         "ap_password": (device_data or {}).get("ap_password", "Cisco"),
         "ap_secret":   (device_data or {}).get("ap_secret", ""),
         "jumphost_ip": (device_data or {}).get("jumphost_ip", ""),
-        "tftp_ip":     (device_data or {}).get("tftp_ip", ""),
+        "tftp_ip":        (device_data or {}).get("tftp_ip", ""),
+        "transfer_proto": (device_data or {}).get("transfer_proto", "TFTP"),
+        "sftp_username":  (device_data or {}).get("sftp_username", ""),
+        "sftp_password":  (device_data or {}).get("sftp_password", ""),
         "eem_script_path": getattr(args, "eem_script_path", None),
         "fourth_disjoin_recurrence_window_seconds": (device_data or {}).get("fourth_disjoin_recurrence_window_seconds", None),
-        "wlc_evidence_cmd_file": (device_data or {}).get("wlc_evidence_cmd_file", "CONF/wlc_commands.conf"),}
+        "wlc_evidence_cmd_file": (device_data or {}).get("wlc_evidence_cmd_file", "CONF/wlc_commands.conf"),
+        "transfer_proto":   (device_data or {}).get("transfer_proto", "TFTP"),
+        "sftp_username":    (device_data or {}).get("sftp_username", ""),
+        "sftp_password":    (device_data or {}).get("sftp_password", ""),}
 
 
 # ---------------------------------------------------------------------------
@@ -3794,7 +3739,7 @@ def _run_monitor_legacy_inline(args: argparse.Namespace) -> None:
         "trigger_mode": f"EEM_{'SNMP_trap' if TRIGGER_MODE == 'snmp' else 'MDT_gRPC_dialout'}",
         "grpc_port": grpc_port if TRIGGER_MODE != "snmp" else None,
         "total_disjoin_events": len(monitor.events),
-        "unique_aps_traced": max(len(monitor.ap_reports), getattr(monitor, "_eem_batch_ap_count", 0)),
+        "unique_aps_traced": len(monitor.events),
         "high_confidence_findings": high,
         "report_json": str(json_path), "report_summary": str(txt_path),
     }, indent=2))
