@@ -3068,12 +3068,14 @@ class MonitorPage(QWidget):
             self._wf_phase_lbl.setText("Listening for disjoin events…")
             self._wf_phase_lbl.setStyleSheet("color: #4b5563; font-size: 11px; min-width: 140px;")
     def _on_view_reports(self):
-        import os, subprocess
+        import os, sys, subprocess
         from pathlib import Path
         path = Path(getattr(self, "_report_dir", "reports")).resolve()
         path.mkdir(parents=True, exist_ok=True)
         if os.name == "nt":
             os.startfile(str(path))
+        elif sys.platform == "darwin":
+            subprocess.Popen(["open", str(path)])
         else:
             subprocess.Popen(["xdg-open", str(path)])
 # ---------------------------------------------------------------------------
