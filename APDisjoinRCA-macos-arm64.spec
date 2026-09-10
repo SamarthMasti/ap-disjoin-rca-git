@@ -7,14 +7,22 @@
 #
 # Output: dist/APDisjoinRCA.app
 
+from PyInstaller.utils.hooks import collect_all
+
 block_cipher = None
 
 app_icon = 'assets/ciscologo.icns'
 
+# grpc's real implementation is mostly a compiled C-extension — listing it in
+# hiddenimports alone only traces its plain-Python parts. collect_all() pulls
+# in its binaries and data files too, which is what's actually needed for it
+# to work once bundled.
+grpc_datas, grpc_binaries, grpc_hiddenimports = collect_all('grpc')
+
 a = Analysis(
     ['gui_main.py'],
     pathex=['.'],
-    binaries=[],
+    binaries=[*grpc_binaries],
     datas=[
         ('assets/ciscologo.icns', 'assets'),
         ('CONF/iosxe_devices.yaml', 'CONF'),
@@ -22,6 +30,7 @@ a = Analysis(
         ('mdt_grpc_dialout_pb2_grpc.py', '.'),
         ('telemetry_pb2.py', '.'),
         ('telemetry_pb2_grpc.py', '.'),
+        *grpc_datas,
     ],
     hiddenimports=[
         'PySide6.QtCore',
@@ -33,6 +42,7 @@ a = Analysis(
         'google.protobuf',
         'paramiko',
         'cryptography',
+        *grpc_hiddenimports,
     ],
     hookspath=[],
     hooksconfig={},
