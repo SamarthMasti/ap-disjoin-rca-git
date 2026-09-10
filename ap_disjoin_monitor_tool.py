@@ -157,6 +157,92 @@ MDT_DEBUG_DIR = REPORTS_DIR / "raw_mdt_payloads"
 # ── Transport mode: set at runtime via CLI prompt ─────────────────────────
 SNMP_COMMUNITY  = "public"
 TRIGGER_MODE    = "telemetry"   # overwritten in run_monitor() based on user input
+SNMP_TRAP_DEBUG = os.getenv("SNMP_TRAP_DEBUG", "false").lower() == "true"
+
+
+# ── SNMP trap decoding (stdlib-only BER/DER parser, no new dependency) ────
+# Cisco EEM's "action snmp-trap strdataN" fires a CISCO-EMBEDDED-EVENT-MGR-MIB
+# ceEvent notification (SNMPv2c TRAP-PDU). This decodes the real ASN.1/BER
+# structure (SEQUENCE / INTEGER / OCTET STRING / variable-bindings) instead
+# of scanning raw bytes for 0x04 tags, which previously picked up the
+# community string / engine padding as false "payload" text.
+def _ber_read_length(data: bytes, idx: int) -> tuple[int, int]:
+    first = data[idx]
+    idx += 1
+    if first & 0x80 == 0:
+        return first, idx
+    num_bytes = first & 0x7f
+    if num_bytes == 0:
+        raise ValueError("BER indefinite length not supported")
+    length = int.from_bytes(data[idx:idx + num_bytes], "big")
+    return length, idx + num_bytes
+
+
+def _ber_read_tlv(data: bytes, idx: int) -> tuple[int, bytes, int]:
+    tag = data[idx]
+    idx += 1
+    length, idx = _ber_read_length(data, idx)
+    value = data[idx:idx + length]
+    return tag, value, idx + length
+
+
+def _ber_read_varbinds(vb_seq: bytes) -> list[str]:
+    """Extract OCTET STRING values from a variable-bindings SEQUENCE OF VarBind."""
+    strings: list[str] = []
+    q = 0
+    while q < len(vb_seq):
+        bind_tag, bind_body, q = _ber_read_tlv(vb_seq, q)
+        if bind_tag != 0x30:      # each VarBind is itself a SEQUENCE { name OID, value ANY }
+            continue
+        r = 0
+        _name_tag, _name_val, r = _ber_read_tlv(bind_body, r)   # OID — not needed
+        val_tag, val_val, r = _ber_read_tlv(bind_body, r)
+        if val_tag == 0x04:       # OCTET STRING
+            try:
+                strings.append(val_val.decode("utf-8", errors="ignore"))
+            except Exception:
+                pass
+    return strings
+
+
+def parse_snmp_trap(data: bytes) -> tuple[str | None, list[str]]:
+    """
+    Minimal SNMPv1/v2c TRAP decoder. Returns (community, [octet-string
+    varbind values in order]) — the varbind values are what Cisco EEM's
+    "snmp-trap strdataN" action actually populates with our applet's
+    trigger_msg. Returns (None, []) on any malformed/unrecognized payload.
+    """
+    try:
+        tag, msg_body, _ = _ber_read_tlv(data, 0)
+        if tag != 0x30:                                # outer SEQUENCE
+            return None, []
+        idx = 0
+        _ver_tag, _ver_val, idx = _ber_read_tlv(msg_body, idx)     # version INTEGER
+        comm_tag, comm_val, idx = _ber_read_tlv(msg_body, idx)     # community OCTET STRING
+        community = comm_val.decode("utf-8", errors="ignore") if comm_tag == 0x04 else None
+        pdu_tag, pdu_body, idx = _ber_read_tlv(msg_body, idx)      # PDU (context tag)
+
+        if pdu_tag == 0xA7:                             # SNMPv2-Trap-PDU
+            p = 0
+            _, _, p = _ber_read_tlv(pdu_body, p)         # request-id
+            _, _, p = _ber_read_tlv(pdu_body, p)         # error-status
+            _, _, p = _ber_read_tlv(pdu_body, p)         # error-index
+            vb_tag, vb_seq, p = _ber_read_tlv(pdu_body, p)   # variable-bindings SEQUENCE
+            return community, (_ber_read_varbinds(vb_seq) if vb_tag == 0x30 else [])
+
+        if pdu_tag == 0xA4:                             # SNMPv1 Trap-PDU (different fixed header)
+            p = 0
+            _, _, p = _ber_read_tlv(pdu_body, p)         # enterprise OID
+            _, _, p = _ber_read_tlv(pdu_body, p)         # agent-addr
+            _, _, p = _ber_read_tlv(pdu_body, p)         # generic-trap
+            _, _, p = _ber_read_tlv(pdu_body, p)         # specific-trap
+            _, _, p = _ber_read_tlv(pdu_body, p)         # time-stamp
+            vb_tag, vb_seq, p = _ber_read_tlv(pdu_body, p)
+            return community, (_ber_read_varbinds(vb_seq) if vb_tag == 0x30 else [])
+
+        return community, []
+    except Exception:
+        return None, []
 MYCAP_NAME           = "MYCAP"
 # ACTIVE_RCA holds the currently running RCA session.
 # Structure: { "mac": str, "ap_name": str|None, "ip": str|None,
@@ -1239,7 +1325,7 @@ def record_disjoin_event(
         save_ap_stats(stats)
 
     print(
-        f"[{now}] [AP_STATS] {mac} | count={entry['disjoin_count']} "
+        f"[{now}] [AP_STATS] {mac} | "
         f"ap={entry['ap_name'] or '?'} ip={entry['ip'] or '?'}",
         file=sys.stderr,
     )
@@ -1976,7 +2062,6 @@ class LiveMonitor:
             EEM_APPLET_CONFIG = [
                 f"snmp-server community {SNMP_COMMUNITY} RO",
                 f"snmp-server host {jumphost_ip} version 2c public",
-                "snmp-server enable traps",
                 "snmp-server enable traps event-manager",
                 "no event manager applet AP_DISJOIN_BATCH_SNMP",
                 "event manager applet AP_DISJOIN_BATCH_SNMP",
@@ -2253,43 +2338,27 @@ class LiveMonitor:
                     sender = self.client_address[0]
                     now    = ts()
 
-                    print(f"[{now}] [SNMP_TRAP] RECEIVED — {len(data)} bytes from {sender}", file=sys.stderr)
+                    community, varbind_strings = parse_snmp_trap(data)
+                    combined_text = " ".join(varbind_strings)
 
-                    # ── Extract printable OCTET STRING varbinds from raw UDP payload ──
-                    strings = []
-                    i, raw = 0, data
-                    while i < len(raw):
-                        if raw[i] == 0x04 and i + 1 < len(raw):
-                            len_byte = raw[i + 1]
-                            if len_byte & 0x80:
-                                num_len_bytes = len_byte & 0x7f
-                                if i + 2 + num_len_bytes > len(raw):
-                                    break
-                                length = int.from_bytes(raw[i + 2:i + 2 + num_len_bytes], "big")
-                                val_start = i + 2 + num_len_bytes
-                            else:
-                                length = len_byte
-                                val_start = i + 2
-                            val = raw[val_start: val_start + length]
-                            try:
-                                strings.append(val.decode("utf-8", errors="ignore"))
-                            except Exception:
-                                pass
-                            i = val_start + length
-                            continue
-                        i += 1
-                    combined_text = " ".join(strings)
-                    print(f"[{now}] [SNMP_TRAP] PARSED STRINGS: {strings}", file=sys.stderr)
+                    is_batch_trigger = "EEM_BATCH_TRIGGER" in combined_text
+                    is_disjoin_event = "Disjoined" in combined_text and "AP_JOIN_DISJOIN" in combined_text
 
-                    if (
-                        "EEM_BATCH_TRIGGER" not in combined_text
-                        and ("Disjoined" not in combined_text or "AP_JOIN_DISJOIN" not in combined_text)
-                    ):
+                    if not is_batch_trigger and not is_disjoin_event:
+                        # Any other SNMP trap (unrelated MIB, malformed payload, etc.) —
+                        # no detail dump, just note that something arrived.
+                        print(f"[{now}] [SNMP_TRAP] SNMP trap received from {sender}", file=sys.stderr)
+                        if community is None:
+                            print(f"[{now}] [SNMP_TRAP_DEBUG] BER decode failed — {len(data)} raw bytes, "
+                                  f"hex: {data.hex()}", file=sys.stderr)
+                        else:
+                            print(f"[{now}] [SNMP_TRAP_DEBUG] community={community!r} "
+                                  f"varbinds={varbind_strings!r}", file=sys.stderr)
                         return
 
                     print(f"[{now}] [SNMP_TRAP] Disjoin trap from {sender}: {combined_text[:120]}", file=sys.stderr)
 
-                    if "EEM_BATCH_TRIGGER" in combined_text:
+                    if is_batch_trigger:
                         print(
                             f"[{now}] [SNMP_TRAP] EEM batch trigger received via SNMP trap",
                             file=sys.stderr,
@@ -2508,8 +2577,13 @@ class LiveMonitor:
         # ── EEM_BATCH: only react to the WLC-confirmed 3rd disjoin trigger ──
         
 
-        self.events.append({"timestamp": trigger_ts, "trigger_line": trigger_line,
-                            "ap_name": ap_name, "ap_mac": mac, "ip": ip, "reason": reason})
+        if mac:
+            # Only count triggers that carry a real AP MAC as a disjoin event —
+            # the WLC also sends a separate no-MAC "batch trigger" notification
+            # for the same 3rd-disjoin moment; that one isn't a distinct AP
+            # disjoin and shouldn't inflate the event count.
+            self.events.append({"timestamp": trigger_ts, "trigger_line": trigger_line,
+                                "ap_name": ap_name, "ap_mac": mac, "ip": ip, "reason": reason})
 
         if not mac:
             if TRIGGER_MODE in ("eem_batch", "snmp"):
@@ -3336,8 +3410,9 @@ class LiveMonitor:
                 else ' action 020 export-to-telemetry "$trigger_msg"'
             )
             
+            _batch_applet_name = "AP_DISJOIN_BATCH_SNMP" if TRIGGER_MODE == "snmp" else "AP_DISJOIN_BATCH"
             _suspend_batch = [
-                "no event manager applet AP_DISJOIN_BATCH",
+                f"no event manager applet {_batch_applet_name}",
             ]
             _4th_conn.send_config_set(_suspend_batch, read_timeout=30, exit_config_mode=True)
             _4th_conn.disconnect()
@@ -3431,6 +3506,12 @@ class LiveMonitor:
                     f"— watcher exiting cleanly.",
                     file=sys.stderr,
                 )
+                print(
+                    f"[{ts()}] Finalization complete — shutting down. "
+                    f"Restart the application to start a new monitoring session.",
+                    file=sys.stderr,
+                )
+                self.stop_event.set()
                 return
             time.sleep(poll_interval)
 

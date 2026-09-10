@@ -1787,6 +1787,8 @@ class ConfigurationPage(QWidget):
         self._rb_mdt.setEnabled(False)
         self._rb_mdt.setVisible(False)
         self._rb_snmp = QRadioButton("SNMP Traps")
+        self._rb_snmp.setToolTip("SNMP Traps — not yet enabled")
+        self._rb_snmp.setEnabled(False)
         self._rb_eem  = QRadioButton("TELEMETRY EEM")
         self._rb_eem.setToolTip("WLC EEM counts 3 disjoins internally and fires one telemetry event")
         self._rb_eem.setChecked(True)
@@ -1855,6 +1857,8 @@ class ConfigurationPage(QWidget):
         proto_row.setSpacing(18)
         self._rb_tftp = QRadioButton("TFTP")
         self._rb_sftp = QRadioButton("SFTP")
+        self._rb_sftp.setToolTip("SFTP — not yet enabled")
+        self._rb_sftp.setEnabled(False)
         self._rb_tftp.setChecked(True)
         proto_grp = QButtonGroup(self)
         proto_grp.addButton(self._rb_tftp)
@@ -1971,7 +1975,7 @@ class ConfigurationPage(QWidget):
         self._cb_debug_commands = type('_Stub', (), {'isChecked': lambda self: False})()
         self._f_wlc_debug_file  = type('_Stub', (), {'text': lambda self: ''})()
         self._f_ap_debug_file   = type('_Stub', (), {'text': lambda self: ''})()
-        adv_section = CollapsibleSection("Advanced Options", adv_content, collapsed=False)
+        adv_section = CollapsibleSection("Telemetery IP options", adv_content, collapsed=False)
         advanced_layout.addWidget(adv_section)
         left_col_layout.addWidget(monitoring_section)
 
@@ -2613,6 +2617,7 @@ class MonitorPage(QWidget):
         self._line_count  = 0
         self._event_count = 0
         self._ap_count    = 0
+        self._session_ending = False
         self._log.clear()
         self._report_dir = config.get("report_dir", "reports")
         self._stat_lines.setText("0")
@@ -2678,6 +2683,12 @@ class MonitorPage(QWidget):
         Accept a raw log line (plain text or with ANSI escapes),
         colourise it, and append to the panel.
         """
+        # Once the "restart the application" shutdown message has been
+        # shown, the run is over — suppress the trailing internal noise
+        # (tracebacks, [EVT] dumps, the final JSON blob) that follows it.
+        if getattr(self, "_session_ending", False):
+            return
+
         self._line_count += 1
         self._stat_lines.setText(str(self._line_count))
 
@@ -2689,6 +2700,9 @@ class MonitorPage(QWidget):
         if self._autoscroll_cb.isChecked():
             sb = self._log.verticalScrollBar()
             sb.setValue(sb.maximum())
+
+        if "Restart the application to start a new monitoring session." in line:
+            self._session_ending = True
 
     def on_controller_event(self, event: dict):
         """
@@ -2922,54 +2936,31 @@ class MonitorPage(QWidget):
                 f"RCA sessions finalized ({self._timer_complete_count}/{expected})..."
             )
 
-            # TFTP
-            self._tftp_status_lbl.setText(
-                    "All cleanup timers completed ✓"
-                )
-
             self._wf_phase_lbl.setStyleSheet(
-                    "color: #34d399; font-size: 11px; min-width: 140px;"
-                )
-
-            self._tftp_status_lbl.setStyleSheet(
                     "color: #34d399; font-size: 11px; min-width: 140px;"
                 )
 
             if self._timer_complete_count >= expected:
                 self._wf_bar.setValue(100)
-                self._tftp_bar.setValue(100)
 
                 self._wf_phase_lbl.setText(
                     "All RCA workflows complete ✓"
-                )
-
-                self._tftp_status_lbl.setText(
-                    "All cleanup timers completed ✓"
                 )
 
                 self._wf_phase_lbl.setStyleSheet(
                     "color: #34d399; font-size: 11px; min-width: 140px;"
                 )
 
-                self._tftp_status_lbl.setStyleSheet(
-                    "color: #34d399; font-size: 11px; min-width: 140px;"
-                )
-
                 QTimer.singleShot(2500, lambda: (
                     self._wf_bar.setValue(0),
-                    self._tftp_bar.setValue(0),
 
                     self._wf_phase_lbl.setText(
                         "Listening for disjoin events…"
                     ),
-
-                    self._tftp_status_lbl.setText(
-                        "waiting..."
-                    )
                 ))
 
                 self._timer_complete_count = 0
-                
+
 
         # Startup — listener ready, no RCA active
         
@@ -2999,6 +2990,17 @@ class MonitorPage(QWidget):
             self._wf_bar.setValue(93)
             self._wf_phase_lbl.setText("Uploading pcap…")
             self._wf_phase_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
+
+        elif _re.search(r"\[EPC_TFTP_Upload\]\s*!+\s*$", line):
+            # Real per-block progress ticks the WLC prints during the actual
+            # copy ("!" per block written) — nudge the Transfer bar forward
+            # on each one so it moves in step with the real transfer instead
+            # of sitting still at 30% until "Transfer complete" arrives.
+            # TFTP-only, on purpose — does not touch the Workflow bar.
+            next_val = min(self._tftp_bar.value() + 3, 90)
+            self._tftp_bar.setValue(next_val)
+            self._tftp_status_lbl.setText(f"Uploading… {next_val}%")
+            self._tftp_status_lbl.setStyleSheet("color: #fbbf24; font-size: 11px; min-width: 140px;")
 
         elif _re.search(r"\[EPC_TFTP_Upload\].*SFTP credentials configured", line):
             self._tftp_bar.setValue(20)

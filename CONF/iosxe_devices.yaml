@@ -4,7 +4,7 @@ iosxe_devices:
   ap_username: admin
   enable_secret: ''
   host: 192.168.0.100
-  jumphost_ip: 192.168.0.4
+  jumphost_ip: 192.168.0.7
   name: WLC_1
   os_version: 17.9.4
   password: Cisco123
@@ -12,7 +12,7 @@ iosxe_devices:
   port: 22
   sftp_password: Cisco123!
   sftp_username: sftpuser
-  tftp_ip: 192.168.0.4
+  tftp_ip: 192.168.0.7
   transfer_proto: TFTP
   transport: ssh
   username: admin
@@ -27,16 +27,29 @@ iosxe_devices:
   port: 22
   tftp_ip: ''
   username: ''
-- ap_password: Cisco
-  ap_secret: ''
-  ap_username: Cisco
-  host: 192.168.0.2
-  jumphost_ip: ''
+- ap_password: Aigle123
+  ap_secret: Aigle123
+  ap_username: admin
+  host: 192.168.0.200
+  jumphost_ip: 192.168.0.27
   name: WLC2
-  password: ''
+  password: Cisco123
   port: 22
   sftp_password: ''
   sftp_username: ''
-  tftp_ip: ''
+  tftp_ip: 192.168.0.27
   transfer_proto: TFTP
-  username: ''
+  username: admin
+- ap_password: Aigle123
+  ap_secret: Aigle123
+  ap_username: admin
+  host: 192.168.0.200
+  jumphost_ip: 192.168.0.7
+  name: WLC_2
+  password: Cisco123
+  port: 22
+  sftp_password: Cisco123!
+  sftp_username: sftpuser
+  tftp_ip: 192.168.0.7
+  transfer_proto: TFTP
+  username: admin

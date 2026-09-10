@@ -1522,32 +1522,78 @@ static const char* const __pyx_f[] = {
 /* #### Code section: type_declarations ### */
 
 /*--- Type declarations ---*/
-struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization;
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive;
 struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr;
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr;
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization;
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr;
 
 /* "backend/engine/finalizer.py":22
+ * 
+ * 
+ * def _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *     conn,
+ *     cmd: str,
+*/
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive {
+  PyObject_HEAD
+  PyObject *__pyx_v_buf_lower;
+};
+
+
+/* "backend/engine/finalizer.py":81
+ *             continue
+ * 
+ *         if any(p in buf_lower for p in (             # <<<<<<<<<<<<<<
+ *                     "bytes copied",
+ *                     "transfer complete",
+*/
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr {
+  PyObject_HEAD
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *__pyx_outer_scope;
+  PyObject *__pyx_genexpr_arg_0;
+  PyObject *__pyx_v_p;
+};
+
+
+/* "backend/engine/finalizer.py":90
+ *                     return buffer
+ * 
+ *         if any(x in buf_lower for x in (             # <<<<<<<<<<<<<<
+ *             "error", "failed", "no such", "permission denied",
+ *             "connection refused", "timed out", "cannot open",
+*/
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr {
+  PyObject_HEAD
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *__pyx_outer_scope;
+  PyObject *__pyx_genexpr_arg_0;
+  PyObject *__pyx_v_x;
+};
+
+
+/* "backend/engine/finalizer.py":103
  * 
  * 
  * def run_finalization(             # <<<<<<<<<<<<<<
  *     *,
  *     wlc_host: str,
 */
-struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization {
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization {
   PyObject_HEAD
   PyObject *__pyx_v_export_out;
 };
 
 
-/* "backend/engine/finalizer.py":101
+/* "backend/engine/finalizer.py":182
  *                     "confirm",
  *                 )
  *                 if any(p in export_out.lower() for p in OVERWRITE_PATTERNS):             # <<<<<<<<<<<<<<
  *                     print(
  *                         f"[{ts()}] [FINALIZE] [MYCAP] Overwrite prompt detected  sending ENTER to confirm.",
 */
-struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr {
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr {
   PyObject_HEAD
-  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *__pyx_outer_scope;
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *__pyx_outer_scope;
   PyObject *__pyx_genexpr_arg_0;
   PyObject *__pyx_v_p;
 };
@@ -1881,12 +1927,12 @@ static CYTHON_INLINE int __Pyx_ParseKeywords(
     int ignore_unknown_kwargs
 );
 
-/* RaiseKeywordRequired.proto */
-static void __Pyx_RaiseKeywordRequired(const char* func_name, PyObject* kw_name);
-
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
+
+/* pyint_simplify.proto */
+static CYTHON_INLINE int __Pyx_PyInt_FromNumber(PyObject **number_var, const char *argname, int accept_none);
 
 /* ArgTypeTestFunc.export */
 static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact);
@@ -1901,13 +1947,6 @@ static void __Pyx_RaiseUnboundLocalError(const char *varname);
 
 /* RaiseClosureNameError.proto */
 static void __Pyx_RaiseClosureNameError(const char *varname);
-
-/* PyObjectFastCallMethod.proto */
-#if CYTHON_VECTORCALL && PY_VERSION_HEX >= 0x03090000
-#define __Pyx_PyObject_FastCallMethod(name, args, nargsf) PyObject_VectorcallMethod(name, args, nargsf, NULL)
-#else
-static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *args, size_t nargsf);
-#endif
 
 /* PySequenceContains.proto */
 static CYTHON_INLINE int __Pyx_PySequence_ContainsTF(PyObject* item, PyObject* seq, int eq) {
@@ -1938,9 +1977,6 @@ static PyObject *__Pyx__Import(PyObject *name, PyObject *const *imported_names, 
 
 /* Import.proto */
 static CYTHON_INLINE PyObject *__Pyx_Import(PyObject *name, PyObject *const *imported_names, Py_ssize_t len_imported_names, PyObject *qualname, int level);
-
-/* ImportFrom.proto */
-static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name);
 
 /* PyObjectCallNoArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
@@ -2031,6 +2067,22 @@ static int __Pyx_VectorcallBuilder_AddArgStr(const char *key, PyObject *value, P
 #define __Pyx_VectorcallBuilder_AddArgStr(key, value, builder, args, n) PyDict_SetItemString(builder, key, value)
 #endif
 
+/* PyObjectFastCallMethod.proto */
+#if CYTHON_VECTORCALL && PY_VERSION_HEX >= 0x03090000
+#define __Pyx_PyObject_FastCallMethod(name, args, nargsf) PyObject_VectorcallMethod(name, args, nargsf, NULL)
+#else
+static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *args, size_t nargsf);
+#endif
+
+/* RaiseUnexpectedTypeError.proto */
+static int __Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj);
+
+/* RaiseKeywordRequired.proto */
+static void __Pyx_RaiseKeywordRequired(const char* func_name, PyObject* kw_name);
+
+/* ImportFrom.proto */
+static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name);
+
 /* DictGetItem.proto */
 #if !CYTHON_COMPILING_IN_PYPY
 static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key);
@@ -2092,14 +2144,14 @@ static CYTHON_INLINE void __Pyx_ExceptionSwap(PyObject **type, PyObject **value,
 static CYTHON_INLINE PyObject* __Pyx_PyObject_FormatSimpleAndDecref(PyObject* s, PyObject* f);
 static CYTHON_INLINE PyObject* __Pyx_PyObject_FormatAndDecref(PyObject* s, PyObject* f);
 
+/* PyUnicode_Unicode.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Unicode(PyObject *obj);
+
 /* SliceObject.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(
         PyObject* obj, Py_ssize_t cstart, Py_ssize_t cstop,
         PyObject** py_start, PyObject** py_stop, PyObject** py_slice,
         int has_cstart, int has_cstop, int wraparound);
-
-/* PyUnicode_Unicode.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Unicode(PyObject *obj);
 
 /* RaiseTooManyValuesToUnpack.proto */
 static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
@@ -2570,10 +2622,16 @@ static PyObject *__pyx_builtin_print;
 /* #### Code section: string_decls ### */
 static const char __pyx_k_Finalizer_sequence_extracted_fr[] = "\nFinalizer sequence \342\200\224 extracted from LiveMonitor._finalize_rca_session.\nAll logic verbatim. Dependencies passed as parameters; no global state imported.\nZero behavior changes. Thread safety is the caller's responsibility (unchanged).\n";
 /* #### Code section: decls ### */
+static PyObject *__pyx_pf_7backend_6engine_9finalizer_25_run_transfer_interactive_genexpr(PyObject *__pyx_self, PyObject *__pyx_genexpr_arg_0); /* proto */
+static PyObject *__pyx_pf_7backend_6engine_9finalizer_25_run_transfer_interactive_3genexpr(PyObject *__pyx_self, PyObject *__pyx_genexpr_arg_0); /* proto */
+static PyObject *__pyx_pf_7backend_6engine_9finalizer__run_transfer_interactive(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_conn, PyObject *__pyx_v_cmd, PyObject *__pyx_v_sftp_user, PyObject *__pyx_v_sftp_pass, PyObject *__pyx_v_ts_fn, PyObject *__pyx_v_timeout); /* proto */
 static PyObject *__pyx_pf_7backend_6engine_9finalizer_16run_finalization_genexpr(PyObject *__pyx_self, PyObject *__pyx_genexpr_arg_0); /* proto */
-static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_wlc_host, PyObject *__pyx_v_auth, PyObject *__pyx_v_ap_auth, PyObject *__pyx_v_mac, PyObject *__pyx_v_ip, PyObject *__pyx_v_mycap_name, PyObject *__pyx_v_active_rca_sessions, PyObject *__pyx_v_active_rca_lock, PyObject *__pyx_v_ts, PyObject *__pyx_v_clear_ap_workflow, PyObject *__pyx_v_mark_ap_used, PyObject *__pyx_v_reset_disjoin_counter, PyObject *__pyx_v_append_finalized_ap, PyObject *__pyx_v_save_report, int __pyx_v_skip_hardcoded); /* proto */
-static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_pf_7backend_6engine_9finalizer_2run_finalization(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_wlc_host, PyObject *__pyx_v_auth, PyObject *__pyx_v_ap_auth, PyObject *__pyx_v_mac, PyObject *__pyx_v_ip, PyObject *__pyx_v_mycap_name, PyObject *__pyx_v_active_rca_sessions, PyObject *__pyx_v_active_rca_lock, PyObject *__pyx_v_ts, PyObject *__pyx_v_clear_ap_workflow, PyObject *__pyx_v_mark_ap_used, PyObject *__pyx_v_reset_disjoin_counter, PyObject *__pyx_v_append_finalized_ap, PyObject *__pyx_v_save_report, int __pyx_v_skip_hardcoded); /* proto */
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 /* #### Code section: late_includes ### */
 /* #### Code section: module_state ### */
 /* SmallCodeConfig */
@@ -2594,30 +2652,51 @@ typedef struct {
   PyObject *__pyx_empty_tuple;
   PyObject *__pyx_empty_bytes;
   PyObject *__pyx_empty_unicode;
-  PyObject *__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization;
+  PyObject *__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive;
   PyObject *__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr;
-  PyTypeObject *__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization;
+  PyObject *__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr;
+  PyObject *__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization;
+  PyObject *__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr;
+  PyTypeObject *__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive;
   PyTypeObject *__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr;
+  PyTypeObject *__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr;
+  PyTypeObject *__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization;
+  PyTypeObject *__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_get;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_items;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_pop;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values;
   __Pyx_CachedCFunction __pyx_umethod_PyUnicode_Type__lower;
   PyObject *__pyx_slice[3];
-  PyObject *__pyx_tuple[2];
-  PyObject *__pyx_codeobj_tab[2];
-  PyObject *__pyx_string_tab[187];
-  PyObject *__pyx_number_tab[13];
+  PyObject *__pyx_tuple[5];
+  PyObject *__pyx_codeobj_tab[5];
+  PyObject *__pyx_string_tab[250];
+  PyObject *__pyx_number_tab[12];
 /* #### Code section: module_state_contents ### */
 
 #if CYTHON_USE_FREELISTS
-struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization[8];
-int __pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization;
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive[8];
+int __pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive;
 #endif
 
 #if CYTHON_USE_FREELISTS
 struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr[8];
 int __pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr;
+#endif
+
+#if CYTHON_USE_FREELISTS
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr[8];
+int __pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr;
+#endif
+
+#if CYTHON_USE_FREELISTS
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization[8];
+int __pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization;
+#endif
+
+#if CYTHON_USE_FREELISTS
+struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr[8];
+int __pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr;
 #endif
 /* CommonTypesMetaclass.module_state_decls */
 PyTypeObject *__pyx_CommonTypesMetaclassType;
@@ -2674,198 +2753,260 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_kp_u_Callable_str_None __pyx_string_tab[5]
 #define __pyx_kp_u_Callable_tuple __pyx_string_tab[6]
 #define __pyx_kp_u_EPC_TFTP_Upload __pyx_string_tab[7]
-#define __pyx_kp_u_EPC_TFTP_Upload_ALWAYS_ON_log_t __pyx_string_tab[8]
-#define __pyx_kp_u_EPC_TFTP_Upload_ApDisjoinEpc_pc __pyx_string_tab[9]
-#define __pyx_kp_u_EPC_TFTP_Upload_First_Enter_res __pyx_string_tab[10]
-#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_ALWAYS __pyx_string_tab[11]
-#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_EPC_exp __pyx_string_tab[12]
-#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_always __pyx_string_tab[13]
-#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_transfe __pyx_string_tab[14]
-#define __pyx_kp_u_FINALIZE_AP_Connecting_to_AP __pyx_string_tab[15]
-#define __pyx_kp_u_FINALIZE_AP_undebug_all_sent_to __pyx_string_tab[16]
-#define __pyx_kp_u_FINALIZE_CUSTOM_ONLY_Skipping_h __pyx_string_tab[17]
-#define __pyx_kp_u_FINALIZE_Disjoin_counter_reset __pyx_string_tab[18]
-#define __pyx_kp_u_FINALIZE_Finalization_complete __pyx_string_tab[19]
-#define __pyx_kp_u_FINALIZE_Generating_reports __pyx_string_tab[20]
-#define __pyx_kp_u_FINALIZE_JSON_report __pyx_string_tab[21]
-#define __pyx_kp_u_FINALIZE_MYCAP __pyx_string_tab[22]
-#define __pyx_kp_u_FINALIZE_MYCAP_2 __pyx_string_tab[23]
-#define __pyx_kp_u_FINALIZE_MYCAP_Capture_was_alre __pyx_string_tab[24]
-#define __pyx_kp_u_FINALIZE_MYCAP_Overwrite_prompt __pyx_string_tab[25]
-#define __pyx_kp_u_FINALIZE_MYCAP_WARNING __pyx_string_tab[26]
-#define __pyx_kp_u_FINALIZE_MYCAP_initial_response __pyx_string_tab[27]
-#define __pyx_kp_u_FINALIZE_MYCAP_post_confirm_out __pyx_string_tab[28]
-#define __pyx_kp_u_FINALIZE_Opening_WLC_SSH_for_cl __pyx_string_tab[29]
-#define __pyx_kp_u_FINALIZE_Second_disjoin_of_same __pyx_string_tab[30]
-#define __pyx_kp_u_FINALIZE_Session_complete_for __pyx_string_tab[31]
-#define __pyx_kp_u_FINALIZE_Summary_report __pyx_string_tab[32]
-#define __pyx_kp_u_FINALIZE_WARNING __pyx_string_tab[33]
-#define __pyx_kp_u_FINALIZE_WARNING_AP_undebug_all __pyx_string_tab[34]
-#define __pyx_kp_u_FINALIZE_WARNING_WLC_SSH_for_cl __pyx_string_tab[35]
-#define __pyx_kp_u_FINALIZE_WARNING_export_command __pyx_string_tab[36]
-#define __pyx_kp_u_FINALIZE_WARNING_report_generat __pyx_string_tab[37]
-#define __pyx_kp_u_FINALIZE_WARNING_undebug_all_fa __pyx_string_tab[38]
-#define __pyx_kp_u_FINALIZE_WLC_cleanup_SSH_sessio __pyx_string_tab[39]
-#define __pyx_kp_u_FINALIZE_WLC_undebug_all __pyx_string_tab[40]
-#define __pyx_kp_u_None __pyx_string_tab[41]
-#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[42]
-#define __pyx_kp_u__2 __pyx_string_tab[43]
-#define __pyx_kp_u__3 __pyx_string_tab[44]
-#define __pyx_kp_u__4 __pyx_string_tab[45]
-#define __pyx_kp_u__5 __pyx_string_tab[46]
-#define __pyx_kp_u__6 __pyx_string_tab[47]
-#define __pyx_kp_u_add_note __pyx_string_tab[48]
-#define __pyx_kp_u_backend_engine_finalizer_py __pyx_string_tab[49]
-#define __pyx_kp_u_confirm __pyx_string_tab[50]
-#define __pyx_kp_u_confirmed_on_flash __pyx_string_tab[51]
-#define __pyx_kp_u_copy_flash __pyx_string_tab[52]
-#define __pyx_kp_u_copy_flash_ALWAYS_ON __pyx_string_tab[53]
-#define __pyx_kp_u_custom_stop_commands_already_se __pyx_string_tab[54]
-#define __pyx_kp_u_d_s_bytes_s_copied_s_in_s_d_d_s __pyx_string_tab[55]
-#define __pyx_kp_u_disable __pyx_string_tab[56]
-#define __pyx_kp_u_enable __pyx_string_tab[57]
-#define __pyx_kp_u_export_bootflash __pyx_string_tab[58]
-#define __pyx_kp_u_failed __pyx_string_tab[59]
-#define __pyx_kp_u_for_undebug_all __pyx_string_tab[60]
-#define __pyx_kp_u_gc __pyx_string_tab[61]
-#define __pyx_kp_u_isenabled __pyx_string_tab[62]
-#define __pyx_kp_u_log __pyx_string_tab[63]
-#define __pyx_kp_u_log_tftp __pyx_string_tab[64]
-#define __pyx_kp_u_monitor_capture __pyx_string_tab[65]
-#define __pyx_kp_u_not_active __pyx_string_tab[66]
-#define __pyx_kp_u_not_found_in_flash_listing __pyx_string_tab[67]
-#define __pyx_kp_u_overwrite_confirm __pyx_string_tab[68]
-#define __pyx_kp_u_overwrite_existing __pyx_string_tab[69]
-#define __pyx_kp_u_pcap __pyx_string_tab[70]
-#define __pyx_kp_u_show_flash_inc_pcap __pyx_string_tab[71]
-#define __pyx_kp_u_starting_finalization_sequence __pyx_string_tab[72]
-#define __pyx_kp_u_stop __pyx_string_tab[73]
-#define __pyx_kp_u_str_None __pyx_string_tab[74]
-#define __pyx_kp_u_tftp __pyx_string_tab[75]
-#define __pyx_kp_u_threading_Lock __pyx_string_tab[76]
-#define __pyx_kp_u_undebug_all __pyx_string_tab[77]
-#define __pyx_n_u_Any __pyx_string_tab[78]
-#define __pyx_n_u_ApDisjoinEpc __pyx_string_tab[79]
-#define __pyx_n_u_Callable __pyx_string_tab[80]
-#define __pyx_n_u_ConnectHandler __pyx_string_tab[81]
-#define __pyx_n_u_I __pyx_string_tab[82]
-#define __pyx_n_u_MYCAP __pyx_string_tab[83]
-#define __pyx_n_u_MYCAP_NAME __pyx_string_tab[84]
-#define __pyx_n_u_None __pyx_string_tab[85]
-#define __pyx_n_u_OVERWRITE_PATTERNS __pyx_string_tab[86]
-#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[87]
-#define __pyx_n_u_SUCCESS_RE __pyx_string_tab[88]
-#define __pyx_n_u_active_rca_lock __pyx_string_tab[89]
-#define __pyx_n_u_active_rca_sessions __pyx_string_tab[90]
-#define __pyx_n_u_always_on_export __pyx_string_tab[91]
-#define __pyx_n_u_ap_auth __pyx_string_tab[92]
-#define __pyx_n_u_ap_conn __pyx_string_tab[93]
-#define __pyx_n_u_ap_name __pyx_string_tab[94]
-#define __pyx_n_u_append_finalized_ap __pyx_string_tab[95]
-#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[96]
-#define __pyx_n_u_auth __pyx_string_tab[97]
-#define __pyx_n_u_backend_engine_finalizer __pyx_string_tab[98]
-#define __pyx_n_u_bool __pyx_string_tab[99]
-#define __pyx_n_u_cisco_ios __pyx_string_tab[100]
-#define __pyx_n_u_clear_ap_workflow __pyx_string_tab[101]
-#define __pyx_n_u_clear_buffer __pyx_string_tab[102]
-#define __pyx_n_u_cline_in_traceback __pyx_string_tab[103]
-#define __pyx_n_u_close __pyx_string_tab[104]
-#define __pyx_n_u_compile __pyx_string_tab[105]
-#define __pyx_n_u_confirm_2 __pyx_string_tab[106]
-#define __pyx_n_u_confirm_out __pyx_string_tab[107]
-#define __pyx_n_u_delay_factor __pyx_string_tab[108]
-#define __pyx_n_u_device_type __pyx_string_tab[109]
-#define __pyx_n_u_dict __pyx_string_tab[110]
-#define __pyx_n_u_digits __pyx_string_tab[111]
-#define __pyx_n_u_disconnect __pyx_string_tab[112]
-#define __pyx_n_u_dot_mac __pyx_string_tab[113]
-#define __pyx_n_u_enable __pyx_string_tab[114]
-#define __pyx_n_u_enter __pyx_string_tab[115]
-#define __pyx_n_u_exc __pyx_string_tab[116]
-#define __pyx_n_u_exit __pyx_string_tab[117]
-#define __pyx_n_u_export_cmd __pyx_string_tab[118]
-#define __pyx_n_u_export_out __pyx_string_tab[119]
-#define __pyx_n_u_fast_cli __pyx_string_tab[120]
-#define __pyx_n_u_file __pyx_string_tab[121]
-#define __pyx_n_u_func __pyx_string_tab[122]
-#define __pyx_n_u_genexpr __pyx_string_tab[123]
-#define __pyx_n_u_get __pyx_string_tab[124]
-#define __pyx_n_u_host __pyx_string_tab[125]
-#define __pyx_n_u_ip __pyx_string_tab[126]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[127]
-#define __pyx_n_u_items __pyx_string_tab[128]
-#define __pyx_n_u_json_path __pyx_string_tab[129]
-#define __pyx_n_u_lower __pyx_string_tab[130]
-#define __pyx_n_u_mac __pyx_string_tab[131]
-#define __pyx_n_u_main __pyx_string_tab[132]
-#define __pyx_n_u_mark_ap_used __pyx_string_tab[133]
-#define __pyx_n_u_module __pyx_string_tab[134]
-#define __pyx_n_u_mycap_name __pyx_string_tab[135]
-#define __pyx_n_u_name __pyx_string_tab[136]
-#define __pyx_n_u_netmiko __pyx_string_tab[137]
-#define __pyx_n_u_next __pyx_string_tab[138]
-#define __pyx_n_u_p __pyx_string_tab[139]
-#define __pyx_n_u_password __pyx_string_tab[140]
-#define __pyx_n_u_pcap_filename __pyx_string_tab[141]
-#define __pyx_n_u_pop __pyx_string_tab[142]
-#define __pyx_n_u_port __pyx_string_tab[143]
-#define __pyx_n_u_print __pyx_string_tab[144]
-#define __pyx_n_u_qualname __pyx_string_tab[145]
-#define __pyx_n_u_re __pyx_string_tab[146]
-#define __pyx_n_u_read_timeout __pyx_string_tab[147]
-#define __pyx_n_u_reset_disjoin_counter __pyx_string_tab[148]
-#define __pyx_n_u_return __pyx_string_tab[149]
-#define __pyx_n_u_run_finalization __pyx_string_tab[150]
-#define __pyx_n_u_run_finalization_locals_genexpr __pyx_string_tab[151]
-#define __pyx_n_u_save_report __pyx_string_tab[152]
-#define __pyx_n_u_search __pyx_string_tab[153]
-#define __pyx_n_u_secret __pyx_string_tab[154]
-#define __pyx_n_u_send __pyx_string_tab[155]
-#define __pyx_n_u_send_command __pyx_string_tab[156]
-#define __pyx_n_u_send_command_timing __pyx_string_tab[157]
-#define __pyx_n_u_set_name __pyx_string_tab[158]
-#define __pyx_n_u_setdefault __pyx_string_tab[159]
-#define __pyx_n_u_skip_hardcoded __pyx_string_tab[160]
-#define __pyx_n_u_sleep __pyx_string_tab[161]
-#define __pyx_n_u_stderr __pyx_string_tab[162]
-#define __pyx_n_u_stop_cmd __pyx_string_tab[163]
-#define __pyx_n_u_stop_out __pyx_string_tab[164]
-#define __pyx_n_u_str __pyx_string_tab[165]
-#define __pyx_n_u_strip __pyx_string_tab[166]
-#define __pyx_n_u_sub __pyx_string_tab[167]
-#define __pyx_n_u_sys __pyx_string_tab[168]
-#define __pyx_n_u_test __pyx_string_tab[169]
-#define __pyx_n_u_tftp_export __pyx_string_tab[170]
-#define __pyx_n_u_tftp_ip __pyx_string_tab[171]
-#define __pyx_n_u_threading __pyx_string_tab[172]
-#define __pyx_n_u_throw __pyx_string_tab[173]
-#define __pyx_n_u_time __pyx_string_tab[174]
-#define __pyx_n_u_ts __pyx_string_tab[175]
-#define __pyx_n_u_txt_path __pyx_string_tab[176]
-#define __pyx_n_u_typing __pyx_string_tab[177]
-#define __pyx_n_u_username __pyx_string_tab[178]
-#define __pyx_n_u_value __pyx_string_tab[179]
-#define __pyx_n_u_values __pyx_string_tab[180]
-#define __pyx_n_u_verify_cmd __pyx_string_tab[181]
-#define __pyx_n_u_verify_out __pyx_string_tab[182]
-#define __pyx_n_u_wlc_conn __pyx_string_tab[183]
-#define __pyx_n_u_wlc_host __pyx_string_tab[184]
-#define __pyx_kp_b_iso88591_A_1B_S_t1_1_Qb_J_sRS_Q_A_Q_T_Qa __pyx_string_tab[185]
-#define __pyx_kp_b_iso88591__7 __pyx_string_tab[186]
+#define __pyx_kp_u_EPC_TFTP_Upload_2 __pyx_string_tab[8]
+#define __pyx_kp_u_EPC_TFTP_Upload_ALWAYS_ON_log_t __pyx_string_tab[9]
+#define __pyx_kp_u_EPC_TFTP_Upload_ApDisjoinEpc_pc __pyx_string_tab[10]
+#define __pyx_kp_u_EPC_TFTP_Upload_Password_prompt __pyx_string_tab[11]
+#define __pyx_kp_u_EPC_TFTP_Upload_Protocol __pyx_string_tab[12]
+#define __pyx_kp_u_EPC_TFTP_Upload_SFTP_credential __pyx_string_tab[13]
+#define __pyx_kp_u_EPC_TFTP_Upload_Transfer_comple __pyx_string_tab[14]
+#define __pyx_kp_u_EPC_TFTP_Upload_Username_prompt __pyx_string_tab[15]
+#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_ALWAYS __pyx_string_tab[16]
+#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_EPC_exp __pyx_string_tab[17]
+#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_No_serv __pyx_string_tab[18]
+#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_always __pyx_string_tab[19]
+#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_pcap_tr __pyx_string_tab[20]
+#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_transfe __pyx_string_tab[21]
+#define __pyx_kp_u_EPC_TFTP_Upload_WARNING_transfe_2 __pyx_string_tab[22]
+#define __pyx_kp_u_FINALIZE_AP_Connecting_to_AP __pyx_string_tab[23]
+#define __pyx_kp_u_FINALIZE_AP_undebug_all_sent_to __pyx_string_tab[24]
+#define __pyx_kp_u_FINALIZE_CUSTOM_ONLY_Skipping_h __pyx_string_tab[25]
+#define __pyx_kp_u_FINALIZE_Disjoin_counter_reset __pyx_string_tab[26]
+#define __pyx_kp_u_FINALIZE_Finalization_complete __pyx_string_tab[27]
+#define __pyx_kp_u_FINALIZE_Generating_reports __pyx_string_tab[28]
+#define __pyx_kp_u_FINALIZE_JSON_report __pyx_string_tab[29]
+#define __pyx_kp_u_FINALIZE_MYCAP __pyx_string_tab[30]
+#define __pyx_kp_u_FINALIZE_MYCAP_2 __pyx_string_tab[31]
+#define __pyx_kp_u_FINALIZE_MYCAP_Capture_was_alre __pyx_string_tab[32]
+#define __pyx_kp_u_FINALIZE_MYCAP_Overwrite_prompt __pyx_string_tab[33]
+#define __pyx_kp_u_FINALIZE_MYCAP_WARNING __pyx_string_tab[34]
+#define __pyx_kp_u_FINALIZE_MYCAP_initial_response __pyx_string_tab[35]
+#define __pyx_kp_u_FINALIZE_MYCAP_post_confirm_out __pyx_string_tab[36]
+#define __pyx_kp_u_FINALIZE_Opening_WLC_SSH_for_cl __pyx_string_tab[37]
+#define __pyx_kp_u_FINALIZE_Second_disjoin_of_same __pyx_string_tab[38]
+#define __pyx_kp_u_FINALIZE_Session_complete_for __pyx_string_tab[39]
+#define __pyx_kp_u_FINALIZE_Summary_report __pyx_string_tab[40]
+#define __pyx_kp_u_FINALIZE_WARNING __pyx_string_tab[41]
+#define __pyx_kp_u_FINALIZE_WARNING_AP_undebug_all __pyx_string_tab[42]
+#define __pyx_kp_u_FINALIZE_WARNING_WLC_SSH_for_cl __pyx_string_tab[43]
+#define __pyx_kp_u_FINALIZE_WARNING_export_command __pyx_string_tab[44]
+#define __pyx_kp_u_FINALIZE_WARNING_report_generat __pyx_string_tab[45]
+#define __pyx_kp_u_FINALIZE_WARNING_undebug_all_fa __pyx_string_tab[46]
+#define __pyx_kp_u_FINALIZE_WLC_cleanup_SSH_sessio __pyx_string_tab[47]
+#define __pyx_kp_u_FINALIZE_WLC_undebug_all __pyx_string_tab[48]
+#define __pyx_kp_u_None __pyx_string_tab[49]
+#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[50]
+#define __pyx_kp_u_Server __pyx_string_tab[51]
+#define __pyx_kp_u__2 __pyx_string_tab[52]
+#define __pyx_kp_u__3 __pyx_string_tab[53]
+#define __pyx_kp_u__4 __pyx_string_tab[54]
+#define __pyx_kp_u__5 __pyx_string_tab[55]
+#define __pyx_kp_u__6 __pyx_string_tab[56]
+#define __pyx_kp_u_add_note __pyx_string_tab[57]
+#define __pyx_kp_u_address_or_name_of_remote_host __pyx_string_tab[58]
+#define __pyx_kp_u_backend_engine_finalizer_py __pyx_string_tab[59]
+#define __pyx_kp_u_bytes_copied __pyx_string_tab[60]
+#define __pyx_kp_u_cannot_open __pyx_string_tab[61]
+#define __pyx_kp_u_confirm __pyx_string_tab[62]
+#define __pyx_kp_u_confirmed_on_flash __pyx_string_tab[63]
+#define __pyx_kp_u_connection_refused __pyx_string_tab[64]
+#define __pyx_kp_u_copy_flash __pyx_string_tab[65]
+#define __pyx_kp_u_copy_flash_ALWAYS_ON __pyx_string_tab[66]
+#define __pyx_kp_u_custom_stop_commands_already_se __pyx_string_tab[67]
+#define __pyx_kp_u_d_s_bytes_s_copied_s_in_s_d_d_s __pyx_string_tab[68]
+#define __pyx_kp_u_destination_filename __pyx_string_tab[69]
+#define __pyx_kp_u_disable __pyx_string_tab[70]
+#define __pyx_kp_u_enable __pyx_string_tab[71]
+#define __pyx_kp_u_export_bootflash __pyx_string_tab[72]
+#define __pyx_kp_u_failed_2 __pyx_string_tab[73]
+#define __pyx_kp_u_for_undebug_all __pyx_string_tab[74]
+#define __pyx_kp_u_gc __pyx_string_tab[75]
+#define __pyx_kp_u_invalid_input __pyx_string_tab[76]
+#define __pyx_kp_u_isenabled __pyx_string_tab[77]
+#define __pyx_kp_u_log __pyx_string_tab[78]
+#define __pyx_kp_u_log_sftp __pyx_string_tab[79]
+#define __pyx_kp_u_log_tftp __pyx_string_tab[80]
+#define __pyx_kp_u_monitor_capture __pyx_string_tab[81]
+#define __pyx_kp_u_no_such __pyx_string_tab[82]
+#define __pyx_kp_u_not_active __pyx_string_tab[83]
+#define __pyx_kp_u_not_found_in_flash_listing __pyx_string_tab[84]
+#define __pyx_kp_u_overwrite_confirm __pyx_string_tab[85]
+#define __pyx_kp_u_overwrite_existing __pyx_string_tab[86]
+#define __pyx_kp_u_password __pyx_string_tab[87]
+#define __pyx_kp_u_pcap __pyx_string_tab[88]
+#define __pyx_kp_u_permission_denied __pyx_string_tab[89]
+#define __pyx_kp_u_sftp __pyx_string_tab[90]
+#define __pyx_kp_u_show_flash_inc_pcap __pyx_string_tab[91]
+#define __pyx_kp_u_starting_finalization_sequence __pyx_string_tab[92]
+#define __pyx_kp_u_stop __pyx_string_tab[93]
+#define __pyx_kp_u_str_None __pyx_string_tab[94]
+#define __pyx_kp_u_successful_file_transfer __pyx_string_tab[95]
+#define __pyx_kp_u_successfully __pyx_string_tab[96]
+#define __pyx_kp_u_tftp __pyx_string_tab[97]
+#define __pyx_kp_u_threading_Lock __pyx_string_tab[98]
+#define __pyx_kp_u_timed_out __pyx_string_tab[99]
+#define __pyx_kp_u_transfer_complete __pyx_string_tab[100]
+#define __pyx_kp_u_undebug_all __pyx_string_tab[101]
+#define __pyx_kp_u_upload_complete __pyx_string_tab[102]
+#define __pyx_kp_u_username __pyx_string_tab[103]
+#define __pyx_kp_u_username_2 __pyx_string_tab[104]
+#define __pyx_kp_u_yes_no __pyx_string_tab[105]
+#define __pyx_n_u_Any __pyx_string_tab[106]
+#define __pyx_n_u_ApDisjoinEpc __pyx_string_tab[107]
+#define __pyx_n_u_Callable __pyx_string_tab[108]
+#define __pyx_n_u_ConnectHandler __pyx_string_tab[109]
+#define __pyx_n_u_I __pyx_string_tab[110]
+#define __pyx_n_u_MYCAP __pyx_string_tab[111]
+#define __pyx_n_u_MYCAP_NAME __pyx_string_tab[112]
+#define __pyx_n_u_NONE __pyx_string_tab[113]
+#define __pyx_n_u_None __pyx_string_tab[114]
+#define __pyx_n_u_OVERWRITE_PATTERNS __pyx_string_tab[115]
+#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[116]
+#define __pyx_n_u_SFTP __pyx_string_tab[117]
+#define __pyx_n_u_SUCCESS_RE __pyx_string_tab[118]
+#define __pyx_n_u_TFTP __pyx_string_tab[119]
+#define __pyx_n_u_active_rca_lock __pyx_string_tab[120]
+#define __pyx_n_u_active_rca_sessions __pyx_string_tab[121]
+#define __pyx_n_u_always_on_export __pyx_string_tab[122]
+#define __pyx_n_u_always_on_out __pyx_string_tab[123]
+#define __pyx_n_u_ap_auth __pyx_string_tab[124]
+#define __pyx_n_u_ap_conn __pyx_string_tab[125]
+#define __pyx_n_u_ap_name __pyx_string_tab[126]
+#define __pyx_n_u_append_finalized_ap __pyx_string_tab[127]
+#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[128]
+#define __pyx_n_u_auth __pyx_string_tab[129]
+#define __pyx_n_u_backend_engine_finalizer __pyx_string_tab[130]
+#define __pyx_n_u_bool __pyx_string_tab[131]
+#define __pyx_n_u_buf_lower __pyx_string_tab[132]
+#define __pyx_n_u_buffer __pyx_string_tab[133]
+#define __pyx_n_u_chunk __pyx_string_tab[134]
+#define __pyx_n_u_cisco_ios __pyx_string_tab[135]
+#define __pyx_n_u_clear_ap_workflow __pyx_string_tab[136]
+#define __pyx_n_u_clear_buffer __pyx_string_tab[137]
+#define __pyx_n_u_cline_in_traceback __pyx_string_tab[138]
+#define __pyx_n_u_close __pyx_string_tab[139]
+#define __pyx_n_u_cmd __pyx_string_tab[140]
+#define __pyx_n_u_compile __pyx_string_tab[141]
+#define __pyx_n_u_confirm_2 __pyx_string_tab[142]
+#define __pyx_n_u_confirm_out __pyx_string_tab[143]
+#define __pyx_n_u_conn __pyx_string_tab[144]
+#define __pyx_n_u_delay_factor __pyx_string_tab[145]
+#define __pyx_n_u_device_type __pyx_string_tab[146]
+#define __pyx_n_u_dict __pyx_string_tab[147]
+#define __pyx_n_u_digits __pyx_string_tab[148]
+#define __pyx_n_u_disconnect __pyx_string_tab[149]
+#define __pyx_n_u_dot_mac __pyx_string_tab[150]
+#define __pyx_n_u_enable __pyx_string_tab[151]
+#define __pyx_n_u_enter __pyx_string_tab[152]
+#define __pyx_n_u_error __pyx_string_tab[153]
+#define __pyx_n_u_exc __pyx_string_tab[154]
+#define __pyx_n_u_exit __pyx_string_tab[155]
+#define __pyx_n_u_export_cmd __pyx_string_tab[156]
+#define __pyx_n_u_export_out __pyx_string_tab[157]
+#define __pyx_n_u_failed __pyx_string_tab[158]
+#define __pyx_n_u_fast_cli __pyx_string_tab[159]
+#define __pyx_n_u_file __pyx_string_tab[160]
+#define __pyx_n_u_func __pyx_string_tab[161]
+#define __pyx_n_u_genexpr __pyx_string_tab[162]
+#define __pyx_n_u_get __pyx_string_tab[163]
+#define __pyx_n_u_host __pyx_string_tab[164]
+#define __pyx_n_u_int __pyx_string_tab[165]
+#define __pyx_n_u_ip __pyx_string_tab[166]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[167]
+#define __pyx_n_u_items __pyx_string_tab[168]
+#define __pyx_n_u_json_path __pyx_string_tab[169]
+#define __pyx_n_u_lower __pyx_string_tab[170]
+#define __pyx_n_u_mac __pyx_string_tab[171]
+#define __pyx_n_u_main __pyx_string_tab[172]
+#define __pyx_n_u_mark_ap_used __pyx_string_tab[173]
+#define __pyx_n_u_module __pyx_string_tab[174]
+#define __pyx_n_u_mycap_name __pyx_string_tab[175]
+#define __pyx_n_u_name __pyx_string_tab[176]
+#define __pyx_n_u_netmiko __pyx_string_tab[177]
+#define __pyx_n_u_next __pyx_string_tab[178]
+#define __pyx_n_u_p __pyx_string_tab[179]
+#define __pyx_n_u_password_2 __pyx_string_tab[180]
+#define __pyx_n_u_pcap_filename __pyx_string_tab[181]
+#define __pyx_n_u_pop __pyx_string_tab[182]
+#define __pyx_n_u_port __pyx_string_tab[183]
+#define __pyx_n_u_print __pyx_string_tab[184]
+#define __pyx_n_u_proto __pyx_string_tab[185]
+#define __pyx_n_u_proto_label __pyx_string_tab[186]
+#define __pyx_n_u_qualname __pyx_string_tab[187]
+#define __pyx_n_u_re __pyx_string_tab[188]
+#define __pyx_n_u_read_channel __pyx_string_tab[189]
+#define __pyx_n_u_read_timeout __pyx_string_tab[190]
+#define __pyx_n_u_reset_disjoin_counter __pyx_string_tab[191]
+#define __pyx_n_u_return __pyx_string_tab[192]
+#define __pyx_n_u_run_finalization __pyx_string_tab[193]
+#define __pyx_n_u_run_finalization_locals_genexpr __pyx_string_tab[194]
+#define __pyx_n_u_run_transfer_interactive __pyx_string_tab[195]
+#define __pyx_n_u_run_transfer_interactive_locals __pyx_string_tab[196]
+#define __pyx_n_u_s __pyx_string_tab[197]
+#define __pyx_n_u_save_report __pyx_string_tab[198]
+#define __pyx_n_u_search __pyx_string_tab[199]
+#define __pyx_n_u_secret __pyx_string_tab[200]
+#define __pyx_n_u_send __pyx_string_tab[201]
+#define __pyx_n_u_send_command __pyx_string_tab[202]
+#define __pyx_n_u_send_command_timing __pyx_string_tab[203]
+#define __pyx_n_u_session_snap __pyx_string_tab[204]
+#define __pyx_n_u_set_name __pyx_string_tab[205]
+#define __pyx_n_u_setdefault __pyx_string_tab[206]
+#define __pyx_n_u_sftp_pass __pyx_string_tab[207]
+#define __pyx_n_u_sftp_password __pyx_string_tab[208]
+#define __pyx_n_u_sftp_user __pyx_string_tab[209]
+#define __pyx_n_u_sftp_username __pyx_string_tab[210]
+#define __pyx_n_u_skip_hardcoded __pyx_string_tab[211]
+#define __pyx_n_u_sleep __pyx_string_tab[212]
+#define __pyx_n_u_start __pyx_string_tab[213]
+#define __pyx_n_u_stderr __pyx_string_tab[214]
+#define __pyx_n_u_stop_cmd __pyx_string_tab[215]
+#define __pyx_n_u_stop_out __pyx_string_tab[216]
+#define __pyx_n_u_str __pyx_string_tab[217]
+#define __pyx_n_u_strip __pyx_string_tab[218]
+#define __pyx_n_u_sub __pyx_string_tab[219]
+#define __pyx_n_u_sys __pyx_string_tab[220]
+#define __pyx_n_u_test __pyx_string_tab[221]
+#define __pyx_n_u_tftp_export __pyx_string_tab[222]
+#define __pyx_n_u_tftp_ip __pyx_string_tab[223]
+#define __pyx_n_u_threading __pyx_string_tab[224]
+#define __pyx_n_u_throw __pyx_string_tab[225]
+#define __pyx_n_u_time __pyx_string_tab[226]
+#define __pyx_n_u_time_2 __pyx_string_tab[227]
+#define __pyx_n_u_timeout __pyx_string_tab[228]
+#define __pyx_n_u_transfer_out __pyx_string_tab[229]
+#define __pyx_n_u_transfer_proto __pyx_string_tab[230]
+#define __pyx_n_u_ts __pyx_string_tab[231]
+#define __pyx_n_u_ts_fn __pyx_string_tab[232]
+#define __pyx_n_u_txt_path __pyx_string_tab[233]
+#define __pyx_n_u_typing __pyx_string_tab[234]
+#define __pyx_n_u_upper __pyx_string_tab[235]
+#define __pyx_n_u_username_3 __pyx_string_tab[236]
+#define __pyx_n_u_value __pyx_string_tab[237]
+#define __pyx_n_u_values __pyx_string_tab[238]
+#define __pyx_n_u_verify_cmd __pyx_string_tab[239]
+#define __pyx_n_u_verify_out __pyx_string_tab[240]
+#define __pyx_n_u_wlc_conn __pyx_string_tab[241]
+#define __pyx_n_u_wlc_host __pyx_string_tab[242]
+#define __pyx_n_u_write_channel __pyx_string_tab[243]
+#define __pyx_n_u_x __pyx_string_tab[244]
+#define __pyx_n_u_yes __pyx_string_tab[245]
+#define __pyx_kp_b_iso88591_A_1B_S_t1_1_Qb_J_sRS_Q_A_Q_T_Qa __pyx_string_tab[246]
+#define __pyx_kp_b_iso88591_Q_Qe_WE_A_at2Q_Q_E_a_V1A_M_1_a __pyx_string_tab[247]
+#define __pyx_kp_b_iso88591__7 __pyx_string_tab[248]
+#define __pyx_kp_b_iso88591__8 __pyx_string_tab[249]
 #define __pyx_int_0 __pyx_number_tab[0]
 #define __pyx_int_1 __pyx_number_tab[1]
 #define __pyx_int_2 __pyx_number_tab[2]
 #define __pyx_int_3 __pyx_number_tab[3]
 #define __pyx_int_4 __pyx_number_tab[4]
 #define __pyx_int_8 __pyx_number_tab[5]
-#define __pyx_int_10 __pyx_number_tab[6]
-#define __pyx_int_12 __pyx_number_tab[7]
-#define __pyx_int_15 __pyx_number_tab[8]
-#define __pyx_int_22 __pyx_number_tab[9]
-#define __pyx_int_30 __pyx_number_tab[10]
-#define __pyx_int_60 __pyx_number_tab[11]
-#define __pyx_int_100 __pyx_number_tab[12]
+#define __pyx_int_12 __pyx_number_tab[6]
+#define __pyx_int_15 __pyx_number_tab[7]
+#define __pyx_int_22 __pyx_number_tab[8]
+#define __pyx_int_30 __pyx_number_tab[9]
+#define __pyx_int_60 __pyx_number_tab[10]
+#define __pyx_int_300 __pyx_number_tab[11]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
 static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
@@ -2880,15 +3021,21 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   __Pyx_State_RemoveModule(NULL);
   #endif
-  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization);
-  Py_CLEAR(clear_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization);
+  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive);
+  Py_CLEAR(clear_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive);
   Py_CLEAR(clear_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr);
   Py_CLEAR(clear_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr);
+  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr);
+  Py_CLEAR(clear_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr);
+  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization);
+  Py_CLEAR(clear_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization);
+  Py_CLEAR(clear_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr);
+  Py_CLEAR(clear_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr);
   for (int i=0; i<3; ++i) { Py_CLEAR(clear_module_state->__pyx_slice[i]); }
-  for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<187; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<13; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<5; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
+  for (int i=0; i<5; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<250; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<12; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
 Py_CLEAR(clear_module_state->__pyx_CommonTypesMetaclassType);
@@ -2914,15 +3061,21 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_tuple);
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_bytes);
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_unicode);
-  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization);
-  Py_VISIT(traverse_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization);
+  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive);
+  Py_VISIT(traverse_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive);
   Py_VISIT(traverse_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr);
   Py_VISIT(traverse_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr);
+  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr);
+  Py_VISIT(traverse_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr);
+  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization);
+  Py_VISIT(traverse_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization);
+  Py_VISIT(traverse_module_state->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr);
+  Py_VISIT(traverse_module_state->__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr);
   for (int i=0; i<3; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_slice[i]); }
-  for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<187; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<13; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<5; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
+  for (int i=0; i<5; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<250; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<12; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
 Py_VISIT(traverse_module_state->__pyx_CommonTypesMetaclassType);
@@ -2942,21 +3095,1542 @@ return 0;
 /* "backend/engine/finalizer.py":22
  * 
  * 
- * def run_finalization(             # <<<<<<<<<<<<<<
- *     *,
- *     wlc_host: str,
+ * def _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *     conn,
+ *     cmd: str,
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7backend_6engine_9finalizer_1run_finalization(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_7backend_6engine_9finalizer_1_run_transfer_interactive(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_7backend_6engine_9finalizer_1run_finalization = {"run_finalization", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_6engine_9finalizer_1run_finalization, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_7backend_6engine_9finalizer_1run_finalization(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_7backend_6engine_9finalizer__run_transfer_interactive, "\n    Send a copy/sftp command and handle IOS-XE interactive prompts \342\200\224\n    username, password, destination filename, confirm \342\200\224 exactly like\n    PollerEngine.run_command_interactive does.\n    Returns the full accumulated output.\n    ");
+static PyMethodDef __pyx_mdef_7backend_6engine_9finalizer_1_run_transfer_interactive = {"_run_transfer_interactive", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_6engine_9finalizer_1_run_transfer_interactive, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_7backend_6engine_9finalizer__run_transfer_interactive};
+static PyObject *__pyx_pw_7backend_6engine_9finalizer_1_run_transfer_interactive(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_conn = 0;
+  PyObject *__pyx_v_cmd = 0;
+  PyObject *__pyx_v_sftp_user = 0;
+  PyObject *__pyx_v_sftp_pass = 0;
+  PyObject *__pyx_v_ts_fn = 0;
+  PyObject *__pyx_v_timeout = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[6] = {0,0,0,0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("_run_transfer_interactive (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_conn,&__pyx_mstate_global->__pyx_n_u_cmd,&__pyx_mstate_global->__pyx_n_u_sftp_user,&__pyx_mstate_global->__pyx_n_u_sftp_pass,&__pyx_mstate_global->__pyx_n_u_ts_fn,&__pyx_mstate_global->__pyx_n_u_timeout,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 22, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  6:
+        values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 22, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  5:
+        values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 22, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  4:
+        values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 22, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 22, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 22, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 22, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_run_transfer_interactive", 0) < (0)) __PYX_ERR(0, 22, __pyx_L3_error)
+      if (!values[5]) values[5] = __Pyx_NewRef(((PyObject*)((PyObject*)__pyx_mstate_global->__pyx_int_300)));
+      for (Py_ssize_t i = __pyx_nargs; i < 5; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_run_transfer_interactive", 0, 5, 6, i); __PYX_ERR(0, 22, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  6:
+        values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 22, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  5:
+        values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 22, __pyx_L3_error)
+        values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 22, __pyx_L3_error)
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 22, __pyx_L3_error)
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 22, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 22, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[5]) values[5] = __Pyx_NewRef(((PyObject*)((PyObject*)__pyx_mstate_global->__pyx_int_300)));
+    }
+    __pyx_v_conn = values[0];
+    __pyx_v_cmd = ((PyObject*)values[1]);
+    __pyx_v_sftp_user = ((PyObject*)values[2]);
+    __pyx_v_sftp_pass = ((PyObject*)values[3]);
+    __pyx_v_ts_fn = values[4];
+    if (__Pyx_PyInt_FromNumber(&values[5], "timeout", 0) < (0)) __PYX_ERR(0, 28, __pyx_L3_error)
+    __pyx_v_timeout = ((PyObject*)values[5]);
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("_run_transfer_interactive", 0, 5, 6, __pyx_nargs); __PYX_ERR(0, 22, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("backend.engine.finalizer._run_transfer_interactive", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_cmd), (&PyUnicode_Type), 0, "cmd", 2))) __PYX_ERR(0, 24, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_sftp_user), (&PyUnicode_Type), 0, "sftp_user", 2))) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_sftp_pass), (&PyUnicode_Type), 0, "sftp_pass", 2))) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_timeout), (&PyLong_Type), 0, "timeout", 2))) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7backend_6engine_9finalizer__run_transfer_interactive(__pyx_self, __pyx_v_conn, __pyx_v_cmd, __pyx_v_sftp_user, __pyx_v_sftp_pass, __pyx_v_ts_fn, __pyx_v_timeout);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  goto __pyx_L7_cleaned_up;
+  __pyx_L0:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __pyx_L7_cleaned_up:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+static PyObject *__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_2generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
+
+/* "backend/engine/finalizer.py":81
+ *             continue
+ * 
+ *         if any(p in buf_lower for p in (             # <<<<<<<<<<<<<<
+ *                     "bytes copied",
+ *                     "transfer complete",
+*/
+
+static PyObject *__pyx_pf_7backend_6engine_9finalizer_25_run_transfer_interactive_genexpr(PyObject *__pyx_self, PyObject *__pyx_genexpr_arg_0) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *__pyx_cur_scope;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  __pyx_cur_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr(__pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr, __pyx_mstate_global->__pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *)Py_None);
+    __Pyx_INCREF(Py_None);
+    __PYX_ERR(0, 81, __pyx_L1_error)
+  } else {
+    __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
+  }
+  __pyx_cur_scope->__pyx_outer_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *) __pyx_self;
+  __Pyx_INCREF((PyObject *)__pyx_cur_scope->__pyx_outer_scope);
+  __Pyx_GIVEREF((PyObject *)__pyx_cur_scope->__pyx_outer_scope);
+  __pyx_cur_scope->__pyx_genexpr_arg_0 = __pyx_genexpr_arg_0;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_genexpr_arg_0);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_genexpr_arg_0);
+  {
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_2generator, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_genexpr, __pyx_mstate_global->__pyx_n_u_run_transfer_interactive_locals, __pyx_mstate_global->__pyx_n_u_backend_engine_finalizer); if (unlikely(!gen)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_cur_scope);
+    __Pyx_RefNannyFinishContext();
+    return (PyObject *) gen;
+  }
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("backend.engine.finalizer._run_transfer_interactive.genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __Pyx_DECREF((PyObject *)__pyx_cur_scope);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_2generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
+{
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *__pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *)__pyx_generator->closure);
+  PyObject *__pyx_r = NULL;
+  PyObject *__pyx_t_1 = NULL;
+  Py_ssize_t __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  switch (__pyx_generator->resume_label) {
+    case 0: goto __pyx_L3_first_run;
+    default: /* CPython raises the right error here */
+    __Pyx_RefNannyFinishContext();
+    return NULL;
+  }
+  __pyx_L3_first_run:;
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 81, __pyx_L1_error)
+
+  /* "backend/engine/finalizer.py":82
+ * 
+ *         if any(p in buf_lower for p in (
+ *                     "bytes copied",             # <<<<<<<<<<<<<<
+ *                     "transfer complete",
+ *                     "upload complete",
+*/
+  if (unlikely(!__pyx_cur_scope->__pyx_genexpr_arg_0)) { __Pyx_RaiseUnboundLocalError(".0"); __PYX_ERR(0, 82, __pyx_L1_error) }
+
+  /* "backend/engine/finalizer.py":81
+ *             continue
+ * 
+ *         if any(p in buf_lower for p in (             # <<<<<<<<<<<<<<
+ *                     "bytes copied",
+ *                     "transfer complete",
+*/
+  __pyx_t_1 = __pyx_cur_scope->__pyx_genexpr_arg_0; __Pyx_INCREF(__pyx_t_1);
+  __pyx_t_2 = 0;
+  for (;;) {
+    {
+      Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
+      #if !CYTHON_ASSUME_SAFE_SIZE
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 81, __pyx_L1_error)
+      #endif
+      if (__pyx_t_2 >= __pyx_temp) break;
+    }
+    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2));
+    #else
+    __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_2);
+    #endif
+    ++__pyx_t_2;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_p);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_p, ((PyObject*)__pyx_t_3));
+    __Pyx_GIVEREF(__pyx_t_3);
+    __pyx_t_3 = 0;
+    if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_buf_lower)) { __Pyx_RaiseClosureNameError("buf_lower"); __PYX_ERR(0, 81, __pyx_L1_error) }
+    __pyx_t_4 = (__Pyx_PySequence_ContainsTF(__pyx_cur_scope->__pyx_v_p, __pyx_cur_scope->__pyx_outer_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 81, __pyx_L1_error)
+    if (__pyx_t_4) {
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(Py_True);
+      __pyx_r = Py_True;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      goto __pyx_L0;
+    }
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  /*else*/ {
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(Py_False);
+    __pyx_r = Py_False;
+    goto __pyx_L0;
+  }
+  CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  if (__Pyx_PyErr_Occurred()) {
+    __Pyx_Generator_Replace_StopIteration(0);
+    __Pyx_AddTraceback("genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  }
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  #if !CYTHON_USE_EXC_INFO_STACK
+  __Pyx_Coroutine_ResetAndClearException(__pyx_generator);
+  #endif
+  __pyx_generator->resume_label = -1;
+  __Pyx_Coroutine_clear((PyObject*)__pyx_generator);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+static PyObject *__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_5generator1(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
+
+/* "backend/engine/finalizer.py":90
+ *                     return buffer
+ * 
+ *         if any(x in buf_lower for x in (             # <<<<<<<<<<<<<<
+ *             "error", "failed", "no such", "permission denied",
+ *             "connection refused", "timed out", "cannot open",
+*/
+
+static PyObject *__pyx_pf_7backend_6engine_9finalizer_25_run_transfer_interactive_3genexpr(PyObject *__pyx_self, PyObject *__pyx_genexpr_arg_0) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *__pyx_cur_scope;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  __pyx_cur_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr(__pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr, __pyx_mstate_global->__pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *)Py_None);
+    __Pyx_INCREF(Py_None);
+    __PYX_ERR(0, 90, __pyx_L1_error)
+  } else {
+    __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
+  }
+  __pyx_cur_scope->__pyx_outer_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *) __pyx_self;
+  __Pyx_INCREF((PyObject *)__pyx_cur_scope->__pyx_outer_scope);
+  __Pyx_GIVEREF((PyObject *)__pyx_cur_scope->__pyx_outer_scope);
+  __pyx_cur_scope->__pyx_genexpr_arg_0 = __pyx_genexpr_arg_0;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_genexpr_arg_0);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_genexpr_arg_0);
+  {
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_5generator1, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_genexpr, __pyx_mstate_global->__pyx_n_u_run_transfer_interactive_locals, __pyx_mstate_global->__pyx_n_u_backend_engine_finalizer); if (unlikely(!gen)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_cur_scope);
+    __Pyx_RefNannyFinishContext();
+    return (PyObject *) gen;
+  }
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("backend.engine.finalizer._run_transfer_interactive.genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __Pyx_DECREF((PyObject *)__pyx_cur_scope);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_5generator1(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
+{
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *__pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *)__pyx_generator->closure);
+  PyObject *__pyx_r = NULL;
+  PyObject *__pyx_t_1 = NULL;
+  Py_ssize_t __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  switch (__pyx_generator->resume_label) {
+    case 0: goto __pyx_L3_first_run;
+    default: /* CPython raises the right error here */
+    __Pyx_RefNannyFinishContext();
+    return NULL;
+  }
+  __pyx_L3_first_run:;
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 90, __pyx_L1_error)
+
+  /* "backend/engine/finalizer.py":91
+ * 
+ *         if any(x in buf_lower for x in (
+ *             "error", "failed", "no such", "permission denied",             # <<<<<<<<<<<<<<
+ *             "connection refused", "timed out", "cannot open",
+ *             "invalid input",
+*/
+  if (unlikely(!__pyx_cur_scope->__pyx_genexpr_arg_0)) { __Pyx_RaiseUnboundLocalError(".0"); __PYX_ERR(0, 91, __pyx_L1_error) }
+
+  /* "backend/engine/finalizer.py":90
+ *                     return buffer
+ * 
+ *         if any(x in buf_lower for x in (             # <<<<<<<<<<<<<<
+ *             "error", "failed", "no such", "permission denied",
+ *             "connection refused", "timed out", "cannot open",
+*/
+  __pyx_t_1 = __pyx_cur_scope->__pyx_genexpr_arg_0; __Pyx_INCREF(__pyx_t_1);
+  __pyx_t_2 = 0;
+  for (;;) {
+    {
+      Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
+      #if !CYTHON_ASSUME_SAFE_SIZE
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 90, __pyx_L1_error)
+      #endif
+      if (__pyx_t_2 >= __pyx_temp) break;
+    }
+    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2));
+    #else
+    __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_2);
+    #endif
+    ++__pyx_t_2;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_x);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_x, ((PyObject*)__pyx_t_3));
+    __Pyx_GIVEREF(__pyx_t_3);
+    __pyx_t_3 = 0;
+    if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_buf_lower)) { __Pyx_RaiseClosureNameError("buf_lower"); __PYX_ERR(0, 90, __pyx_L1_error) }
+    __pyx_t_4 = (__Pyx_PySequence_ContainsTF(__pyx_cur_scope->__pyx_v_x, __pyx_cur_scope->__pyx_outer_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 90, __pyx_L1_error)
+    if (__pyx_t_4) {
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(Py_True);
+      __pyx_r = Py_True;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      goto __pyx_L0;
+    }
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  /*else*/ {
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(Py_False);
+    __pyx_r = Py_False;
+    goto __pyx_L0;
+  }
+  CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  if (__Pyx_PyErr_Occurred()) {
+    __Pyx_Generator_Replace_StopIteration(0);
+    __Pyx_AddTraceback("genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  }
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  #if !CYTHON_USE_EXC_INFO_STACK
+  __Pyx_Coroutine_ResetAndClearException(__pyx_generator);
+  #endif
+  __pyx_generator->resume_label = -1;
+  __Pyx_Coroutine_clear((PyObject*)__pyx_generator);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/engine/finalizer.py":22
+ * 
+ * 
+ * def _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *     conn,
+ *     cmd: str,
+*/
+
+static PyObject *__pyx_pf_7backend_6engine_9finalizer__run_transfer_interactive(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_conn, PyObject *__pyx_v_cmd, PyObject *__pyx_v_sftp_user, PyObject *__pyx_v_sftp_pass, PyObject *__pyx_v_ts_fn, PyObject *__pyx_v_timeout) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *__pyx_cur_scope;
+  PyObject *__pyx_v__time = NULL;
+  PyObject *__pyx_v_buffer = NULL;
+  PyObject *__pyx_v_start = NULL;
+  PyObject *__pyx_v_chunk = NULL;
+  PyObject *__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_2generator = 0;
+  PyObject *__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_5generator1 = 0;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6[4];
+  PyObject *__pyx_t_7 = NULL;
+  size_t __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  PyObject *__pyx_t_11[3];
+  PyObject *__pyx_t_12[5];
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_run_transfer_interactive", 0);
+  __pyx_cur_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive(__pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive, __pyx_mstate_global->__pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *)Py_None);
+    __Pyx_INCREF(Py_None);
+    __PYX_ERR(0, 22, __pyx_L1_error)
+  } else {
+    __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
+  }
+
+  /* "backend/engine/finalizer.py":36
+ *     Returns the full accumulated output.
+ *     """
+ *     import time as _time             # <<<<<<<<<<<<<<
+ *     print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {cmd}", file=sys.stderr)
+ *     conn.write_channel(cmd + "\n")
+*/
+  __pyx_t_2 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_time, 0, 0, NULL, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_1 = __pyx_t_2;
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v__time = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/engine/finalizer.py":37
+ *     """
+ *     import time as _time
+ *     print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {cmd}", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *     conn.write_channel(cmd + "\n")
+ *     buffer = ""
+*/
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts_fn); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_6[0] = __pyx_mstate_global->__pyx_kp_u_;
+  __pyx_t_6[1] = __pyx_t_5;
+  __pyx_t_6[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload;
+  __pyx_t_6[3] = __pyx_v_cmd;
+  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_6, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 22 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_cmd), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_cmd));
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_8 = 1;
+  {
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_3, __pyx_t_4};
+    __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_7, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/engine/finalizer.py":38
+ *     import time as _time
+ *     print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {cmd}", file=sys.stderr)
+ *     conn.write_channel(cmd + "\n")             # <<<<<<<<<<<<<<
+ *     buffer = ""
+ *     start = _time.time()
+*/
+  __pyx_t_5 = __pyx_v_conn;
+  __Pyx_INCREF(__pyx_t_5);
+  __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_v_cmd, __pyx_mstate_global->__pyx_kp_u__2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_8 = 0;
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_7};
+    __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_write_channel, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/engine/finalizer.py":39
+ *     print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {cmd}", file=sys.stderr)
+ *     conn.write_channel(cmd + "\n")
+ *     buffer = ""             # <<<<<<<<<<<<<<
+ *     start = _time.time()
+ * 
+*/
+  __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+  __pyx_v_buffer = __pyx_mstate_global->__pyx_kp_u__3;
+
+  /* "backend/engine/finalizer.py":40
+ *     conn.write_channel(cmd + "\n")
+ *     buffer = ""
+ *     start = _time.time()             # <<<<<<<<<<<<<<
+ * 
+ *     while True:
+*/
+  __pyx_t_7 = __pyx_v__time;
+  __Pyx_INCREF(__pyx_t_7);
+  __pyx_t_8 = 0;
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_7, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_time, __pyx_callargs+__pyx_t_8, (1-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_start = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "backend/engine/finalizer.py":42
+ *     start = _time.time()
+ * 
+ *     while True:             # <<<<<<<<<<<<<<
+ *         _time.sleep(1)
+ *         chunk = conn.read_channel()
+*/
+  while (1) {
+
+    /* "backend/engine/finalizer.py":43
+ * 
+ *     while True:
+ *         _time.sleep(1)             # <<<<<<<<<<<<<<
+ *         chunk = conn.read_channel()
+ *         if chunk:
+*/
+    __pyx_t_7 = __pyx_v__time;
+    __Pyx_INCREF(__pyx_t_7);
+    __pyx_t_8 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_7, __pyx_mstate_global->__pyx_int_1};
+      __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_sleep, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "backend/engine/finalizer.py":44
+ *     while True:
+ *         _time.sleep(1)
+ *         chunk = conn.read_channel()             # <<<<<<<<<<<<<<
+ *         if chunk:
+ *             buffer += chunk
+*/
+    __pyx_t_7 = __pyx_v_conn;
+    __Pyx_INCREF(__pyx_t_7);
+    __pyx_t_8 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_7, NULL};
+      __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_read_channel, __pyx_callargs+__pyx_t_8, (1-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_XDECREF_SET(__pyx_v_chunk, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "backend/engine/finalizer.py":45
+ *         _time.sleep(1)
+ *         chunk = conn.read_channel()
+ *         if chunk:             # <<<<<<<<<<<<<<
+ *             buffer += chunk
+ *             if chunk.strip(): print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {chunk}", file=sys.stderr)
+*/
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_v_chunk); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 45, __pyx_L1_error)
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":46
+ *         chunk = conn.read_channel()
+ *         if chunk:
+ *             buffer += chunk             # <<<<<<<<<<<<<<
+ *             if chunk.strip(): print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {chunk}", file=sys.stderr)
+ * 
+*/
+      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_buffer, __pyx_v_chunk); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF_SET(__pyx_v_buffer, __pyx_t_1);
+      __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":47
+ *         if chunk:
+ *             buffer += chunk
+ *             if chunk.strip(): print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {chunk}", file=sys.stderr)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+      __pyx_t_7 = __pyx_v_chunk;
+      __Pyx_INCREF(__pyx_t_7);
+      __pyx_t_8 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_7, NULL};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_8, (1-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 47, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      if (__pyx_t_9) {
+        __pyx_t_7 = NULL;
+        __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts_fn); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_chunk, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_6[0] = __pyx_mstate_global->__pyx_kp_u_;
+        __pyx_t_6[1] = __pyx_t_4;
+        __pyx_t_6[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload;
+        __pyx_t_6[3] = __pyx_t_5;
+        __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_6, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 22 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __pyx_t_8 = 1;
+        {
+          PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_7, __pyx_t_3};
+          __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 47, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+          __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+          __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_1);
+        }
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      }
+
+      /* "backend/engine/finalizer.py":45
+ *         _time.sleep(1)
+ *         chunk = conn.read_channel()
+ *         if chunk:             # <<<<<<<<<<<<<<
+ *             buffer += chunk
+ *             if chunk.strip(): print(f"[{ts_fn()}]   [EPC_TFTP_Upload] {chunk}", file=sys.stderr)
+*/
+    }
+
+    /* "backend/engine/finalizer.py":50
+ * 
+ * 
+ *         buf_lower = buffer.lower()             # <<<<<<<<<<<<<<
+ * 
+ *         if ("username:" in buf_lower or "username [" in buf_lower) and sftp_user:
+*/
+    __pyx_t_5 = __pyx_v_buffer;
+    __Pyx_INCREF(__pyx_t_5);
+    __pyx_t_8 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
+      __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_8, (1-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_buf_lower);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_buf_lower, __pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "backend/engine/finalizer.py":52
+ *         buf_lower = buffer.lower()
+ * 
+ *         if ("username:" in buf_lower or "username [" in buf_lower) and sftp_user:             # <<<<<<<<<<<<<<
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Username prompt  sending SFTP username", file=sys.stderr)
+ *             conn.write_channel(sftp_user + "\n")
+*/
+    __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_username, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (!__pyx_t_10) {
+    } else {
+      goto __pyx_L9_next_and;
+    }
+    __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_username_2, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (__pyx_t_10) {
+    } else {
+      __pyx_t_9 = __pyx_t_10;
+      goto __pyx_L8_bool_binop_done;
+    }
+    __pyx_L9_next_and:;
+    {
+      Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_sftp_user);
+      if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 52, __pyx_L1_error)
+      __pyx_t_10 = (__pyx_temp != 0);
+    }
+
+    __pyx_t_9 = __pyx_t_10;
+    __pyx_L8_bool_binop_done:;
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":53
+ * 
+ *         if ("username:" in buf_lower or "username [" in buf_lower) and sftp_user:
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Username prompt  sending SFTP username", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             conn.write_channel(sftp_user + "\n")
+ *             buffer = ""
+*/
+      __pyx_t_5 = NULL;
+      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts_fn); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_11[0] = __pyx_mstate_global->__pyx_kp_u_;
+      __pyx_t_11[1] = __pyx_t_3;
+      __pyx_t_11[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_Username_prompt;
+      __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_11, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_3) + 61, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3));
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 53, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_8 = 1;
+      {
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_4};
+        __pyx_t_3 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_7, __pyx_t_3, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 53, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_3);
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":54
+ *         if ("username:" in buf_lower or "username [" in buf_lower) and sftp_user:
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Username prompt  sending SFTP username", file=sys.stderr)
+ *             conn.write_channel(sftp_user + "\n")             # <<<<<<<<<<<<<<
+ *             buffer = ""
+ *             continue
+*/
+      __pyx_t_3 = __pyx_v_conn;
+      __Pyx_INCREF(__pyx_t_3);
+      __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_v_sftp_user, __pyx_mstate_global->__pyx_kp_u__2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 54, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_8 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_t_7};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_write_channel, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":55
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Username prompt  sending SFTP username", file=sys.stderr)
+ *             conn.write_channel(sftp_user + "\n")
+ *             buffer = ""             # <<<<<<<<<<<<<<
+ *             continue
+ * 
+*/
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+      __Pyx_DECREF_SET(__pyx_v_buffer, __pyx_mstate_global->__pyx_kp_u__3);
+
+      /* "backend/engine/finalizer.py":56
+ *             conn.write_channel(sftp_user + "\n")
+ *             buffer = ""
+ *             continue             # <<<<<<<<<<<<<<
+ * 
+ *         if "password:" in buf_lower and sftp_pass:
+*/
+      goto __pyx_L3_continue;
+
+      /* "backend/engine/finalizer.py":52
+ *         buf_lower = buffer.lower()
+ * 
+ *         if ("username:" in buf_lower or "username [" in buf_lower) and sftp_user:             # <<<<<<<<<<<<<<
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Username prompt  sending SFTP username", file=sys.stderr)
+ *             conn.write_channel(sftp_user + "\n")
+*/
+    }
+
+    /* "backend/engine/finalizer.py":58
+ *             continue
+ * 
+ *         if "password:" in buf_lower and sftp_pass:             # <<<<<<<<<<<<<<
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Password prompt  sending SFTP password", file=sys.stderr)
+ *             conn.write_channel(sftp_pass + "\n")
+*/
+    __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_password, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 58, __pyx_L1_error)
+    if (__pyx_t_10) {
+    } else {
+      __pyx_t_9 = __pyx_t_10;
+      goto __pyx_L12_bool_binop_done;
+    }
+    {
+      Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_sftp_pass);
+      if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 58, __pyx_L1_error)
+      __pyx_t_10 = (__pyx_temp != 0);
+    }
+
+    __pyx_t_9 = __pyx_t_10;
+    __pyx_L12_bool_binop_done:;
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":59
+ * 
+ *         if "password:" in buf_lower and sftp_pass:
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Password prompt  sending SFTP password", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             conn.write_channel(sftp_pass + "\n")
+ *             buffer = ""
+*/
+      __pyx_t_7 = NULL;
+      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_v_ts_fn); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_3, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_11[0] = __pyx_mstate_global->__pyx_kp_u_;
+      __pyx_t_11[1] = __pyx_t_4;
+      __pyx_t_11[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_Password_prompt;
+      __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_11, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 61, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4));
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_8 = 1;
+      {
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_7, __pyx_t_3};
+        __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
+        __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":60
+ *         if "password:" in buf_lower and sftp_pass:
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Password prompt  sending SFTP password", file=sys.stderr)
+ *             conn.write_channel(sftp_pass + "\n")             # <<<<<<<<<<<<<<
+ *             buffer = ""
+ *             continue
+*/
+      __pyx_t_4 = __pyx_v_conn;
+      __Pyx_INCREF(__pyx_t_4);
+      __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_v_sftp_pass, __pyx_mstate_global->__pyx_kp_u__2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_8 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_t_5};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_write_channel, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":61
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Password prompt  sending SFTP password", file=sys.stderr)
+ *             conn.write_channel(sftp_pass + "\n")
+ *             buffer = ""             # <<<<<<<<<<<<<<
+ *             continue
+ *         if "address or name of remote host" in buf_lower:
+*/
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+      __Pyx_DECREF_SET(__pyx_v_buffer, __pyx_mstate_global->__pyx_kp_u__3);
+
+      /* "backend/engine/finalizer.py":62
+ *             conn.write_channel(sftp_pass + "\n")
+ *             buffer = ""
+ *             continue             # <<<<<<<<<<<<<<
+ *         if "address or name of remote host" in buf_lower:
+ *             conn.write_channel("\n")
+*/
+      goto __pyx_L3_continue;
+
+      /* "backend/engine/finalizer.py":58
+ *             continue
+ * 
+ *         if "password:" in buf_lower and sftp_pass:             # <<<<<<<<<<<<<<
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Password prompt  sending SFTP password", file=sys.stderr)
+ *             conn.write_channel(sftp_pass + "\n")
+*/
+    }
+
+    /* "backend/engine/finalizer.py":63
+ *             buffer = ""
+ *             continue
+ *         if "address or name of remote host" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("\n")
+ *             buffer = ""
+*/
+    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_address_or_name_of_remote_host, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 63, __pyx_L1_error)
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":64
+ *             continue
+ *         if "address or name of remote host" in buf_lower:
+ *             conn.write_channel("\n")             # <<<<<<<<<<<<<<
+ *             buffer = ""
+ *             continue
+*/
+      __pyx_t_5 = __pyx_v_conn;
+      __Pyx_INCREF(__pyx_t_5);
+      __pyx_t_8 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u__2};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_write_channel, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":65
+ *         if "address or name of remote host" in buf_lower:
+ *             conn.write_channel("\n")
+ *             buffer = ""             # <<<<<<<<<<<<<<
+ *             continue
+ *         if "destination filename" in buf_lower:
+*/
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+      __Pyx_DECREF_SET(__pyx_v_buffer, __pyx_mstate_global->__pyx_kp_u__3);
+
+      /* "backend/engine/finalizer.py":66
+ *             conn.write_channel("\n")
+ *             buffer = ""
+ *             continue             # <<<<<<<<<<<<<<
+ *         if "destination filename" in buf_lower:
+ *             conn.write_channel("\n")
+*/
+      goto __pyx_L3_continue;
+
+      /* "backend/engine/finalizer.py":63
+ *             buffer = ""
+ *             continue
+ *         if "address or name of remote host" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("\n")
+ *             buffer = ""
+*/
+    }
+
+    /* "backend/engine/finalizer.py":67
+ *             buffer = ""
+ *             continue
+ *         if "destination filename" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("\n")
+ *             buffer = ""
+*/
+    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_destination_filename, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 67, __pyx_L1_error)
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":68
+ *             continue
+ *         if "destination filename" in buf_lower:
+ *             conn.write_channel("\n")             # <<<<<<<<<<<<<<
+ *             buffer = ""
+ *             continue
+*/
+      __pyx_t_5 = __pyx_v_conn;
+      __Pyx_INCREF(__pyx_t_5);
+      __pyx_t_8 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u__2};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_write_channel, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":69
+ *         if "destination filename" in buf_lower:
+ *             conn.write_channel("\n")
+ *             buffer = ""             # <<<<<<<<<<<<<<
+ *             continue
+ * 
+*/
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+      __Pyx_DECREF_SET(__pyx_v_buffer, __pyx_mstate_global->__pyx_kp_u__3);
+
+      /* "backend/engine/finalizer.py":70
+ *             conn.write_channel("\n")
+ *             buffer = ""
+ *             continue             # <<<<<<<<<<<<<<
+ * 
+ *         if "[confirm]" in buf_lower or "(yes/no)" in buf_lower:
+*/
+      goto __pyx_L3_continue;
+
+      /* "backend/engine/finalizer.py":67
+ *             buffer = ""
+ *             continue
+ *         if "destination filename" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("\n")
+ *             buffer = ""
+*/
+    }
+
+    /* "backend/engine/finalizer.py":72
+ *             continue
+ * 
+ *         if "[confirm]" in buf_lower or "(yes/no)" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("\n")
+ *             buffer = ""
+*/
+    __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_confirm, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 72, __pyx_L1_error)
+    if (!__pyx_t_10) {
+    } else {
+      __pyx_t_9 = __pyx_t_10;
+      goto __pyx_L17_bool_binop_done;
+    }
+    __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_yes_no, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_9 = __pyx_t_10;
+    __pyx_L17_bool_binop_done:;
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":73
+ * 
+ *         if "[confirm]" in buf_lower or "(yes/no)" in buf_lower:
+ *             conn.write_channel("\n")             # <<<<<<<<<<<<<<
+ *             buffer = ""
+ *             continue
+*/
+      __pyx_t_5 = __pyx_v_conn;
+      __Pyx_INCREF(__pyx_t_5);
+      __pyx_t_8 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u__2};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_write_channel, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":74
+ *         if "[confirm]" in buf_lower or "(yes/no)" in buf_lower:
+ *             conn.write_channel("\n")
+ *             buffer = ""             # <<<<<<<<<<<<<<
+ *             continue
+ *         if "(yes/no)" in buf_lower:
+*/
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+      __Pyx_DECREF_SET(__pyx_v_buffer, __pyx_mstate_global->__pyx_kp_u__3);
+
+      /* "backend/engine/finalizer.py":75
+ *             conn.write_channel("\n")
+ *             buffer = ""
+ *             continue             # <<<<<<<<<<<<<<
+ *         if "(yes/no)" in buf_lower:
+ *             conn.write_channel("yes\n")
+*/
+      goto __pyx_L3_continue;
+
+      /* "backend/engine/finalizer.py":72
+ *             continue
+ * 
+ *         if "[confirm]" in buf_lower or "(yes/no)" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("\n")
+ *             buffer = ""
+*/
+    }
+
+    /* "backend/engine/finalizer.py":76
+ *             buffer = ""
+ *             continue
+ *         if "(yes/no)" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("yes\n")
+ *             buffer = ""
+*/
+    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_yes_no, __pyx_cur_scope->__pyx_v_buf_lower, Py_EQ)); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 76, __pyx_L1_error)
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":77
+ *             continue
+ *         if "(yes/no)" in buf_lower:
+ *             conn.write_channel("yes\n")             # <<<<<<<<<<<<<<
+ *             buffer = ""
+ *             continue
+*/
+      __pyx_t_5 = __pyx_v_conn;
+      __Pyx_INCREF(__pyx_t_5);
+      __pyx_t_8 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_n_u_yes};
+        __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_write_channel, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "backend/engine/finalizer.py":78
+ *         if "(yes/no)" in buf_lower:
+ *             conn.write_channel("yes\n")
+ *             buffer = ""             # <<<<<<<<<<<<<<
+ *             continue
+ * 
+*/
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+      __Pyx_DECREF_SET(__pyx_v_buffer, __pyx_mstate_global->__pyx_kp_u__3);
+
+      /* "backend/engine/finalizer.py":79
+ *             conn.write_channel("yes\n")
+ *             buffer = ""
+ *             continue             # <<<<<<<<<<<<<<
+ * 
+ *         if any(p in buf_lower for p in (
+*/
+      goto __pyx_L3_continue;
+
+      /* "backend/engine/finalizer.py":76
+ *             buffer = ""
+ *             continue
+ *         if "(yes/no)" in buf_lower:             # <<<<<<<<<<<<<<
+ *             conn.write_channel("yes\n")
+ *             buffer = ""
+*/
+    }
+
+    /* "backend/engine/finalizer.py":81
+ *             continue
+ * 
+ *         if any(p in buf_lower for p in (             # <<<<<<<<<<<<<<
+ *                     "bytes copied",
+ *                     "transfer complete",
+*/
+    __pyx_t_1 = __pyx_pf_7backend_6engine_9finalizer_25_run_transfer_interactive_genexpr(((PyObject*)__pyx_cur_scope), __pyx_mstate_global->__pyx_tuple[0]); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_Generator_GetInlinedResult(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":87
+ *                     "successful file transfer",
+ *                 )):
+ *                     print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Transfer complete ", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *                     return buffer
+ * 
+*/
+      __pyx_t_1 = NULL;
+      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts_fn); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 87, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_11[0] = __pyx_mstate_global->__pyx_kp_u_;
+      __pyx_t_11[1] = __pyx_t_3;
+      __pyx_t_11[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_Transfer_comple;
+      __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_11, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_3) + 41, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3));
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 87, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 87, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_8 = 1;
+      {
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_4};
+        __pyx_t_3 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_7, __pyx_t_3, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 87, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_3);
+        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 87, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+      }
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+      /* "backend/engine/finalizer.py":88
+ *                 )):
+ *                     print(f"[{ts_fn()}]   [EPC_TFTP_Upload] Transfer complete ", file=sys.stderr)
+ *                     return buffer             # <<<<<<<<<<<<<<
+ * 
+ *         if any(x in buf_lower for x in (
+*/
+      __Pyx_XDECREF(__pyx_r);
+      __pyx_t_5 = __pyx_v_buffer;
+      __Pyx_INCREF(__pyx_t_5);
+      if (!(likely(PyUnicode_CheckExact(__pyx_t_5))||((__pyx_t_5) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_5))) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_r = ((PyObject*)__pyx_t_5);
+      __pyx_t_5 = 0;
+      goto __pyx_L0;
+
+      /* "backend/engine/finalizer.py":81
+ *             continue
+ * 
+ *         if any(p in buf_lower for p in (             # <<<<<<<<<<<<<<
+ *                     "bytes copied",
+ *                     "transfer complete",
+*/
+    }
+
+    /* "backend/engine/finalizer.py":90
+ *                     return buffer
+ * 
+ *         if any(x in buf_lower for x in (             # <<<<<<<<<<<<<<
+ *             "error", "failed", "no such", "permission denied",
+ *             "connection refused", "timed out", "cannot open",
+*/
+    __pyx_t_5 = __pyx_pf_7backend_6engine_9finalizer_25_run_transfer_interactive_3genexpr(((PyObject*)__pyx_cur_scope), __pyx_mstate_global->__pyx_tuple[1]); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_3 = __Pyx_Generator_GetInlinedResult(__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 90, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":95
+ *             "invalid input",
+ *         )):
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer error detected in output", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             return buffer
+ * 
+*/
+      __pyx_t_5 = NULL;
+      __pyx_t_7 = __Pyx_PyObject_CallNoArg(__pyx_v_ts_fn); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_7, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_11[0] = __pyx_mstate_global->__pyx_kp_u_;
+      __pyx_t_11[1] = __pyx_t_4;
+      __pyx_t_11[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_transfe;
+      __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_11, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 64, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4));
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_8 = 1;
+      {
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_7};
+        __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 95, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+      }
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+      /* "backend/engine/finalizer.py":96
+ *         )):
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer error detected in output", file=sys.stderr)
+ *             return buffer             # <<<<<<<<<<<<<<
+ * 
+ *         if _time.time() - start > timeout:
+*/
+      __Pyx_XDECREF(__pyx_r);
+      __pyx_t_3 = __pyx_v_buffer;
+      __Pyx_INCREF(__pyx_t_3);
+      if (!(likely(PyUnicode_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 96, __pyx_L1_error)
+      __pyx_r = ((PyObject*)__pyx_t_3);
+      __pyx_t_3 = 0;
+      goto __pyx_L0;
+
+      /* "backend/engine/finalizer.py":90
+ *                     return buffer
+ * 
+ *         if any(x in buf_lower for x in (             # <<<<<<<<<<<<<<
+ *             "error", "failed", "no such", "permission denied",
+ *             "connection refused", "timed out", "cannot open",
+*/
+    }
+
+    /* "backend/engine/finalizer.py":98
+ *             return buffer
+ * 
+ *         if _time.time() - start > timeout:             # <<<<<<<<<<<<<<
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer timed out after {timeout}s", file=sys.stderr)
+ *             return buffer
+*/
+    __pyx_t_4 = __pyx_v__time;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_8 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
+      __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_time, __pyx_callargs+__pyx_t_8, (1-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    }
+    __pyx_t_4 = PyNumber_Subtract(__pyx_t_3, __pyx_v_start); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 98, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyObject_RichCompare(__pyx_t_4, __pyx_v_timeout, Py_GT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 98, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (__pyx_t_9) {
+
+      /* "backend/engine/finalizer.py":99
+ * 
+ *         if _time.time() - start > timeout:
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer timed out after {timeout}s", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             return buffer
+ * 
+*/
+      __pyx_t_4 = NULL;
+      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts_fn); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 99, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_timeout, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_12[0] = __pyx_mstate_global->__pyx_kp_u_;
+      __pyx_t_12[1] = __pyx_t_7;
+      __pyx_t_12[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_transfe_2;
+      __pyx_t_12[3] = __pyx_t_1;
+      __pyx_t_12[4] = __pyx_mstate_global->__pyx_n_u_s;
+      __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_12, 5, 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_7) + 56 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_7) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 99, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 99, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_8 = 1;
+      {
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_5};
+        __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_7, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 99, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 99, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+      }
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+      /* "backend/engine/finalizer.py":100
+ *         if _time.time() - start > timeout:
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer timed out after {timeout}s", file=sys.stderr)
+ *             return buffer             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+      __Pyx_XDECREF(__pyx_r);
+      __pyx_t_3 = __pyx_v_buffer;
+      __Pyx_INCREF(__pyx_t_3);
+      if (!(likely(PyUnicode_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 100, __pyx_L1_error)
+      __pyx_r = ((PyObject*)__pyx_t_3);
+      __pyx_t_3 = 0;
+      goto __pyx_L0;
+
+      /* "backend/engine/finalizer.py":98
+ *             return buffer
+ * 
+ *         if _time.time() - start > timeout:             # <<<<<<<<<<<<<<
+ *             print(f"[{ts_fn()}]   [EPC_TFTP_Upload] WARNING: transfer timed out after {timeout}s", file=sys.stderr)
+ *             return buffer
+*/
+    }
+    __pyx_L3_continue:;
+  }
+
+  /* "backend/engine/finalizer.py":22
+ * 
+ * 
+ * def _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *     conn,
+ *     cmd: str,
+*/
+
+  /* function exit code */
+  __pyx_r = ((PyObject*)Py_None); __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_AddTraceback("backend.engine.finalizer._run_transfer_interactive", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v__time);
+  __Pyx_XDECREF(__pyx_v_buffer);
+  __Pyx_XDECREF(__pyx_v_start);
+  __Pyx_XDECREF(__pyx_v_chunk);
+  __Pyx_XDECREF(__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_2generator);
+  __Pyx_XDECREF(__pyx_gb_7backend_6engine_9finalizer_25_run_transfer_interactive_5generator1);
+  __Pyx_DECREF((PyObject *)__pyx_cur_scope);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "backend/engine/finalizer.py":103
+ * 
+ * 
+ * def run_finalization(             # <<<<<<<<<<<<<<
+ *     *,
+ *     wlc_host: str,
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7backend_6engine_9finalizer_3run_finalization(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_7backend_6engine_9finalizer_3run_finalization = {"run_finalization", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7backend_6engine_9finalizer_3run_finalization, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7backend_6engine_9finalizer_3run_finalization(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3000,20 +4674,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_wlc_host,&__pyx_mstate_global->__pyx_n_u_auth,&__pyx_mstate_global->__pyx_n_u_ap_auth,&__pyx_mstate_global->__pyx_n_u_mac,&__pyx_mstate_global->__pyx_n_u_ip,&__pyx_mstate_global->__pyx_n_u_mycap_name,&__pyx_mstate_global->__pyx_n_u_active_rca_sessions,&__pyx_mstate_global->__pyx_n_u_active_rca_lock,&__pyx_mstate_global->__pyx_n_u_ts,&__pyx_mstate_global->__pyx_n_u_clear_ap_workflow,&__pyx_mstate_global->__pyx_n_u_mark_ap_used,&__pyx_mstate_global->__pyx_n_u_reset_disjoin_counter,&__pyx_mstate_global->__pyx_n_u_append_finalized_ap,&__pyx_mstate_global->__pyx_n_u_save_report,&__pyx_mstate_global->__pyx_n_u_skip_hardcoded,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 22, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 103, __pyx_L3_error)
     if (likely(__pyx_kwds_len > 0)) {
       switch (__pyx_nargs) {
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, 0, __pyx_kwds_len, "run_finalization", 0) < (0)) __PYX_ERR(0, 22, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, 0, __pyx_kwds_len, "run_finalization", 0) < (0)) __PYX_ERR(0, 103, __pyx_L3_error)
       for (Py_ssize_t i = 0; i < 14; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseKeywordRequired("run_finalization", *(__pyx_pyargnames[i - 0])); __PYX_ERR(0, 22, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseKeywordRequired("run_finalization", *(__pyx_pyargnames[i - 0])); __PYX_ERR(0, 103, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 0)) {
       goto __pyx_L5_argtuple_error;
     } else {
-      __Pyx_RaiseKeywordRequired("run_finalization", __pyx_mstate_global->__pyx_n_u_wlc_host); __PYX_ERR(0, 22, __pyx_L3_error)
+      __Pyx_RaiseKeywordRequired("run_finalization", __pyx_mstate_global->__pyx_n_u_wlc_host); __PYX_ERR(0, 103, __pyx_L3_error)
     }
     __pyx_v_wlc_host = ((PyObject*)values[0]);
     __pyx_v_auth = ((PyObject*)values[1]);
@@ -3030,10 +4704,10 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
     __pyx_v_append_finalized_ap = values[12];
     __pyx_v_save_report = values[13];
     if (values[14]) {
-      __pyx_v_skip_hardcoded = __Pyx_PyObject_IsTrue(values[14]); if (unlikely((__pyx_v_skip_hardcoded == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 38, __pyx_L3_error)
+      __pyx_v_skip_hardcoded = __Pyx_PyObject_IsTrue(values[14]); if (unlikely((__pyx_v_skip_hardcoded == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 119, __pyx_L3_error)
     } else {
 
-      /* "backend/engine/finalizer.py":38
+      /* "backend/engine/finalizer.py":119
  *     append_finalized_ap: Callable[..., None],
  *     save_report: Callable[[], tuple],
  *     skip_hardcoded: bool = False,             # <<<<<<<<<<<<<<
@@ -3045,7 +4719,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("run_finalization", 1, 0, 0, __pyx_nargs); __PYX_ERR(0, 22, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("run_finalization", 1, 0, 0, __pyx_nargs); __PYX_ERR(0, 103, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3056,16 +4730,16 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_wlc_host), (&PyUnicode_Type), 0, "wlc_host", 2))) __PYX_ERR(0, 24, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_auth), (&PyDict_Type), 0, "auth", 2))) __PYX_ERR(0, 25, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ap_auth), (&PyDict_Type), 0, "ap_auth", 2))) __PYX_ERR(0, 26, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mac), (&PyUnicode_Type), 0, "mac", 2))) __PYX_ERR(0, 27, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ip), (&PyUnicode_Type), 1, "ip", 2))) __PYX_ERR(0, 28, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mycap_name), (&PyUnicode_Type), 0, "mycap_name", 2))) __PYX_ERR(0, 29, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_active_rca_sessions), (&PyDict_Type), 0, "active_rca_sessions", 2))) __PYX_ERR(0, 30, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7backend_6engine_9finalizer_run_finalization(__pyx_self, __pyx_v_wlc_host, __pyx_v_auth, __pyx_v_ap_auth, __pyx_v_mac, __pyx_v_ip, __pyx_v_mycap_name, __pyx_v_active_rca_sessions, __pyx_v_active_rca_lock, __pyx_v_ts, __pyx_v_clear_ap_workflow, __pyx_v_mark_ap_used, __pyx_v_reset_disjoin_counter, __pyx_v_append_finalized_ap, __pyx_v_save_report, __pyx_v_skip_hardcoded);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_wlc_host), (&PyUnicode_Type), 0, "wlc_host", 2))) __PYX_ERR(0, 105, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_auth), (&PyDict_Type), 0, "auth", 2))) __PYX_ERR(0, 106, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ap_auth), (&PyDict_Type), 0, "ap_auth", 2))) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mac), (&PyUnicode_Type), 0, "mac", 2))) __PYX_ERR(0, 108, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ip), (&PyUnicode_Type), 1, "ip", 2))) __PYX_ERR(0, 109, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mycap_name), (&PyUnicode_Type), 0, "mycap_name", 2))) __PYX_ERR(0, 110, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_active_rca_sessions), (&PyDict_Type), 0, "active_rca_sessions", 2))) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7backend_6engine_9finalizer_2run_finalization(__pyx_self, __pyx_v_wlc_host, __pyx_v_auth, __pyx_v_ap_auth, __pyx_v_mac, __pyx_v_ip, __pyx_v_mycap_name, __pyx_v_active_rca_sessions, __pyx_v_active_rca_lock, __pyx_v_ts, __pyx_v_clear_ap_workflow, __pyx_v_mark_ap_used, __pyx_v_reset_disjoin_counter, __pyx_v_append_finalized_ap, __pyx_v_save_report, __pyx_v_skip_hardcoded);
 
-  /* "backend/engine/finalizer.py":22
+  /* "backend/engine/finalizer.py":103
  * 
  * 
  * def run_finalization(             # <<<<<<<<<<<<<<
@@ -3089,9 +4763,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
+static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator2(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "backend/engine/finalizer.py":101
+/* "backend/engine/finalizer.py":182
  *                     "confirm",
  *                 )
  *                 if any(p in export_out.lower() for p in OVERWRITE_PATTERNS):             # <<<<<<<<<<<<<<
@@ -3100,29 +4774,29 @@ static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2genera
 */
 
 static PyObject *__pyx_pf_7backend_6engine_9finalizer_16run_finalization_genexpr(PyObject *__pyx_self, PyObject *__pyx_genexpr_arg_0) {
-  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *__pyx_cur_scope;
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("genexpr", 0);
-  __pyx_cur_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr(__pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr, __pyx_mstate_global->__pyx_empty_tuple, NULL);
+  __pyx_cur_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr(__pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr, __pyx_mstate_global->__pyx_empty_tuple, NULL);
   if (unlikely(!__pyx_cur_scope)) {
-    __pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *)Py_None);
+    __pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 101, __pyx_L1_error)
+    __PYX_ERR(0, 182, __pyx_L1_error)
   } else {
     __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
   }
-  __pyx_cur_scope->__pyx_outer_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *) __pyx_self;
+  __pyx_cur_scope->__pyx_outer_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *) __pyx_self;
   __Pyx_INCREF((PyObject *)__pyx_cur_scope->__pyx_outer_scope);
   __Pyx_GIVEREF((PyObject *)__pyx_cur_scope->__pyx_outer_scope);
   __pyx_cur_scope->__pyx_genexpr_arg_0 = __pyx_genexpr_arg_0;
   __Pyx_INCREF(__pyx_cur_scope->__pyx_genexpr_arg_0);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_genexpr_arg_0);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_genexpr, __pyx_mstate_global->__pyx_n_u_run_finalization_locals_genexpr, __pyx_mstate_global->__pyx_n_u_backend_engine_finalizer); if (unlikely(!gen)) __PYX_ERR(0, 101, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator2, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_genexpr, __pyx_mstate_global->__pyx_n_u_run_finalization_locals_genexpr, __pyx_mstate_global->__pyx_n_u_backend_engine_finalizer); if (unlikely(!gen)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -3138,9 +4812,9 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_16run_finalization_genexpr
   return __pyx_r;
 }
 
-static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
+static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator2(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
 {
-  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *__pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr *)__pyx_generator->closure);
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *__pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *)__pyx_generator->closure);
   PyObject *__pyx_r = NULL;
   PyObject *__pyx_t_1 = NULL;
   Py_ssize_t __pyx_t_2;
@@ -3160,15 +4834,15 @@ static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2genera
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 101, __pyx_L1_error)
-  if (unlikely(!__pyx_cur_scope->__pyx_genexpr_arg_0)) { __Pyx_RaiseUnboundLocalError(".0"); __PYX_ERR(0, 101, __pyx_L1_error) }
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 182, __pyx_L1_error)
+  if (unlikely(!__pyx_cur_scope->__pyx_genexpr_arg_0)) { __Pyx_RaiseUnboundLocalError(".0"); __PYX_ERR(0, 182, __pyx_L1_error) }
   __pyx_t_1 = __pyx_cur_scope->__pyx_genexpr_arg_0; __Pyx_INCREF(__pyx_t_1);
   __pyx_t_2 = 0;
   for (;;) {
     {
       Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
       #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 101, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 182, __pyx_L1_error)
       #endif
       if (__pyx_t_2 >= __pyx_temp) break;
     }
@@ -3178,13 +4852,13 @@ static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2genera
     __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_2);
     #endif
     ++__pyx_t_2;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_p);
     __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_p, ((PyObject*)__pyx_t_3));
     __Pyx_GIVEREF(__pyx_t_3);
     __pyx_t_3 = 0;
-    if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_export_out)) { __Pyx_RaiseClosureNameError("export_out"); __PYX_ERR(0, 101, __pyx_L1_error) }
+    if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_export_out)) { __Pyx_RaiseClosureNameError("export_out"); __PYX_ERR(0, 182, __pyx_L1_error) }
     __pyx_t_4 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_export_out;
     __Pyx_INCREF(__pyx_t_4);
     __pyx_t_5 = 0;
@@ -3192,10 +4866,10 @@ static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2genera
       PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
       __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_5, (1-__pyx_t_5) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     }
-    __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_cur_scope->__pyx_v_p, __pyx_t_3, Py_EQ)); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 101, __pyx_L1_error)
+    __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_cur_scope->__pyx_v_p, __pyx_t_3, Py_EQ)); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_6) {
       __Pyx_XDECREF(__pyx_r);
@@ -3235,7 +4909,7 @@ static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2genera
   return __pyx_r;
 }
 
-/* "backend/engine/finalizer.py":22
+/* "backend/engine/finalizer.py":103
  * 
  * 
  * def run_finalization(             # <<<<<<<<<<<<<<
@@ -3243,8 +4917,8 @@ static PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2genera
  *     wlc_host: str,
 */
 
-static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_wlc_host, PyObject *__pyx_v_auth, PyObject *__pyx_v_ap_auth, PyObject *__pyx_v_mac, PyObject *__pyx_v_ip, PyObject *__pyx_v_mycap_name, PyObject *__pyx_v_active_rca_sessions, PyObject *__pyx_v_active_rca_lock, PyObject *__pyx_v_ts, PyObject *__pyx_v_clear_ap_workflow, PyObject *__pyx_v_mark_ap_used, PyObject *__pyx_v_reset_disjoin_counter, PyObject *__pyx_v_append_finalized_ap, PyObject *__pyx_v_save_report, int __pyx_v_skip_hardcoded) {
-  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *__pyx_cur_scope;
+static PyObject *__pyx_pf_7backend_6engine_9finalizer_2run_finalization(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_wlc_host, PyObject *__pyx_v_auth, PyObject *__pyx_v_ap_auth, PyObject *__pyx_v_mac, PyObject *__pyx_v_ip, PyObject *__pyx_v_mycap_name, PyObject *__pyx_v_active_rca_sessions, PyObject *__pyx_v_active_rca_lock, PyObject *__pyx_v_ts, PyObject *__pyx_v_clear_ap_workflow, PyObject *__pyx_v_mark_ap_used, PyObject *__pyx_v_reset_disjoin_counter, PyObject *__pyx_v_append_finalized_ap, PyObject *__pyx_v_save_report, int __pyx_v_skip_hardcoded) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *__pyx_cur_scope;
   PyObject *__pyx_v_ConnectHandler = NULL;
   PyObject *__pyx_v_wlc_conn = NULL;
   PyObject *__pyx_v_exc = NULL;
@@ -3257,14 +4931,21 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
   PyObject *__pyx_v_verify_cmd = NULL;
   PyObject *__pyx_v_verify_out = NULL;
   PyObject *__pyx_v_tftp_ip = NULL;
+  PyObject *__pyx_v_proto = NULL;
+  PyObject *__pyx_v_sftp_user = NULL;
+  PyObject *__pyx_v_sftp_pass = NULL;
   PyObject *__pyx_v_tftp_export = NULL;
+  PyObject *__pyx_v_proto_label = NULL;
+  PyObject *__pyx_v_transfer_out = NULL;
   PyObject *__pyx_v_digits = NULL;
   PyObject *__pyx_v_dot_mac = NULL;
   PyObject *__pyx_v_always_on_export = NULL;
+  PyObject *__pyx_v_always_on_out = NULL;
   PyObject *__pyx_v_ap_conn = NULL;
   PyObject *__pyx_v_json_path = NULL;
   PyObject *__pyx_v_txt_path = NULL;
-  PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator = 0;
+  PyObject *__pyx_v__session_snap = NULL;
+  PyObject *__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator2 = 0;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3300,30 +4981,30 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
   char const *__pyx_t_31;
   char const *__pyx_t_32;
   char const *__pyx_t_33;
-  char const *__pyx_t_34;
-  PyObject *__pyx_t_35[7];
-  char const *__pyx_t_36;
+  int __pyx_t_34;
+  char const *__pyx_t_35;
+  PyObject *__pyx_t_36[7];
   char const *__pyx_t_37;
   char const *__pyx_t_38;
-  int __pyx_t_39;
-  char const *__pyx_t_40;
-  PyObject *(*__pyx_t_41)(PyObject *);
-  char const *__pyx_t_42;
-  int __pyx_t_43;
+  char const *__pyx_t_39;
+  int __pyx_t_40;
+  char const *__pyx_t_41;
+  PyObject *(*__pyx_t_42)(PyObject *);
+  char const *__pyx_t_43;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("run_finalization", 0);
-  __pyx_cur_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization(__pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization, __pyx_mstate_global->__pyx_empty_tuple, NULL);
+  __pyx_cur_scope = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization(__pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization, __pyx_mstate_global->__pyx_empty_tuple, NULL);
   if (unlikely(!__pyx_cur_scope)) {
-    __pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *)Py_None);
+    __pyx_cur_scope = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 22, __pyx_L1_error)
+    __PYX_ERR(0, 103, __pyx_L1_error)
   } else {
     __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
   }
 
-  /* "backend/engine/finalizer.py":40
+  /* "backend/engine/finalizer.py":121
  *     skip_hardcoded: bool = False,
  * ) -> None:
  *     from netmiko import ConnectHandler             # <<<<<<<<<<<<<<
@@ -3332,14 +5013,14 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_ConnectHandler};
-    __pyx_t_2 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_netmiko, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_netmiko, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 121, __pyx_L1_error)
   }
   __pyx_t_1 = __pyx_t_2;
   __Pyx_GOTREF(__pyx_t_1);
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_ConnectHandler};
     __pyx_t_3 = 0; {
-      __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_1, __pyx_imported_names[__pyx_t_3]); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_1, __pyx_imported_names[__pyx_t_3]); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 121, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       switch (__pyx_t_3) {
         case 0:
@@ -3353,7 +5034,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/engine/finalizer.py":42
+  /* "backend/engine/finalizer.py":123
  *     from netmiko import ConnectHandler
  * 
  *     print(             # <<<<<<<<<<<<<<
@@ -3362,57 +5043,57 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
   __pyx_t_4 = NULL;
 
-  /* "backend/engine/finalizer.py":43
+  /* "backend/engine/finalizer.py":124
  * 
  *     print(
  *         f"[{ts()}] [FINALIZE] Second disjoin of same AP ({mac})  starting finalization sequence.",             # <<<<<<<<<<<<<<
  *         file=sys.stderr,
  *     )
 */
-  __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
+  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
   __pyx_t_7[1] = __pyx_t_6;
   __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_Second_disjoin_of_same;
   __pyx_t_7[3] = __pyx_v_mac;
   __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_starting_finalization_sequence;
   __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 40 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac) + 35, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
-  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-  /* "backend/engine/finalizer.py":44
+  /* "backend/engine/finalizer.py":125
  *     print(
  *         f"[{ts()}] [FINALIZE] Second disjoin of same AP ({mac})  starting finalization sequence.",
  *         file=sys.stderr,             # <<<<<<<<<<<<<<
  *     )
  * 
 */
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_9 = 1;
   {
     PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_5};
-    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 42, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 42, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 123, __pyx_L1_error)
     __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/engine/finalizer.py":47
+  /* "backend/engine/finalizer.py":128
  *     )
  * 
  *     if not skip_hardcoded:             # <<<<<<<<<<<<<<
@@ -3422,7 +5103,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
   __pyx_t_10 = (!__pyx_v_skip_hardcoded);
   if (__pyx_t_10) {
 
-    /* "backend/engine/finalizer.py":49
+    /* "backend/engine/finalizer.py":130
  *     if not skip_hardcoded:
  *         #  1+2+3+4+5: WLC cleanup via fresh SSH
  *         wlc_conn = None             # <<<<<<<<<<<<<<
@@ -3432,7 +5113,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
     __Pyx_INCREF(Py_None);
     __pyx_v_wlc_conn = Py_None;
 
-    /* "backend/engine/finalizer.py":50
+    /* "backend/engine/finalizer.py":131
  *         #  1+2+3+4+5: WLC cleanup via fresh SSH
  *         wlc_conn = None
  *         try:             # <<<<<<<<<<<<<<
@@ -3449,7 +5130,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XGOTREF(__pyx_t_12);
         /*try:*/ {
 
-          /* "backend/engine/finalizer.py":51
+          /* "backend/engine/finalizer.py":132
  *         wlc_conn = None
  *         try:
  *             print(f"[{ts()}] [FINALIZE] Opening WLC SSH for cleanup ...", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -3457,40 +5138,40 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                 device_type="cisco_ios",
 */
           __pyx_t_6 = NULL;
-          __pyx_t_8 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 51, __pyx_L7_error)
+          __pyx_t_8 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 132, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L7_error)
+          __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 132, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
+          __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
           __pyx_t_13[1] = __pyx_t_5;
           __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_Opening_WLC_SSH_for_cl;
           __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 44, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
-          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 51, __pyx_L7_error)
+          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 132, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 132, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L7_error)
+          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 132, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __pyx_t_9 = 1;
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_6, __pyx_t_8};
-            __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L7_error)
+            __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 132, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_5);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 51, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 132, __pyx_L7_error)
             __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L7_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_1);
           }
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "backend/engine/finalizer.py":52
+          /* "backend/engine/finalizer.py":133
  *         try:
  *             print(f"[{ts()}] [FINALIZE] Opening WLC SSH for cleanup ...", file=sys.stderr)
  *             wlc_conn = ConnectHandler(             # <<<<<<<<<<<<<<
@@ -3501,47 +5182,47 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __Pyx_INCREF(__pyx_v_ConnectHandler);
           __pyx_t_4 = __pyx_v_ConnectHandler; 
 
-          /* "backend/engine/finalizer.py":55
+          /* "backend/engine/finalizer.py":136
  *                 device_type="cisco_ios",
  *                 host=wlc_host,
  *                 port=auth["port"],             # <<<<<<<<<<<<<<
  *                 username=auth["username"],
  *                 password=auth["password"],
 */
-          __pyx_t_8 = __Pyx_PyDict_GetItem(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_port); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 55, __pyx_L7_error)
+          __pyx_t_8 = __Pyx_PyDict_GetItem(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_port); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 136, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
 
-          /* "backend/engine/finalizer.py":56
+          /* "backend/engine/finalizer.py":137
  *                 host=wlc_host,
  *                 port=auth["port"],
  *                 username=auth["username"],             # <<<<<<<<<<<<<<
  *                 password=auth["password"],
  *                 secret=auth.get("secret"),
 */
-          __pyx_t_6 = __Pyx_PyDict_GetItem(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_username); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 56, __pyx_L7_error)
+          __pyx_t_6 = __Pyx_PyDict_GetItem(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_username_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 137, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_6);
 
-          /* "backend/engine/finalizer.py":57
+          /* "backend/engine/finalizer.py":138
  *                 port=auth["port"],
  *                 username=auth["username"],
  *                 password=auth["password"],             # <<<<<<<<<<<<<<
  *                 secret=auth.get("secret"),
  *                 fast_cli=False,
 */
-          __pyx_t_14 = __Pyx_PyDict_GetItem(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_password); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 57, __pyx_L7_error)
+          __pyx_t_14 = __Pyx_PyDict_GetItem(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_password_2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 138, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_14);
 
-          /* "backend/engine/finalizer.py":58
+          /* "backend/engine/finalizer.py":139
  *                 username=auth["username"],
  *                 password=auth["password"],
  *                 secret=auth.get("secret"),             # <<<<<<<<<<<<<<
  *                 fast_cli=False,
  *             )
 */
-          __pyx_t_15 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_secret, Py_None); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 58, __pyx_L7_error)
+          __pyx_t_15 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_secret, Py_None); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 139, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_15);
 
-          /* "backend/engine/finalizer.py":59
+          /* "backend/engine/finalizer.py":140
  *                 password=auth["password"],
  *                 secret=auth.get("secret"),
  *                 fast_cli=False,             # <<<<<<<<<<<<<<
@@ -3562,15 +5243,15 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           #endif
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 7 : 0)] = {__pyx_t_5, NULL};
-            __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(7); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 52, __pyx_L7_error)
+            __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(7); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 133, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_16);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_device_type, __pyx_mstate_global->__pyx_n_u_cisco_ios, __pyx_t_16, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 52, __pyx_L7_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_host, __pyx_v_wlc_host, __pyx_t_16, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 52, __pyx_L7_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_port, __pyx_t_8, __pyx_t_16, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 52, __pyx_L7_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_username, __pyx_t_6, __pyx_t_16, __pyx_callargs+1, 3) < (0)) __PYX_ERR(0, 52, __pyx_L7_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_password, __pyx_t_14, __pyx_t_16, __pyx_callargs+1, 4) < (0)) __PYX_ERR(0, 52, __pyx_L7_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_secret, __pyx_t_15, __pyx_t_16, __pyx_callargs+1, 5) < (0)) __PYX_ERR(0, 52, __pyx_L7_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_fast_cli, Py_False, __pyx_t_16, __pyx_callargs+1, 6) < (0)) __PYX_ERR(0, 52, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_device_type, __pyx_mstate_global->__pyx_n_u_cisco_ios, __pyx_t_16, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 133, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_host, __pyx_v_wlc_host, __pyx_t_16, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 133, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_port, __pyx_t_8, __pyx_t_16, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 133, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_username_3, __pyx_t_6, __pyx_t_16, __pyx_callargs+1, 3) < (0)) __PYX_ERR(0, 133, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_password_2, __pyx_t_14, __pyx_t_16, __pyx_callargs+1, 4) < (0)) __PYX_ERR(0, 133, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_secret, __pyx_t_15, __pyx_t_16, __pyx_callargs+1, 5) < (0)) __PYX_ERR(0, 133, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_fast_cli, Py_False, __pyx_t_16, __pyx_callargs+1, 6) < (0)) __PYX_ERR(0, 133, __pyx_L7_error)
             __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
             __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -3579,26 +5260,26 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
             __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L7_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_1);
           }
           __Pyx_DECREF_SET(__pyx_v_wlc_conn, __pyx_t_1);
           __pyx_t_1 = 0;
 
-          /* "backend/engine/finalizer.py":61
+          /* "backend/engine/finalizer.py":142
  *                 fast_cli=False,
  *             )
  *             if auth.get("secret"):             # <<<<<<<<<<<<<<
  *                 wlc_conn.enable()
  * 
 */
-          __pyx_t_1 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_secret, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L7_error)
+          __pyx_t_1 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_secret, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 61, __pyx_L7_error)
+          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 142, __pyx_L7_error)
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           if (__pyx_t_10) {
 
-            /* "backend/engine/finalizer.py":62
+            /* "backend/engine/finalizer.py":143
  *             )
  *             if auth.get("secret"):
  *                 wlc_conn.enable()             # <<<<<<<<<<<<<<
@@ -3612,12 +5293,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
               __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_enable, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-              if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L7_error)
+              if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_1);
             }
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-            /* "backend/engine/finalizer.py":61
+            /* "backend/engine/finalizer.py":142
  *                 fast_cli=False,
  *             )
  *             if auth.get("secret"):             # <<<<<<<<<<<<<<
@@ -3626,7 +5307,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
           }
 
-          /* "backend/engine/finalizer.py":64
+          /* "backend/engine/finalizer.py":145
  *                 wlc_conn.enable()
  * 
  *             print(f"[{ts()}] [FINALIZE] [WLC] undebug all", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -3634,40 +5315,40 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                 wlc_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
 */
           __pyx_t_4 = NULL;
-          __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 64, __pyx_L7_error)
+          __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 145, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 64, __pyx_L7_error)
+          __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 145, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
+          __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
           __pyx_t_13[1] = __pyx_t_15;
           __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WLC_undebug_all;
           __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 30, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15));
-          if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 64, __pyx_L7_error)
+          if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 145, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_16);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 64, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 145, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_15);
-          __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 64, __pyx_L7_error)
+          __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 145, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_14);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
           __pyx_t_9 = 1;
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_16};
-            __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 64, __pyx_L7_error)
+            __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 145, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_15);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 64, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 145, __pyx_L7_error)
             __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
             __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L7_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_1);
           }
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "backend/engine/finalizer.py":65
+          /* "backend/engine/finalizer.py":146
  * 
  *             print(f"[{ts()}] [FINALIZE] [WLC] undebug all", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -3683,7 +5364,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XGOTREF(__pyx_t_19);
             /*try:*/ {
 
-              /* "backend/engine/finalizer.py":66
+              /* "backend/engine/finalizer.py":147
  *             print(f"[{ts()}] [FINALIZE] [WLC] undebug all", file=sys.stderr)
  *             try:
  *                 wlc_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)             # <<<<<<<<<<<<<<
@@ -3695,19 +5376,19 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_t_9 = 0;
               {
                 PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_15, __pyx_mstate_global->__pyx_kp_u_undebug_all};
-                __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 66, __pyx_L14_error)
+                __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 147, __pyx_L14_error)
                 __Pyx_GOTREF(__pyx_t_14);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 66, __pyx_L14_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_15, __pyx_t_14, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 66, __pyx_L14_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 147, __pyx_L14_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_15, __pyx_t_14, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 147, __pyx_L14_error)
                 __pyx_t_1 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_14);
                 __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
                 __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L14_error)
+                if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L14_error)
                 __Pyx_GOTREF(__pyx_t_1);
               }
               __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-              /* "backend/engine/finalizer.py":65
+              /* "backend/engine/finalizer.py":146
  * 
  *             print(f"[{ts()}] [FINALIZE] [WLC] undebug all", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -3729,7 +5410,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "backend/engine/finalizer.py":67
+            /* "backend/engine/finalizer.py":148
  *             try:
  *                 wlc_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -3739,7 +5420,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_20 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
             if (__pyx_t_20) {
               __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_14, &__pyx_t_15) < 0) __PYX_ERR(0, 67, __pyx_L16_except_error)
+              if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_14, &__pyx_t_15) < 0) __PYX_ERR(0, 148, __pyx_L16_except_error)
               __Pyx_XGOTREF(__pyx_t_1);
               __Pyx_XGOTREF(__pyx_t_14);
               __Pyx_XGOTREF(__pyx_t_15);
@@ -3747,7 +5428,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_v_exc = __pyx_t_14;
               /*try:*/ {
 
-                /* "backend/engine/finalizer.py":68
+                /* "backend/engine/finalizer.py":149
  *                 wlc_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
  *             except Exception as exc:
  *                 print(f"[{ts()}] [FINALIZE] WARNING: undebug all failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -3755,45 +5436,45 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *             stop_cmd = f"monitor capture {mycap_name} stop"
 */
                 __pyx_t_4 = NULL;
-                __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 68, __pyx_L25_error)
+                __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L25_error)
                 __Pyx_GOTREF(__pyx_t_6);
-                __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L25_error)
+                __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L25_error)
                 __Pyx_GOTREF(__pyx_t_8);
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 68, __pyx_L25_error)
+                __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L25_error)
                 __Pyx_GOTREF(__pyx_t_6);
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_21[1] = __pyx_t_8;
                 __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING_undebug_all_fa;
                 __pyx_t_21[3] = __pyx_t_6;
                 __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8) + 42 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6));
-                if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L25_error)
+                if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 149, __pyx_L25_error)
                 __Pyx_GOTREF(__pyx_t_5);
                 __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 68, __pyx_L25_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L25_error)
                 __Pyx_GOTREF(__pyx_t_6);
-                __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L25_error)
+                __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L25_error)
                 __Pyx_GOTREF(__pyx_t_8);
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_5};
-                  __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 68, __pyx_L25_error)
+                  __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L25_error)
                   __Pyx_GOTREF(__pyx_t_6);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 68, __pyx_L25_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 149, __pyx_L25_error)
                   __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
                   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 68, __pyx_L25_error)
+                  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 149, __pyx_L25_error)
                   __Pyx_GOTREF(__pyx_t_16);
                 }
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
               }
 
-              /* "backend/engine/finalizer.py":67
+              /* "backend/engine/finalizer.py":148
  *             try:
  *                 wlc_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -3848,7 +5529,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             }
             goto __pyx_L16_except_error;
 
-            /* "backend/engine/finalizer.py":65
+            /* "backend/engine/finalizer.py":146
  * 
  *             print(f"[{ts()}] [FINALIZE] [WLC] undebug all", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -3869,7 +5550,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_L19_try_end:;
           }
 
-          /* "backend/engine/finalizer.py":70
+          /* "backend/engine/finalizer.py":151
  *                 print(f"[{ts()}] [FINALIZE] WARNING: undebug all failed: {exc}", file=sys.stderr)
  * 
  *             stop_cmd = f"monitor capture {mycap_name} stop"             # <<<<<<<<<<<<<<
@@ -3880,12 +5561,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __pyx_t_13[1] = __pyx_v_mycap_name;
           __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_stop;
           __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 16 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mycap_name) + 5, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mycap_name));
-          if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 70, __pyx_L7_error)
+          if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 151, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_15);
           __pyx_v_stop_cmd = ((PyObject*)__pyx_t_15);
           __pyx_t_15 = 0;
 
-          /* "backend/engine/finalizer.py":71
+          /* "backend/engine/finalizer.py":152
  * 
  *             stop_cmd = f"monitor capture {mycap_name} stop"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_cmd}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -3893,41 +5574,41 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                 stop_out = wlc_conn.send_command_timing(stop_cmd, delay_factor=1, read_timeout=30)
 */
           __pyx_t_14 = NULL;
-          __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L7_error)
+          __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 71, __pyx_L7_error)
+          __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 152, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_16);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
           __pyx_t_21[1] = __pyx_t_16;
           __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP;
           __pyx_t_21[3] = __pyx_v_stop_cmd;
           __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 21 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_stop_cmd), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_stop_cmd));
-          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L7_error)
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 71, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 152, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 71, __pyx_L7_error)
+          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           __pyx_t_9 = 1;
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_1};
-            __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 71, __pyx_L7_error)
+            __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 152, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_16);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 71, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 152, __pyx_L7_error)
             __pyx_t_15 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
             __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-            if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 71, __pyx_L7_error)
+            if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 152, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_15);
           }
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-          /* "backend/engine/finalizer.py":72
+          /* "backend/engine/finalizer.py":153
  *             stop_cmd = f"monitor capture {mycap_name} stop"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -3943,7 +5624,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XGOTREF(__pyx_t_17);
             /*try:*/ {
 
-              /* "backend/engine/finalizer.py":73
+              /* "backend/engine/finalizer.py":154
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_cmd}", file=sys.stderr)
  *             try:
  *                 stop_out = wlc_conn.send_command_timing(stop_cmd, delay_factor=1, read_timeout=30)             # <<<<<<<<<<<<<<
@@ -3955,30 +5636,30 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_t_9 = 0;
               {
                 PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_16, __pyx_v_stop_cmd};
-                __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 73, __pyx_L31_error)
+                __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 154, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_6);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 73, __pyx_L31_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_30, __pyx_t_6, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 73, __pyx_L31_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 154, __pyx_L31_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_30, __pyx_t_6, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 154, __pyx_L31_error)
                 __pyx_t_15 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
                 __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 73, __pyx_L31_error)
+                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 154, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_15);
               }
               __pyx_v_stop_out = __pyx_t_15;
               __pyx_t_15 = 0;
 
-              /* "backend/engine/finalizer.py":74
+              /* "backend/engine/finalizer.py":155
  *             try:
  *                 stop_out = wlc_conn.send_command_timing(stop_cmd, delay_factor=1, read_timeout=30)
  *                 if stop_out:             # <<<<<<<<<<<<<<
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_out.strip()}", file=sys.stderr)
  *                 if "not active" in (stop_out or "").lower():
 */
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_stop_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 74, __pyx_L31_error)
+              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_stop_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 155, __pyx_L31_error)
               if (__pyx_t_10) {
 
-                /* "backend/engine/finalizer.py":75
+                /* "backend/engine/finalizer.py":156
  *                 stop_out = wlc_conn.send_command_timing(stop_cmd, delay_factor=1, read_timeout=30)
  *                 if stop_out:
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_out.strip()}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -3986,50 +5667,50 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                     print(
 */
                 __pyx_t_6 = NULL;
-                __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 75, __pyx_L31_error)
+                __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L31_error)
+                __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_stop_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 75, __pyx_L31_error)
+                __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_stop_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 75, __pyx_L31_error)
+                __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_14);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_14, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 75, __pyx_L31_error)
+                __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_14, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_16);
                 __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_21[1] = __pyx_t_1;
                 __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP;
                 __pyx_t_21[3] = __pyx_t_16;
                 __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + 21 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
-                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 75, __pyx_L31_error)
+                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_14);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 75, __pyx_L31_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L31_error)
+                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 156, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_6, __pyx_t_14};
-                  __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 75, __pyx_L31_error)
+                  __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L31_error)
                   __Pyx_GOTREF(__pyx_t_16);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 75, __pyx_L31_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 156, __pyx_L31_error)
                   __pyx_t_15 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
                   __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
                   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 75, __pyx_L31_error)
+                  if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 156, __pyx_L31_error)
                   __Pyx_GOTREF(__pyx_t_15);
                 }
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-                /* "backend/engine/finalizer.py":74
+                /* "backend/engine/finalizer.py":155
  *             try:
  *                 stop_out = wlc_conn.send_command_timing(stop_cmd, delay_factor=1, read_timeout=30)
  *                 if stop_out:             # <<<<<<<<<<<<<<
@@ -4038,14 +5719,14 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
               }
 
-              /* "backend/engine/finalizer.py":76
+              /* "backend/engine/finalizer.py":157
  *                 if stop_out:
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_out.strip()}", file=sys.stderr)
  *                 if "not active" in (stop_out or "").lower():             # <<<<<<<<<<<<<<
  *                     print(
  *                         f"[{ts()}] [FINALIZE] [MYCAP] Capture was already stopped  continuing.",
 */
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_stop_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 76, __pyx_L31_error)
+              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_stop_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 157, __pyx_L31_error)
               if (!__pyx_t_10) {
               } else {
                 __Pyx_INCREF(__pyx_v_stop_out);
@@ -4063,14 +5744,14 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                 __pyx_t_15 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                 __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 76, __pyx_L31_error)
+                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 157, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_15);
               }
-              __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_not_active, __pyx_t_15, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 76, __pyx_L31_error)
+              __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_not_active, __pyx_t_15, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 157, __pyx_L31_error)
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
               if (__pyx_t_10) {
 
-                /* "backend/engine/finalizer.py":77
+                /* "backend/engine/finalizer.py":158
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_out.strip()}", file=sys.stderr)
  *                 if "not active" in (stop_out or "").lower():
  *                     print(             # <<<<<<<<<<<<<<
@@ -4079,55 +5760,55 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
                 __pyx_t_1 = NULL;
 
-                /* "backend/engine/finalizer.py":78
+                /* "backend/engine/finalizer.py":159
  *                 if "not active" in (stop_out or "").lower():
  *                     print(
  *                         f"[{ts()}] [FINALIZE] [MYCAP] Capture was already stopped  continuing.",             # <<<<<<<<<<<<<<
  *                         file=sys.stderr,
  *                     )
 */
-                __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 78, __pyx_L31_error)
+                __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 159, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 78, __pyx_L31_error)
+                __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 159, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_14);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_13[1] = __pyx_t_14;
                 __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP_Capture_was_alre;
                 __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 62, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14));
-                if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 78, __pyx_L31_error)
+                if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 159, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_16);
                 __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
 
-                /* "backend/engine/finalizer.py":79
+                /* "backend/engine/finalizer.py":160
  *                     print(
  *                         f"[{ts()}] [FINALIZE] [MYCAP] Capture was already stopped  continuing.",
  *                         file=sys.stderr,             # <<<<<<<<<<<<<<
  *                     )
  *                 time.sleep(3)
 */
-                __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 79, __pyx_L31_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 160, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_14);
-                __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L31_error)
+                __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 160, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_6);
                 __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_16};
-                  __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 77, __pyx_L31_error)
+                  __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 158, __pyx_L31_error)
                   __Pyx_GOTREF(__pyx_t_14);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 77, __pyx_L31_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 158, __pyx_L31_error)
                   __pyx_t_15 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_14);
                   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
                   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 77, __pyx_L31_error)
+                  if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 158, __pyx_L31_error)
                   __Pyx_GOTREF(__pyx_t_15);
                 }
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-                /* "backend/engine/finalizer.py":76
+                /* "backend/engine/finalizer.py":157
  *                 if stop_out:
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_out.strip()}", file=sys.stderr)
  *                 if "not active" in (stop_out or "").lower():             # <<<<<<<<<<<<<<
@@ -4136,7 +5817,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
               }
 
-              /* "backend/engine/finalizer.py":81
+              /* "backend/engine/finalizer.py":162
  *                         file=sys.stderr,
  *                     )
  *                 time.sleep(3)             # <<<<<<<<<<<<<<
@@ -4144,9 +5825,9 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                 print(f"[{ts()}] [FINALIZE] WARNING: '{stop_cmd}' failed: {exc}", file=sys.stderr)
 */
               __pyx_t_14 = NULL;
-              __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_time); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 81, __pyx_L31_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_time); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 162, __pyx_L31_error)
               __Pyx_GOTREF(__pyx_t_6);
-              __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sleep); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 81, __pyx_L31_error)
+              __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sleep); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 162, __pyx_L31_error)
               __Pyx_GOTREF(__pyx_t_16);
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
               __pyx_t_9 = 1;
@@ -4166,12 +5847,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                 __pyx_t_15 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_16, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                 __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 81, __pyx_L31_error)
+                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 162, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_15);
               }
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-              /* "backend/engine/finalizer.py":72
+              /* "backend/engine/finalizer.py":153
  *             stop_cmd = f"monitor capture {mycap_name} stop"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -4193,7 +5874,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "backend/engine/finalizer.py":82
+            /* "backend/engine/finalizer.py":163
  *                     )
  *                 time.sleep(3)
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -4203,7 +5884,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_22 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
             if (__pyx_t_22) {
               __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_15, &__pyx_t_16, &__pyx_t_14) < 0) __PYX_ERR(0, 82, __pyx_L33_except_error)
+              if (__Pyx_GetException(&__pyx_t_15, &__pyx_t_16, &__pyx_t_14) < 0) __PYX_ERR(0, 163, __pyx_L33_except_error)
               __Pyx_XGOTREF(__pyx_t_15);
               __Pyx_XGOTREF(__pyx_t_16);
               __Pyx_XGOTREF(__pyx_t_14);
@@ -4211,7 +5892,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_v_exc = __pyx_t_16;
               /*try:*/ {
 
-                /* "backend/engine/finalizer.py":83
+                /* "backend/engine/finalizer.py":164
  *                 time.sleep(3)
  *             except Exception as exc:
  *                 print(f"[{ts()}] [FINALIZE] WARNING: '{stop_cmd}' failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -4219,47 +5900,47 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *             pcap_filename = f"ApDisjoinEpc_{mycap_name}.pcap"
 */
                 __pyx_t_1 = NULL;
-                __pyx_t_8 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L46_error)
+                __pyx_t_8 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 164, __pyx_L46_error)
                 __Pyx_GOTREF(__pyx_t_8);
-                __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L46_error)
+                __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 164, __pyx_L46_error)
                 __Pyx_GOTREF(__pyx_t_5);
                 __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L46_error)
+                __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 164, __pyx_L46_error)
                 __Pyx_GOTREF(__pyx_t_8);
-                __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_30[1] = __pyx_t_5;
                 __pyx_t_30[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING;
                 __pyx_t_30[3] = __pyx_v_stop_cmd;
-                __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u_failed;
+                __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u_failed_2;
                 __pyx_t_30[5] = __pyx_t_8;
                 __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_30, 6, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 23 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_stop_cmd) + 10 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_stop_cmd) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8));
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 83, __pyx_L46_error)
+                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 164, __pyx_L46_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                 __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L46_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 164, __pyx_L46_error)
                 __Pyx_GOTREF(__pyx_t_8);
-                __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L46_error)
+                __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 164, __pyx_L46_error)
                 __Pyx_GOTREF(__pyx_t_5);
                 __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_4};
-                  __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L46_error)
+                  __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 164, __pyx_L46_error)
                   __Pyx_GOTREF(__pyx_t_8);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 83, __pyx_L46_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 164, __pyx_L46_error)
                   __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
                   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 83, __pyx_L46_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 164, __pyx_L46_error)
                   __Pyx_GOTREF(__pyx_t_6);
                 }
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
               }
 
-              /* "backend/engine/finalizer.py":82
+              /* "backend/engine/finalizer.py":163
  *                     )
  *                 time.sleep(3)
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -4314,7 +5995,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             }
             goto __pyx_L33_except_error;
 
-            /* "backend/engine/finalizer.py":72
+            /* "backend/engine/finalizer.py":153
  *             stop_cmd = f"monitor capture {mycap_name} stop"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {stop_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -4335,7 +6016,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_L36_try_end:;
           }
 
-          /* "backend/engine/finalizer.py":85
+          /* "backend/engine/finalizer.py":166
  *                 print(f"[{ts()}] [FINALIZE] WARNING: '{stop_cmd}' failed: {exc}", file=sys.stderr)
  * 
  *             pcap_filename = f"ApDisjoinEpc_{mycap_name}.pcap"             # <<<<<<<<<<<<<<
@@ -4346,12 +6027,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __pyx_t_13[1] = __pyx_v_mycap_name;
           __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_pcap;
           __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 13 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mycap_name) + 5, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mycap_name));
-          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 85, __pyx_L7_error)
+          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 166, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_14);
           __pyx_v_pcap_filename = ((PyObject*)__pyx_t_14);
           __pyx_t_14 = 0;
 
-          /* "backend/engine/finalizer.py":86
+          /* "backend/engine/finalizer.py":167
  * 
  *             pcap_filename = f"ApDisjoinEpc_{mycap_name}.pcap"
  *             export_cmd = f"monitor capture {mycap_name} export bootflash:{pcap_filename}"             # <<<<<<<<<<<<<<
@@ -4363,12 +6044,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_export_bootflash;
           __pyx_t_21[3] = __pyx_v_pcap_filename;
           __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 16 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mycap_name) + 18 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_pcap_filename), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mycap_name) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename));
-          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 86, __pyx_L7_error)
+          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 167, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_14);
           __pyx_v_export_cmd = ((PyObject*)__pyx_t_14);
           __pyx_t_14 = 0;
 
-          /* "backend/engine/finalizer.py":87
+          /* "backend/engine/finalizer.py":168
  *             pcap_filename = f"ApDisjoinEpc_{mycap_name}.pcap"
  *             export_cmd = f"monitor capture {mycap_name} export bootflash:{pcap_filename}"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {export_cmd}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -4376,41 +6057,41 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                 export_out = wlc_conn.send_command_timing(export_cmd, delay_factor=1, read_timeout=30)
 */
           __pyx_t_16 = NULL;
-          __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 87, __pyx_L7_error)
+          __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 168, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_15);
-          __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 87, __pyx_L7_error)
+          __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
           __pyx_t_21[1] = __pyx_t_6;
           __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP;
           __pyx_t_21[3] = __pyx_v_export_cmd;
           __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 21 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_export_cmd), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_export_cmd));
-          if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 87, __pyx_L7_error)
+          if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 168, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 87, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 87, __pyx_L7_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 168, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __pyx_t_9 = 1;
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_15};
-            __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 87, __pyx_L7_error)
+            __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_6);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 87, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 168, __pyx_L7_error)
             __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
             __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 87, __pyx_L7_error)
+            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 168, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_14);
           }
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
 
-          /* "backend/engine/finalizer.py":88
+          /* "backend/engine/finalizer.py":169
  *             export_cmd = f"monitor capture {mycap_name} export bootflash:{pcap_filename}"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {export_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -4426,7 +6107,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XGOTREF(__pyx_t_19);
             /*try:*/ {
 
-              /* "backend/engine/finalizer.py":89
+              /* "backend/engine/finalizer.py":170
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {export_cmd}", file=sys.stderr)
  *             try:
  *                 export_out = wlc_conn.send_command_timing(export_cmd, delay_factor=1, read_timeout=30)             # <<<<<<<<<<<<<<
@@ -4438,21 +6119,21 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_t_9 = 0;
               {
                 PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_6, __pyx_v_export_cmd};
-                __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 89, __pyx_L52_error)
+                __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 170, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_8);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 89, __pyx_L52_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_30, __pyx_t_8, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 89, __pyx_L52_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 170, __pyx_L52_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_30, __pyx_t_8, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 170, __pyx_L52_error)
                 __pyx_t_14 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
                 __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
                 __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 89, __pyx_L52_error)
+                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 170, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_14);
               }
               __Pyx_GIVEREF(__pyx_t_14);
               __pyx_cur_scope->__pyx_v_export_out = __pyx_t_14;
               __pyx_t_14 = 0;
 
-              /* "backend/engine/finalizer.py":90
+              /* "backend/engine/finalizer.py":171
  *             try:
  *                 export_out = wlc_conn.send_command_timing(export_cmd, delay_factor=1, read_timeout=30)
  *                 print(             # <<<<<<<<<<<<<<
@@ -4461,91 +6142,91 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
               __pyx_t_8 = NULL;
 
-              /* "backend/engine/finalizer.py":91
+              /* "backend/engine/finalizer.py":172
  *                 export_out = wlc_conn.send_command_timing(export_cmd, delay_factor=1, read_timeout=30)
  *                 print(
  *                     f"[{ts()}] [FINALIZE] [MYCAP] initial response: {export_out.strip()!r}",             # <<<<<<<<<<<<<<
  *                     file=sys.stderr,
  *                 )
 */
-              __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L52_error)
+              __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 172, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_6);
-              __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 91, __pyx_L52_error)
+              __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 172, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_15);
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-              __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_export_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L52_error)
+              __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_export_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 172, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_6);
-              __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 91, __pyx_L52_error)
+              __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 172, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_16);
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-              __pyx_t_6 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_t_16), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L52_error)
+              __pyx_t_6 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_t_16), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 172, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_6);
               __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-              __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+              __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
               __pyx_t_21[1] = __pyx_t_15;
               __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP_initial_response;
               __pyx_t_21[3] = __pyx_t_6;
               __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 39 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6));
-              if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 91, __pyx_L52_error)
+              if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 172, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_16);
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-              /* "backend/engine/finalizer.py":92
+              /* "backend/engine/finalizer.py":173
  *                 print(
  *                     f"[{ts()}] [FINALIZE] [MYCAP] initial response: {export_out.strip()!r}",
  *                     file=sys.stderr,             # <<<<<<<<<<<<<<
  *                 )
  * 
 */
-              __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L52_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 173, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_6);
-              __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 92, __pyx_L52_error)
+              __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 173, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_15);
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
               __pyx_t_9 = 1;
               {
                 PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_16};
-                __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 90, __pyx_L52_error)
+                __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 171, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_6);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 90, __pyx_L52_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 171, __pyx_L52_error)
                 __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
                 __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 90, __pyx_L52_error)
+                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 171, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_14);
               }
               __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
 
-              /* "backend/engine/finalizer.py":96
+              /* "backend/engine/finalizer.py":177
  * 
  *                 OVERWRITE_PATTERNS = (
  *                     "overwrite?[confirm]",             # <<<<<<<<<<<<<<
  *                     "overwrite existing",
  *                     "[confirm]",
 */
-              __Pyx_INCREF(__pyx_mstate_global->__pyx_tuple[0]);
-              __pyx_v_OVERWRITE_PATTERNS = __pyx_mstate_global->__pyx_tuple[0];
+              __Pyx_INCREF(__pyx_mstate_global->__pyx_tuple[2]);
+              __pyx_v_OVERWRITE_PATTERNS = __pyx_mstate_global->__pyx_tuple[2];
 
-              /* "backend/engine/finalizer.py":101
+              /* "backend/engine/finalizer.py":182
  *                     "confirm",
  *                 )
  *                 if any(p in export_out.lower() for p in OVERWRITE_PATTERNS):             # <<<<<<<<<<<<<<
  *                     print(
  *                         f"[{ts()}] [FINALIZE] [MYCAP] Overwrite prompt detected  sending ENTER to confirm.",
 */
-              __pyx_t_14 = __pyx_pf_7backend_6engine_9finalizer_16run_finalization_genexpr(((PyObject*)__pyx_cur_scope), __pyx_v_OVERWRITE_PATTERNS); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 101, __pyx_L52_error)
+              __pyx_t_14 = __pyx_pf_7backend_6engine_9finalizer_16run_finalization_genexpr(((PyObject*)__pyx_cur_scope), __pyx_v_OVERWRITE_PATTERNS); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 182, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_14);
-              __pyx_t_6 = __Pyx_Generator_GetInlinedResult(__pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 101, __pyx_L52_error)
+              __pyx_t_6 = __Pyx_Generator_GetInlinedResult(__pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 182, __pyx_L52_error)
               __Pyx_GOTREF(__pyx_t_6);
               __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 101, __pyx_L52_error)
+              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 182, __pyx_L52_error)
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
               if (__pyx_t_10) {
 
-                /* "backend/engine/finalizer.py":102
+                /* "backend/engine/finalizer.py":183
  *                 )
  *                 if any(p in export_out.lower() for p in OVERWRITE_PATTERNS):
  *                     print(             # <<<<<<<<<<<<<<
@@ -4554,55 +6235,55 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
                 __pyx_t_14 = NULL;
 
-                /* "backend/engine/finalizer.py":103
+                /* "backend/engine/finalizer.py":184
  *                 if any(p in export_out.lower() for p in OVERWRITE_PATTERNS):
  *                     print(
  *                         f"[{ts()}] [FINALIZE] [MYCAP] Overwrite prompt detected  sending ENTER to confirm.",             # <<<<<<<<<<<<<<
  *                         file=sys.stderr,
  *                     )
 */
-                __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 103, __pyx_L52_error)
+                __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 184, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_15);
-                __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 103, __pyx_L52_error)
+                __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 184, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_16);
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_13[1] = __pyx_t_16;
                 __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP_Overwrite_prompt;
                 __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 74, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
-                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 103, __pyx_L52_error)
+                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 184, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_15);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
-                /* "backend/engine/finalizer.py":104
+                /* "backend/engine/finalizer.py":185
  *                     print(
  *                         f"[{ts()}] [FINALIZE] [MYCAP] Overwrite prompt detected  sending ENTER to confirm.",
  *                         file=sys.stderr,             # <<<<<<<<<<<<<<
  *                     )
  *                     confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=60)
 */
-                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 104, __pyx_L52_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 185, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 104, __pyx_L52_error)
+                __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 185, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_8);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_15};
-                  __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 102, __pyx_L52_error)
+                  __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 183, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_16);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 102, __pyx_L52_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 183, __pyx_L52_error)
                   __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
                   __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 102, __pyx_L52_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 183, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_6);
                 }
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":106
+                /* "backend/engine/finalizer.py":187
  *                         file=sys.stderr,
  *                     )
  *                     confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=60)             # <<<<<<<<<<<<<<
@@ -4613,31 +6294,31 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                 __Pyx_INCREF(__pyx_t_16);
                 __pyx_t_9 = 0;
                 {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_16, __pyx_mstate_global->__pyx_kp_u__4};
-                  __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 106, __pyx_L52_error)
+                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_16, __pyx_mstate_global->__pyx_kp_u__2};
+                  __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 187, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_8);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 106, __pyx_L52_error)
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_60, __pyx_t_8, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 106, __pyx_L52_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 187, __pyx_L52_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_60, __pyx_t_8, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 187, __pyx_L52_error)
                   __pyx_t_6 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
                   __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 106, __pyx_L52_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 187, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_6);
                 }
                 __pyx_v_confirm_out = __pyx_t_6;
                 __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":107
+                /* "backend/engine/finalizer.py":188
  *                     )
  *                     confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=60)
  *                     if confirm_out:             # <<<<<<<<<<<<<<
  *                         print(
  *                             f"[{ts()}] [FINALIZE] [MYCAP] post-confirm output: {confirm_out.strip()!r}",
 */
-                __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_confirm_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 107, __pyx_L52_error)
+                __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_confirm_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 188, __pyx_L52_error)
                 if (__pyx_t_10) {
 
-                  /* "backend/engine/finalizer.py":108
+                  /* "backend/engine/finalizer.py":189
  *                     confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=60)
  *                     if confirm_out:
  *                         print(             # <<<<<<<<<<<<<<
@@ -4646,65 +6327,65 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
                   __pyx_t_8 = NULL;
 
-                  /* "backend/engine/finalizer.py":109
+                  /* "backend/engine/finalizer.py":190
  *                     if confirm_out:
  *                         print(
  *                             f"[{ts()}] [FINALIZE] [MYCAP] post-confirm output: {confirm_out.strip()!r}",             # <<<<<<<<<<<<<<
  *                             file=sys.stderr,
  *                         )
 */
-                  __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 109, __pyx_L52_error)
+                  __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 190, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_16);
-                  __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 109, __pyx_L52_error)
+                  __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 190, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_15);
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_confirm_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 109, __pyx_L52_error)
+                  __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_confirm_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 190, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_16);
-                  __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 109, __pyx_L52_error)
+                  __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 190, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_14);
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  __pyx_t_16 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_t_14), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 109, __pyx_L52_error)
+                  __pyx_t_16 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_t_14), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 190, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_16);
                   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                  __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
                   __pyx_t_21[1] = __pyx_t_15;
                   __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP_post_confirm_out;
                   __pyx_t_21[3] = __pyx_t_16;
                   __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 42 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
-                  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 109, __pyx_L52_error)
+                  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 190, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_14);
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
-                  /* "backend/engine/finalizer.py":110
+                  /* "backend/engine/finalizer.py":191
  *                         print(
  *                             f"[{ts()}] [FINALIZE] [MYCAP] post-confirm output: {confirm_out.strip()!r}",
  *                             file=sys.stderr,             # <<<<<<<<<<<<<<
  *                         )
  *                     time.sleep(2)
 */
-                  __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 110, __pyx_L52_error)
+                  __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 191, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_16);
-                  __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 110, __pyx_L52_error)
+                  __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 191, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_15);
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                   __pyx_t_9 = 1;
                   {
                     PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_14};
-                    __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 108, __pyx_L52_error)
+                    __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 189, __pyx_L52_error)
                     __Pyx_GOTREF(__pyx_t_16);
-                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 108, __pyx_L52_error)
+                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 189, __pyx_L52_error)
                     __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
                     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                     __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
                     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                     __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 108, __pyx_L52_error)
+                    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 189, __pyx_L52_error)
                     __Pyx_GOTREF(__pyx_t_6);
                   }
                   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                  /* "backend/engine/finalizer.py":107
+                  /* "backend/engine/finalizer.py":188
  *                     )
  *                     confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=60)
  *                     if confirm_out:             # <<<<<<<<<<<<<<
@@ -4713,7 +6394,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
                 }
 
-                /* "backend/engine/finalizer.py":112
+                /* "backend/engine/finalizer.py":193
  *                             file=sys.stderr,
  *                         )
  *                     time.sleep(2)             # <<<<<<<<<<<<<<
@@ -4721,9 +6402,9 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                 else:
 */
                 __pyx_t_16 = NULL;
-                __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_time); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 112, __pyx_L52_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_time); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 193, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_15);
-                __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sleep); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 112, __pyx_L52_error)
+                __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sleep); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 193, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_14);
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                 __pyx_t_9 = 1;
@@ -4743,12 +6424,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   __pyx_t_6 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_14, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                   __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
                   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 112, __pyx_L52_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 193, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_6);
                 }
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":113
+                /* "backend/engine/finalizer.py":194
  *                         )
  *                     time.sleep(2)
  *                     wlc_conn.clear_buffer()             # <<<<<<<<<<<<<<
@@ -4762,12 +6443,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   PyObject *__pyx_callargs[2] = {__pyx_t_14, NULL};
                   __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_clear_buffer, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                   __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 113, __pyx_L52_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 194, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_6);
                 }
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":101
+                /* "backend/engine/finalizer.py":182
  *                     "confirm",
  *                 )
  *                 if any(p in export_out.lower() for p in OVERWRITE_PATTERNS):             # <<<<<<<<<<<<<<
@@ -4777,7 +6458,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                 goto __pyx_L58;
               }
 
-              /* "backend/engine/finalizer.py":115
+              /* "backend/engine/finalizer.py":196
  *                     wlc_conn.clear_buffer()
  *                 else:
  *                     time.sleep(2)             # <<<<<<<<<<<<<<
@@ -4786,9 +6467,9 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
               /*else*/ {
                 __pyx_t_14 = NULL;
-                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_time); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 115, __pyx_L52_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_time); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 196, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sleep); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 115, __pyx_L52_error)
+                __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sleep); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 196, __pyx_L52_error)
                 __Pyx_GOTREF(__pyx_t_15);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __pyx_t_9 = 1;
@@ -4808,12 +6489,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   __pyx_t_6 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                   __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L52_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 196, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_6);
                 }
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":116
+                /* "backend/engine/finalizer.py":197
  *                 else:
  *                     time.sleep(2)
  *                     wlc_conn.clear_buffer()             # <<<<<<<<<<<<<<
@@ -4827,14 +6508,14 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   PyObject *__pyx_callargs[2] = {__pyx_t_15, NULL};
                   __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_clear_buffer, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                   __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 116, __pyx_L52_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 197, __pyx_L52_error)
                   __Pyx_GOTREF(__pyx_t_6);
                 }
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
               }
               __pyx_L58:;
 
-              /* "backend/engine/finalizer.py":88
+              /* "backend/engine/finalizer.py":169
  *             export_cmd = f"monitor capture {mycap_name} export bootflash:{pcap_filename}"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {export_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -4856,7 +6537,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "backend/engine/finalizer.py":117
+            /* "backend/engine/finalizer.py":198
  *                     time.sleep(2)
  *                     wlc_conn.clear_buffer()
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -4866,7 +6547,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_20 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
             if (__pyx_t_20) {
               __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_15, &__pyx_t_14) < 0) __PYX_ERR(0, 117, __pyx_L54_except_error)
+              if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_15, &__pyx_t_14) < 0) __PYX_ERR(0, 198, __pyx_L54_except_error)
               __Pyx_XGOTREF(__pyx_t_6);
               __Pyx_XGOTREF(__pyx_t_15);
               __Pyx_XGOTREF(__pyx_t_14);
@@ -4874,7 +6555,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_v_exc = __pyx_t_15;
               /*try:*/ {
 
-                /* "backend/engine/finalizer.py":118
+                /* "backend/engine/finalizer.py":199
  *                     wlc_conn.clear_buffer()
  *             except Exception as exc:
  *                 print(f"[{ts()}] [FINALIZE] WARNING: export command failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -4882,45 +6563,45 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *             verify_cmd = "show flash: | inc .pcap"
 */
                 __pyx_t_8 = NULL;
-                __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L65_error)
+                __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L65_error)
                 __Pyx_GOTREF(__pyx_t_5);
-                __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 118, __pyx_L65_error)
+                __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L65_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L65_error)
+                __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L65_error)
                 __Pyx_GOTREF(__pyx_t_5);
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_21[1] = __pyx_t_4;
                 __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING_export_command;
                 __pyx_t_21[3] = __pyx_t_5;
                 __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 45 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
-                if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L65_error)
+                if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L65_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
                 __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L65_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L65_error)
                 __Pyx_GOTREF(__pyx_t_5);
-                __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 118, __pyx_L65_error)
+                __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L65_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_1};
-                  __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L65_error)
+                  __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L65_error)
                   __Pyx_GOTREF(__pyx_t_5);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 118, __pyx_L65_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 199, __pyx_L65_error)
                   __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
                   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 118, __pyx_L65_error)
+                  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 199, __pyx_L65_error)
                   __Pyx_GOTREF(__pyx_t_16);
                 }
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
               }
 
-              /* "backend/engine/finalizer.py":117
+              /* "backend/engine/finalizer.py":198
  *                     time.sleep(2)
  *                     wlc_conn.clear_buffer()
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -4975,7 +6656,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             }
             goto __pyx_L54_except_error;
 
-            /* "backend/engine/finalizer.py":88
+            /* "backend/engine/finalizer.py":169
  *             export_cmd = f"monitor capture {mycap_name} export bootflash:{pcap_filename}"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {export_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -4996,7 +6677,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_L57_try_end:;
           }
 
-          /* "backend/engine/finalizer.py":120
+          /* "backend/engine/finalizer.py":201
  *                 print(f"[{ts()}] [FINALIZE] WARNING: export command failed: {exc}", file=sys.stderr)
  * 
  *             verify_cmd = "show flash: | inc .pcap"             # <<<<<<<<<<<<<<
@@ -5006,7 +6687,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_show_flash_inc_pcap);
           __pyx_v_verify_cmd = __pyx_mstate_global->__pyx_kp_u_show_flash_inc_pcap;
 
-          /* "backend/engine/finalizer.py":121
+          /* "backend/engine/finalizer.py":202
  * 
  *             verify_cmd = "show flash: | inc .pcap"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_cmd}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -5014,41 +6695,41 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                 verify_out = wlc_conn.send_command(verify_cmd, read_timeout=30)
 */
           __pyx_t_15 = NULL;
-          __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 121, __pyx_L7_error)
+          __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 202, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 121, __pyx_L7_error)
+          __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_16);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
           __pyx_t_21[1] = __pyx_t_16;
           __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP;
           __pyx_t_21[3] = __pyx_v_verify_cmd;
           __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 21 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_verify_cmd), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_verify_cmd));
-          if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 121, __pyx_L7_error)
+          if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 202, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 121, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 121, __pyx_L7_error)
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 202, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           __pyx_t_9 = 1;
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_6};
-            __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 121, __pyx_L7_error)
+            __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_16);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 121, __pyx_L7_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 202, __pyx_L7_error)
             __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
             __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 121, __pyx_L7_error)
+            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 202, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_14);
           }
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
 
-          /* "backend/engine/finalizer.py":122
+          /* "backend/engine/finalizer.py":203
  *             verify_cmd = "show flash: | inc .pcap"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -5064,7 +6745,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XGOTREF(__pyx_t_17);
             /*try:*/ {
 
-              /* "backend/engine/finalizer.py":123
+              /* "backend/engine/finalizer.py":204
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_cmd}", file=sys.stderr)
  *             try:
  *                 verify_out = wlc_conn.send_command(verify_cmd, read_timeout=30)             # <<<<<<<<<<<<<<
@@ -5076,29 +6757,29 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_t_9 = 0;
               {
                 PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_v_verify_cmd};
-                __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L71_error)
+                __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 204, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_5);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_30, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 123, __pyx_L71_error)
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_30, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 204, __pyx_L71_error)
                 __pyx_t_14 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
                 __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 123, __pyx_L71_error)
+                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 204, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_14);
               }
               __pyx_v_verify_out = __pyx_t_14;
               __pyx_t_14 = 0;
 
-              /* "backend/engine/finalizer.py":124
+              /* "backend/engine/finalizer.py":205
  *             try:
  *                 verify_out = wlc_conn.send_command(verify_cmd, read_timeout=30)
  *                 if verify_out:             # <<<<<<<<<<<<<<
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_out.strip()}", file=sys.stderr)
  *                     if pcap_filename.lower() in verify_out.lower():
 */
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_verify_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 124, __pyx_L71_error)
+              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_verify_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 205, __pyx_L71_error)
               if (__pyx_t_10) {
 
-                /* "backend/engine/finalizer.py":125
+                /* "backend/engine/finalizer.py":206
  *                 verify_out = wlc_conn.send_command(verify_cmd, read_timeout=30)
  *                 if verify_out:
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_out.strip()}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -5106,57 +6787,57 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                         print(f"[{ts()}] [FINALIZE] [MYCAP]  {pcap_filename} confirmed on flash.", file=sys.stderr)
 */
                 __pyx_t_5 = NULL;
-                __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 125, __pyx_L71_error)
+                __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L71_error)
+                __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_6);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_verify_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 125, __pyx_L71_error)
+                __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_verify_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 125, __pyx_L71_error)
+                __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_15);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 125, __pyx_L71_error)
+                __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_16);
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_21[1] = __pyx_t_6;
                 __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP;
                 __pyx_t_21[3] = __pyx_t_16;
                 __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 21 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
-                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 125, __pyx_L71_error)
+                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_15);
                 __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 125, __pyx_L71_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L71_error)
+                __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 206, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_6);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_15};
-                  __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 125, __pyx_L71_error)
+                  __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 206, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_16);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 125, __pyx_L71_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 206, __pyx_L71_error)
                   __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
                   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 125, __pyx_L71_error)
+                  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 206, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_14);
                 }
                 __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
 
-                /* "backend/engine/finalizer.py":126
+                /* "backend/engine/finalizer.py":207
  *                 if verify_out:
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_out.strip()}", file=sys.stderr)
  *                     if pcap_filename.lower() in verify_out.lower():             # <<<<<<<<<<<<<<
  *                         print(f"[{ts()}] [FINALIZE] [MYCAP]  {pcap_filename} confirmed on flash.", file=sys.stderr)
  *                     else:
 */
-                __pyx_t_14 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_pcap_filename); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 126, __pyx_L71_error)
+                __pyx_t_14 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_pcap_filename); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 207, __pyx_L71_error)
                 __Pyx_GOTREF(__pyx_t_14);
                 __pyx_t_6 = __pyx_v_verify_out;
                 __Pyx_INCREF(__pyx_t_6);
@@ -5165,15 +6846,15 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   PyObject *__pyx_callargs[2] = {__pyx_t_6, NULL};
                   __pyx_t_16 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                   __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-                  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 126, __pyx_L71_error)
+                  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 207, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_16);
                 }
-                __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_t_14, __pyx_t_16, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 126, __pyx_L71_error)
+                __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_t_14, __pyx_t_16, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 207, __pyx_L71_error)
                 __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 if (__pyx_t_10) {
 
-                  /* "backend/engine/finalizer.py":127
+                  /* "backend/engine/finalizer.py":208
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_out.strip()}", file=sys.stderr)
  *                     if pcap_filename.lower() in verify_out.lower():
  *                         print(f"[{ts()}] [FINALIZE] [MYCAP]  {pcap_filename} confirmed on flash.", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -5181,42 +6862,42 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *                         print(
 */
                   __pyx_t_14 = NULL;
-                  __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L71_error)
+                  __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 208, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_6);
-                  __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 127, __pyx_L71_error)
+                  __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 208, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_15);
                   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
                   __pyx_t_7[1] = __pyx_t_15;
                   __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP_2;
                   __pyx_t_7[3] = __pyx_v_pcap_filename;
                   __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_confirmed_on_flash;
                   __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 23 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_pcap_filename) + 20, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename));
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L71_error)
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 208, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_6);
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 127, __pyx_L71_error)
+                  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 208, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_15);
-                  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 127, __pyx_L71_error)
+                  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 208, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_5);
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                   __pyx_t_9 = 1;
                   {
                     PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_6};
-                    __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 127, __pyx_L71_error)
+                    __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 208, __pyx_L71_error)
                     __Pyx_GOTREF(__pyx_t_15);
-                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 127, __pyx_L71_error)
+                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 208, __pyx_L71_error)
                     __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
                     __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
                     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
                     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 127, __pyx_L71_error)
+                    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 208, __pyx_L71_error)
                     __Pyx_GOTREF(__pyx_t_16);
                   }
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
-                  /* "backend/engine/finalizer.py":126
+                  /* "backend/engine/finalizer.py":207
  *                 if verify_out:
  *                     print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_out.strip()}", file=sys.stderr)
  *                     if pcap_filename.lower() in verify_out.lower():             # <<<<<<<<<<<<<<
@@ -5226,7 +6907,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   goto __pyx_L78;
                 }
 
-                /* "backend/engine/finalizer.py":129
+                /* "backend/engine/finalizer.py":210
  *                         print(f"[{ts()}] [FINALIZE] [MYCAP]  {pcap_filename} confirmed on flash.", file=sys.stderr)
  *                     else:
  *                         print(             # <<<<<<<<<<<<<<
@@ -5236,59 +6917,59 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                 /*else*/ {
                   __pyx_t_15 = NULL;
 
-                  /* "backend/engine/finalizer.py":130
+                  /* "backend/engine/finalizer.py":211
  *                     else:
  *                         print(
  *                             f"[{ts()}] [FINALIZE] [MYCAP] WARNING: {pcap_filename} not found in flash listing.",             # <<<<<<<<<<<<<<
  *                             file=sys.stderr,
  *                         )
 */
-                  __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 130, __pyx_L71_error)
+                  __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 211, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_5);
-                  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 130, __pyx_L71_error)
+                  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 211, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_6);
                   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
                   __pyx_t_7[1] = __pyx_t_6;
                   __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_MYCAP_WARNING;
                   __pyx_t_7[3] = __pyx_v_pcap_filename;
                   __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_not_found_in_flash_listing;
                   __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 30 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_pcap_filename) + 28, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename));
-                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 130, __pyx_L71_error)
+                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 211, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_5);
                   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                  /* "backend/engine/finalizer.py":131
+                  /* "backend/engine/finalizer.py":212
  *                         print(
  *                             f"[{ts()}] [FINALIZE] [MYCAP] WARNING: {pcap_filename} not found in flash listing.",
  *                             file=sys.stderr,             # <<<<<<<<<<<<<<
  *                         )
  *             except Exception as exc:
 */
-                  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L71_error)
+                  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 212, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_6);
-                  __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 131, __pyx_L71_error)
+                  __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 212, __pyx_L71_error)
                   __Pyx_GOTREF(__pyx_t_14);
                   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
                   __pyx_t_9 = 1;
                   {
                     PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_5};
-                    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L71_error)
+                    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 210, __pyx_L71_error)
                     __Pyx_GOTREF(__pyx_t_6);
-                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 129, __pyx_L71_error)
+                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 210, __pyx_L71_error)
                     __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
                     __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
                     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                     __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
                     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 129, __pyx_L71_error)
+                    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 210, __pyx_L71_error)
                     __Pyx_GOTREF(__pyx_t_16);
                   }
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 }
                 __pyx_L78:;
 
-                /* "backend/engine/finalizer.py":124
+                /* "backend/engine/finalizer.py":205
  *             try:
  *                 verify_out = wlc_conn.send_command(verify_cmd, read_timeout=30)
  *                 if verify_out:             # <<<<<<<<<<<<<<
@@ -5297,7 +6978,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
               }
 
-              /* "backend/engine/finalizer.py":122
+              /* "backend/engine/finalizer.py":203
  *             verify_cmd = "show flash: | inc .pcap"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -5319,7 +7000,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "backend/engine/finalizer.py":133
+            /* "backend/engine/finalizer.py":214
  *                             file=sys.stderr,
  *                         )
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -5329,7 +7010,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_22 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
             if (__pyx_t_22) {
               __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_16, &__pyx_t_6, &__pyx_t_14) < 0) __PYX_ERR(0, 133, __pyx_L73_except_error)
+              if (__Pyx_GetException(&__pyx_t_16, &__pyx_t_6, &__pyx_t_14) < 0) __PYX_ERR(0, 214, __pyx_L73_except_error)
               __Pyx_XGOTREF(__pyx_t_16);
               __Pyx_XGOTREF(__pyx_t_6);
               __Pyx_XGOTREF(__pyx_t_14);
@@ -5337,55 +7018,55 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __pyx_v_exc = __pyx_t_6;
               /*try:*/ {
 
-                /* "backend/engine/finalizer.py":134
+                /* "backend/engine/finalizer.py":215
  *                         )
  *             except Exception as exc:
  *                 print(f"[{ts()}] [FINALIZE] WARNING: '{verify_cmd}' failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
  * 
- *             tftp_ip = auth.get("tftp_ip", "")
+ *             tftp_ip       = auth.get("tftp_ip", "")
 */
                 __pyx_t_15 = NULL;
-                __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 134, __pyx_L84_error)
+                __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L84_error)
                 __Pyx_GOTREF(__pyx_t_4);
-                __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L84_error)
+                __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L84_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 134, __pyx_L84_error)
+                __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L84_error)
                 __Pyx_GOTREF(__pyx_t_4);
-                __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_30[1] = __pyx_t_1;
                 __pyx_t_30[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING;
                 __pyx_t_30[3] = __pyx_v_verify_cmd;
-                __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u_failed;
+                __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u_failed_2;
                 __pyx_t_30[5] = __pyx_t_4;
                 __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_30, 6, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + 23 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_verify_cmd) + 10 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_verify_cmd) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4));
-                if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 134, __pyx_L84_error)
+                if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 215, __pyx_L84_error)
                 __Pyx_GOTREF(__pyx_t_8);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
                 __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 134, __pyx_L84_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L84_error)
                 __Pyx_GOTREF(__pyx_t_4);
-                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L84_error)
+                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L84_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
                 __pyx_t_9 = 1;
                 {
                   PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_8};
-                  __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 134, __pyx_L84_error)
+                  __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L84_error)
                   __Pyx_GOTREF(__pyx_t_4);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 134, __pyx_L84_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 215, __pyx_L84_error)
                   __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
                   __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 134, __pyx_L84_error)
+                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 215, __pyx_L84_error)
                   __Pyx_GOTREF(__pyx_t_5);
                 }
                 __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
               }
 
-              /* "backend/engine/finalizer.py":133
+              /* "backend/engine/finalizer.py":214
  *                             file=sys.stderr,
  *                         )
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -5440,7 +7121,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             }
             goto __pyx_L73_except_error;
 
-            /* "backend/engine/finalizer.py":122
+            /* "backend/engine/finalizer.py":203
  *             verify_cmd = "show flash: | inc .pcap"
  *             print(f"[{ts()}] [FINALIZE] [MYCAP] {verify_cmd}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
@@ -5461,88 +7142,430 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_L76_try_end:;
           }
 
-          /* "backend/engine/finalizer.py":136
+          /* "backend/engine/finalizer.py":217
  *                 print(f"[{ts()}] [FINALIZE] WARNING: '{verify_cmd}' failed: {exc}", file=sys.stderr)
  * 
- *             tftp_ip = auth.get("tftp_ip", "")             # <<<<<<<<<<<<<<
- *             tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+ *             tftp_ip       = auth.get("tftp_ip", "")             # <<<<<<<<<<<<<<
+ *             proto         = auth.get("transfer_proto", "TFTP").upper()
+ *             sftp_user     = auth.get("sftp_username", "")
 */
-          __pyx_t_14 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_tftp_ip, __pyx_mstate_global->__pyx_kp_u__3); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 136, __pyx_L7_error)
+          __pyx_t_14 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_tftp_ip, __pyx_mstate_global->__pyx_kp_u__3); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 217, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_14);
           __pyx_v_tftp_ip = __pyx_t_14;
           __pyx_t_14 = 0;
 
-          /* "backend/engine/finalizer.py":137
+          /* "backend/engine/finalizer.py":218
  * 
- *             tftp_ip = auth.get("tftp_ip", "")
- *             tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"             # <<<<<<<<<<<<<<
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
- *             try:
+ *             tftp_ip       = auth.get("tftp_ip", "")
+ *             proto         = auth.get("transfer_proto", "TFTP").upper()             # <<<<<<<<<<<<<<
+ *             sftp_user     = auth.get("sftp_username", "")
+ *             sftp_pass     = auth.get("sftp_password", "")
 */
-          __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_v_tftp_ip, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 137, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_14);
-          __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u_copy_flash;
-          __pyx_t_30[1] = __pyx_v_pcap_filename;
-          __pyx_t_30[2] = __pyx_mstate_global->__pyx_kp_u_tftp;
-          __pyx_t_30[3] = __pyx_t_14;
-          __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u__5;
-          __pyx_t_30[5] = __pyx_v_pcap_filename;
-          __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_30, 6, 12 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_pcap_filename) * 2 + 8 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 1, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename));
-          if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 137, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-          __pyx_v_tftp_export = ((PyObject*)__pyx_t_6);
-          __pyx_t_6 = 0;
+          __pyx_t_16 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_transfer_proto, __pyx_mstate_global->__pyx_n_u_TFTP); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 218, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_6 = __pyx_t_16;
+          __Pyx_INCREF(__pyx_t_6);
+          __pyx_t_9 = 0;
+          {
+            PyObject *__pyx_callargs[2] = {__pyx_t_6, NULL};
+            __pyx_t_14 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_upper, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+            __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 218, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_14);
+          }
+          __pyx_v_proto = __pyx_t_14;
+          __pyx_t_14 = 0;
 
-          /* "backend/engine/finalizer.py":138
- *             tftp_ip = auth.get("tftp_ip", "")
- *             tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)             # <<<<<<<<<<<<<<
- *             try:
- *                 export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)
+          /* "backend/engine/finalizer.py":219
+ *             tftp_ip       = auth.get("tftp_ip", "")
+ *             proto         = auth.get("transfer_proto", "TFTP").upper()
+ *             sftp_user     = auth.get("sftp_username", "")             # <<<<<<<<<<<<<<
+ *             sftp_pass     = auth.get("sftp_password", "")
+ * 
 */
-          __pyx_t_14 = NULL;
-          __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 138, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 138, __pyx_L7_error)
+          __pyx_t_14 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_sftp_username, __pyx_mstate_global->__pyx_kp_u__3); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 219, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_14);
+          __pyx_v_sftp_user = __pyx_t_14;
+          __pyx_t_14 = 0;
+
+          /* "backend/engine/finalizer.py":220
+ *             proto         = auth.get("transfer_proto", "TFTP").upper()
+ *             sftp_user     = auth.get("sftp_username", "")
+ *             sftp_pass     = auth.get("sftp_password", "")             # <<<<<<<<<<<<<<
+ * 
+ *             #  Build export commands depending on protocol
+*/
+          __pyx_t_14 = __Pyx_PyDict_GetItemDefault(__pyx_v_auth, __pyx_mstate_global->__pyx_n_u_sftp_password, __pyx_mstate_global->__pyx_kp_u__3); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 220, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_14);
+          __pyx_v_sftp_pass = __pyx_t_14;
+          __pyx_t_14 = 0;
+
+          /* "backend/engine/finalizer.py":223
+ * 
+ *             #  Build export commands depending on protocol
+ *             if proto == "SFTP" and tftp_ip:             # <<<<<<<<<<<<<<
+ *                 tftp_export = f"copy flash:/{pcap_filename} sftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "SFTP"
+*/
+          __pyx_t_34 = (__Pyx_PyUnicode_Equals(__pyx_v_proto, __pyx_mstate_global->__pyx_n_u_SFTP, Py_EQ)); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 223, __pyx_L7_error)
+          if (__pyx_t_34) {
+          } else {
+            __pyx_t_10 = __pyx_t_34;
+            goto __pyx_L91_bool_binop_done;
+          }
+          __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_v_tftp_ip); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 223, __pyx_L7_error)
+          __pyx_t_10 = __pyx_t_34;
+          __pyx_L91_bool_binop_done:;
+          if (__pyx_t_10) {
+
+            /* "backend/engine/finalizer.py":224
+ *             #  Build export commands depending on protocol
+ *             if proto == "SFTP" and tftp_ip:
+ *                 tftp_export = f"copy flash:/{pcap_filename} sftp://{tftp_ip}/{pcap_filename}"             # <<<<<<<<<<<<<<
+ *                 proto_label = "SFTP"
+ *             elif tftp_ip:
+*/
+            __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_v_tftp_ip, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 224, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_14);
+            __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u_copy_flash;
+            __pyx_t_30[1] = __pyx_v_pcap_filename;
+            __pyx_t_30[2] = __pyx_mstate_global->__pyx_kp_u_sftp;
+            __pyx_t_30[3] = __pyx_t_14;
+            __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u__5;
+            __pyx_t_30[5] = __pyx_v_pcap_filename;
+            __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_30, 6, 12 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_pcap_filename) * 2 + 8 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 1, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename));
+            if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 224, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+            __pyx_v_tftp_export = ((PyObject*)__pyx_t_16);
+            __pyx_t_16 = 0;
+
+            /* "backend/engine/finalizer.py":225
+ *             if proto == "SFTP" and tftp_ip:
+ *                 tftp_export = f"copy flash:/{pcap_filename} sftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "SFTP"             # <<<<<<<<<<<<<<
+ *             elif tftp_ip:
+ *                 tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
+*/
+            __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_SFTP);
+            __pyx_v_proto_label = __pyx_mstate_global->__pyx_n_u_SFTP;
+
+            /* "backend/engine/finalizer.py":223
+ * 
+ *             #  Build export commands depending on protocol
+ *             if proto == "SFTP" and tftp_ip:             # <<<<<<<<<<<<<<
+ *                 tftp_export = f"copy flash:/{pcap_filename} sftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "SFTP"
+*/
+            goto __pyx_L90;
+          }
+
+          /* "backend/engine/finalizer.py":226
+ *                 tftp_export = f"copy flash:/{pcap_filename} sftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "SFTP"
+ *             elif tftp_ip:             # <<<<<<<<<<<<<<
+ *                 tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "TFTP"
+*/
+          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_tftp_ip); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 226, __pyx_L7_error)
+          if (__pyx_t_10) {
+
+            /* "backend/engine/finalizer.py":227
+ *                 proto_label = "SFTP"
+ *             elif tftp_ip:
+ *                 tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"             # <<<<<<<<<<<<<<
+ *                 proto_label = "TFTP"
+ *             else:
+*/
+            __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_tftp_ip, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 227, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u_copy_flash;
+            __pyx_t_30[1] = __pyx_v_pcap_filename;
+            __pyx_t_30[2] = __pyx_mstate_global->__pyx_kp_u_tftp;
+            __pyx_t_30[3] = __pyx_t_16;
+            __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u__5;
+            __pyx_t_30[5] = __pyx_v_pcap_filename;
+            __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_30, 6, 12 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_pcap_filename) * 2 + 8 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 1, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_pcap_filename));
+            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 227, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_14);
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __pyx_v_tftp_export = ((PyObject*)__pyx_t_14);
+            __pyx_t_14 = 0;
+
+            /* "backend/engine/finalizer.py":228
+ *             elif tftp_ip:
+ *                 tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "TFTP"             # <<<<<<<<<<<<<<
+ *             else:
+ *                 tftp_export = None
+*/
+            __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_TFTP);
+            __pyx_v_proto_label = __pyx_mstate_global->__pyx_n_u_TFTP;
+
+            /* "backend/engine/finalizer.py":226
+ *                 tftp_export = f"copy flash:/{pcap_filename} sftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "SFTP"
+ *             elif tftp_ip:             # <<<<<<<<<<<<<<
+ *                 tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
+ *                 proto_label = "TFTP"
+*/
+            goto __pyx_L90;
+          }
+
+          /* "backend/engine/finalizer.py":230
+ *                 proto_label = "TFTP"
+ *             else:
+ *                 tftp_export = None             # <<<<<<<<<<<<<<
+ *                 proto_label = "NONE"
+ * 
+*/
+          /*else*/ {
+            __Pyx_INCREF(Py_None);
+            __pyx_v_tftp_export = ((PyObject*)Py_None);
+
+            /* "backend/engine/finalizer.py":231
+ *             else:
+ *                 tftp_export = None
+ *                 proto_label = "NONE"             # <<<<<<<<<<<<<<
+ * 
+ *             print(f"[{ts()}] [EPC_TFTP_Upload] Protocol={proto_label}  Server={tftp_ip}", file=sys.stderr)
+*/
+            __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_NONE);
+            __pyx_v_proto_label = __pyx_mstate_global->__pyx_n_u_NONE;
+          }
+          __pyx_L90:;
+
+          /* "backend/engine/finalizer.py":233
+ *                 proto_label = "NONE"
+ * 
+ *             print(f"[{ts()}] [EPC_TFTP_Upload] Protocol={proto_label}  Server={tftp_ip}", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             if not tftp_export:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: No server IP configured  skipping pcap transfer", file=sys.stderr)
+*/
+          __pyx_t_16 = NULL;
+          __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 233, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_6);
+          __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 233, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-          __pyx_t_21[1] = __pyx_t_5;
-          __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload;
-          __pyx_t_21[3] = __pyx_v_tftp_export;
-          __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 20 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_tftp_export), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_tftp_export));
-          if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 138, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_16);
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 138, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L7_error)
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_tftp_ip, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 233, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_6);
+          __pyx_t_30[0] = __pyx_mstate_global->__pyx_kp_u_;
+          __pyx_t_30[1] = __pyx_t_5;
+          __pyx_t_30[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_Protocol;
+          __pyx_t_30[3] = __pyx_v_proto_label;
+          __pyx_t_30[4] = __pyx_mstate_global->__pyx_kp_u_Server;
+          __pyx_t_30[5] = __pyx_t_6;
+          __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_30, 6, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 29 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_proto_label) + 9 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_proto_label) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6));
+          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 233, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 233, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_6);
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 233, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __pyx_t_9 = 1;
           {
-            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_16};
-            __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 138, __pyx_L7_error)
-            __Pyx_GOTREF(__pyx_t_5);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 138, __pyx_L7_error)
-            __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
-            __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_4};
+            __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 233, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 233, __pyx_L7_error)
+            __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
+            __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 138, __pyx_L7_error)
-            __Pyx_GOTREF(__pyx_t_6);
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 233, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_14);
           }
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
 
-          /* "backend/engine/finalizer.py":139
- *             tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+          /* "backend/engine/finalizer.py":234
+ * 
+ *             print(f"[{ts()}] [EPC_TFTP_Upload] Protocol={proto_label}  Server={tftp_ip}", file=sys.stderr)
+ *             if not tftp_export:             # <<<<<<<<<<<<<<
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: No server IP configured  skipping pcap transfer", file=sys.stderr)
+ *             else:
+*/
+          if (__pyx_v_tftp_export == Py_None) __pyx_t_10 = 0;
+          else
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_tftp_export);
+            if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 234, __pyx_L7_error)
+            __pyx_t_10 = (__pyx_temp != 0);
+          }
+
+          __pyx_t_34 = (!__pyx_t_10);
+          if (__pyx_t_34) {
+
+            /* "backend/engine/finalizer.py":235
+ *             print(f"[{ts()}] [EPC_TFTP_Upload] Protocol={proto_label}  Server={tftp_ip}", file=sys.stderr)
+ *             if not tftp_export:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: No server IP configured  skipping pcap transfer", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             else:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+*/
+            __pyx_t_6 = NULL;
+            __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 235, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
+            __pyx_t_13[1] = __pyx_t_4;
+            __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_No_serv;
+            __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 77, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4));
+            if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 235, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_4);
+            __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 235, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __pyx_t_9 = 1;
+            {
+              PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_6, __pyx_t_5};
+              __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_4);
+              if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 235, __pyx_L7_error)
+              __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
+              __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+              __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+              __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+              if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 235, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_14);
+            }
+            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+
+            /* "backend/engine/finalizer.py":234
+ * 
+ *             print(f"[{ts()}] [EPC_TFTP_Upload] Protocol={proto_label}  Server={tftp_ip}", file=sys.stderr)
+ *             if not tftp_export:             # <<<<<<<<<<<<<<
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: No server IP configured  skipping pcap transfer", file=sys.stderr)
+ *             else:
+*/
+            goto __pyx_L93;
+          }
+
+          /* "backend/engine/finalizer.py":237
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: No server IP configured  skipping pcap transfer", file=sys.stderr)
+ *             else:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *                 if proto == "SFTP":
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
+*/
+          /*else*/ {
+            __pyx_t_4 = NULL;
+            __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 237, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 237, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __pyx_t_16 = __Pyx_PyUnicode_Unicode(__pyx_v_tftp_export); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 237, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+            __pyx_t_21[1] = __pyx_t_5;
+            __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_2;
+            __pyx_t_21[3] = __pyx_t_16;
+            __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 20 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 237, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 237, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 237, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __pyx_t_9 = 1;
+            {
+              PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_6};
+              __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 237, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_16);
+              if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 237, __pyx_L7_error)
+              __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
+              __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+              __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+              if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 237, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_14);
+            }
+            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+
+            /* "backend/engine/finalizer.py":238
+ *             else:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+ *                 if proto == "SFTP":             # <<<<<<<<<<<<<<
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
+ *             try:
+*/
+            __pyx_t_34 = (__Pyx_PyUnicode_Equals(__pyx_v_proto, __pyx_mstate_global->__pyx_n_u_SFTP, Py_EQ)); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 238, __pyx_L7_error)
+            if (__pyx_t_34) {
+
+              /* "backend/engine/finalizer.py":239
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+ *                 if proto == "SFTP":
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             try:
+ *               if tftp_export:
+*/
+              __pyx_t_16 = NULL;
+              __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 239, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_5);
+              __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 239, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_6);
+              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+              __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
+              __pyx_t_13[1] = __pyx_t_6;
+              __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_SFTP_credential;
+              __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 47, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6));
+              if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 239, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_5);
+              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+              __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 239, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_6);
+              __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 239, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_4);
+              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+              __pyx_t_9 = 1;
+              {
+                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_5};
+                __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 239, __pyx_L7_error)
+                __Pyx_GOTREF(__pyx_t_6);
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 239, __pyx_L7_error)
+                __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
+                __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 239, __pyx_L7_error)
+                __Pyx_GOTREF(__pyx_t_14);
+              }
+              __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+
+              /* "backend/engine/finalizer.py":238
+ *             else:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+ *                 if proto == "SFTP":             # <<<<<<<<<<<<<<
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
+ *             try:
+*/
+            }
+          }
+          __pyx_L93:;
+
+          /* "backend/engine/finalizer.py":240
+ *                 if proto == "SFTP":
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
- *                 export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
+ *               if tftp_export:
+ *                 transfer_out = _run_transfer_interactive(
 */
           {
             __Pyx_PyThreadState_declare
@@ -5553,309 +7576,251 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XGOTREF(__pyx_t_19);
             /*try:*/ {
 
-              /* "backend/engine/finalizer.py":140
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+              /* "backend/engine/finalizer.py":241
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
  *             try:
- *                 export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)             # <<<<<<<<<<<<<<
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
+ *               if tftp_export:             # <<<<<<<<<<<<<<
+ *                 transfer_out = _run_transfer_interactive(
+ *                     wlc_conn, tftp_export, sftp_user, sftp_pass, ts
 */
-              __pyx_t_5 = __pyx_v_wlc_conn;
-              __Pyx_INCREF(__pyx_t_5);
-              __pyx_t_9 = 0;
+              if (__pyx_v_tftp_export == Py_None) __pyx_t_34 = 0;
+              else
               {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_5, __pyx_v_tftp_export};
-                __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 140, __pyx_L90_error)
+                Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_tftp_export);
+                if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 241, __pyx_L95_error)
+                __pyx_t_34 = (__pyx_temp != 0);
+              }
+
+              if (__pyx_t_34) {
+
+                /* "backend/engine/finalizer.py":242
+ *             try:
+ *               if tftp_export:
+ *                 transfer_out = _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *                     wlc_conn, tftp_export, sftp_user, sftp_pass, ts
+ *                 )
+*/
+                __pyx_t_6 = NULL;
+                __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_run_transfer_interactive); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L95_error)
                 __Pyx_GOTREF(__pyx_t_4);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 140, __pyx_L90_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_100, __pyx_t_4, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 140, __pyx_L90_error)
-                __pyx_t_6 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
-                __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 140, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_6);
-              }
-              __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_export_out);
-              __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_export_out, __pyx_t_6);
-              __Pyx_GIVEREF(__pyx_t_6);
-              __pyx_t_6 = 0;
 
-              /* "backend/engine/finalizer.py":141
- *             try:
- *                 export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)             # <<<<<<<<<<<<<<
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
+                /* "backend/engine/finalizer.py":243
+ *               if tftp_export:
+ *                 transfer_out = _run_transfer_interactive(
+ *                     wlc_conn, tftp_export, sftp_user, sftp_pass, ts             # <<<<<<<<<<<<<<
+ *                 )
+ *                 if SUCCESS_RE.search(transfer_out or ""):
 */
-              __pyx_t_4 = NULL;
-              __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_5);
-              __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_export_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_5);
-              __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_t_5); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __pyx_t_5 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_t_14), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_5);
-              __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-              __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-              __pyx_t_21[1] = __pyx_t_16;
-              __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_First_Enter_res;
-              __pyx_t_21[3] = __pyx_t_5;
-              __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 42 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
-              if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_5);
-              __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 141, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __pyx_t_9 = 1;
-              {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_14};
-                __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 141, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_5);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 141, __pyx_L90_error)
-                __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
-                __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 141, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_6);
-              }
-              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                __pyx_t_9 = 1;
+                #if CYTHON_UNPACK_METHODS
+                if (unlikely(PyMethod_Check(__pyx_t_4))) {
+                  __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_4);
+                  assert(__pyx_t_6);
+                  PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_4);
+                  __Pyx_INCREF(__pyx_t_6);
+                  __Pyx_INCREF(__pyx__function);
+                  __Pyx_DECREF_SET(__pyx_t_4, __pyx__function);
+                  __pyx_t_9 = 0;
+                }
+                #endif
+                {
+                  PyObject *__pyx_callargs[6] = {__pyx_t_6, __pyx_v_wlc_conn, __pyx_v_tftp_export, __pyx_v_sftp_user, __pyx_v_sftp_pass, __pyx_v_ts};
+                  __pyx_t_14 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_9, (6-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+                  __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+                  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 242, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_14);
+                }
+                __pyx_v_transfer_out = __pyx_t_14;
+                __pyx_t_14 = 0;
 
-              /* "backend/engine/finalizer.py":142
- *                 export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)             # <<<<<<<<<<<<<<
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):
-*/
-              __pyx_t_5 = __pyx_v_wlc_conn;
-              __Pyx_INCREF(__pyx_t_5);
-              __pyx_t_9 = 0;
-              {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u__4};
-                __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 142, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_16);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 142, __pyx_L90_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_10, __pyx_t_16, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 142, __pyx_L90_error)
-                __pyx_t_6 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
-                __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 142, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_6);
-              }
-              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-
-              /* "backend/engine/finalizer.py":143
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)             # <<<<<<<<<<<<<<
- *                 if SUCCESS_RE.search(confirm_out or ""):
- *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred successfully.", file=sys.stderr)
-*/
-              __pyx_t_16 = __pyx_v_wlc_conn;
-              __Pyx_INCREF(__pyx_t_16);
-              __pyx_t_9 = 0;
-              {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_16, __pyx_mstate_global->__pyx_kp_u__4};
-                __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 143, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_5);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 143, __pyx_L90_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_10, __pyx_t_5, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 143, __pyx_L90_error)
-                __pyx_t_6 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
-                __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 143, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_6);
-              }
-              __Pyx_XDECREF_SET(__pyx_v_confirm_out, __pyx_t_6);
-              __pyx_t_6 = 0;
-
-              /* "backend/engine/finalizer.py":144
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):             # <<<<<<<<<<<<<<
- *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred successfully.", file=sys.stderr)
+                /* "backend/engine/finalizer.py":245
+ *                     wlc_conn, tftp_export, sftp_user, sftp_pass, ts
+ *                 )
+ *                 if SUCCESS_RE.search(transfer_out or ""):             # <<<<<<<<<<<<<<
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred via {proto_label} successfully.", file=sys.stderr)
  *                 else:
 */
-              __pyx_t_5 = NULL;
-              __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_SUCCESS_RE); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 144, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 144, __pyx_L90_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_confirm_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 144, __pyx_L90_error)
-              if (!__pyx_t_10) {
-              } else {
-                __Pyx_INCREF(__pyx_v_confirm_out);
-                __pyx_t_16 = __pyx_v_confirm_out;
-                goto __pyx_L97_bool_binop_done;
-              }
-              __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
-              __pyx_t_16 = __pyx_mstate_global->__pyx_kp_u__3;
-              __pyx_L97_bool_binop_done:;
-              __pyx_t_9 = 1;
-              #if CYTHON_UNPACK_METHODS
-              if (unlikely(PyMethod_Check(__pyx_t_14))) {
-                __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_14);
-                assert(__pyx_t_5);
-                PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_14);
-                __Pyx_INCREF(__pyx_t_5);
-                __Pyx_INCREF(__pyx__function);
-                __Pyx_DECREF_SET(__pyx_t_14, __pyx__function);
-                __pyx_t_9 = 0;
-              }
-              #endif
-              {
-                PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_16};
-                __pyx_t_6 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_14, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-                __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 144, __pyx_L90_error)
+                __pyx_t_4 = NULL;
+                __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_SUCCESS_RE); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 245, __pyx_L95_error)
                 __Pyx_GOTREF(__pyx_t_6);
-              }
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 144, __pyx_L90_error)
-              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-              if (__pyx_t_10) {
+                __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 245, __pyx_L95_error)
+                __Pyx_GOTREF(__pyx_t_5);
+                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_v_transfer_out); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 245, __pyx_L95_error)
+                if (!__pyx_t_34) {
+                } else {
+                  __Pyx_INCREF(__pyx_v_transfer_out);
+                  __pyx_t_6 = __pyx_v_transfer_out;
+                  goto __pyx_L103_bool_binop_done;
+                }
+                __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+                __pyx_t_6 = __pyx_mstate_global->__pyx_kp_u__3;
+                __pyx_L103_bool_binop_done:;
+                __pyx_t_9 = 1;
+                #if CYTHON_UNPACK_METHODS
+                if (unlikely(PyMethod_Check(__pyx_t_5))) {
+                  __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_5);
+                  assert(__pyx_t_4);
+                  PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
+                  __Pyx_INCREF(__pyx_t_4);
+                  __Pyx_INCREF(__pyx__function);
+                  __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
+                  __pyx_t_9 = 0;
+                }
+                #endif
+                {
+                  PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_t_6};
+                  __pyx_t_14 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+                  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+                  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 245, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_14);
+                }
+                __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_t_14); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 245, __pyx_L95_error)
+                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+                if (__pyx_t_34) {
 
-                /* "backend/engine/finalizer.py":145
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):
- *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred successfully.", file=sys.stderr)             # <<<<<<<<<<<<<<
+                  /* "backend/engine/finalizer.py":246
+ *                 )
+ *                 if SUCCESS_RE.search(transfer_out or ""):
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred via {proto_label} successfully.", file=sys.stderr)             # <<<<<<<<<<<<<<
  *                 else:
  *                     print(
 */
-                __pyx_t_14 = NULL;
-                __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 145, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_16);
-                __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 145, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_5);
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
-                __pyx_t_13[1] = __pyx_t_5;
-                __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_ApDisjoinEpc_pc;
-                __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 65, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
-                if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 145, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_16);
-                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 145, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_5);
-                __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 145, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_4);
-                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __pyx_t_9 = 1;
-                {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_16};
-                  __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 145, __pyx_L90_error)
-                  __Pyx_GOTREF(__pyx_t_5);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 145, __pyx_L90_error)
-                  __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
-                  __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 145, __pyx_L90_error)
+                  __pyx_t_5 = NULL;
+                  __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 246, __pyx_L95_error)
                   __Pyx_GOTREF(__pyx_t_6);
-                }
-                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_4);
+                  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
+                  __pyx_t_7[1] = __pyx_t_4;
+                  __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_ApDisjoinEpc_pc;
+                  __pyx_t_7[3] = __pyx_v_proto_label;
+                  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_successfully;
+                  __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 56 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_proto_label) + 14, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_proto_label));
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 246, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_6);
+                  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_4);
+                  __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 246, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                  __pyx_t_9 = 1;
+                  {
+                    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_6};
+                    __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L95_error)
+                    __Pyx_GOTREF(__pyx_t_4);
+                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 246, __pyx_L95_error)
+                    __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
+                    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+                    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                    if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 246, __pyx_L95_error)
+                    __Pyx_GOTREF(__pyx_t_14);
+                  }
+                  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
 
-                /* "backend/engine/finalizer.py":144
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):             # <<<<<<<<<<<<<<
- *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred successfully.", file=sys.stderr)
+                  /* "backend/engine/finalizer.py":245
+ *                     wlc_conn, tftp_export, sftp_user, sftp_pass, ts
+ *                 )
+ *                 if SUCCESS_RE.search(transfer_out or ""):             # <<<<<<<<<<<<<<
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred via {proto_label} successfully.", file=sys.stderr)
  *                 else:
 */
-                goto __pyx_L96;
-              }
+                  goto __pyx_L102;
+                }
 
-              /* "backend/engine/finalizer.py":147
- *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred successfully.", file=sys.stderr)
+                /* "backend/engine/finalizer.py":248
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ApDisjoinEpc.pcap transferred via {proto_label} successfully.", file=sys.stderr)
  *                 else:
  *                     print(             # <<<<<<<<<<<<<<
- *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: transfer may have failed. Response: {confirm_out!r}",
+ *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: pcap transfer may have failed. Output: {transfer_out!r}",
  *                         file=sys.stderr,
 */
-              /*else*/ {
-                __pyx_t_5 = NULL;
+                /*else*/ {
+                  __pyx_t_4 = NULL;
 
-                /* "backend/engine/finalizer.py":148
+                  /* "backend/engine/finalizer.py":249
  *                 else:
  *                     print(
- *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: transfer may have failed. Response: {confirm_out!r}",             # <<<<<<<<<<<<<<
+ *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: pcap transfer may have failed. Output: {transfer_out!r}",             # <<<<<<<<<<<<<<
  *                         file=sys.stderr,
  *                     )
 */
-                __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_4);
-                __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 148, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_16);
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                __pyx_t_4 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_v_confirm_out), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_4);
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-                __pyx_t_21[1] = __pyx_t_16;
-                __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_transfe;
-                __pyx_t_21[3] = __pyx_t_4;
-                __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 65 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4));
-                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 148, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_14);
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                  __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 249, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 249, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_6);
+                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                  __pyx_t_16 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_v_transfer_out), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 249, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+                  __pyx_t_21[1] = __pyx_t_6;
+                  __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_pcap_tr;
+                  __pyx_t_21[3] = __pyx_t_16;
+                  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 68 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
+                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 249, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_5);
+                  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
-                /* "backend/engine/finalizer.py":149
+                  /* "backend/engine/finalizer.py":250
  *                     print(
- *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: transfer may have failed. Response: {confirm_out!r}",
+ *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: pcap transfer may have failed. Output: {transfer_out!r}",
  *                         file=sys.stderr,             # <<<<<<<<<<<<<<
  *                     )
  *             except Exception as exc:
 */
-                __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 149, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_4);
-                __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 149, __pyx_L90_error)
-                __Pyx_GOTREF(__pyx_t_16);
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                __pyx_t_9 = 1;
-                {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_14};
-                  __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 147, __pyx_L90_error)
-                  __Pyx_GOTREF(__pyx_t_4);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 147, __pyx_L90_error)
-                  __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
-                  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-                  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L90_error)
+                  __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 250, __pyx_L95_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 250, __pyx_L95_error)
                   __Pyx_GOTREF(__pyx_t_6);
+                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                  __pyx_t_9 = 1;
+                  {
+                    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_5};
+                    __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 248, __pyx_L95_error)
+                    __Pyx_GOTREF(__pyx_t_16);
+                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 248, __pyx_L95_error)
+                    __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
+                    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+                    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                    if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 248, __pyx_L95_error)
+                    __Pyx_GOTREF(__pyx_t_14);
+                  }
+                  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
                 }
-                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-              }
-              __pyx_L96:;
+                __pyx_L102:;
 
-              /* "backend/engine/finalizer.py":139
- *             tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+                /* "backend/engine/finalizer.py":241
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
+ *             try:
+ *               if tftp_export:             # <<<<<<<<<<<<<<
+ *                 transfer_out = _run_transfer_interactive(
+ *                     wlc_conn, tftp_export, sftp_user, sftp_pass, ts
+*/
+              }
+
+              /* "backend/engine/finalizer.py":240
+ *                 if proto == "SFTP":
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
- *                 export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
+ *               if tftp_export:
+ *                 transfer_out = _run_transfer_interactive(
 */
             }
             __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_XDECREF(__pyx_t_19); __pyx_t_19 = 0;
-            goto __pyx_L95_try_end;
-            __pyx_L90_error:;
+            goto __pyx_L100_try_end;
+            __pyx_L95_error:;
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
             __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -5865,7 +7830,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "backend/engine/finalizer.py":151
+            /* "backend/engine/finalizer.py":252
  *                         file=sys.stderr,
  *                     )
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -5875,61 +7840,61 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_20 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
             if (__pyx_t_20) {
               __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_4, &__pyx_t_16) < 0) __PYX_ERR(0, 151, __pyx_L92_except_error)
-              __Pyx_XGOTREF(__pyx_t_6);
-              __Pyx_XGOTREF(__pyx_t_4);
+              if (__Pyx_GetException(&__pyx_t_14, &__pyx_t_16, &__pyx_t_6) < 0) __PYX_ERR(0, 252, __pyx_L97_except_error)
+              __Pyx_XGOTREF(__pyx_t_14);
               __Pyx_XGOTREF(__pyx_t_16);
-              __Pyx_INCREF(__pyx_t_4);
-              __pyx_v_exc = __pyx_t_4;
+              __Pyx_XGOTREF(__pyx_t_6);
+              __Pyx_INCREF(__pyx_t_16);
+              __pyx_v_exc = __pyx_t_16;
               /*try:*/ {
 
-                /* "backend/engine/finalizer.py":152
+                /* "backend/engine/finalizer.py":253
  *                     )
  *             except Exception as exc:
  *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: EPC export failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
  * 
  *             digits  = re.sub(r"[^0-9a-fA-F]", "", mac)
 */
-                __pyx_t_5 = NULL;
-                __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L104_error)
+                __pyx_t_4 = NULL;
+                __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L110_error)
                 __Pyx_GOTREF(__pyx_t_1);
-                __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L104_error)
+                __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 253, __pyx_L110_error)
                 __Pyx_GOTREF(__pyx_t_8);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L104_error)
+                __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L110_error)
                 __Pyx_GOTREF(__pyx_t_1);
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_21[1] = __pyx_t_8;
                 __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_EPC_exp;
                 __pyx_t_21[3] = __pyx_t_1;
                 __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8) + 48 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
-                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 152, __pyx_L104_error)
+                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 253, __pyx_L110_error)
                 __Pyx_GOTREF(__pyx_t_15);
                 __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L104_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L110_error)
                 __Pyx_GOTREF(__pyx_t_1);
-                __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L104_error)
+                __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 253, __pyx_L110_error)
                 __Pyx_GOTREF(__pyx_t_8);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
                 __pyx_t_9 = 1;
                 {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_15};
-                  __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L104_error)
+                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_15};
+                  __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L110_error)
                   __Pyx_GOTREF(__pyx_t_1);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 152, __pyx_L104_error)
-                  __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
-                  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 253, __pyx_L110_error)
+                  __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
+                  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 152, __pyx_L104_error)
-                  __Pyx_GOTREF(__pyx_t_14);
+                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 253, __pyx_L110_error)
+                  __Pyx_GOTREF(__pyx_t_5);
                 }
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
               }
 
-              /* "backend/engine/finalizer.py":151
+              /* "backend/engine/finalizer.py":252
  *                         file=sys.stderr,
  *                     )
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -5939,16 +7904,16 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               /*finally:*/ {
                 /*normal exit:*/{
                   __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
-                  goto __pyx_L105;
+                  goto __pyx_L111;
                 }
-                __pyx_L104_error:;
+                __pyx_L110_error:;
                 /*exception exit:*/{
                   __Pyx_PyThreadState_declare
                   __Pyx_PyThreadState_assign
                   __pyx_t_24 = 0; __pyx_t_25 = 0; __pyx_t_26 = 0; __pyx_t_27 = 0; __pyx_t_28 = 0; __pyx_t_29 = 0;
                   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
                   __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
+                  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
                   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                    __Pyx_ExceptionSwap(&__pyx_t_27, &__pyx_t_28, &__pyx_t_29);
@@ -5959,7 +7924,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   __Pyx_XGOTREF(__pyx_t_27);
                   __Pyx_XGOTREF(__pyx_t_28);
                   __Pyx_XGOTREF(__pyx_t_29);
-                  __pyx_t_20 = __pyx_lineno; __pyx_t_22 = __pyx_clineno; __pyx_t_34 = __pyx_filename;
+                  __pyx_t_20 = __pyx_lineno; __pyx_t_22 = __pyx_clineno; __pyx_t_35 = __pyx_filename;
                   {
                     __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
                   }
@@ -5972,193 +7937,306 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   __Pyx_XGIVEREF(__pyx_t_26);
                   __Pyx_ErrRestore(__pyx_t_24, __pyx_t_25, __pyx_t_26);
                   __pyx_t_24 = 0; __pyx_t_25 = 0; __pyx_t_26 = 0; __pyx_t_27 = 0; __pyx_t_28 = 0; __pyx_t_29 = 0;
-                  __pyx_lineno = __pyx_t_20; __pyx_clineno = __pyx_t_22; __pyx_filename = __pyx_t_34;
-                  goto __pyx_L92_except_error;
+                  __pyx_lineno = __pyx_t_20; __pyx_clineno = __pyx_t_22; __pyx_filename = __pyx_t_35;
+                  goto __pyx_L97_except_error;
                 }
-                __pyx_L105:;
+                __pyx_L111:;
               }
-              __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-              __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+              __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
               __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-              goto __pyx_L91_exception_handled;
+              __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+              goto __pyx_L96_exception_handled;
             }
-            goto __pyx_L92_except_error;
+            goto __pyx_L97_except_error;
 
-            /* "backend/engine/finalizer.py":139
- *             tftp_export = f"copy flash:/{pcap_filename} tftp://{tftp_ip}/{pcap_filename}"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {tftp_export}", file=sys.stderr)
+            /* "backend/engine/finalizer.py":240
+ *                 if proto == "SFTP":
+ *                     print(f"[{ts()}] [EPC_TFTP_Upload] SFTP credentials configured", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
- *                 export_out = wlc_conn.send_command_timing(tftp_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
+ *               if tftp_export:
+ *                 transfer_out = _run_transfer_interactive(
 */
-            __pyx_L92_except_error:;
+            __pyx_L97_except_error:;
             __Pyx_XGIVEREF(__pyx_t_17);
             __Pyx_XGIVEREF(__pyx_t_18);
             __Pyx_XGIVEREF(__pyx_t_19);
             __Pyx_ExceptionReset(__pyx_t_17, __pyx_t_18, __pyx_t_19);
             goto __pyx_L7_error;
-            __pyx_L91_exception_handled:;
+            __pyx_L96_exception_handled:;
             __Pyx_XGIVEREF(__pyx_t_17);
             __Pyx_XGIVEREF(__pyx_t_18);
             __Pyx_XGIVEREF(__pyx_t_19);
             __Pyx_ExceptionReset(__pyx_t_17, __pyx_t_18, __pyx_t_19);
-            __pyx_L95_try_end:;
+            __pyx_L100_try_end:;
           }
 
-          /* "backend/engine/finalizer.py":154
+          /* "backend/engine/finalizer.py":255
  *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: EPC export failed: {exc}", file=sys.stderr)
  * 
  *             digits  = re.sub(r"[^0-9a-fA-F]", "", mac)             # <<<<<<<<<<<<<<
  *             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             if proto == "SFTP" and tftp_ip:
 */
-          __pyx_t_4 = NULL;
-          __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 154, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sub); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 154, __pyx_L7_error)
+          __pyx_t_16 = NULL;
+          __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 255, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_14);
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_sub); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 255, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
           __pyx_t_9 = 1;
           #if CYTHON_UNPACK_METHODS
-          if (unlikely(PyMethod_Check(__pyx_t_14))) {
-            __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_14);
-            assert(__pyx_t_4);
-            PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_14);
-            __Pyx_INCREF(__pyx_t_4);
+          if (unlikely(PyMethod_Check(__pyx_t_5))) {
+            __pyx_t_16 = PyMethod_GET_SELF(__pyx_t_5);
+            assert(__pyx_t_16);
+            PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
+            __Pyx_INCREF(__pyx_t_16);
             __Pyx_INCREF(__pyx__function);
-            __Pyx_DECREF_SET(__pyx_t_14, __pyx__function);
+            __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
             __pyx_t_9 = 0;
           }
           #endif
           {
-            PyObject *__pyx_callargs[4] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_0_9a_fA_F, __pyx_mstate_global->__pyx_kp_u__3, __pyx_v_mac};
-            __pyx_t_16 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_14, __pyx_callargs+__pyx_t_9, (4-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-            __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-            if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 154, __pyx_L7_error)
-            __Pyx_GOTREF(__pyx_t_16);
+            PyObject *__pyx_callargs[4] = {__pyx_t_16, __pyx_mstate_global->__pyx_kp_u_0_9a_fA_F, __pyx_mstate_global->__pyx_kp_u__3, __pyx_v_mac};
+            __pyx_t_6 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_9, (4-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+            __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 255, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_6);
           }
-          __pyx_v_digits = __pyx_t_16;
-          __pyx_t_16 = 0;
+          __pyx_v_digits = __pyx_t_6;
+          __pyx_t_6 = 0;
 
-          /* "backend/engine/finalizer.py":155
+          /* "backend/engine/finalizer.py":256
  * 
  *             digits  = re.sub(r"[^0-9a-fA-F]", "", mac)
  *             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()             # <<<<<<<<<<<<<<
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+ *             if proto == "SFTP" and tftp_ip:
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
 */
-          __pyx_t_4 = __Pyx_PyObject_GetSlice(__pyx_v_digits, 0, 4, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 155, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __pyx_t_4 = __Pyx_PyObject_GetSlice(__pyx_v_digits, 4, 8, NULL, NULL, &__pyx_mstate_global->__pyx_slice[1], 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L7_error)
+          __pyx_t_16 = __Pyx_PyObject_GetSlice(__pyx_v_digits, 0, 4, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 1, 1, 1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 256, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 256, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_14);
+          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+          __pyx_t_16 = __Pyx_PyObject_GetSlice(__pyx_v_digits, 4, 8, NULL, NULL, &__pyx_mstate_global->__pyx_slice[1], 1, 1, 1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 256, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __pyx_t_4 = __Pyx_PyObject_GetSlice(__pyx_v_digits, 8, 12, NULL, NULL, &__pyx_mstate_global->__pyx_slice[2], 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 155, __pyx_L7_error)
+          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+          __pyx_t_16 = __Pyx_PyObject_GetSlice(__pyx_v_digits, 8, 12, NULL, NULL, &__pyx_mstate_global->__pyx_slice[2], 1, 1, 1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 256, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 256, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __pyx_t_7[0] = __pyx_t_6;
-          __pyx_t_7[1] = __pyx_mstate_global->__pyx_kp_u_;
+          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+          __pyx_t_7[0] = __pyx_t_14;
+          __pyx_t_7[1] = __pyx_mstate_global->__pyx_kp_u__4;
           __pyx_t_7[2] = __pyx_t_1;
-          __pyx_t_7[3] = __pyx_mstate_global->__pyx_kp_u_;
+          __pyx_t_7[3] = __pyx_mstate_global->__pyx_kp_u__4;
           __pyx_t_7[4] = __pyx_t_8;
-          __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8));
-          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8));
+          if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 256, __pyx_L7_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_14 = __pyx_t_4;
-          __Pyx_INCREF(__pyx_t_14);
+          __pyx_t_5 = __pyx_t_16;
+          __Pyx_INCREF(__pyx_t_5);
           __pyx_t_9 = 0;
           {
-            PyObject *__pyx_callargs[2] = {__pyx_t_14, NULL};
-            __pyx_t_16 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-            __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-            if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 155, __pyx_L7_error)
-            __Pyx_GOTREF(__pyx_t_16);
+            PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
+            __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+            __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 256, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_6);
           }
-          __pyx_v_dot_mac = ((PyObject*)__pyx_t_16);
-          __pyx_t_16 = 0;
+          __pyx_v_dot_mac = ((PyObject*)__pyx_t_6);
+          __pyx_t_6 = 0;
 
-          /* "backend/engine/finalizer.py":156
+          /* "backend/engine/finalizer.py":257
  *             digits  = re.sub(r"[^0-9a-fA-F]", "", mac)
  *             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"             # <<<<<<<<<<<<<<
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
- *             try:
+ *             if proto == "SFTP" and tftp_ip:             # <<<<<<<<<<<<<<
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             elif tftp_ip:
 */
-          __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_tftp_ip, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_35[0] = __pyx_mstate_global->__pyx_kp_u_copy_flash_ALWAYS_ON;
-          __pyx_t_35[1] = __pyx_v_dot_mac;
-          __pyx_t_35[2] = __pyx_mstate_global->__pyx_kp_u_log_tftp;
-          __pyx_t_35[3] = __pyx_t_16;
-          __pyx_t_35[4] = __pyx_mstate_global->__pyx_kp_u_ALWAYS_ON;
-          __pyx_t_35[5] = __pyx_v_dot_mac;
-          __pyx_t_35[6] = __pyx_mstate_global->__pyx_kp_u_log;
-          __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_35, 7, 22 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_dot_mac) * 2 + 12 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 11 + 4, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_dot_mac) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_dot_mac));
-          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 156, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_v_always_on_export = ((PyObject*)__pyx_t_4);
-          __pyx_t_4 = 0;
-
-          /* "backend/engine/finalizer.py":157
- *             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)             # <<<<<<<<<<<<<<
- *             try:
- *                 export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)
-*/
-          __pyx_t_16 = NULL;
-          __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 157, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_14);
-          __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_14, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 157, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-          __pyx_t_21[1] = __pyx_t_8;
-          __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload;
-          __pyx_t_21[3] = __pyx_v_always_on_export;
-          __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8) + 20 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_always_on_export), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_always_on_export));
-          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 157, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_14);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 157, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L7_error)
-          __Pyx_GOTREF(__pyx_t_1);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_9 = 1;
-          {
-            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_14};
-            __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 157, __pyx_L7_error)
-            __Pyx_GOTREF(__pyx_t_8);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 157, __pyx_L7_error)
-            __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
-            __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L7_error)
-            __Pyx_GOTREF(__pyx_t_4);
+          __pyx_t_10 = (__Pyx_PyUnicode_Equals(__pyx_v_proto, __pyx_mstate_global->__pyx_n_u_SFTP, Py_EQ)); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 257, __pyx_L7_error)
+          if (__pyx_t_10) {
+          } else {
+            __pyx_t_34 = __pyx_t_10;
+            goto __pyx_L117_bool_binop_done;
           }
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_tftp_ip); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 257, __pyx_L7_error)
+          __pyx_t_34 = __pyx_t_10;
+          __pyx_L117_bool_binop_done:;
+          if (__pyx_t_34) {
 
-          /* "backend/engine/finalizer.py":158
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+            /* "backend/engine/finalizer.py":258
+ *             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
+ *             if proto == "SFTP" and tftp_ip:
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"             # <<<<<<<<<<<<<<
+ *             elif tftp_ip:
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+*/
+            __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_tftp_ip, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 258, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __pyx_t_36[0] = __pyx_mstate_global->__pyx_kp_u_copy_flash_ALWAYS_ON;
+            __pyx_t_36[1] = __pyx_v_dot_mac;
+            __pyx_t_36[2] = __pyx_mstate_global->__pyx_kp_u_log_sftp;
+            __pyx_t_36[3] = __pyx_t_6;
+            __pyx_t_36[4] = __pyx_mstate_global->__pyx_kp_u_ALWAYS_ON;
+            __pyx_t_36[5] = __pyx_v_dot_mac;
+            __pyx_t_36[6] = __pyx_mstate_global->__pyx_kp_u_log;
+            __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_36, 7, 22 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_dot_mac) * 2 + 12 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 11 + 4, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_dot_mac) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_dot_mac));
+            if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 258, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __pyx_v_always_on_export = ((PyObject*)__pyx_t_16);
+            __pyx_t_16 = 0;
+
+            /* "backend/engine/finalizer.py":257
+ *             digits  = re.sub(r"[^0-9a-fA-F]", "", mac)
+ *             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
+ *             if proto == "SFTP" and tftp_ip:             # <<<<<<<<<<<<<<
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             elif tftp_ip:
+*/
+            goto __pyx_L116;
+          }
+
+          /* "backend/engine/finalizer.py":259
+ *             if proto == "SFTP" and tftp_ip:
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             elif tftp_ip:             # <<<<<<<<<<<<<<
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             else:
+*/
+          __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_v_tftp_ip); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 259, __pyx_L7_error)
+          if (__pyx_t_34) {
+
+            /* "backend/engine/finalizer.py":260
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             elif tftp_ip:
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"             # <<<<<<<<<<<<<<
+ *             else:
+ *                 always_on_export = None
+*/
+            __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_tftp_ip, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 260, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __pyx_t_36[0] = __pyx_mstate_global->__pyx_kp_u_copy_flash_ALWAYS_ON;
+            __pyx_t_36[1] = __pyx_v_dot_mac;
+            __pyx_t_36[2] = __pyx_mstate_global->__pyx_kp_u_log_tftp;
+            __pyx_t_36[3] = __pyx_t_16;
+            __pyx_t_36[4] = __pyx_mstate_global->__pyx_kp_u_ALWAYS_ON;
+            __pyx_t_36[5] = __pyx_v_dot_mac;
+            __pyx_t_36[6] = __pyx_mstate_global->__pyx_kp_u_log;
+            __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_36, 7, 22 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_dot_mac) * 2 + 12 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 11 + 4, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_dot_mac) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_dot_mac));
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 260, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __pyx_v_always_on_export = ((PyObject*)__pyx_t_6);
+            __pyx_t_6 = 0;
+
+            /* "backend/engine/finalizer.py":259
+ *             if proto == "SFTP" and tftp_ip:
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             elif tftp_ip:             # <<<<<<<<<<<<<<
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             else:
+*/
+            goto __pyx_L116;
+          }
+
+          /* "backend/engine/finalizer.py":262
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
+ *             else:
+ *                 always_on_export = None             # <<<<<<<<<<<<<<
+ *             if always_on_export:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+*/
+          /*else*/ {
+            __Pyx_INCREF(Py_None);
+            __pyx_v_always_on_export = ((PyObject*)Py_None);
+          }
+          __pyx_L116:;
+
+          /* "backend/engine/finalizer.py":263
+ *             else:
+ *                 always_on_export = None
+ *             if always_on_export:             # <<<<<<<<<<<<<<
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+ *             try:
+*/
+          if (__pyx_v_always_on_export == Py_None) __pyx_t_34 = 0;
+          else
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_always_on_export);
+            if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 263, __pyx_L7_error)
+            __pyx_t_34 = (__pyx_temp != 0);
+          }
+
+          if (__pyx_t_34) {
+
+            /* "backend/engine/finalizer.py":264
+ *                 always_on_export = None
+ *             if always_on_export:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)             # <<<<<<<<<<<<<<
+ *             try:
+ *               if always_on_export:
+*/
+            __pyx_t_16 = NULL;
+            __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 264, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 264, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_8);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __pyx_t_5 = __Pyx_PyUnicode_Unicode(__pyx_v_always_on_export); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 264, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+            __pyx_t_21[1] = __pyx_t_8;
+            __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_2;
+            __pyx_t_21[3] = __pyx_t_5;
+            __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8) + 20 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 264, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_1);
+            __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 264, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 264, __pyx_L7_error)
+            __Pyx_GOTREF(__pyx_t_8);
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __pyx_t_9 = 1;
+            {
+              PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_1};
+              __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 264, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_5);
+              if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_8, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 264, __pyx_L7_error)
+              __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+              __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+              __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+              __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+              if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 264, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_6);
+            }
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+            /* "backend/engine/finalizer.py":263
+ *             else:
+ *                 always_on_export = None
+ *             if always_on_export:             # <<<<<<<<<<<<<<
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+ *             try:
+*/
+          }
+
+          /* "backend/engine/finalizer.py":265
+ *             if always_on_export:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
- *                 export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
+ *               if always_on_export:
+ *                 always_on_out = _run_transfer_interactive(
 */
           {
             __Pyx_PyThreadState_declare
@@ -6169,309 +8247,249 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XGOTREF(__pyx_t_17);
             /*try:*/ {
 
-              /* "backend/engine/finalizer.py":159
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+              /* "backend/engine/finalizer.py":266
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
  *             try:
- *                 export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)             # <<<<<<<<<<<<<<
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
+ *               if always_on_export:             # <<<<<<<<<<<<<<
+ *                 always_on_out = _run_transfer_interactive(
+ *                     wlc_conn, always_on_export, sftp_user, sftp_pass, ts
 */
-              __pyx_t_8 = __pyx_v_wlc_conn;
-              __Pyx_INCREF(__pyx_t_8);
-              __pyx_t_9 = 0;
+              if (__pyx_v_always_on_export == Py_None) __pyx_t_34 = 0;
+              else
               {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_8, __pyx_v_always_on_export};
-                __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_1);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 159, __pyx_L110_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_100, __pyx_t_1, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 159, __pyx_L110_error)
-                __pyx_t_4 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
-                __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-                __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 159, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_4);
+                Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_always_on_export);
+                if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 266, __pyx_L120_error)
+                __pyx_t_34 = (__pyx_temp != 0);
               }
-              __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_export_out);
-              __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_export_out, __pyx_t_4);
-              __Pyx_GIVEREF(__pyx_t_4);
-              __pyx_t_4 = 0;
 
-              /* "backend/engine/finalizer.py":160
+              if (__pyx_t_34) {
+
+                /* "backend/engine/finalizer.py":267
  *             try:
- *                 export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)             # <<<<<<<<<<<<<<
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
+ *               if always_on_export:
+ *                 always_on_out = _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *                     wlc_conn, always_on_export, sftp_user, sftp_pass, ts
+ *                 )
 */
-              __pyx_t_1 = NULL;
-              __pyx_t_8 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_8);
-              __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-              __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_export_out, __pyx_mstate_global->__pyx_n_u_strip); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_8);
-              __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_t_8); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-              __pyx_t_8 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_t_16), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_8);
-              __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-              __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-              __pyx_t_21[1] = __pyx_t_14;
-              __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_First_Enter_res;
-              __pyx_t_21[3] = __pyx_t_8;
-              __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 42 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8));
-              if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-              __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-              __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_8);
-              __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 160, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-              __pyx_t_9 = 1;
-              {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_16};
-                __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L110_error)
+                __pyx_t_5 = NULL;
+                __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_run_transfer_interactive); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 267, __pyx_L120_error)
                 __Pyx_GOTREF(__pyx_t_8);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 160, __pyx_L110_error)
-                __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
-                __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 160, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_4);
-              }
-              __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "backend/engine/finalizer.py":161
- *                 export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)             # <<<<<<<<<<<<<<
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):
+                /* "backend/engine/finalizer.py":268
+ *               if always_on_export:
+ *                 always_on_out = _run_transfer_interactive(
+ *                     wlc_conn, always_on_export, sftp_user, sftp_pass, ts             # <<<<<<<<<<<<<<
+ *                 )
+ *                 if SUCCESS_RE.search(always_on_out or ""):
 */
-              __pyx_t_8 = __pyx_v_wlc_conn;
-              __Pyx_INCREF(__pyx_t_8);
-              __pyx_t_9 = 0;
-              {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_8, __pyx_mstate_global->__pyx_kp_u__4};
-                __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 161, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_14);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 161, __pyx_L110_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_10, __pyx_t_14, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 161, __pyx_L110_error)
-                __pyx_t_4 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_14);
-                __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 161, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_4);
-              }
-              __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                __pyx_t_9 = 1;
+                #if CYTHON_UNPACK_METHODS
+                if (unlikely(PyMethod_Check(__pyx_t_8))) {
+                  __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_8);
+                  assert(__pyx_t_5);
+                  PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_8);
+                  __Pyx_INCREF(__pyx_t_5);
+                  __Pyx_INCREF(__pyx__function);
+                  __Pyx_DECREF_SET(__pyx_t_8, __pyx__function);
+                  __pyx_t_9 = 0;
+                }
+                #endif
+                {
+                  PyObject *__pyx_callargs[6] = {__pyx_t_5, __pyx_v_wlc_conn, __pyx_v_always_on_export, __pyx_v_sftp_user, __pyx_v_sftp_pass, __pyx_v_ts};
+                  __pyx_t_6 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_8, __pyx_callargs+__pyx_t_9, (6-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+                  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 267, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_6);
+                }
+                __pyx_v_always_on_out = __pyx_t_6;
+                __pyx_t_6 = 0;
 
-              /* "backend/engine/finalizer.py":162
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)             # <<<<<<<<<<<<<<
- *                 if SUCCESS_RE.search(confirm_out or ""):
- *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ALWAYS_ON log transferred successfully.", file=sys.stderr)
-*/
-              __pyx_t_14 = __pyx_v_wlc_conn;
-              __Pyx_INCREF(__pyx_t_14);
-              __pyx_t_9 = 0;
-              {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_14, __pyx_mstate_global->__pyx_kp_u__4};
-                __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 162, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_8);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 162, __pyx_L110_error)
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_10, __pyx_t_8, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 162, __pyx_L110_error)
-                __pyx_t_4 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
-                __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 162, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_4);
-              }
-              __Pyx_XDECREF_SET(__pyx_v_confirm_out, __pyx_t_4);
-              __pyx_t_4 = 0;
-
-              /* "backend/engine/finalizer.py":163
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):             # <<<<<<<<<<<<<<
+                /* "backend/engine/finalizer.py":270
+ *                     wlc_conn, always_on_export, sftp_user, sftp_pass, ts
+ *                 )
+ *                 if SUCCESS_RE.search(always_on_out or ""):             # <<<<<<<<<<<<<<
  *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ALWAYS_ON log transferred successfully.", file=sys.stderr)
  *                 else:
 */
-              __pyx_t_8 = NULL;
-              __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_SUCCESS_RE); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 163, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 163, __pyx_L110_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_confirm_out); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 163, __pyx_L110_error)
-              if (!__pyx_t_10) {
-              } else {
-                __Pyx_INCREF(__pyx_v_confirm_out);
-                __pyx_t_14 = __pyx_v_confirm_out;
-                goto __pyx_L117_bool_binop_done;
-              }
-              __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
-              __pyx_t_14 = __pyx_mstate_global->__pyx_kp_u__3;
-              __pyx_L117_bool_binop_done:;
-              __pyx_t_9 = 1;
-              #if CYTHON_UNPACK_METHODS
-              if (unlikely(PyMethod_Check(__pyx_t_16))) {
-                __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_16);
-                assert(__pyx_t_8);
-                PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_16);
-                __Pyx_INCREF(__pyx_t_8);
-                __Pyx_INCREF(__pyx__function);
-                __Pyx_DECREF_SET(__pyx_t_16, __pyx__function);
-                __pyx_t_9 = 0;
-              }
-              #endif
-              {
-                PyObject *__pyx_callargs[2] = {__pyx_t_8, __pyx_t_14};
-                __pyx_t_4 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_16, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-                __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 163, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_4);
-              }
-              __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 163, __pyx_L110_error)
-              __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-              if (__pyx_t_10) {
+                __pyx_t_8 = NULL;
+                __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_SUCCESS_RE); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 270, __pyx_L120_error)
+                __Pyx_GOTREF(__pyx_t_5);
+                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_search); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L120_error)
+                __Pyx_GOTREF(__pyx_t_1);
+                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_v_always_on_out); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 270, __pyx_L120_error)
+                if (!__pyx_t_34) {
+                } else {
+                  __Pyx_INCREF(__pyx_v_always_on_out);
+                  __pyx_t_5 = __pyx_v_always_on_out;
+                  goto __pyx_L128_bool_binop_done;
+                }
+                __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u__3);
+                __pyx_t_5 = __pyx_mstate_global->__pyx_kp_u__3;
+                __pyx_L128_bool_binop_done:;
+                __pyx_t_9 = 1;
+                #if CYTHON_UNPACK_METHODS
+                if (unlikely(PyMethod_Check(__pyx_t_1))) {
+                  __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_1);
+                  assert(__pyx_t_8);
+                  PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_1);
+                  __Pyx_INCREF(__pyx_t_8);
+                  __Pyx_INCREF(__pyx__function);
+                  __Pyx_DECREF_SET(__pyx_t_1, __pyx__function);
+                  __pyx_t_9 = 0;
+                }
+                #endif
+                {
+                  PyObject *__pyx_callargs[2] = {__pyx_t_8, __pyx_t_5};
+                  __pyx_t_6 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+                  __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+                  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 270, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_6);
+                }
+                __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 270, __pyx_L120_error)
+                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                if (__pyx_t_34) {
 
-                /* "backend/engine/finalizer.py":164
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):
+                  /* "backend/engine/finalizer.py":271
+ *                 )
+ *                 if SUCCESS_RE.search(always_on_out or ""):
  *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ALWAYS_ON log transferred successfully.", file=sys.stderr)             # <<<<<<<<<<<<<<
  *                 else:
  *                     print(
 */
-                __pyx_t_16 = NULL;
-                __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 164, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_14);
-                __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_14, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 164, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_8);
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
-                __pyx_t_13[1] = __pyx_t_8;
-                __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_ALWAYS_ON_log_t;
-                __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8) + 61, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8));
-                if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 164, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_14);
-                __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 164, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_8);
-                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_1);
-                __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                __pyx_t_9 = 1;
-                {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_14};
-                  __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 164, __pyx_L110_error)
+                  __pyx_t_1 = NULL;
+                  __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 271, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_5);
+                  __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 271, __pyx_L120_error)
                   __Pyx_GOTREF(__pyx_t_8);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 164, __pyx_L110_error)
-                  __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
-                  __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+                  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
+                  __pyx_t_13[1] = __pyx_t_8;
+                  __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_ALWAYS_ON_log_t;
+                  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8) + 61, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8));
+                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 271, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_5);
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 164, __pyx_L110_error)
-                  __Pyx_GOTREF(__pyx_t_4);
-                }
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 271, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_8);
+                  __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 271, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+                  __pyx_t_9 = 1;
+                  {
+                    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_5};
+                    __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 271, __pyx_L120_error)
+                    __Pyx_GOTREF(__pyx_t_8);
+                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 271, __pyx_L120_error)
+                    __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
+                    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+                    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+                    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 271, __pyx_L120_error)
+                    __Pyx_GOTREF(__pyx_t_6);
+                  }
+                  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":163
- *                 wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 confirm_out = wlc_conn.send_command_timing("\n", delay_factor=1, read_timeout=10)
- *                 if SUCCESS_RE.search(confirm_out or ""):             # <<<<<<<<<<<<<<
+                  /* "backend/engine/finalizer.py":270
+ *                     wlc_conn, always_on_export, sftp_user, sftp_pass, ts
+ *                 )
+ *                 if SUCCESS_RE.search(always_on_out or ""):             # <<<<<<<<<<<<<<
  *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ALWAYS_ON log transferred successfully.", file=sys.stderr)
  *                 else:
 */
-                goto __pyx_L116;
-              }
+                  goto __pyx_L127;
+                }
 
-              /* "backend/engine/finalizer.py":166
+                /* "backend/engine/finalizer.py":273
  *                     print(f"[{ts()}] [EPC_TFTP_Upload]  ALWAYS_ON log transferred successfully.", file=sys.stderr)
  *                 else:
  *                     print(             # <<<<<<<<<<<<<<
- *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Response: {confirm_out!r}",
+ *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Output: {always_on_out!r}",
  *                         file=sys.stderr,
 */
-              /*else*/ {
-                __pyx_t_8 = NULL;
+                /*else*/ {
+                  __pyx_t_8 = NULL;
 
-                /* "backend/engine/finalizer.py":167
+                  /* "backend/engine/finalizer.py":274
  *                 else:
  *                     print(
- *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Response: {confirm_out!r}",             # <<<<<<<<<<<<<<
+ *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Output: {always_on_out!r}",             # <<<<<<<<<<<<<<
  *                         file=sys.stderr,
  *                     )
 */
-                __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_1);
-                __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 167, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_14);
-                __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                __pyx_t_1 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_v_confirm_out), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_1);
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-                __pyx_t_21[1] = __pyx_t_14;
-                __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_ALWAYS;
-                __pyx_t_21[3] = __pyx_t_1;
-                __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 79 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
-                if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 167, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_16);
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+                  __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 274, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 274, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_5);
+                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                  __pyx_t_16 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Repr(__pyx_v_always_on_out), __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 274, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+                  __pyx_t_21[1] = __pyx_t_5;
+                  __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_ALWAYS;
+                  __pyx_t_21[3] = __pyx_t_16;
+                  __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 77 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
+                  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 274, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_1);
+                  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
-                /* "backend/engine/finalizer.py":168
+                  /* "backend/engine/finalizer.py":275
  *                     print(
- *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Response: {confirm_out!r}",
+ *                         f"[{ts()}] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Output: {always_on_out!r}",
  *                         file=sys.stderr,             # <<<<<<<<<<<<<<
  *                     )
  *             except Exception as exc:
 */
-                __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_1);
-                __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 168, __pyx_L110_error)
-                __Pyx_GOTREF(__pyx_t_14);
-                __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                __pyx_t_9 = 1;
-                {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_16};
-                  __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L110_error)
-                  __Pyx_GOTREF(__pyx_t_1);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 166, __pyx_L110_error)
-                  __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
-                  __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+                  __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 275, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_16);
+                  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 275, __pyx_L120_error)
+                  __Pyx_GOTREF(__pyx_t_5);
                   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 166, __pyx_L110_error)
-                  __Pyx_GOTREF(__pyx_t_4);
+                  __pyx_t_9 = 1;
+                  {
+                    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_1};
+                    __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 273, __pyx_L120_error)
+                    __Pyx_GOTREF(__pyx_t_16);
+                    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 273, __pyx_L120_error)
+                    __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
+                    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+                    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+                    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 273, __pyx_L120_error)
+                    __Pyx_GOTREF(__pyx_t_6);
+                  }
+                  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
                 }
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-              }
-              __pyx_L116:;
+                __pyx_L127:;
 
-              /* "backend/engine/finalizer.py":158
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+                /* "backend/engine/finalizer.py":266
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+ *             try:
+ *               if always_on_export:             # <<<<<<<<<<<<<<
+ *                 always_on_out = _run_transfer_interactive(
+ *                     wlc_conn, always_on_export, sftp_user, sftp_pass, ts
+*/
+              }
+
+              /* "backend/engine/finalizer.py":265
+ *             if always_on_export:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
- *                 export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
+ *               if always_on_export:
+ *                 always_on_out = _run_transfer_interactive(
 */
             }
             __Pyx_XDECREF(__pyx_t_19); __pyx_t_19 = 0;
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-            goto __pyx_L115_try_end;
-            __pyx_L110_error:;
+            goto __pyx_L125_try_end;
+            __pyx_L120_error:;
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
             __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -6481,7 +8499,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "backend/engine/finalizer.py":170
+            /* "backend/engine/finalizer.py":277
  *                         file=sys.stderr,
  *                     )
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -6491,15 +8509,15 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_22 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
             if (__pyx_t_22) {
               __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_1, &__pyx_t_14) < 0) __PYX_ERR(0, 170, __pyx_L112_except_error)
-              __Pyx_XGOTREF(__pyx_t_4);
-              __Pyx_XGOTREF(__pyx_t_1);
-              __Pyx_XGOTREF(__pyx_t_14);
-              __Pyx_INCREF(__pyx_t_1);
-              __pyx_v_exc = __pyx_t_1;
+              if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_16, &__pyx_t_5) < 0) __PYX_ERR(0, 277, __pyx_L122_except_error)
+              __Pyx_XGOTREF(__pyx_t_6);
+              __Pyx_XGOTREF(__pyx_t_16);
+              __Pyx_XGOTREF(__pyx_t_5);
+              __Pyx_INCREF(__pyx_t_16);
+              __pyx_v_exc = __pyx_t_16;
               /*try:*/ {
 
-                /* "backend/engine/finalizer.py":171
+                /* "backend/engine/finalizer.py":278
  *                     )
  *             except Exception as exc:
  *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: always-on log export failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -6507,45 +8525,45 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *         except Exception as exc:
 */
                 __pyx_t_8 = NULL;
-                __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 171, __pyx_L124_error)
-                __Pyx_GOTREF(__pyx_t_6);
-                __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 171, __pyx_L124_error)
+                __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 278, __pyx_L135_error)
+                __Pyx_GOTREF(__pyx_t_14);
+                __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_14, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 278, __pyx_L135_error)
                 __Pyx_GOTREF(__pyx_t_15);
-                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 171, __pyx_L124_error)
-                __Pyx_GOTREF(__pyx_t_6);
-                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
+                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+                __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 278, __pyx_L135_error)
+                __Pyx_GOTREF(__pyx_t_14);
+                __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
                 __pyx_t_21[1] = __pyx_t_15;
                 __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_EPC_TFTP_Upload_WARNING_always;
-                __pyx_t_21[3] = __pyx_t_6;
-                __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 58 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6));
-                if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 171, __pyx_L124_error)
-                __Pyx_GOTREF(__pyx_t_5);
+                __pyx_t_21[3] = __pyx_t_14;
+                __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 58 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14));
+                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 278, __pyx_L135_error)
+                __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 171, __pyx_L124_error)
-                __Pyx_GOTREF(__pyx_t_6);
-                __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 171, __pyx_L124_error)
+                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+                __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 278, __pyx_L135_error)
+                __Pyx_GOTREF(__pyx_t_14);
+                __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 278, __pyx_L135_error)
                 __Pyx_GOTREF(__pyx_t_15);
-                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
                 __pyx_t_9 = 1;
                 {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_5};
-                  __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 171, __pyx_L124_error)
-                  __Pyx_GOTREF(__pyx_t_6);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 171, __pyx_L124_error)
-                  __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
+                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_4};
+                  __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 278, __pyx_L135_error)
+                  __Pyx_GOTREF(__pyx_t_14);
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 278, __pyx_L135_error)
+                  __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_14);
                   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-                  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-                  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 171, __pyx_L124_error)
-                  __Pyx_GOTREF(__pyx_t_16);
+                  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+                  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 278, __pyx_L135_error)
+                  __Pyx_GOTREF(__pyx_t_1);
                 }
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
               }
 
-              /* "backend/engine/finalizer.py":170
+              /* "backend/engine/finalizer.py":277
  *                         file=sys.stderr,
  *                     )
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -6555,17 +8573,17 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               /*finally:*/ {
                 /*normal exit:*/{
                   __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
-                  goto __pyx_L125;
+                  goto __pyx_L136;
                 }
-                __pyx_L124_error:;
+                __pyx_L135_error:;
                 /*exception exit:*/{
                   __Pyx_PyThreadState_declare
                   __Pyx_PyThreadState_assign
                   __pyx_t_29 = 0; __pyx_t_28 = 0; __pyx_t_27 = 0; __pyx_t_26 = 0; __pyx_t_25 = 0; __pyx_t_24 = 0;
+                  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+                  __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
                   __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-                  __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-                  __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+                  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                    __Pyx_ExceptionSwap(&__pyx_t_26, &__pyx_t_25, &__pyx_t_24);
                   if ( unlikely(__Pyx_GetException(&__pyx_t_29, &__pyx_t_28, &__pyx_t_27) < 0)) __Pyx_ErrFetch(&__pyx_t_29, &__pyx_t_28, &__pyx_t_27);
@@ -6575,7 +8593,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   __Pyx_XGOTREF(__pyx_t_26);
                   __Pyx_XGOTREF(__pyx_t_25);
                   __Pyx_XGOTREF(__pyx_t_24);
-                  __pyx_t_22 = __pyx_lineno; __pyx_t_20 = __pyx_clineno; __pyx_t_36 = __pyx_filename;
+                  __pyx_t_22 = __pyx_lineno; __pyx_t_20 = __pyx_clineno; __pyx_t_37 = __pyx_filename;
                   {
                     __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
                   }
@@ -6588,40 +8606,40 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
                   __Pyx_XGIVEREF(__pyx_t_27);
                   __Pyx_ErrRestore(__pyx_t_29, __pyx_t_28, __pyx_t_27);
                   __pyx_t_29 = 0; __pyx_t_28 = 0; __pyx_t_27 = 0; __pyx_t_26 = 0; __pyx_t_25 = 0; __pyx_t_24 = 0;
-                  __pyx_lineno = __pyx_t_22; __pyx_clineno = __pyx_t_20; __pyx_filename = __pyx_t_36;
-                  goto __pyx_L112_except_error;
+                  __pyx_lineno = __pyx_t_22; __pyx_clineno = __pyx_t_20; __pyx_filename = __pyx_t_37;
+                  goto __pyx_L122_except_error;
                 }
-                __pyx_L125:;
+                __pyx_L136:;
               }
-              __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-              __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-              __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-              goto __pyx_L111_exception_handled;
+              __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+              __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+              __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+              goto __pyx_L121_exception_handled;
             }
-            goto __pyx_L112_except_error;
+            goto __pyx_L122_except_error;
 
-            /* "backend/engine/finalizer.py":158
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+            /* "backend/engine/finalizer.py":265
+ *             if always_on_export:
+ *                 print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
  *             try:             # <<<<<<<<<<<<<<
- *                 export_out = wlc_conn.send_command_timing(always_on_export, delay_factor=1, read_timeout=100)
- *                 print(f"[{ts()}] [EPC_TFTP_Upload] First Enter response: {export_out.strip()!r}", file=sys.stderr)
+ *               if always_on_export:
+ *                 always_on_out = _run_transfer_interactive(
 */
-            __pyx_L112_except_error:;
+            __pyx_L122_except_error:;
             __Pyx_XGIVEREF(__pyx_t_19);
             __Pyx_XGIVEREF(__pyx_t_18);
             __Pyx_XGIVEREF(__pyx_t_17);
             __Pyx_ExceptionReset(__pyx_t_19, __pyx_t_18, __pyx_t_17);
             goto __pyx_L7_error;
-            __pyx_L111_exception_handled:;
+            __pyx_L121_exception_handled:;
             __Pyx_XGIVEREF(__pyx_t_19);
             __Pyx_XGIVEREF(__pyx_t_18);
             __Pyx_XGIVEREF(__pyx_t_17);
             __Pyx_ExceptionReset(__pyx_t_19, __pyx_t_18, __pyx_t_17);
-            __pyx_L115_try_end:;
+            __pyx_L125_try_end:;
           }
 
-          /* "backend/engine/finalizer.py":50
+          /* "backend/engine/finalizer.py":131
  *         #  1+2+3+4+5: WLC cleanup via fresh SSH
  *         wlc_conn = None
  *         try:             # <<<<<<<<<<<<<<
@@ -6643,7 +8661,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "backend/engine/finalizer.py":173
+        /* "backend/engine/finalizer.py":280
  *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: always-on log export failed: {exc}", file=sys.stderr)
  * 
  *         except Exception as exc:             # <<<<<<<<<<<<<<
@@ -6653,61 +8671,61 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __pyx_t_20 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
         if (__pyx_t_20) {
           __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_14, &__pyx_t_1, &__pyx_t_4) < 0) __PYX_ERR(0, 173, __pyx_L9_except_error)
-          __Pyx_XGOTREF(__pyx_t_14);
-          __Pyx_XGOTREF(__pyx_t_1);
-          __Pyx_XGOTREF(__pyx_t_4);
-          __Pyx_INCREF(__pyx_t_1);
-          __Pyx_XDECREF_SET(__pyx_v_exc, __pyx_t_1);
+          if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_16, &__pyx_t_6) < 0) __PYX_ERR(0, 280, __pyx_L9_except_error)
+          __Pyx_XGOTREF(__pyx_t_5);
+          __Pyx_XGOTREF(__pyx_t_16);
+          __Pyx_XGOTREF(__pyx_t_6);
+          __Pyx_INCREF(__pyx_t_16);
+          __Pyx_XDECREF_SET(__pyx_v_exc, __pyx_t_16);
           /*try:*/ {
 
-            /* "backend/engine/finalizer.py":174
+            /* "backend/engine/finalizer.py":281
  * 
  *         except Exception as exc:
  *             print(f"[{ts()}] [FINALIZE] WARNING: WLC SSH for cleanup failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
  *         finally:
  *             if wlc_conn:
 */
-            __pyx_t_6 = NULL;
-            __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 174, __pyx_L135_error)
+            __pyx_t_14 = NULL;
+            __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 281, __pyx_L146_error)
             __Pyx_GOTREF(__pyx_t_15);
-            __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L135_error)
-            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 281, __pyx_L146_error)
+            __Pyx_GOTREF(__pyx_t_4);
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-            __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 174, __pyx_L135_error)
+            __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 281, __pyx_L146_error)
             __Pyx_GOTREF(__pyx_t_15);
-            __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-            __pyx_t_21[1] = __pyx_t_5;
+            __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+            __pyx_t_21[1] = __pyx_t_4;
             __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING_WLC_SSH_for_cl;
             __pyx_t_21[3] = __pyx_t_15;
-            __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 50 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15));
-            if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 174, __pyx_L135_error)
+            __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 50 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15));
+            if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 281, __pyx_L146_error)
             __Pyx_GOTREF(__pyx_t_8);
-            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-            __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 174, __pyx_L135_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 281, __pyx_L146_error)
             __Pyx_GOTREF(__pyx_t_15);
-            __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L135_error)
-            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 281, __pyx_L146_error)
+            __Pyx_GOTREF(__pyx_t_4);
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
             __pyx_t_9 = 1;
             {
-              PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_6, __pyx_t_8};
-              __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 174, __pyx_L135_error)
+              PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_8};
+              __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 281, __pyx_L146_error)
               __Pyx_GOTREF(__pyx_t_15);
-              if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 174, __pyx_L135_error)
-              __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
-              __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+              if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 281, __pyx_L146_error)
+              __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
+              __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
               __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+              __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-              if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 174, __pyx_L135_error)
-              __Pyx_GOTREF(__pyx_t_16);
+              if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L146_error)
+              __Pyx_GOTREF(__pyx_t_1);
             }
-            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           }
 
-          /* "backend/engine/finalizer.py":173
+          /* "backend/engine/finalizer.py":280
  *                 print(f"[{ts()}] [EPC_TFTP_Upload] WARNING: always-on log export failed: {exc}", file=sys.stderr)
  * 
  *         except Exception as exc:             # <<<<<<<<<<<<<<
@@ -6717,17 +8735,17 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           /*finally:*/ {
             /*normal exit:*/{
               __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
-              goto __pyx_L136;
+              goto __pyx_L147;
             }
-            __pyx_L135_error:;
+            __pyx_L146_error:;
             /*exception exit:*/{
               __Pyx_PyThreadState_declare
               __Pyx_PyThreadState_assign
               __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_24 = 0; __pyx_t_25 = 0; __pyx_t_26 = 0;
+              __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+              __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
               __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-              __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-              __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+              __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
               __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                __Pyx_ExceptionSwap(&__pyx_t_24, &__pyx_t_25, &__pyx_t_26);
               if ( unlikely(__Pyx_GetException(&__pyx_t_17, &__pyx_t_18, &__pyx_t_19) < 0)) __Pyx_ErrFetch(&__pyx_t_17, &__pyx_t_18, &__pyx_t_19);
@@ -6737,7 +8755,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XGOTREF(__pyx_t_24);
               __Pyx_XGOTREF(__pyx_t_25);
               __Pyx_XGOTREF(__pyx_t_26);
-              __pyx_t_20 = __pyx_lineno; __pyx_t_22 = __pyx_clineno; __pyx_t_37 = __pyx_filename;
+              __pyx_t_20 = __pyx_lineno; __pyx_t_22 = __pyx_clineno; __pyx_t_38 = __pyx_filename;
               {
                 __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
               }
@@ -6750,19 +8768,19 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XGIVEREF(__pyx_t_19);
               __Pyx_ErrRestore(__pyx_t_17, __pyx_t_18, __pyx_t_19);
               __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_24 = 0; __pyx_t_25 = 0; __pyx_t_26 = 0;
-              __pyx_lineno = __pyx_t_20; __pyx_clineno = __pyx_t_22; __pyx_filename = __pyx_t_37;
+              __pyx_lineno = __pyx_t_20; __pyx_clineno = __pyx_t_22; __pyx_filename = __pyx_t_38;
               goto __pyx_L9_except_error;
             }
-            __pyx_L136:;
+            __pyx_L147:;
           }
-          __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-          __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+          __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           goto __pyx_L8_exception_handled;
         }
         goto __pyx_L9_except_error;
 
-        /* "backend/engine/finalizer.py":50
+        /* "backend/engine/finalizer.py":131
  *         #  1+2+3+4+5: WLC cleanup via fresh SSH
  *         wlc_conn = None
  *         try:             # <<<<<<<<<<<<<<
@@ -6784,7 +8802,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
       }
     }
 
-    /* "backend/engine/finalizer.py":176
+    /* "backend/engine/finalizer.py":283
  *             print(f"[{ts()}] [FINALIZE] WARNING: WLC SSH for cleanup failed: {exc}", file=sys.stderr)
  *         finally:
  *             if wlc_conn:             # <<<<<<<<<<<<<<
@@ -6793,10 +8811,10 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
     /*finally:*/ {
       /*normal exit:*/{
-        __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_wlc_conn); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 176, __pyx_L1_error)
-        if (__pyx_t_10) {
+        __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_v_wlc_conn); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 283, __pyx_L1_error)
+        if (__pyx_t_34) {
 
-          /* "backend/engine/finalizer.py":177
+          /* "backend/engine/finalizer.py":284
  *         finally:
  *             if wlc_conn:
  *                 try:             # <<<<<<<<<<<<<<
@@ -6812,67 +8830,67 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XGOTREF(__pyx_t_2);
             /*try:*/ {
 
-              /* "backend/engine/finalizer.py":178
+              /* "backend/engine/finalizer.py":285
  *             if wlc_conn:
  *                 try:
  *                     wlc_conn.disconnect()             # <<<<<<<<<<<<<<
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)
  *                 except Exception:
 */
-              __pyx_t_1 = __pyx_v_wlc_conn;
-              __Pyx_INCREF(__pyx_t_1);
+              __pyx_t_16 = __pyx_v_wlc_conn;
+              __Pyx_INCREF(__pyx_t_16);
               __pyx_t_9 = 0;
               {
-                PyObject *__pyx_callargs[2] = {__pyx_t_1, NULL};
-                __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_disconnect, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-                __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 178, __pyx_L142_error)
-                __Pyx_GOTREF(__pyx_t_4);
+                PyObject *__pyx_callargs[2] = {__pyx_t_16, NULL};
+                __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_disconnect, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+                __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+                if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 285, __pyx_L153_error)
+                __Pyx_GOTREF(__pyx_t_6);
               }
-              __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-              /* "backend/engine/finalizer.py":179
+              /* "backend/engine/finalizer.py":286
  *                 try:
  *                     wlc_conn.disconnect()
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)             # <<<<<<<<<<<<<<
  *                 except Exception:
  *                     pass
 */
-              __pyx_t_1 = NULL;
-              __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 179, __pyx_L142_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_14, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 179, __pyx_L142_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-              __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
-              __pyx_t_13[1] = __pyx_t_16;
+              __pyx_t_16 = NULL;
+              __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L153_error)
+              __Pyx_GOTREF(__pyx_t_5);
+              __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L153_error)
+              __Pyx_GOTREF(__pyx_t_1);
+              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+              __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
+              __pyx_t_13[1] = __pyx_t_1;
               __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WLC_cleanup_SSH_sessio;
-              __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 44, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
-              if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 179, __pyx_L142_error)
-              __Pyx_GOTREF(__pyx_t_14);
-              __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-              __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 179, __pyx_L142_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 179, __pyx_L142_error)
+              __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + 44, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
+              if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L153_error)
+              __Pyx_GOTREF(__pyx_t_5);
+              __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+              __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L153_error)
+              __Pyx_GOTREF(__pyx_t_1);
+              __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 286, __pyx_L153_error)
               __Pyx_GOTREF(__pyx_t_15);
-              __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+              __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
               __pyx_t_9 = 1;
               {
-                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_14};
-                __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 179, __pyx_L142_error)
-                __Pyx_GOTREF(__pyx_t_16);
-                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 179, __pyx_L142_error)
-                __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
-                __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+                PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_5};
+                __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L153_error)
+                __Pyx_GOTREF(__pyx_t_1);
+                if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 286, __pyx_L153_error)
+                __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
+                __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 179, __pyx_L142_error)
-                __Pyx_GOTREF(__pyx_t_4);
+                __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+                if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 286, __pyx_L153_error)
+                __Pyx_GOTREF(__pyx_t_6);
               }
-              __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-              /* "backend/engine/finalizer.py":177
+              /* "backend/engine/finalizer.py":284
  *         finally:
  *             if wlc_conn:
  *                 try:             # <<<<<<<<<<<<<<
@@ -6883,8 +8901,8 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
             __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-            goto __pyx_L147_try_end;
-            __pyx_L142_error:;
+            goto __pyx_L158_try_end;
+            __pyx_L153_error:;
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
             __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -6894,7 +8912,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "backend/engine/finalizer.py":180
+            /* "backend/engine/finalizer.py":287
  *                     wlc_conn.disconnect()
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)
  *                 except Exception:             # <<<<<<<<<<<<<<
@@ -6904,32 +8922,32 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_22 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
             if (__pyx_t_22) {
               __Pyx_ErrRestore(0,0,0);
-              goto __pyx_L143_exception_handled;
+              goto __pyx_L154_exception_handled;
             }
-            goto __pyx_L144_except_error;
+            goto __pyx_L155_except_error;
 
-            /* "backend/engine/finalizer.py":177
+            /* "backend/engine/finalizer.py":284
  *         finally:
  *             if wlc_conn:
  *                 try:             # <<<<<<<<<<<<<<
  *                     wlc_conn.disconnect()
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)
 */
-            __pyx_L144_except_error:;
+            __pyx_L155_except_error:;
             __Pyx_XGIVEREF(__pyx_t_12);
             __Pyx_XGIVEREF(__pyx_t_11);
             __Pyx_XGIVEREF(__pyx_t_2);
             __Pyx_ExceptionReset(__pyx_t_12, __pyx_t_11, __pyx_t_2);
             goto __pyx_L1_error;
-            __pyx_L143_exception_handled:;
+            __pyx_L154_exception_handled:;
             __Pyx_XGIVEREF(__pyx_t_12);
             __Pyx_XGIVEREF(__pyx_t_11);
             __Pyx_XGIVEREF(__pyx_t_2);
             __Pyx_ExceptionReset(__pyx_t_12, __pyx_t_11, __pyx_t_2);
-            __pyx_L147_try_end:;
+            __pyx_L158_try_end:;
           }
 
-          /* "backend/engine/finalizer.py":176
+          /* "backend/engine/finalizer.py":283
  *             print(f"[{ts()}] [FINALIZE] WARNING: WLC SSH for cleanup failed: {exc}", file=sys.stderr)
  *         finally:
  *             if wlc_conn:             # <<<<<<<<<<<<<<
@@ -6960,12 +8978,12 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XGOTREF(__pyx_t_26);
         __Pyx_XGOTREF(__pyx_t_25);
         __Pyx_XGOTREF(__pyx_t_24);
-        __pyx_t_22 = __pyx_lineno; __pyx_t_20 = __pyx_clineno; __pyx_t_38 = __pyx_filename;
+        __pyx_t_22 = __pyx_lineno; __pyx_t_20 = __pyx_clineno; __pyx_t_39 = __pyx_filename;
         {
-          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_wlc_conn); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 176, __pyx_L151_error)
-          if (__pyx_t_10) {
+          __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_v_wlc_conn); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 283, __pyx_L162_error)
+          if (__pyx_t_34) {
 
-            /* "backend/engine/finalizer.py":177
+            /* "backend/engine/finalizer.py":284
  *         finally:
  *             if wlc_conn:
  *                 try:             # <<<<<<<<<<<<<<
@@ -6981,67 +8999,67 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XGOTREF(__pyx_t_17);
               /*try:*/ {
 
-                /* "backend/engine/finalizer.py":178
+                /* "backend/engine/finalizer.py":285
  *             if wlc_conn:
  *                 try:
  *                     wlc_conn.disconnect()             # <<<<<<<<<<<<<<
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)
  *                 except Exception:
 */
-                __pyx_t_16 = __pyx_v_wlc_conn;
-                __Pyx_INCREF(__pyx_t_16);
+                __pyx_t_1 = __pyx_v_wlc_conn;
+                __Pyx_INCREF(__pyx_t_1);
                 __pyx_t_9 = 0;
                 {
-                  PyObject *__pyx_callargs[2] = {__pyx_t_16, NULL};
-                  __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_disconnect, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-                  __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-                  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 178, __pyx_L153_error)
-                  __Pyx_GOTREF(__pyx_t_4);
+                  PyObject *__pyx_callargs[2] = {__pyx_t_1, NULL};
+                  __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_disconnect, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+                  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 285, __pyx_L164_error)
+                  __Pyx_GOTREF(__pyx_t_6);
                 }
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":179
+                /* "backend/engine/finalizer.py":286
  *                 try:
  *                     wlc_conn.disconnect()
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)             # <<<<<<<<<<<<<<
  *                 except Exception:
  *                     pass
 */
-                __pyx_t_16 = NULL;
-                __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 179, __pyx_L153_error)
+                __pyx_t_1 = NULL;
+                __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 286, __pyx_L164_error)
                 __Pyx_GOTREF(__pyx_t_15);
-                __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 179, __pyx_L153_error)
-                __Pyx_GOTREF(__pyx_t_14);
+                __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L164_error)
+                __Pyx_GOTREF(__pyx_t_5);
                 __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
-                __pyx_t_13[1] = __pyx_t_14;
+                __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
+                __pyx_t_13[1] = __pyx_t_5;
                 __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WLC_cleanup_SSH_sessio;
-                __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 44, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14));
-                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 179, __pyx_L153_error)
+                __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 44, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5));
+                if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 286, __pyx_L164_error)
                 __Pyx_GOTREF(__pyx_t_15);
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 179, __pyx_L153_error)
-                __Pyx_GOTREF(__pyx_t_14);
-                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L153_error)
-                __Pyx_GOTREF(__pyx_t_1);
-                __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L164_error)
+                __Pyx_GOTREF(__pyx_t_5);
+                __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 286, __pyx_L164_error)
+                __Pyx_GOTREF(__pyx_t_16);
+                __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                 __pyx_t_9 = 1;
                 {
-                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_15};
-                  __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 179, __pyx_L153_error)
-                  __Pyx_GOTREF(__pyx_t_14);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 179, __pyx_L153_error)
-                  __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_14);
-                  __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+                  PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_15};
+                  __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L164_error)
+                  __Pyx_GOTREF(__pyx_t_5);
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 286, __pyx_L164_error)
+                  __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+                  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-                  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-                  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 179, __pyx_L153_error)
-                  __Pyx_GOTREF(__pyx_t_4);
+                  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+                  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+                  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 286, __pyx_L164_error)
+                  __Pyx_GOTREF(__pyx_t_6);
                 }
-                __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+                __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-                /* "backend/engine/finalizer.py":177
+                /* "backend/engine/finalizer.py":284
  *         finally:
  *             if wlc_conn:
  *                 try:             # <<<<<<<<<<<<<<
@@ -7052,8 +9070,8 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XDECREF(__pyx_t_19); __pyx_t_19 = 0;
               __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
               __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-              goto __pyx_L158_try_end;
-              __pyx_L153_error:;
+              goto __pyx_L169_try_end;
+              __pyx_L164_error:;
               __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
               __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
               __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -7063,42 +9081,42 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
               __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-              /* "backend/engine/finalizer.py":180
+              /* "backend/engine/finalizer.py":287
  *                     wlc_conn.disconnect()
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)
  *                 except Exception:             # <<<<<<<<<<<<<<
  *                     pass
  * 
 */
-              __pyx_t_39 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
-              if (__pyx_t_39) {
+              __pyx_t_40 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
+              if (__pyx_t_40) {
                 __Pyx_ErrRestore(0,0,0);
-                goto __pyx_L154_exception_handled;
+                goto __pyx_L165_exception_handled;
               }
-              goto __pyx_L155_except_error;
+              goto __pyx_L166_except_error;
 
-              /* "backend/engine/finalizer.py":177
+              /* "backend/engine/finalizer.py":284
  *         finally:
  *             if wlc_conn:
  *                 try:             # <<<<<<<<<<<<<<
  *                     wlc_conn.disconnect()
  *                     print(f"[{ts()}] [FINALIZE] WLC cleanup SSH session closed.", file=sys.stderr)
 */
-              __pyx_L155_except_error:;
+              __pyx_L166_except_error:;
               __Pyx_XGIVEREF(__pyx_t_19);
               __Pyx_XGIVEREF(__pyx_t_18);
               __Pyx_XGIVEREF(__pyx_t_17);
               __Pyx_ExceptionReset(__pyx_t_19, __pyx_t_18, __pyx_t_17);
-              goto __pyx_L151_error;
-              __pyx_L154_exception_handled:;
+              goto __pyx_L162_error;
+              __pyx_L165_exception_handled:;
               __Pyx_XGIVEREF(__pyx_t_19);
               __Pyx_XGIVEREF(__pyx_t_18);
               __Pyx_XGIVEREF(__pyx_t_17);
               __Pyx_ExceptionReset(__pyx_t_19, __pyx_t_18, __pyx_t_17);
-              __pyx_L158_try_end:;
+              __pyx_L169_try_end:;
             }
 
-            /* "backend/engine/finalizer.py":176
+            /* "backend/engine/finalizer.py":283
  *             print(f"[{ts()}] [FINALIZE] WARNING: WLC SSH for cleanup failed: {exc}", file=sys.stderr)
  *         finally:
  *             if wlc_conn:             # <<<<<<<<<<<<<<
@@ -7116,9 +9134,9 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XGIVEREF(__pyx_t_12);
         __Pyx_ErrRestore(__pyx_t_2, __pyx_t_11, __pyx_t_12);
         __pyx_t_2 = 0; __pyx_t_11 = 0; __pyx_t_12 = 0; __pyx_t_26 = 0; __pyx_t_25 = 0; __pyx_t_24 = 0;
-        __pyx_lineno = __pyx_t_22; __pyx_clineno = __pyx_t_20; __pyx_filename = __pyx_t_38;
+        __pyx_lineno = __pyx_t_22; __pyx_clineno = __pyx_t_20; __pyx_filename = __pyx_t_39;
         goto __pyx_L1_error;
-        __pyx_L151_error:;
+        __pyx_L162_error:;
         __Pyx_XGIVEREF(__pyx_t_26);
         __Pyx_XGIVEREF(__pyx_t_25);
         __Pyx_XGIVEREF(__pyx_t_24);
@@ -7132,24 +9150,24 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
       __pyx_L6:;
     }
 
-    /* "backend/engine/finalizer.py":184
+    /* "backend/engine/finalizer.py":291
  * 
  *         #  6: undebug all on AP (direct SSH)
  *         if ip:             # <<<<<<<<<<<<<<
  *             try:
  *                 print(f"[{ts()}] [FINALIZE] [AP] Connecting to AP {ip} for undebug all ...", file=sys.stderr)
 */
-    if (__pyx_v_ip == Py_None) __pyx_t_10 = 0;
+    if (__pyx_v_ip == Py_None) __pyx_t_34 = 0;
     else
     {
       Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_ip);
-      if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 184, __pyx_L1_error)
-      __pyx_t_10 = (__pyx_temp != 0);
+      if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 291, __pyx_L1_error)
+      __pyx_t_34 = (__pyx_temp != 0);
     }
 
-    if (__pyx_t_10) {
+    if (__pyx_t_34) {
 
-      /* "backend/engine/finalizer.py":185
+      /* "backend/engine/finalizer.py":292
  *         #  6: undebug all on AP (direct SSH)
  *         if ip:
  *             try:             # <<<<<<<<<<<<<<
@@ -7165,94 +9183,94 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XGOTREF(__pyx_t_26);
         /*try:*/ {
 
-          /* "backend/engine/finalizer.py":186
+          /* "backend/engine/finalizer.py":293
  *         if ip:
  *             try:
  *                 print(f"[{ts()}] [FINALIZE] [AP] Connecting to AP {ip} for undebug all ...", file=sys.stderr)             # <<<<<<<<<<<<<<
  *                 ap_conn = ConnectHandler(
  *                     device_type="cisco_ios",
 */
-          __pyx_t_14 = NULL;
-          __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 186, __pyx_L162_error)
+          __pyx_t_5 = NULL;
+          __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 293, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 293, __pyx_L173_error)
           __Pyx_GOTREF(__pyx_t_15);
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_PyUnicode_Unicode(__pyx_v_ip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
+          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+          __pyx_t_16 = __Pyx_PyUnicode_Unicode(__pyx_v_ip); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 293, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
           __pyx_t_7[1] = __pyx_t_15;
           __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_AP_Connecting_to_AP;
-          __pyx_t_7[3] = __pyx_t_1;
+          __pyx_t_7[3] = __pyx_t_16;
           __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_for_undebug_all;
-          __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 35 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + 20, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
-          if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 186, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_16);
-          __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L162_error)
+          __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15) + 35 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 20, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 293, __pyx_L173_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 186, __pyx_L162_error)
+          __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+          __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 293, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 293, __pyx_L173_error)
           __Pyx_GOTREF(__pyx_t_15);
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           __pyx_t_9 = 1;
           {
-            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_16};
-            __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L162_error)
-            __Pyx_GOTREF(__pyx_t_1);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 186, __pyx_L162_error)
-            __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
-            __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-            __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_1};
+            __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 293, __pyx_L173_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 293, __pyx_L173_error)
+            __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
+            __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 186, __pyx_L162_error)
-            __Pyx_GOTREF(__pyx_t_4);
+            __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 293, __pyx_L173_error)
+            __Pyx_GOTREF(__pyx_t_6);
           }
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-          /* "backend/engine/finalizer.py":187
+          /* "backend/engine/finalizer.py":294
  *             try:
  *                 print(f"[{ts()}] [FINALIZE] [AP] Connecting to AP {ip} for undebug all ...", file=sys.stderr)
  *                 ap_conn = ConnectHandler(             # <<<<<<<<<<<<<<
  *                     device_type="cisco_ios",
  *                     host=ip,
 */
-          __pyx_t_1 = NULL;
+          __pyx_t_16 = NULL;
           __Pyx_INCREF(__pyx_v_ConnectHandler);
           __pyx_t_15 = __pyx_v_ConnectHandler; 
 
-          /* "backend/engine/finalizer.py":191
+          /* "backend/engine/finalizer.py":298
  *                     host=ip,
  *                     port=22,
  *                     username=ap_auth["username"],             # <<<<<<<<<<<<<<
  *                     password=ap_auth["password"],
  *                     secret=ap_auth.get("secret", ""),
 */
-          __pyx_t_16 = __Pyx_PyDict_GetItem(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_username); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 191, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_16);
+          __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_username_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 298, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_1);
 
-          /* "backend/engine/finalizer.py":192
+          /* "backend/engine/finalizer.py":299
  *                     port=22,
  *                     username=ap_auth["username"],
  *                     password=ap_auth["password"],             # <<<<<<<<<<<<<<
  *                     secret=ap_auth.get("secret", ""),
  *                     fast_cli=False,
 */
-          __pyx_t_14 = __Pyx_PyDict_GetItem(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_password); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 192, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_14);
+          __pyx_t_5 = __Pyx_PyDict_GetItem(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_password_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 299, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_5);
 
-          /* "backend/engine/finalizer.py":193
+          /* "backend/engine/finalizer.py":300
  *                     username=ap_auth["username"],
  *                     password=ap_auth["password"],
  *                     secret=ap_auth.get("secret", ""),             # <<<<<<<<<<<<<<
  *                     fast_cli=False,
  *                 )
 */
-          __pyx_t_5 = __Pyx_PyDict_GetItemDefault(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_secret, __pyx_mstate_global->__pyx_kp_u__3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 193, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_5);
+          __pyx_t_4 = __Pyx_PyDict_GetItemDefault(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_secret, __pyx_mstate_global->__pyx_kp_u__3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 300, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_4);
 
-          /* "backend/engine/finalizer.py":194
+          /* "backend/engine/finalizer.py":301
  *                     password=ap_auth["password"],
  *                     secret=ap_auth.get("secret", ""),
  *                     fast_cli=False,             # <<<<<<<<<<<<<<
@@ -7262,53 +9280,53 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __pyx_t_9 = 1;
           #if CYTHON_UNPACK_METHODS
           if (unlikely(PyMethod_Check(__pyx_t_15))) {
-            __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_15);
-            assert(__pyx_t_1);
+            __pyx_t_16 = PyMethod_GET_SELF(__pyx_t_15);
+            assert(__pyx_t_16);
             PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_15);
-            __Pyx_INCREF(__pyx_t_1);
+            __Pyx_INCREF(__pyx_t_16);
             __Pyx_INCREF(__pyx__function);
             __Pyx_DECREF_SET(__pyx_t_15, __pyx__function);
             __pyx_t_9 = 0;
           }
           #endif
           {
-            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 7 : 0)] = {__pyx_t_1, NULL};
-            __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 187, __pyx_L162_error)
+            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 7 : 0)] = {__pyx_t_16, NULL};
+            __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 294, __pyx_L173_error)
             __Pyx_GOTREF(__pyx_t_8);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_device_type, __pyx_mstate_global->__pyx_n_u_cisco_ios, __pyx_t_8, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 187, __pyx_L162_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_host, __pyx_v_ip, __pyx_t_8, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 187, __pyx_L162_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_port, __pyx_mstate_global->__pyx_int_22, __pyx_t_8, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 187, __pyx_L162_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_username, __pyx_t_16, __pyx_t_8, __pyx_callargs+1, 3) < (0)) __PYX_ERR(0, 187, __pyx_L162_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_password, __pyx_t_14, __pyx_t_8, __pyx_callargs+1, 4) < (0)) __PYX_ERR(0, 187, __pyx_L162_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_secret, __pyx_t_5, __pyx_t_8, __pyx_callargs+1, 5) < (0)) __PYX_ERR(0, 187, __pyx_L162_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_fast_cli, Py_False, __pyx_t_8, __pyx_callargs+1, 6) < (0)) __PYX_ERR(0, 187, __pyx_L162_error)
-            __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
-            __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_device_type, __pyx_mstate_global->__pyx_n_u_cisco_ios, __pyx_t_8, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 294, __pyx_L173_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_host, __pyx_v_ip, __pyx_t_8, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 294, __pyx_L173_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_port, __pyx_mstate_global->__pyx_int_22, __pyx_t_8, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 294, __pyx_L173_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_username_3, __pyx_t_1, __pyx_t_8, __pyx_callargs+1, 3) < (0)) __PYX_ERR(0, 294, __pyx_L173_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_password_2, __pyx_t_5, __pyx_t_8, __pyx_callargs+1, 4) < (0)) __PYX_ERR(0, 294, __pyx_L173_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_secret, __pyx_t_4, __pyx_t_8, __pyx_callargs+1, 5) < (0)) __PYX_ERR(0, 294, __pyx_L173_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_fast_cli, Py_False, __pyx_t_8, __pyx_callargs+1, 6) < (0)) __PYX_ERR(0, 294, __pyx_L173_error)
+            __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
+            __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 187, __pyx_L162_error)
-            __Pyx_GOTREF(__pyx_t_4);
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 294, __pyx_L173_error)
+            __Pyx_GOTREF(__pyx_t_6);
           }
-          __pyx_v_ap_conn = __pyx_t_4;
-          __pyx_t_4 = 0;
+          __pyx_v_ap_conn = __pyx_t_6;
+          __pyx_t_6 = 0;
 
-          /* "backend/engine/finalizer.py":196
+          /* "backend/engine/finalizer.py":303
  *                     fast_cli=False,
  *                 )
  *                 if ap_auth.get("secret"):             # <<<<<<<<<<<<<<
  *                     ap_conn.enable()
  *                 ap_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
 */
-          __pyx_t_4 = __Pyx_PyDict_GetItemDefault(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_secret, Py_None); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 196, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 196, __pyx_L162_error)
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          if (__pyx_t_10) {
+          __pyx_t_6 = __Pyx_PyDict_GetItemDefault(__pyx_v_ap_auth, __pyx_mstate_global->__pyx_n_u_secret, Py_None); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 303, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_6);
+          __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely((__pyx_t_34 < 0))) __PYX_ERR(0, 303, __pyx_L173_error)
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          if (__pyx_t_34) {
 
-            /* "backend/engine/finalizer.py":197
+            /* "backend/engine/finalizer.py":304
  *                 )
  *                 if ap_auth.get("secret"):
  *                     ap_conn.enable()             # <<<<<<<<<<<<<<
@@ -7320,14 +9338,14 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
             __pyx_t_9 = 0;
             {
               PyObject *__pyx_callargs[2] = {__pyx_t_15, NULL};
-              __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_enable, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+              __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_enable, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-              if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L162_error)
-              __Pyx_GOTREF(__pyx_t_4);
+              if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 304, __pyx_L173_error)
+              __Pyx_GOTREF(__pyx_t_6);
             }
-            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-            /* "backend/engine/finalizer.py":196
+            /* "backend/engine/finalizer.py":303
  *                     fast_cli=False,
  *                 )
  *                 if ap_auth.get("secret"):             # <<<<<<<<<<<<<<
@@ -7336,7 +9354,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
           }
 
-          /* "backend/engine/finalizer.py":198
+          /* "backend/engine/finalizer.py":305
  *                 if ap_auth.get("secret"):
  *                     ap_conn.enable()
  *                 ap_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)             # <<<<<<<<<<<<<<
@@ -7348,19 +9366,19 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __pyx_t_9 = 0;
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_15, __pyx_mstate_global->__pyx_kp_u_undebug_all};
-            __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 198, __pyx_L162_error)
+            __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 305, __pyx_L173_error)
             __Pyx_GOTREF(__pyx_t_8);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 198, __pyx_L162_error)
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_15, __pyx_t_8, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 198, __pyx_L162_error)
-            __pyx_t_4 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_delay_factor, __pyx_mstate_global->__pyx_int_1, __pyx_t_8, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 305, __pyx_L173_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_read_timeout, __pyx_mstate_global->__pyx_int_15, __pyx_t_8, __pyx_callargs+2, 1) < (0)) __PYX_ERR(0, 305, __pyx_L173_error)
+            __pyx_t_6 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_send_command_timing, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 198, __pyx_L162_error)
-            __Pyx_GOTREF(__pyx_t_4);
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 305, __pyx_L173_error)
+            __Pyx_GOTREF(__pyx_t_6);
           }
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-          /* "backend/engine/finalizer.py":199
+          /* "backend/engine/finalizer.py":306
  *                     ap_conn.enable()
  *                 ap_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
  *                 print(f"[{ts()}] [FINALIZE] [AP] undebug all sent to AP {ip}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -7368,44 +9386,44 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *             except Exception as exc:
 */
           __pyx_t_8 = NULL;
-          __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 199, __pyx_L162_error)
+          __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 306, __pyx_L173_error)
           __Pyx_GOTREF(__pyx_t_15);
-          __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_5);
+          __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 306, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-          __pyx_t_15 = __Pyx_PyUnicode_Unicode(__pyx_v_ip); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 199, __pyx_L162_error)
+          __pyx_t_15 = __Pyx_PyUnicode_Unicode(__pyx_v_ip); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 306, __pyx_L173_error)
           __Pyx_GOTREF(__pyx_t_15);
-          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-          __pyx_t_21[1] = __pyx_t_5;
+          __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+          __pyx_t_21[1] = __pyx_t_4;
           __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_AP_undebug_all_sent_to;
           __pyx_t_21[3] = __pyx_t_15;
-          __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 41 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15));
-          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 199, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_14);
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 199, __pyx_L162_error)
-          __Pyx_GOTREF(__pyx_t_15);
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L162_error)
+          __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 41 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15));
+          if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 306, __pyx_L173_error)
           __Pyx_GOTREF(__pyx_t_5);
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+          __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 306, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_15);
+          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 306, __pyx_L173_error)
+          __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
           __pyx_t_9 = 1;
           {
-            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_14};
-            __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 199, __pyx_L162_error)
+            PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_5};
+            __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 306, __pyx_L173_error)
             __Pyx_GOTREF(__pyx_t_15);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 199, __pyx_L162_error)
-            __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 306, __pyx_L173_error)
+            __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+            __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L162_error)
-            __Pyx_GOTREF(__pyx_t_4);
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 306, __pyx_L173_error)
+            __Pyx_GOTREF(__pyx_t_6);
           }
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-          /* "backend/engine/finalizer.py":200
+          /* "backend/engine/finalizer.py":307
  *                 ap_conn.send_command_timing("undebug all", delay_factor=1, read_timeout=15)
  *                 print(f"[{ts()}] [FINALIZE] [AP] undebug all sent to AP {ip}", file=sys.stderr)
  *                 ap_conn.disconnect()             # <<<<<<<<<<<<<<
@@ -7417,14 +9435,14 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __pyx_t_9 = 0;
           {
             PyObject *__pyx_callargs[2] = {__pyx_t_15, NULL};
-            __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_disconnect, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+            __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_disconnect, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 200, __pyx_L162_error)
-            __Pyx_GOTREF(__pyx_t_4);
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 307, __pyx_L173_error)
+            __Pyx_GOTREF(__pyx_t_6);
           }
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-          /* "backend/engine/finalizer.py":185
+          /* "backend/engine/finalizer.py":292
  *         #  6: undebug all on AP (direct SSH)
  *         if ip:
  *             try:             # <<<<<<<<<<<<<<
@@ -7435,8 +9453,8 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XDECREF(__pyx_t_24); __pyx_t_24 = 0;
         __Pyx_XDECREF(__pyx_t_25); __pyx_t_25 = 0;
         __Pyx_XDECREF(__pyx_t_26); __pyx_t_26 = 0;
-        goto __pyx_L167_try_end;
-        __pyx_L162_error:;
+        goto __pyx_L178_try_end;
+        __pyx_L173_error:;
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -7446,7 +9464,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "backend/engine/finalizer.py":201
+        /* "backend/engine/finalizer.py":308
  *                 print(f"[{ts()}] [FINALIZE] [AP] undebug all sent to AP {ip}", file=sys.stderr)
  *                 ap_conn.disconnect()
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -7456,15 +9474,15 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __pyx_t_20 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
         if (__pyx_t_20) {
           __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_15, &__pyx_t_5) < 0) __PYX_ERR(0, 201, __pyx_L164_except_error)
-          __Pyx_XGOTREF(__pyx_t_4);
+          if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_15, &__pyx_t_4) < 0) __PYX_ERR(0, 308, __pyx_L175_except_error)
+          __Pyx_XGOTREF(__pyx_t_6);
           __Pyx_XGOTREF(__pyx_t_15);
-          __Pyx_XGOTREF(__pyx_t_5);
+          __Pyx_XGOTREF(__pyx_t_4);
           __Pyx_INCREF(__pyx_t_15);
           __pyx_v_exc = __pyx_t_15;
           /*try:*/ {
 
-            /* "backend/engine/finalizer.py":202
+            /* "backend/engine/finalizer.py":309
  *                 ap_conn.disconnect()
  *             except Exception as exc:
  *                 print(f"[{ts()}] [FINALIZE] WARNING: AP undebug all failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -7472,45 +9490,45 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *         print(
 */
             __pyx_t_8 = NULL;
-            __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L174_error)
-            __Pyx_GOTREF(__pyx_t_16);
-            __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L174_error)
+            __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L185_error)
             __Pyx_GOTREF(__pyx_t_1);
-            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-            __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L174_error)
+            __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 309, __pyx_L185_error)
             __Pyx_GOTREF(__pyx_t_16);
-            __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-            __pyx_t_21[1] = __pyx_t_1;
-            __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING_AP_undebug_all;
-            __pyx_t_21[3] = __pyx_t_16;
-            __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + 45 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
-            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 202, __pyx_L174_error)
-            __Pyx_GOTREF(__pyx_t_6);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-            __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L174_error)
-            __Pyx_GOTREF(__pyx_t_16);
-            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L174_error)
+            __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L185_error)
             __Pyx_GOTREF(__pyx_t_1);
+            __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+            __pyx_t_21[1] = __pyx_t_16;
+            __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING_AP_undebug_all;
+            __pyx_t_21[3] = __pyx_t_1;
+            __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 45 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
+            if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 309, __pyx_L185_error)
+            __Pyx_GOTREF(__pyx_t_14);
             __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+            __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L185_error)
+            __Pyx_GOTREF(__pyx_t_1);
+            __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 309, __pyx_L185_error)
+            __Pyx_GOTREF(__pyx_t_16);
+            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __pyx_t_9 = 1;
             {
-              PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_6};
-              __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L174_error)
-              __Pyx_GOTREF(__pyx_t_16);
-              if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 202, __pyx_L174_error)
-              __pyx_t_14 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
+              PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_8, __pyx_t_14};
+              __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L185_error)
+              __Pyx_GOTREF(__pyx_t_1);
+              if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 309, __pyx_L185_error)
+              __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
               __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-              __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-              __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+              __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
               __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-              if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 202, __pyx_L174_error)
-              __Pyx_GOTREF(__pyx_t_14);
+              __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+              if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 309, __pyx_L185_error)
+              __Pyx_GOTREF(__pyx_t_5);
             }
-            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+            __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           }
 
-          /* "backend/engine/finalizer.py":201
+          /* "backend/engine/finalizer.py":308
  *                 print(f"[{ts()}] [FINALIZE] [AP] undebug all sent to AP {ip}", file=sys.stderr)
  *                 ap_conn.disconnect()
  *             except Exception as exc:             # <<<<<<<<<<<<<<
@@ -7520,9 +9538,9 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           /*finally:*/ {
             /*normal exit:*/{
               __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
-              goto __pyx_L175;
+              goto __pyx_L186;
             }
-            __pyx_L174_error:;
+            __pyx_L185_error:;
             /*exception exit:*/{
               __Pyx_PyThreadState_declare
               __Pyx_PyThreadState_assign
@@ -7530,7 +9548,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
               __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
               __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-              __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+              __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
               __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                __Pyx_ExceptionSwap(&__pyx_t_17, &__pyx_t_18, &__pyx_t_19);
               if ( unlikely(__Pyx_GetException(&__pyx_t_12, &__pyx_t_11, &__pyx_t_2) < 0)) __Pyx_ErrFetch(&__pyx_t_12, &__pyx_t_11, &__pyx_t_2);
@@ -7540,7 +9558,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XGOTREF(__pyx_t_17);
               __Pyx_XGOTREF(__pyx_t_18);
               __Pyx_XGOTREF(__pyx_t_19);
-              __pyx_t_20 = __pyx_lineno; __pyx_t_22 = __pyx_clineno; __pyx_t_40 = __pyx_filename;
+              __pyx_t_20 = __pyx_lineno; __pyx_t_22 = __pyx_clineno; __pyx_t_41 = __pyx_filename;
               {
                 __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
               }
@@ -7553,40 +9571,40 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
               __Pyx_XGIVEREF(__pyx_t_2);
               __Pyx_ErrRestore(__pyx_t_12, __pyx_t_11, __pyx_t_2);
               __pyx_t_12 = 0; __pyx_t_11 = 0; __pyx_t_2 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0;
-              __pyx_lineno = __pyx_t_20; __pyx_clineno = __pyx_t_22; __pyx_filename = __pyx_t_40;
-              goto __pyx_L164_except_error;
+              __pyx_lineno = __pyx_t_20; __pyx_clineno = __pyx_t_22; __pyx_filename = __pyx_t_41;
+              goto __pyx_L175_except_error;
             }
-            __pyx_L175:;
+            __pyx_L186:;
           }
-          __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-          __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-          goto __pyx_L163_exception_handled;
+          __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+          goto __pyx_L174_exception_handled;
         }
-        goto __pyx_L164_except_error;
+        goto __pyx_L175_except_error;
 
-        /* "backend/engine/finalizer.py":185
+        /* "backend/engine/finalizer.py":292
  *         #  6: undebug all on AP (direct SSH)
  *         if ip:
  *             try:             # <<<<<<<<<<<<<<
  *                 print(f"[{ts()}] [FINALIZE] [AP] Connecting to AP {ip} for undebug all ...", file=sys.stderr)
  *                 ap_conn = ConnectHandler(
 */
-        __pyx_L164_except_error:;
+        __pyx_L175_except_error:;
         __Pyx_XGIVEREF(__pyx_t_24);
         __Pyx_XGIVEREF(__pyx_t_25);
         __Pyx_XGIVEREF(__pyx_t_26);
         __Pyx_ExceptionReset(__pyx_t_24, __pyx_t_25, __pyx_t_26);
         goto __pyx_L1_error;
-        __pyx_L163_exception_handled:;
+        __pyx_L174_exception_handled:;
         __Pyx_XGIVEREF(__pyx_t_24);
         __Pyx_XGIVEREF(__pyx_t_25);
         __Pyx_XGIVEREF(__pyx_t_26);
         __Pyx_ExceptionReset(__pyx_t_24, __pyx_t_25, __pyx_t_26);
-        __pyx_L167_try_end:;
+        __pyx_L178_try_end:;
       }
 
-      /* "backend/engine/finalizer.py":184
+      /* "backend/engine/finalizer.py":291
  * 
  *         #  6: undebug all on AP (direct SSH)
  *         if ip:             # <<<<<<<<<<<<<<
@@ -7595,7 +9613,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 */
     }
 
-    /* "backend/engine/finalizer.py":47
+    /* "backend/engine/finalizer.py":128
  *     )
  * 
  *     if not skip_hardcoded:             # <<<<<<<<<<<<<<
@@ -7605,7 +9623,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
     goto __pyx_L3;
   }
 
-  /* "backend/engine/finalizer.py":204
+  /* "backend/engine/finalizer.py":311
  *                 print(f"[{ts()}] [FINALIZE] WARNING: AP undebug all failed: {exc}", file=sys.stderr)
  *     else:
  *         print(             # <<<<<<<<<<<<<<
@@ -7615,116 +9633,116 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
   /*else*/ {
     __pyx_t_15 = NULL;
 
-    /* "backend/engine/finalizer.py":205
+    /* "backend/engine/finalizer.py":312
  *     else:
  *         print(
  *             f"[{ts()}] [FINALIZE] [CUSTOM-ONLY] Skipping hardcoded WLC/MYCAP/TFTP cleanup "             # <<<<<<<<<<<<<<
  *             f"sequence for {mac}  custom stop commands already sent by caller.",
  *             file=sys.stderr,
 */
-    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 205, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 205, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "backend/engine/finalizer.py":206
+    /* "backend/engine/finalizer.py":313
  *         print(
  *             f"[{ts()}] [FINALIZE] [CUSTOM-ONLY] Skipping hardcoded WLC/MYCAP/TFTP cleanup "
  *             f"sequence for {mac}  custom stop commands already sent by caller.",             # <<<<<<<<<<<<<<
  *             file=sys.stderr,
  *         )
 */
-    __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
-    __pyx_t_7[1] = __pyx_t_14;
+    __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
+    __pyx_t_7[1] = __pyx_t_5;
     __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_CUSTOM_ONLY_Skipping_h;
     __pyx_t_7[3] = __pyx_v_mac;
     __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_custom_stop_commands_already_se;
 
-    /* "backend/engine/finalizer.py":205
+    /* "backend/engine/finalizer.py":312
  *     else:
  *         print(
  *             f"[{ts()}] [FINALIZE] [CUSTOM-ONLY] Skipping hardcoded WLC/MYCAP/TFTP cleanup "             # <<<<<<<<<<<<<<
  *             f"sequence for {mac}  custom stop commands already sent by caller.",
  *             file=sys.stderr,
 */
-    __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 82 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac) + 47, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 205, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 82 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac) + 47, 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "backend/engine/finalizer.py":207
+    /* "backend/engine/finalizer.py":314
  *             f"[{ts()}] [FINALIZE] [CUSTOM-ONLY] Skipping hardcoded WLC/MYCAP/TFTP cleanup "
  *             f"sequence for {mac}  custom stop commands already sent by caller.",
  *             file=sys.stderr,             # <<<<<<<<<<<<<<
  *         )
  * 
 */
-    __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 207, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 207, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 314, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 314, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_9 = 1;
     {
-      PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_4};
-      __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 204, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 204, __pyx_L1_error)
-      __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_14);
-      __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 204, __pyx_L1_error)
+      PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_6};
+      __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 311, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+      __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
     }
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __pyx_L3:;
 
-  /* "backend/engine/finalizer.py":211
+  /* "backend/engine/finalizer.py":318
  * 
  *     #  7: generate reports (always runs)
  *     print(f"[{ts()}] [FINALIZE] Generating reports ...", file=sys.stderr)             # <<<<<<<<<<<<<<
  *     try:
  *         json_path, txt_path = save_report()
 */
-  __pyx_t_14 = NULL;
-  __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 211, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_16);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-  __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u__2;
-  __pyx_t_13[1] = __pyx_t_4;
+  __pyx_t_5 = NULL;
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_13[0] = __pyx_mstate_global->__pyx_kp_u_;
+  __pyx_t_13[1] = __pyx_t_6;
   __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_Generating_reports;
-  __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 35, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4));
-  if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 211, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_16);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 35, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6));
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 318, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_9 = 1;
   {
-    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_16};
-    __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 211, __pyx_L1_error)
-    __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
-    __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_1};
+    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 318, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_15, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 318, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 211, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 318, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
   }
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "backend/engine/finalizer.py":212
+  /* "backend/engine/finalizer.py":319
  *     #  7: generate reports (always runs)
  *     print(f"[{ts()}] [FINALIZE] Generating reports ...", file=sys.stderr)
  *     try:             # <<<<<<<<<<<<<<
@@ -7740,137 +9758,137 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
     __Pyx_XGOTREF(__pyx_t_24);
     /*try:*/ {
 
-      /* "backend/engine/finalizer.py":213
+      /* "backend/engine/finalizer.py":320
  *     print(f"[{ts()}] [FINALIZE] Generating reports ...", file=sys.stderr)
  *     try:
  *         json_path, txt_path = save_report()             # <<<<<<<<<<<<<<
  *         print(f"[{ts()}] [FINALIZE] JSON report    {json_path}", file=sys.stderr)
  *         print(f"[{ts()}] [FINALIZE] Summary report  {txt_path}", file=sys.stderr)
 */
-      __pyx_t_4 = NULL;
+      __pyx_t_6 = NULL;
       __Pyx_INCREF(__pyx_v_save_report);
       __pyx_t_15 = __pyx_v_save_report; 
       __pyx_t_9 = 1;
       #if CYTHON_UNPACK_METHODS
       if (unlikely(PyMethod_Check(__pyx_t_15))) {
-        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_15);
-        assert(__pyx_t_4);
+        __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_15);
+        assert(__pyx_t_6);
         PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_15);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_6);
         __Pyx_INCREF(__pyx__function);
         __Pyx_DECREF_SET(__pyx_t_15, __pyx__function);
         __pyx_t_9 = 0;
       }
       #endif
       {
-        PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
-        __pyx_t_5 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        PyObject *__pyx_callargs[2] = {__pyx_t_6, NULL};
+        __pyx_t_4 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 213, __pyx_L180_error)
-        __Pyx_GOTREF(__pyx_t_5);
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 320, __pyx_L191_error)
+        __Pyx_GOTREF(__pyx_t_4);
       }
-      if ((likely(PyTuple_CheckExact(__pyx_t_5))) || (PyList_CheckExact(__pyx_t_5))) {
-        PyObject* sequence = __pyx_t_5;
+      if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
+        PyObject* sequence = __pyx_t_4;
         Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          __PYX_ERR(0, 213, __pyx_L180_error)
+          __PYX_ERR(0, 320, __pyx_L191_error)
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
         if (likely(PyTuple_CheckExact(sequence))) {
           __pyx_t_15 = PyTuple_GET_ITEM(sequence, 0);
           __Pyx_INCREF(__pyx_t_15);
-          __pyx_t_4 = PyTuple_GET_ITEM(sequence, 1);
-          __Pyx_INCREF(__pyx_t_4);
+          __pyx_t_6 = PyTuple_GET_ITEM(sequence, 1);
+          __Pyx_INCREF(__pyx_t_6);
         } else {
           __pyx_t_15 = __Pyx_PyList_GetItemRefFast(sequence, 0, __Pyx_ReferenceSharing_SharedReference);
-          if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 213, __pyx_L180_error)
+          if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 320, __pyx_L191_error)
           __Pyx_XGOTREF(__pyx_t_15);
-          __pyx_t_4 = __Pyx_PyList_GetItemRefFast(sequence, 1, __Pyx_ReferenceSharing_SharedReference);
-          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 213, __pyx_L180_error)
-          __Pyx_XGOTREF(__pyx_t_4);
+          __pyx_t_6 = __Pyx_PyList_GetItemRefFast(sequence, 1, __Pyx_ReferenceSharing_SharedReference);
+          if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 320, __pyx_L191_error)
+          __Pyx_XGOTREF(__pyx_t_6);
         }
         #else
-        __pyx_t_15 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 213, __pyx_L180_error)
+        __pyx_t_15 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 320, __pyx_L191_error)
         __Pyx_GOTREF(__pyx_t_15);
-        __pyx_t_4 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 213, __pyx_L180_error)
-        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_6 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 320, __pyx_L191_error)
+        __Pyx_GOTREF(__pyx_t_6);
         #endif
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_16 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 213, __pyx_L180_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __pyx_t_41 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_16);
-        index = 0; __pyx_t_15 = __pyx_t_41(__pyx_t_16); if (unlikely(!__pyx_t_15)) goto __pyx_L186_unpacking_failed;
+        __pyx_t_1 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 320, __pyx_L191_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __pyx_t_42 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1);
+        index = 0; __pyx_t_15 = __pyx_t_42(__pyx_t_1); if (unlikely(!__pyx_t_15)) goto __pyx_L197_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_15);
-        index = 1; __pyx_t_4 = __pyx_t_41(__pyx_t_16); if (unlikely(!__pyx_t_4)) goto __pyx_L186_unpacking_failed;
-        __Pyx_GOTREF(__pyx_t_4);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_41(__pyx_t_16), 2) < (0)) __PYX_ERR(0, 213, __pyx_L180_error)
-        __pyx_t_41 = NULL;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        goto __pyx_L187_unpacking_done;
-        __pyx_L186_unpacking_failed:;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __pyx_t_41 = NULL;
+        index = 1; __pyx_t_6 = __pyx_t_42(__pyx_t_1); if (unlikely(!__pyx_t_6)) goto __pyx_L197_unpacking_failed;
+        __Pyx_GOTREF(__pyx_t_6);
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_42(__pyx_t_1), 2) < (0)) __PYX_ERR(0, 320, __pyx_L191_error)
+        __pyx_t_42 = NULL;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        goto __pyx_L198_unpacking_done;
+        __pyx_L197_unpacking_failed:;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __pyx_t_42 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        __PYX_ERR(0, 213, __pyx_L180_error)
-        __pyx_L187_unpacking_done:;
+        __PYX_ERR(0, 320, __pyx_L191_error)
+        __pyx_L198_unpacking_done:;
       }
       __pyx_v_json_path = __pyx_t_15;
       __pyx_t_15 = 0;
-      __pyx_v_txt_path = __pyx_t_4;
-      __pyx_t_4 = 0;
+      __pyx_v_txt_path = __pyx_t_6;
+      __pyx_t_6 = 0;
 
-      /* "backend/engine/finalizer.py":214
+      /* "backend/engine/finalizer.py":321
  *     try:
  *         json_path, txt_path = save_report()
  *         print(f"[{ts()}] [FINALIZE] JSON report    {json_path}", file=sys.stderr)             # <<<<<<<<<<<<<<
  *         print(f"[{ts()}] [FINALIZE] Summary report  {txt_path}", file=sys.stderr)
  *     except Exception as exc:
 */
-      __pyx_t_4 = NULL;
-      __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 214, __pyx_L180_error)
+      __pyx_t_6 = NULL;
+      __pyx_t_15 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 321, __pyx_L191_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 214, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_16);
+      __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_15, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 321, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_json_path, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 214, __pyx_L180_error)
+      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_json_path, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 321, __pyx_L191_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-      __pyx_t_21[1] = __pyx_t_16;
+      __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+      __pyx_t_21[1] = __pyx_t_1;
       __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_JSON_report;
       __pyx_t_21[3] = __pyx_t_15;
-      __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16) + 29 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15), 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15));
-      if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 214, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+      __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1) + 29 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15), 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15));
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 321, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 214, __pyx_L180_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 321, __pyx_L191_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 214, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_16);
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 321, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __pyx_t_9 = 1;
       {
-        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_14};
-        __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 214, __pyx_L180_error)
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_6, __pyx_t_5};
+        __pyx_t_15 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 321, __pyx_L191_error)
         __Pyx_GOTREF(__pyx_t_15);
-        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 214, __pyx_L180_error)
-        __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
-        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_15, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 321, __pyx_L191_error)
+        __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_15);
+        __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 214, __pyx_L180_error)
-        __Pyx_GOTREF(__pyx_t_5);
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 321, __pyx_L191_error)
+        __Pyx_GOTREF(__pyx_t_4);
       }
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "backend/engine/finalizer.py":215
+      /* "backend/engine/finalizer.py":322
  *         json_path, txt_path = save_report()
  *         print(f"[{ts()}] [FINALIZE] JSON report    {json_path}", file=sys.stderr)
  *         print(f"[{ts()}] [FINALIZE] Summary report  {txt_path}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -7878,44 +9896,44 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *         print(f"[{ts()}] [FINALIZE] WARNING: report generation failed: {exc}", file=sys.stderr)
 */
       __pyx_t_15 = NULL;
-      __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 215, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_16);
-      __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 215, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_txt_path, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 215, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_16);
-      __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-      __pyx_t_21[1] = __pyx_t_14;
+      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 322, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_txt_path, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+      __pyx_t_21[1] = __pyx_t_5;
       __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_Summary_report;
-      __pyx_t_21[3] = __pyx_t_16;
-      __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 30 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 215, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_16);
-      __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 215, __pyx_L180_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+      __pyx_t_21[3] = __pyx_t_1;
+      __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 30 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1), 65535 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
+      if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 322, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 322, __pyx_L191_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_9 = 1;
       {
-        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_4};
-        __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 215, __pyx_L180_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 215, __pyx_L180_error)
-        __pyx_t_5 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
+        PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_6};
+        __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L191_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 322, __pyx_L191_error)
+        __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 215, __pyx_L180_error)
-        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 322, __pyx_L191_error)
+        __Pyx_GOTREF(__pyx_t_4);
       }
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "backend/engine/finalizer.py":212
+      /* "backend/engine/finalizer.py":319
  *     #  7: generate reports (always runs)
  *     print(f"[{ts()}] [FINALIZE] Generating reports ...", file=sys.stderr)
  *     try:             # <<<<<<<<<<<<<<
@@ -7926,8 +9944,8 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
     __Pyx_XDECREF(__pyx_t_26); __pyx_t_26 = 0;
     __Pyx_XDECREF(__pyx_t_25); __pyx_t_25 = 0;
     __Pyx_XDECREF(__pyx_t_24); __pyx_t_24 = 0;
-    goto __pyx_L185_try_end;
-    __pyx_L180_error:;
+    goto __pyx_L196_try_end;
+    __pyx_L191_error:;
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
     __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -7937,7 +9955,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "backend/engine/finalizer.py":216
+    /* "backend/engine/finalizer.py":323
  *         print(f"[{ts()}] [FINALIZE] JSON report    {json_path}", file=sys.stderr)
  *         print(f"[{ts()}] [FINALIZE] Summary report  {txt_path}", file=sys.stderr)
  *     except Exception as exc:             # <<<<<<<<<<<<<<
@@ -7947,15 +9965,15 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
     __pyx_t_22 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_22) {
       __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_16, &__pyx_t_14) < 0) __PYX_ERR(0, 216, __pyx_L182_except_error)
+      if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_1, &__pyx_t_5) < 0) __PYX_ERR(0, 323, __pyx_L193_except_error)
+      __Pyx_XGOTREF(__pyx_t_4);
+      __Pyx_XGOTREF(__pyx_t_1);
       __Pyx_XGOTREF(__pyx_t_5);
-      __Pyx_XGOTREF(__pyx_t_16);
-      __Pyx_XGOTREF(__pyx_t_14);
-      __Pyx_INCREF(__pyx_t_16);
-      __pyx_v_exc = __pyx_t_16;
+      __Pyx_INCREF(__pyx_t_1);
+      __pyx_v_exc = __pyx_t_1;
       /*try:*/ {
 
-        /* "backend/engine/finalizer.py":217
+        /* "backend/engine/finalizer.py":324
  *         print(f"[{ts()}] [FINALIZE] Summary report  {txt_path}", file=sys.stderr)
  *     except Exception as exc:
  *         print(f"[{ts()}] [FINALIZE] WARNING: report generation failed: {exc}", file=sys.stderr)             # <<<<<<<<<<<<<<
@@ -7963,45 +9981,45 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *     #  8: clear ACTIVE_RCA state (always runs)
 */
         __pyx_t_15 = NULL;
-        __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L193_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 217, __pyx_L193_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L193_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u__2;
-        __pyx_t_21[1] = __pyx_t_6;
+        __pyx_t_16 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 324, __pyx_L204_error)
+        __Pyx_GOTREF(__pyx_t_16);
+        __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_16, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 324, __pyx_L204_error)
+        __Pyx_GOTREF(__pyx_t_14);
+        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+        __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_exc, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 324, __pyx_L204_error)
+        __Pyx_GOTREF(__pyx_t_16);
+        __pyx_t_21[0] = __pyx_mstate_global->__pyx_kp_u_;
+        __pyx_t_21[1] = __pyx_t_14;
         __pyx_t_21[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_WARNING_report_generat;
-        __pyx_t_21[3] = __pyx_t_1;
-        __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 48 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1));
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 217, __pyx_L193_error)
+        __pyx_t_21[3] = __pyx_t_16;
+        __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_21, 4, 1 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 48 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16));
+        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 324, __pyx_L204_error)
         __Pyx_GOTREF(__pyx_t_8);
-        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L193_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 217, __pyx_L193_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+        __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 324, __pyx_L204_error)
+        __Pyx_GOTREF(__pyx_t_16);
+        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 324, __pyx_L204_error)
+        __Pyx_GOTREF(__pyx_t_14);
+        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         __pyx_t_9 = 1;
         {
           PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_15, __pyx_t_8};
-          __pyx_t_1 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L193_error)
-          __Pyx_GOTREF(__pyx_t_1);
-          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_6, __pyx_t_1, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 217, __pyx_L193_error)
-          __pyx_t_4 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_1);
+          __pyx_t_16 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 324, __pyx_L204_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_14, __pyx_t_16, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 324, __pyx_L204_error)
+          __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_16);
           __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L193_error)
-          __Pyx_GOTREF(__pyx_t_4);
+          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+          if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 324, __pyx_L204_error)
+          __Pyx_GOTREF(__pyx_t_6);
         }
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
 
-      /* "backend/engine/finalizer.py":216
+      /* "backend/engine/finalizer.py":323
  *         print(f"[{ts()}] [FINALIZE] JSON report    {json_path}", file=sys.stderr)
  *         print(f"[{ts()}] [FINALIZE] Summary report  {txt_path}", file=sys.stderr)
  *     except Exception as exc:             # <<<<<<<<<<<<<<
@@ -8011,16 +10029,16 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
       /*finally:*/ {
         /*normal exit:*/{
           __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
-          goto __pyx_L194;
+          goto __pyx_L205;
         }
-        __pyx_L193_error:;
+        __pyx_L204_error:;
         /*exception exit:*/{
           __Pyx_PyThreadState_declare
           __Pyx_PyThreadState_assign
           __pyx_t_19 = 0; __pyx_t_18 = 0; __pyx_t_17 = 0; __pyx_t_2 = 0; __pyx_t_11 = 0; __pyx_t_12 = 0;
-          __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
           __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-          __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
            __Pyx_ExceptionSwap(&__pyx_t_2, &__pyx_t_11, &__pyx_t_12);
@@ -8031,7 +10049,7 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __Pyx_XGOTREF(__pyx_t_2);
           __Pyx_XGOTREF(__pyx_t_11);
           __Pyx_XGOTREF(__pyx_t_12);
-          __pyx_t_22 = __pyx_lineno; __pyx_t_20 = __pyx_clineno; __pyx_t_42 = __pyx_filename;
+          __pyx_t_22 = __pyx_lineno; __pyx_t_20 = __pyx_clineno; __pyx_t_43 = __pyx_filename;
           {
             __Pyx_DECREF(__pyx_v_exc); __pyx_v_exc = 0;
           }
@@ -8044,40 +10062,40 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
           __Pyx_XGIVEREF(__pyx_t_17);
           __Pyx_ErrRestore(__pyx_t_19, __pyx_t_18, __pyx_t_17);
           __pyx_t_19 = 0; __pyx_t_18 = 0; __pyx_t_17 = 0; __pyx_t_2 = 0; __pyx_t_11 = 0; __pyx_t_12 = 0;
-          __pyx_lineno = __pyx_t_22; __pyx_clineno = __pyx_t_20; __pyx_filename = __pyx_t_42;
-          goto __pyx_L182_except_error;
+          __pyx_lineno = __pyx_t_22; __pyx_clineno = __pyx_t_20; __pyx_filename = __pyx_t_43;
+          goto __pyx_L193_except_error;
         }
-        __pyx_L194:;
+        __pyx_L205:;
       }
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-      goto __pyx_L181_exception_handled;
+      goto __pyx_L192_exception_handled;
     }
-    goto __pyx_L182_except_error;
+    goto __pyx_L193_except_error;
 
-    /* "backend/engine/finalizer.py":212
+    /* "backend/engine/finalizer.py":319
  *     #  7: generate reports (always runs)
  *     print(f"[{ts()}] [FINALIZE] Generating reports ...", file=sys.stderr)
  *     try:             # <<<<<<<<<<<<<<
  *         json_path, txt_path = save_report()
  *         print(f"[{ts()}] [FINALIZE] JSON report    {json_path}", file=sys.stderr)
 */
-    __pyx_L182_except_error:;
+    __pyx_L193_except_error:;
     __Pyx_XGIVEREF(__pyx_t_26);
     __Pyx_XGIVEREF(__pyx_t_25);
     __Pyx_XGIVEREF(__pyx_t_24);
     __Pyx_ExceptionReset(__pyx_t_26, __pyx_t_25, __pyx_t_24);
     goto __pyx_L1_error;
-    __pyx_L181_exception_handled:;
+    __pyx_L192_exception_handled:;
     __Pyx_XGIVEREF(__pyx_t_26);
     __Pyx_XGIVEREF(__pyx_t_25);
     __Pyx_XGIVEREF(__pyx_t_24);
     __Pyx_ExceptionReset(__pyx_t_26, __pyx_t_25, __pyx_t_24);
-    __pyx_L185_try_end:;
+    __pyx_L196_try_end:;
   }
 
-  /* "backend/engine/finalizer.py":220
+  /* "backend/engine/finalizer.py":327
  * 
  *     #  8: clear ACTIVE_RCA state (always runs)
  *     with active_rca_lock:             # <<<<<<<<<<<<<<
@@ -8085,32 +10103,32 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
  *     clear_ap_workflow(mac)
 */
   /*with:*/ {
-    __pyx_t_24 = __Pyx_PyObject_LookupSpecial(__pyx_v_active_rca_lock, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 220, __pyx_L1_error)
+    __pyx_t_24 = __Pyx_PyObject_LookupSpecial(__pyx_v_active_rca_lock, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 327, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_24);
-    __pyx_t_16 = NULL;
-    __pyx_t_5 = __Pyx_PyObject_LookupSpecial(__pyx_v_active_rca_lock, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 220, __pyx_L199_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_1 = NULL;
+    __pyx_t_4 = __Pyx_PyObject_LookupSpecial(__pyx_v_active_rca_lock, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 327, __pyx_L210_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_9 = 1;
     #if CYTHON_UNPACK_METHODS
-    if (likely(PyMethod_Check(__pyx_t_5))) {
-      __pyx_t_16 = PyMethod_GET_SELF(__pyx_t_5);
-      assert(__pyx_t_16);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
-      __Pyx_INCREF(__pyx_t_16);
+    if (likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_4);
+      assert(__pyx_t_1);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_4);
+      __Pyx_INCREF(__pyx_t_1);
       __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_4, __pyx__function);
       __pyx_t_9 = 0;
     }
     #endif
     {
-      PyObject *__pyx_callargs[2] = {__pyx_t_16, NULL};
-      __pyx_t_14 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 220, __pyx_L199_error)
-      __Pyx_GOTREF(__pyx_t_14);
+      PyObject *__pyx_callargs[2] = {__pyx_t_1, NULL};
+      __pyx_t_5 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 327, __pyx_L210_error)
+      __Pyx_GOTREF(__pyx_t_5);
     }
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     /*try:*/ {
       {
         __Pyx_PyThreadState_declare
@@ -8121,16 +10139,16 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XGOTREF(__pyx_t_12);
         /*try:*/ {
 
-          /* "backend/engine/finalizer.py":221
+          /* "backend/engine/finalizer.py":328
  *     #  8: clear ACTIVE_RCA state (always runs)
  *     with active_rca_lock:
  *         active_rca_sessions.pop(mac, None)             # <<<<<<<<<<<<<<
  *     clear_ap_workflow(mac)
  *     mark_ap_used(mac)
 */
-          __pyx_t_20 = __Pyx_PyDict_Pop_ignore(__pyx_v_active_rca_sessions, __pyx_v_mac, Py_None); if (unlikely(__pyx_t_20 == ((int)-1))) __PYX_ERR(0, 221, __pyx_L203_error)
+          __pyx_t_20 = __Pyx_PyDict_Pop_ignore(__pyx_v_active_rca_sessions, __pyx_v_mac, Py_None); if (unlikely(__pyx_t_20 == ((int)-1))) __PYX_ERR(0, 328, __pyx_L214_error)
 
-          /* "backend/engine/finalizer.py":220
+          /* "backend/engine/finalizer.py":327
  * 
  *     #  8: clear ACTIVE_RCA state (always runs)
  *     with active_rca_lock:             # <<<<<<<<<<<<<<
@@ -8141,8 +10159,8 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XDECREF(__pyx_t_25); __pyx_t_25 = 0;
         __Pyx_XDECREF(__pyx_t_26); __pyx_t_26 = 0;
         __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
-        goto __pyx_L208_try_end;
-        __pyx_L203_error:;
+        goto __pyx_L219_try_end;
+        __pyx_L214_error:;
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -8153,364 +10171,503 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
         /*except:*/ {
           __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_14, &__pyx_t_5, &__pyx_t_16) < 0) __PYX_ERR(0, 220, __pyx_L205_except_error)
-          __Pyx_XGOTREF(__pyx_t_14);
+          if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_4, &__pyx_t_1) < 0) __PYX_ERR(0, 327, __pyx_L216_except_error)
           __Pyx_XGOTREF(__pyx_t_5);
-          __Pyx_XGOTREF(__pyx_t_16);
-          __pyx_t_4 = PyTuple_Pack(3, __pyx_t_14, __pyx_t_5, __pyx_t_16); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 220, __pyx_L205_except_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_t_4, NULL);
+          __Pyx_XGOTREF(__pyx_t_4);
+          __Pyx_XGOTREF(__pyx_t_1);
+          __pyx_t_6 = PyTuple_Pack(3, __pyx_t_5, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 327, __pyx_L216_except_error)
+          __Pyx_GOTREF(__pyx_t_6);
+          __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_t_6, NULL);
           __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 220, __pyx_L205_except_error)
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 327, __pyx_L216_except_error)
           __Pyx_GOTREF(__pyx_t_11);
-          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_11);
+          __pyx_t_34 = __Pyx_PyObject_IsTrue(__pyx_t_11);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-          if (__pyx_t_10 < (0)) __PYX_ERR(0, 220, __pyx_L205_except_error)
-          __pyx_t_43 = (!__pyx_t_10);
-          if (unlikely(__pyx_t_43)) {
-            __Pyx_GIVEREF(__pyx_t_14);
+          if (__pyx_t_34 < (0)) __PYX_ERR(0, 327, __pyx_L216_except_error)
+          __pyx_t_10 = (!__pyx_t_34);
+          if (unlikely(__pyx_t_10)) {
             __Pyx_GIVEREF(__pyx_t_5);
-            __Pyx_XGIVEREF(__pyx_t_16);
-            __Pyx_ErrRestoreWithState(__pyx_t_14, __pyx_t_5, __pyx_t_16);
-            __pyx_t_14 = 0;  __pyx_t_5 = 0;  __pyx_t_16 = 0; 
-            __PYX_ERR(0, 220, __pyx_L205_except_error)
+            __Pyx_GIVEREF(__pyx_t_4);
+            __Pyx_XGIVEREF(__pyx_t_1);
+            __Pyx_ErrRestoreWithState(__pyx_t_5, __pyx_t_4, __pyx_t_1);
+            __pyx_t_5 = 0;  __pyx_t_4 = 0;  __pyx_t_1 = 0; 
+            __PYX_ERR(0, 327, __pyx_L216_except_error)
           }
-          __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-          goto __pyx_L204_exception_handled;
+          __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+          goto __pyx_L215_exception_handled;
         }
-        __pyx_L205_except_error:;
+        __pyx_L216_except_error:;
         __Pyx_XGIVEREF(__pyx_t_25);
         __Pyx_XGIVEREF(__pyx_t_26);
         __Pyx_XGIVEREF(__pyx_t_12);
         __Pyx_ExceptionReset(__pyx_t_25, __pyx_t_26, __pyx_t_12);
         goto __pyx_L1_error;
-        __pyx_L204_exception_handled:;
+        __pyx_L215_exception_handled:;
         __Pyx_XGIVEREF(__pyx_t_25);
         __Pyx_XGIVEREF(__pyx_t_26);
         __Pyx_XGIVEREF(__pyx_t_12);
         __Pyx_ExceptionReset(__pyx_t_25, __pyx_t_26, __pyx_t_12);
-        __pyx_L208_try_end:;
+        __pyx_L219_try_end:;
       }
     }
     /*finally:*/ {
       /*normal exit:*/{
         if (__pyx_t_24) {
-          __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_mstate_global->__pyx_tuple[1], NULL);
+          __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_mstate_global->__pyx_tuple[3], NULL);
           __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-          if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 220, __pyx_L1_error)
+          if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 327, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_12);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
         }
-        goto __pyx_L202;
+        goto __pyx_L213;
       }
-      __pyx_L202:;
+      __pyx_L213:;
     }
-    goto __pyx_L212;
-    __pyx_L199_error:;
+    goto __pyx_L223;
+    __pyx_L210_error:;
     __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
     goto __pyx_L1_error;
-    __pyx_L212:;
+    __pyx_L223:;
   }
 
-  /* "backend/engine/finalizer.py":222
+  /* "backend/engine/finalizer.py":329
  *     with active_rca_lock:
  *         active_rca_sessions.pop(mac, None)
  *     clear_ap_workflow(mac)             # <<<<<<<<<<<<<<
  *     mark_ap_used(mac)
  *     print(f"[{ts()}] [FINALIZE] Session complete for {mac}.", file=sys.stderr)
 */
-  __pyx_t_5 = NULL;
+  __pyx_t_4 = NULL;
   __Pyx_INCREF(__pyx_v_clear_ap_workflow);
-  __pyx_t_14 = __pyx_v_clear_ap_workflow; 
-  __pyx_t_9 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_14))) {
-    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_14);
-    assert(__pyx_t_5);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_14);
-    __Pyx_INCREF(__pyx_t_5);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_14, __pyx__function);
-    __pyx_t_9 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_mac};
-    __pyx_t_16 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_14, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 222, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
-  }
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-
-  /* "backend/engine/finalizer.py":223
- *         active_rca_sessions.pop(mac, None)
- *     clear_ap_workflow(mac)
- *     mark_ap_used(mac)             # <<<<<<<<<<<<<<
- *     print(f"[{ts()}] [FINALIZE] Session complete for {mac}.", file=sys.stderr)
- *     reset_disjoin_counter(mac)
-*/
-  __pyx_t_14 = NULL;
-  __Pyx_INCREF(__pyx_v_mark_ap_used);
-  __pyx_t_5 = __pyx_v_mark_ap_used; 
+  __pyx_t_5 = __pyx_v_clear_ap_workflow; 
   __pyx_t_9 = 1;
   #if CYTHON_UNPACK_METHODS
   if (unlikely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_5);
-    assert(__pyx_t_14);
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_5);
+    assert(__pyx_t_4);
     PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
-    __Pyx_INCREF(__pyx_t_14);
+    __Pyx_INCREF(__pyx_t_4);
     __Pyx_INCREF(__pyx__function);
     __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
     __pyx_t_9 = 0;
   }
   #endif
   {
-    PyObject *__pyx_callargs[2] = {__pyx_t_14, __pyx_v_mac};
-    __pyx_t_16 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
+    PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_mac};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 223, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
   }
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/engine/finalizer.py":224
+  /* "backend/engine/finalizer.py":330
+ *         active_rca_sessions.pop(mac, None)
+ *     clear_ap_workflow(mac)
+ *     mark_ap_used(mac)             # <<<<<<<<<<<<<<
+ *     print(f"[{ts()}] [FINALIZE] Session complete for {mac}.", file=sys.stderr)
+ *     reset_disjoin_counter(mac)
+*/
+  __pyx_t_5 = NULL;
+  __Pyx_INCREF(__pyx_v_mark_ap_used);
+  __pyx_t_4 = __pyx_v_mark_ap_used; 
+  __pyx_t_9 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
+    assert(__pyx_t_5);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_4);
+    __Pyx_INCREF(__pyx_t_5);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_4, __pyx__function);
+    __pyx_t_9 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_mac};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 330, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "backend/engine/finalizer.py":331
  *     clear_ap_workflow(mac)
  *     mark_ap_used(mac)
  *     print(f"[{ts()}] [FINALIZE] Session complete for {mac}.", file=sys.stderr)             # <<<<<<<<<<<<<<
  *     reset_disjoin_counter(mac)
  *     print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)
 */
-  __pyx_t_5 = NULL;
-  __pyx_t_14 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_14);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_14, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
-  __pyx_t_7[1] = __pyx_t_4;
+  __pyx_t_4 = NULL;
+  __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
+  __pyx_t_7[1] = __pyx_t_6;
   __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_Session_complete_for;
   __pyx_t_7[3] = __pyx_v_mac;
-  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_;
-  __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 34 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
-  if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_14);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u__4;
+  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 34 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
+  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_16);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_9 = 1;
   {
-    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_14};
-    __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 224, __pyx_L1_error)
-    __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 224, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_t_5};
+    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 331, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 331, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 331, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
   }
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/engine/finalizer.py":225
+  /* "backend/engine/finalizer.py":332
  *     mark_ap_used(mac)
  *     print(f"[{ts()}] [FINALIZE] Session complete for {mac}.", file=sys.stderr)
  *     reset_disjoin_counter(mac)             # <<<<<<<<<<<<<<
  *     print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)
  *     print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)
 */
-  __pyx_t_4 = NULL;
+  __pyx_t_6 = NULL;
   __Pyx_INCREF(__pyx_v_reset_disjoin_counter);
-  __pyx_t_1 = __pyx_v_reset_disjoin_counter; 
+  __pyx_t_16 = __pyx_v_reset_disjoin_counter; 
   __pyx_t_9 = 1;
   #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_1))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_1);
-    assert(__pyx_t_4);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_1);
-    __Pyx_INCREF(__pyx_t_4);
+  if (unlikely(PyMethod_Check(__pyx_t_16))) {
+    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_16);
+    assert(__pyx_t_6);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_16);
+    __Pyx_INCREF(__pyx_t_6);
     __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_1, __pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_16, __pyx__function);
     __pyx_t_9 = 0;
   }
   #endif
   {
-    PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_mac};
-    __pyx_t_16 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 225, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
+    PyObject *__pyx_callargs[2] = {__pyx_t_6, __pyx_v_mac};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_16, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
   }
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/engine/finalizer.py":226
+  /* "backend/engine/finalizer.py":333
  *     print(f"[{ts()}] [FINALIZE] Session complete for {mac}.", file=sys.stderr)
  *     reset_disjoin_counter(mac)
  *     print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)             # <<<<<<<<<<<<<<
  *     print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)
- *     append_finalized_ap(
+ *     with active_rca_lock:
 */
-  __pyx_t_1 = NULL;
-  __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 226, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 226, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_14);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
-  __pyx_t_7[1] = __pyx_t_14;
+  __pyx_t_16 = NULL;
+  __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
+  __pyx_t_7[1] = __pyx_t_5;
   __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_Disjoin_counter_reset;
   __pyx_t_7[3] = __pyx_v_mac;
-  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_;
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_14) + 39 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_14) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 226, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 226, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_14);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 226, __pyx_L1_error)
+  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u__4;
+  __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5) + 39 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
+  if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 333, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_9 = 1;
   {
-    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_t_4};
-    __pyx_t_14 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 226, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_5, __pyx_t_14, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 226, __pyx_L1_error)
-    __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_14);
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_16, __pyx_t_6};
+    __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 333, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_4, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 333, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 226, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 333, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
   }
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/engine/finalizer.py":227
+  /* "backend/engine/finalizer.py":334
  *     reset_disjoin_counter(mac)
  *     print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)
  *     print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)             # <<<<<<<<<<<<<<
- *     append_finalized_ap(
- *         mac=mac,
+ *     with active_rca_lock:
+ *         _session_snap = active_rca_sessions.get(mac, {})
 */
-  __pyx_t_14 = NULL;
-  __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 227, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_t_5 = NULL;
+  __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_v_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 334, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u__2;
-  __pyx_t_7[1] = __pyx_t_4;
+  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_7[0] = __pyx_mstate_global->__pyx_kp_u_;
+  __pyx_t_7[1] = __pyx_t_6;
   __pyx_t_7[2] = __pyx_mstate_global->__pyx_kp_u_FINALIZE_Finalization_complete;
   __pyx_t_7[3] = __pyx_v_mac;
-  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u_;
-  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4) + 39 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
-  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 227, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_t_7[4] = __pyx_mstate_global->__pyx_kp_u__4;
+  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, 1 * 2 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6) + 39 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_mac), 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_mac));
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 334, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_stderr); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_16);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_9 = 1;
   {
-    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, __pyx_t_5};
-    __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 227, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_1, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 227, __pyx_L1_error)
-    __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
-    __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, __pyx_t_4};
+    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 334, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_file, __pyx_t_16, __pyx_t_6, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 334, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_builtin_print, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 227, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
+    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 334, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
   }
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "backend/engine/finalizer.py":228
+  /* "backend/engine/finalizer.py":335
  *     print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)
  *     print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)
- *     append_finalized_ap(             # <<<<<<<<<<<<<<
- *         mac=mac,
- *         ap_name=active_rca_sessions.get(mac, {}).get("ap_name"),
+ *     with active_rca_lock:             # <<<<<<<<<<<<<<
+ *         _session_snap = active_rca_sessions.get(mac, {})
+ *     append_finalized_ap(
 */
-  __pyx_t_4 = NULL;
-  __Pyx_INCREF(__pyx_v_append_finalized_ap);
-  __pyx_t_1 = __pyx_v_append_finalized_ap; 
+  /*with:*/ {
+    __pyx_t_24 = __Pyx_PyObject_LookupSpecial(__pyx_v_active_rca_lock, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 335, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_24);
+    __pyx_t_6 = NULL;
+    __pyx_t_16 = __Pyx_PyObject_LookupSpecial(__pyx_v_active_rca_lock, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 335, __pyx_L224_error)
+    __Pyx_GOTREF(__pyx_t_16);
+    __pyx_t_9 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (likely(PyMethod_Check(__pyx_t_16))) {
+      __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_16);
+      assert(__pyx_t_6);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_16);
+      __Pyx_INCREF(__pyx_t_6);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_16, __pyx__function);
+      __pyx_t_9 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_6, NULL};
+      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_16, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 335, __pyx_L224_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    /*try:*/ {
+      {
+        __Pyx_PyThreadState_declare
+        __Pyx_PyThreadState_assign
+        __Pyx_ExceptionSave(&__pyx_t_12, &__pyx_t_26, &__pyx_t_25);
+        __Pyx_XGOTREF(__pyx_t_12);
+        __Pyx_XGOTREF(__pyx_t_26);
+        __Pyx_XGOTREF(__pyx_t_25);
+        /*try:*/ {
 
-  /* "backend/engine/finalizer.py":230
+          /* "backend/engine/finalizer.py":336
+ *     print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)
+ *     with active_rca_lock:
+ *         _session_snap = active_rca_sessions.get(mac, {})             # <<<<<<<<<<<<<<
  *     append_finalized_ap(
  *         mac=mac,
- *         ap_name=active_rca_sessions.get(mac, {}).get("ap_name"),             # <<<<<<<<<<<<<<
+*/
+          __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 336, __pyx_L228_error)
+          __Pyx_GOTREF(__pyx_t_1);
+          __pyx_t_16 = __Pyx_PyDict_GetItemDefault(__pyx_v_active_rca_sessions, __pyx_v_mac, __pyx_t_1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 336, __pyx_L228_error)
+          __Pyx_GOTREF(__pyx_t_16);
+          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __pyx_v__session_snap = __pyx_t_16;
+          __pyx_t_16 = 0;
+
+          /* "backend/engine/finalizer.py":335
+ *     print(f"[{ts()}] [FINALIZE] Disjoin counter reset for {mac}.", file=sys.stderr)
+ *     print(f"[{ts()}] [FINALIZE] Finalization complete for {mac}.", file=sys.stderr)
+ *     with active_rca_lock:             # <<<<<<<<<<<<<<
+ *         _session_snap = active_rca_sessions.get(mac, {})
+ *     append_finalized_ap(
+*/
+        }
+        __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
+        __Pyx_XDECREF(__pyx_t_26); __pyx_t_26 = 0;
+        __Pyx_XDECREF(__pyx_t_25); __pyx_t_25 = 0;
+        goto __pyx_L233_try_end;
+        __pyx_L228_error:;
+        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
+        __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
+        __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+        __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        /*except:*/ {
+          __Pyx_AddTraceback("backend.engine.finalizer.run_finalization", __pyx_clineno, __pyx_lineno, __pyx_filename);
+          if (__Pyx_GetException(&__pyx_t_16, &__pyx_t_1, &__pyx_t_6) < 0) __PYX_ERR(0, 335, __pyx_L230_except_error)
+          __Pyx_XGOTREF(__pyx_t_16);
+          __Pyx_XGOTREF(__pyx_t_1);
+          __Pyx_XGOTREF(__pyx_t_6);
+          __pyx_t_4 = PyTuple_Pack(3, __pyx_t_16, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 335, __pyx_L230_except_error)
+          __Pyx_GOTREF(__pyx_t_4);
+          __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_t_4, NULL);
+          __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 335, __pyx_L230_except_error)
+          __Pyx_GOTREF(__pyx_t_11);
+          __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_11);
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+          if (__pyx_t_10 < (0)) __PYX_ERR(0, 335, __pyx_L230_except_error)
+          __pyx_t_34 = (!__pyx_t_10);
+          if (unlikely(__pyx_t_34)) {
+            __Pyx_GIVEREF(__pyx_t_16);
+            __Pyx_GIVEREF(__pyx_t_1);
+            __Pyx_XGIVEREF(__pyx_t_6);
+            __Pyx_ErrRestoreWithState(__pyx_t_16, __pyx_t_1, __pyx_t_6);
+            __pyx_t_16 = 0;  __pyx_t_1 = 0;  __pyx_t_6 = 0; 
+            __PYX_ERR(0, 335, __pyx_L230_except_error)
+          }
+          __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
+          __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+          goto __pyx_L229_exception_handled;
+        }
+        __pyx_L230_except_error:;
+        __Pyx_XGIVEREF(__pyx_t_12);
+        __Pyx_XGIVEREF(__pyx_t_26);
+        __Pyx_XGIVEREF(__pyx_t_25);
+        __Pyx_ExceptionReset(__pyx_t_12, __pyx_t_26, __pyx_t_25);
+        goto __pyx_L1_error;
+        __pyx_L229_exception_handled:;
+        __Pyx_XGIVEREF(__pyx_t_12);
+        __Pyx_XGIVEREF(__pyx_t_26);
+        __Pyx_XGIVEREF(__pyx_t_25);
+        __Pyx_ExceptionReset(__pyx_t_12, __pyx_t_26, __pyx_t_25);
+        __pyx_L233_try_end:;
+      }
+    }
+    /*finally:*/ {
+      /*normal exit:*/{
+        if (__pyx_t_24) {
+          __pyx_t_25 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_mstate_global->__pyx_tuple[3], NULL);
+          __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
+          if (unlikely(!__pyx_t_25)) __PYX_ERR(0, 335, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_25);
+          __Pyx_DECREF(__pyx_t_25); __pyx_t_25 = 0;
+        }
+        goto __pyx_L227;
+      }
+      __pyx_L227:;
+    }
+    goto __pyx_L237;
+    __pyx_L224_error:;
+    __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
+    goto __pyx_L1_error;
+    __pyx_L237:;
+  }
+
+  /* "backend/engine/finalizer.py":337
+ *     with active_rca_lock:
+ *         _session_snap = active_rca_sessions.get(mac, {})
+ *     append_finalized_ap(             # <<<<<<<<<<<<<<
+ *         mac=mac,
+ *         ap_name=_session_snap.get("ap_name"),
+*/
+  __pyx_t_1 = NULL;
+  __Pyx_INCREF(__pyx_v_append_finalized_ap);
+  __pyx_t_16 = __pyx_v_append_finalized_ap; 
+
+  /* "backend/engine/finalizer.py":339
+ *     append_finalized_ap(
+ *         mac=mac,
+ *         ap_name=_session_snap.get("ap_name"),             # <<<<<<<<<<<<<<
  *         ip=ip,
  *     )
 */
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 230, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_8 = __Pyx_PyDict_GetItemDefault(__pyx_v_active_rca_sessions, __pyx_v_mac, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 230, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_14 = __pyx_t_8;
-  __Pyx_INCREF(__pyx_t_14);
+  if (unlikely(!__pyx_v__session_snap)) { __Pyx_RaiseUnboundLocalError("_session_snap"); __PYX_ERR(0, 339, __pyx_L1_error) }
+  __pyx_t_5 = __pyx_v__session_snap;
+  __Pyx_INCREF(__pyx_t_5);
   __pyx_t_9 = 0;
   {
-    PyObject *__pyx_callargs[2] = {__pyx_t_14, __pyx_mstate_global->__pyx_n_u_ap_name};
-    __pyx_t_5 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_get, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 230, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_n_u_ap_name};
+    __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_get, __pyx_callargs+__pyx_t_9, (2-__pyx_t_9) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 339, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
   }
 
-  /* "backend/engine/finalizer.py":231
+  /* "backend/engine/finalizer.py":340
  *         mac=mac,
- *         ap_name=active_rca_sessions.get(mac, {}).get("ap_name"),
+ *         ap_name=_session_snap.get("ap_name"),
  *         ip=ip,             # <<<<<<<<<<<<<<
  *     )
 */
   __pyx_t_9 = 1;
   #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_1))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_1);
-    assert(__pyx_t_4);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_1);
-    __Pyx_INCREF(__pyx_t_4);
+  if (unlikely(PyMethod_Check(__pyx_t_16))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_16);
+    assert(__pyx_t_1);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_16);
+    __Pyx_INCREF(__pyx_t_1);
     __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_1, __pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_16, __pyx__function);
     __pyx_t_9 = 0;
   }
   #endif
   {
-    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 3 : 0)] = {__pyx_t_4, NULL};
-    __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 228, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_mac, __pyx_v_mac, __pyx_t_8, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 228, __pyx_L1_error)
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_ap_name, __pyx_t_5, __pyx_t_8, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 228, __pyx_L1_error)
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_ip, __pyx_v_ip, __pyx_t_8, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 228, __pyx_L1_error)
-    __pyx_t_16 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 3 : 0)] = {__pyx_t_1, NULL};
+    __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 337, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_mac, __pyx_v_mac, __pyx_t_5, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 337, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_ap_name, __pyx_t_4, __pyx_t_5, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 337, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_ip, __pyx_v_ip, __pyx_t_5, __pyx_callargs+1, 2) < (0)) __PYX_ERR(0, 337, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_16, __pyx_callargs+__pyx_t_9, (1-__pyx_t_9) | (__pyx_t_9*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 228, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
+    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 337, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
   }
-  __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-  /* "backend/engine/finalizer.py":22
+  /* "backend/engine/finalizer.py":103
  * 
  * 
  * def run_finalization(             # <<<<<<<<<<<<<<
@@ -8545,14 +10702,21 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
   __Pyx_XDECREF(__pyx_v_verify_cmd);
   __Pyx_XDECREF(__pyx_v_verify_out);
   __Pyx_XDECREF(__pyx_v_tftp_ip);
+  __Pyx_XDECREF(__pyx_v_proto);
+  __Pyx_XDECREF(__pyx_v_sftp_user);
+  __Pyx_XDECREF(__pyx_v_sftp_pass);
   __Pyx_XDECREF(__pyx_v_tftp_export);
+  __Pyx_XDECREF(__pyx_v_proto_label);
+  __Pyx_XDECREF(__pyx_v_transfer_out);
   __Pyx_XDECREF(__pyx_v_digits);
   __Pyx_XDECREF(__pyx_v_dot_mac);
   __Pyx_XDECREF(__pyx_v_always_on_export);
+  __Pyx_XDECREF(__pyx_v_always_on_out);
   __Pyx_XDECREF(__pyx_v_ap_conn);
   __Pyx_XDECREF(__pyx_v_json_path);
   __Pyx_XDECREF(__pyx_v_txt_path);
-  __Pyx_XDECREF(__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator);
+  __Pyx_XDECREF(__pyx_v__session_snap);
+  __Pyx_XDECREF(__pyx_gb_7backend_6engine_9finalizer_16run_finalization_2generator2);
   __Pyx_DECREF((PyObject *)__pyx_cur_scope);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -8560,16 +10724,16 @@ static PyObject *__pyx_pf_7backend_6engine_9finalizer_run_finalization(CYTHON_UN
 }
 /* #### Code section: module_exttypes ### */
 
-static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
   #if CYTHON_USE_FREELISTS
-  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization))))
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive))))
   {
-    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization[--__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization];
+    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive[--__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive];
     #if CYTHON_USE_TYPE_SPECS
     Py_DECREF(Py_TYPE(o));
     #endif
-    memset(o, 0, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization));
+    memset(o, 0, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive));
     #if CYTHON_COMPILING_IN_LIMITED_API
     (void) PyObject_Init(o, t);
     #else
@@ -8585,21 +10749,21 @@ static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct__ru
   return o;
 }
 
-static void __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization(PyObject *o) {
-  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *)o;
+static void __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive(PyObject *o) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(__Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && !__Pyx_PyObject_GC_IsFinalized(o)) {
-    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive) {
       if (PyObject_CallFinalizerFromDealloc(o)) return;
     }
   }
   #endif
   PyObject_GC_UnTrack(o);
-  Py_CLEAR(p->__pyx_v_export_out);
+  Py_CLEAR(p->__pyx_v_buf_lower);
   #if CYTHON_USE_FREELISTS
-  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization))))
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive))))
   {
-    __pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization[__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization++] = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *)o);
+    __pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive[__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive++] = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *)o);
   } else
   #endif
   {
@@ -8618,50 +10782,50 @@ static void __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct__run
   }
 }
 
-static int __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *)o;
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *)o;
   {
     e = __Pyx_call_type_traverse(o, 1, v, a);
     if (e) return e;
   }
-  if (p->__pyx_v_export_out) {
-    e = (*v)(p->__pyx_v_export_out, a); if (e) return e;
+  if (p->__pyx_v_buf_lower) {
+    e = (*v)(p->__pyx_v_buf_lower, a); if (e) return e;
   }
   return 0;
 }
 
-static int __pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization(PyObject *o) {
+static int __pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization *)o;
-  tmp = ((PyObject*)p->__pyx_v_export_out);
-  p->__pyx_v_export_out = Py_None; Py_INCREF(Py_None);
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive *)o;
+  tmp = ((PyObject*)p->__pyx_v_buf_lower);
+  p->__pyx_v_buf_lower = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   return 0;
 }
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization_slots[] = {
-  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization},
-  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization},
-  {Py_tp_clear, (void *)__pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization},
-  {Py_tp_new, (void *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization},
+static PyType_Slot __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive},
+  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive},
+  {Py_tp_clear, (void *)__pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive},
+  {Py_tp_new, (void *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive},
   {0, 0},
 };
-static PyType_Spec __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization_spec = {
-  "backend.engine.finalizer.__pyx_scope_struct__run_finalization",
-  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization),
+static PyType_Spec __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive_spec = {
+  "backend.engine.finalizer.__pyx_scope_struct___run_transfer_interactive",
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC,
-  __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization_slots,
+  __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization = {
+static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive = {
   PyVarObject_HEAD_INIT(0, 0)
-  "backend.engine.finalizer.""__pyx_scope_struct__run_finalization", /*tp_name*/
-  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization), /*tp_basicsize*/
+  "backend.engine.finalizer.""__pyx_scope_struct___run_transfer_interactive", /*tp_name*/
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization, /*tp_dealloc*/
+  __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive, /*tp_dealloc*/
   0, /*tp_vectorcall_offset*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -8678,8 +10842,8 @@ static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__r
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization, /*tp_traverse*/
-  __pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization, /*tp_clear*/
+  __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive, /*tp_traverse*/
+  __pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
@@ -8696,7 +10860,7 @@ static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__r
   #endif
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization, /*tp_new*/
+  __pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -8893,6 +11057,503 @@ static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_
 };
 #endif
 
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr))))
+  {
+    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr[--__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr];
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(Py_TYPE(o));
+    #endif
+    memset(o, 0, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr));
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    (void) PyObject_Init(o, t);
+    #else
+    (void) PyObject_INIT(o, t);
+    #endif
+    PyObject_GC_Track(o);
+  } else
+  #endif
+  {
+    o = __Pyx_AllocateExtensionType(t, 1);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr(PyObject *o) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *)o;
+  #if CYTHON_USE_TP_FINALIZE
+  if (unlikely(__Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && !__Pyx_PyObject_GC_IsFinalized(o)) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr) {
+      if (PyObject_CallFinalizerFromDealloc(o)) return;
+    }
+  }
+  #endif
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_outer_scope);
+  Py_CLEAR(p->__pyx_genexpr_arg_0);
+  Py_CLEAR(p->__pyx_v_x);
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr))))
+  {
+    __pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr[__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr++] = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *)o);
+  } else
+  #endif
+  {
+    PyTypeObject *tp = Py_TYPE(o);
+    #if CYTHON_USE_TYPE_SLOTS
+    (*tp->tp_free)(o);
+    #else
+    {
+      freefunc tp_free = (freefunc)PyType_GetSlot(tp, Py_tp_free);
+      if (tp_free) tp_free(o);
+    }
+    #endif
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(tp);
+    #endif
+  }
+}
+
+static int __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr *)o;
+  {
+    e = __Pyx_call_type_traverse(o, 1, v, a);
+    if (e) return e;
+  }
+  if (p->__pyx_outer_scope) {
+    e = (*v)(((PyObject *)p->__pyx_outer_scope), a); if (e) return e;
+  }
+  if (p->__pyx_genexpr_arg_0) {
+    e = (*v)(p->__pyx_genexpr_arg_0, a); if (e) return e;
+  }
+  return 0;
+}
+#if CYTHON_USE_TYPE_SPECS
+static PyType_Slot __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr},
+  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr},
+  {Py_tp_new, (void *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr},
+  {0, 0},
+};
+static PyType_Spec __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr_spec = {
+  "backend.engine.finalizer.__pyx_scope_struct_2_genexpr",
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr),
+  0,
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC,
+  __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr_slots,
+};
+#else
+
+static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "backend.engine.finalizer.""__pyx_scope_struct_2_genexpr", /*tp_name*/
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr, /*tp_dealloc*/
+  0, /*tp_vectorcall_offset*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  0, /*tp_as_async*/
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  #if !CYTHON_USE_TYPE_SPECS
+  0, /*tp_dictoffset*/
+  #endif
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if CYTHON_USE_TP_FINALIZE
+  0, /*tp_finalize*/
+  #else
+  NULL, /*tp_finalize*/
+  #endif
+  #if !CYTHON_COMPILING_IN_PYPY || PYPY_VERSION_NUM >= 0x07030800
+  0, /*tp_vectorcall*/
+  #endif
+  #if __PYX_NEED_TP_PRINT_SLOT == 1
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030C0000
+  0, /*tp_watched*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030d00A4
+  0, /*tp_versions_used*/
+  #endif
+  #if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX >= 0x03090000 && PY_VERSION_HEX < 0x030a0000
+  0, /*tp_pypy_flags*/
+  #endif
+};
+#endif
+
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization))))
+  {
+    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization[--__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization];
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(Py_TYPE(o));
+    #endif
+    memset(o, 0, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization));
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    (void) PyObject_Init(o, t);
+    #else
+    (void) PyObject_INIT(o, t);
+    #endif
+    PyObject_GC_Track(o);
+  } else
+  #endif
+  {
+    o = __Pyx_AllocateExtensionType(t, 1);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization(PyObject *o) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *)o;
+  #if CYTHON_USE_TP_FINALIZE
+  if (unlikely(__Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && !__Pyx_PyObject_GC_IsFinalized(o)) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization) {
+      if (PyObject_CallFinalizerFromDealloc(o)) return;
+    }
+  }
+  #endif
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_v_export_out);
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization))))
+  {
+    __pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization[__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization++] = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *)o);
+  } else
+  #endif
+  {
+    PyTypeObject *tp = Py_TYPE(o);
+    #if CYTHON_USE_TYPE_SLOTS
+    (*tp->tp_free)(o);
+    #else
+    {
+      freefunc tp_free = (freefunc)PyType_GetSlot(tp, Py_tp_free);
+      if (tp_free) tp_free(o);
+    }
+    #endif
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(tp);
+    #endif
+  }
+}
+
+static int __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *)o;
+  {
+    e = __Pyx_call_type_traverse(o, 1, v, a);
+    if (e) return e;
+  }
+  if (p->__pyx_v_export_out) {
+    e = (*v)(p->__pyx_v_export_out, a); if (e) return e;
+  }
+  return 0;
+}
+
+static int __pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization(PyObject *o) {
+  PyObject* tmp;
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization *)o;
+  tmp = ((PyObject*)p->__pyx_v_export_out);
+  p->__pyx_v_export_out = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  return 0;
+}
+#if CYTHON_USE_TYPE_SPECS
+static PyType_Slot __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization},
+  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization},
+  {Py_tp_clear, (void *)__pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization},
+  {Py_tp_new, (void *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization},
+  {0, 0},
+};
+static PyType_Spec __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization_spec = {
+  "backend.engine.finalizer.__pyx_scope_struct_3_run_finalization",
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization),
+  0,
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC,
+  __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization_slots,
+};
+#else
+
+static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "backend.engine.finalizer.""__pyx_scope_struct_3_run_finalization", /*tp_name*/
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization, /*tp_dealloc*/
+  0, /*tp_vectorcall_offset*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  0, /*tp_as_async*/
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization, /*tp_traverse*/
+  __pyx_tp_clear_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  #if !CYTHON_USE_TYPE_SPECS
+  0, /*tp_dictoffset*/
+  #endif
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if CYTHON_USE_TP_FINALIZE
+  0, /*tp_finalize*/
+  #else
+  NULL, /*tp_finalize*/
+  #endif
+  #if !CYTHON_COMPILING_IN_PYPY || PYPY_VERSION_NUM >= 0x07030800
+  0, /*tp_vectorcall*/
+  #endif
+  #if __PYX_NEED_TP_PRINT_SLOT == 1
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030C0000
+  0, /*tp_watched*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030d00A4
+  0, /*tp_versions_used*/
+  #endif
+  #if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX >= 0x03090000 && PY_VERSION_HEX < 0x030a0000
+  0, /*tp_pypy_flags*/
+  #endif
+};
+#endif
+
+static PyObject *__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr > 0) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(t, __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr))))
+  {
+    o = (PyObject*)__pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr[--__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr];
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(Py_TYPE(o));
+    #endif
+    memset(o, 0, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr));
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    (void) PyObject_Init(o, t);
+    #else
+    (void) PyObject_INIT(o, t);
+    #endif
+    PyObject_GC_Track(o);
+  } else
+  #endif
+  {
+    o = __Pyx_AllocateExtensionType(t, 1);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr(PyObject *o) {
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *)o;
+  #if CYTHON_USE_TP_FINALIZE
+  if (unlikely(__Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && !__Pyx_PyObject_GC_IsFinalized(o)) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr) {
+      if (PyObject_CallFinalizerFromDealloc(o)) return;
+    }
+  }
+  #endif
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_outer_scope);
+  Py_CLEAR(p->__pyx_genexpr_arg_0);
+  Py_CLEAR(p->__pyx_v_p);
+  #if CYTHON_USE_FREELISTS
+  if (likely((int)(__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr < 8) & __PYX_CHECK_FINAL_TYPE_FOR_FREELISTS(Py_TYPE(o), __pyx_mstate_global->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr, sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr))))
+  {
+    __pyx_mstate_global->__pyx_freelist_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr[__pyx_mstate_global->__pyx_freecount_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr++] = ((struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *)o);
+  } else
+  #endif
+  {
+    PyTypeObject *tp = Py_TYPE(o);
+    #if CYTHON_USE_TYPE_SLOTS
+    (*tp->tp_free)(o);
+    #else
+    {
+      freefunc tp_free = (freefunc)PyType_GetSlot(tp, Py_tp_free);
+      if (tp_free) tp_free(o);
+    }
+    #endif
+    #if CYTHON_USE_TYPE_SPECS
+    Py_DECREF(tp);
+    #endif
+  }
+}
+
+static int __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *p = (struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr *)o;
+  {
+    e = __Pyx_call_type_traverse(o, 1, v, a);
+    if (e) return e;
+  }
+  if (p->__pyx_outer_scope) {
+    e = (*v)(((PyObject *)p->__pyx_outer_scope), a); if (e) return e;
+  }
+  if (p->__pyx_genexpr_arg_0) {
+    e = (*v)(p->__pyx_genexpr_arg_0, a); if (e) return e;
+  }
+  return 0;
+}
+#if CYTHON_USE_TYPE_SPECS
+static PyType_Slot __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr},
+  {Py_tp_traverse, (void *)__pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr},
+  {Py_tp_new, (void *)__pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr},
+  {0, 0},
+};
+static PyType_Spec __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr_spec = {
+  "backend.engine.finalizer.__pyx_scope_struct_4_genexpr",
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr),
+  0,
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC,
+  __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr_slots,
+};
+#else
+
+static PyTypeObject __pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "backend.engine.finalizer.""__pyx_scope_struct_4_genexpr", /*tp_name*/
+  sizeof(struct __pyx_obj_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr, /*tp_dealloc*/
+  0, /*tp_vectorcall_offset*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  0, /*tp_as_async*/
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  #if !CYTHON_USE_TYPE_SPECS
+  0, /*tp_dictoffset*/
+  #endif
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if CYTHON_USE_TP_FINALIZE
+  0, /*tp_finalize*/
+  #else
+  NULL, /*tp_finalize*/
+  #endif
+  #if !CYTHON_COMPILING_IN_PYPY || PYPY_VERSION_NUM >= 0x07030800
+  0, /*tp_vectorcall*/
+  #endif
+  #if __PYX_NEED_TP_PRINT_SLOT == 1
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030C0000
+  0, /*tp_watched*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030d00A4
+  0, /*tp_versions_used*/
+  #endif
+  #if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX >= 0x03090000 && PY_VERSION_HEX < 0x030a0000
+  0, /*tp_pypy_flags*/
+  #endif
+};
+#endif
+
 static PyMethodDef __pyx_methods[] = {
   {0, 0, 0, 0}
 };
@@ -8947,34 +11608,34 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization_spec, __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive_spec, __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
   #else
-  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization = &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization;
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive = &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization);
+  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive);
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct__run_finalization->tp_getattro = PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct___run_transfer_interactive->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr)) __PYX_ERR(0, 101, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr_spec, __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr) < (0)) __PYX_ERR(0, 101, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr)) __PYX_ERR(0, 81, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr_spec, __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr) < (0)) __PYX_ERR(0, 81, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr = &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr) < (0)) __PYX_ERR(0, 101, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr) < (0)) __PYX_ERR(0, 81, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr);
@@ -8982,6 +11643,63 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   #if !CYTHON_COMPILING_IN_LIMITED_API
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr->tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_1_genexpr->tp_getattro = PyObject_GenericGetAttr;
+  }
+  #endif
+  #if CYTHON_USE_TYPE_SPECS
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr)) __PYX_ERR(0, 90, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr_spec, __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr) < (0)) __PYX_ERR(0, 90, __pyx_L1_error)
+  #else
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr = &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr;
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  #endif
+  #if !CYTHON_USE_TYPE_SPECS
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr) < (0)) __PYX_ERR(0, 90, __pyx_L1_error)
+  #endif
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr);
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_2_genexpr->tp_getattro = PyObject_GenericGetAttr;
+  }
+  #endif
+  #if CYTHON_USE_TYPE_SPECS
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization_spec, __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  #else
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization = &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization;
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  #endif
+  #if !CYTHON_USE_TYPE_SPECS
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  #endif
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization);
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_3_run_finalization->tp_getattro = PyObject_GenericGetAttr;
+  }
+  #endif
+  #if CYTHON_USE_TYPE_SPECS
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr)) __PYX_ERR(0, 182, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr_spec, __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr) < (0)) __PYX_ERR(0, 182, __pyx_L1_error)
+  #else
+  __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr = &__pyx_type_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr;
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  #endif
+  #if !CYTHON_USE_TYPE_SPECS
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr) < (0)) __PYX_ERR(0, 182, __pyx_L1_error)
+  #endif
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr);
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr->tp_dictoffset && __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_mstate->__pyx_ptype_7backend_6engine_9finalizer___pyx_scope_struct_4_genexpr->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
   __Pyx_RefNannyFinishContext();
@@ -9417,60 +12135,85 @@ __Pyx_RefNannySetupContext("PyInit_finalizer", 0);
   /* "backend/engine/finalizer.py":22
  * 
  * 
+ * def _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *     conn,
+ *     cmd: str,
+*/
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_cmd, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_sftp_user, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_sftp_pass, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_timeout, __pyx_mstate_global->__pyx_n_u_int) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_6engine_9finalizer_1_run_transfer_interactive, 0, __pyx_mstate_global->__pyx_n_u_run_transfer_interactive, NULL, __pyx_mstate_global->__pyx_n_u_backend_engine_finalizer, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_6);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_6, __pyx_mstate_global->__pyx_tuple[4]);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_6, __pyx_t_2);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_run_transfer_interactive, __pyx_t_6) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+  /* "backend/engine/finalizer.py":103
+ * 
+ * 
  * def run_finalization(             # <<<<<<<<<<<<<<
  *     *,
  *     wlc_host: str,
 */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
 
-  /* "backend/engine/finalizer.py":38
+  /* "backend/engine/finalizer.py":119
  *     append_finalized_ap: Callable[..., None],
  *     save_report: Callable[[], tuple],
  *     skip_hardcoded: bool = False,             # <<<<<<<<<<<<<<
  * ) -> None:
  *     from netmiko import ConnectHandler
 */
-  __pyx_t_6 = __Pyx_PyBool_FromLong(((int)0)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 38, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_skip_hardcoded, __pyx_t_6) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_2 = __Pyx_PyBool_FromLong(((int)0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_skip_hardcoded, __pyx_t_2) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "backend/engine/finalizer.py":22
+  /* "backend/engine/finalizer.py":103
  * 
  * 
  * def run_finalization(             # <<<<<<<<<<<<<<
  *     *,
  *     wlc_host: str,
 */
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(16); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_wlc_host, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_auth, __pyx_mstate_global->__pyx_n_u_dict) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_ap_auth, __pyx_mstate_global->__pyx_n_u_dict) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_mac, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_ip, __pyx_mstate_global->__pyx_kp_u_str_None) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_mycap_name, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_active_rca_sessions, __pyx_mstate_global->__pyx_n_u_dict) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_active_rca_lock, __pyx_mstate_global->__pyx_kp_u_threading_Lock) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_ts, __pyx_mstate_global->__pyx_kp_u_Callable_str) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_clear_ap_workflow, __pyx_mstate_global->__pyx_kp_u_Callable_str_None) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_mark_ap_used, __pyx_mstate_global->__pyx_kp_u_Callable_str_None) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_reset_disjoin_counter, __pyx_mstate_global->__pyx_kp_u_Callable_str_None) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_append_finalized_ap, __pyx_mstate_global->__pyx_kp_u_Callable_None) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_save_report, __pyx_mstate_global->__pyx_kp_u_Callable_tuple) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_skip_hardcoded, __pyx_mstate_global->__pyx_n_u_bool) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_6engine_9finalizer_1run_finalization, 0, __pyx_mstate_global->__pyx_n_u_run_finalization, NULL, __pyx_mstate_global->__pyx_n_u_backend_engine_finalizer, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(16); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_wlc_host, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_auth, __pyx_mstate_global->__pyx_n_u_dict) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_ap_auth, __pyx_mstate_global->__pyx_n_u_dict) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_mac, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_ip, __pyx_mstate_global->__pyx_kp_u_str_None) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_mycap_name, __pyx_mstate_global->__pyx_n_u_str) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_active_rca_sessions, __pyx_mstate_global->__pyx_n_u_dict) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_active_rca_lock, __pyx_mstate_global->__pyx_kp_u_threading_Lock) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_ts, __pyx_mstate_global->__pyx_kp_u_Callable_str) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_clear_ap_workflow, __pyx_mstate_global->__pyx_kp_u_Callable_str_None) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_mark_ap_used, __pyx_mstate_global->__pyx_kp_u_Callable_str_None) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_reset_disjoin_counter, __pyx_mstate_global->__pyx_kp_u_Callable_str_None) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_append_finalized_ap, __pyx_mstate_global->__pyx_kp_u_Callable_None) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_save_report, __pyx_mstate_global->__pyx_kp_u_Callable_tuple) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_skip_hardcoded, __pyx_mstate_global->__pyx_n_u_bool) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_None) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_7backend_6engine_9finalizer_3run_finalization, 0, __pyx_mstate_global->__pyx_n_u_run_finalization, NULL, __pyx_mstate_global->__pyx_n_u_backend_engine_finalizer, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_7);
   #endif
-  __Pyx_CyFunction_SetDefaultsKwDict(__pyx_t_7, __pyx_t_2);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_7, __pyx_t_6);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_CyFunction_SetDefaultsKwDict(__pyx_t_7, __pyx_t_6);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_7, __pyx_t_2);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_run_finalization, __pyx_t_7) < (0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_run_finalization, __pyx_t_7) < (0)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
   /* "backend/engine/finalizer.py":1
@@ -9523,7 +12266,7 @@ __Pyx_RefNannySetupContext("PyInit_finalizer", 0);
 
 static int __Pyx_InitCachedBuiltins(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_print); if (!__pyx_builtin_print) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_print); if (!__pyx_builtin_print) __PYX_ERR(0, 37, __pyx_L1_error)
 
   /* Cached unbound methods */
   __pyx_mstate->__pyx_umethod_PyDict_Type_get.type = (PyObject*)&PyDict_Type;
@@ -9547,48 +12290,81 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "backend/engine/finalizer.py":96
+  /* "backend/engine/finalizer.py":82
+ * 
+ *         if any(p in buf_lower for p in (
+ *                     "bytes copied",             # <<<<<<<<<<<<<<
+ *                     "transfer complete",
+ *                     "upload complete",
+*/
+  __pyx_mstate_global->__pyx_tuple[0] = PyTuple_Pack(4, __pyx_mstate_global->__pyx_kp_u_bytes_copied, __pyx_mstate_global->__pyx_kp_u_transfer_complete, __pyx_mstate_global->__pyx_kp_u_upload_complete, __pyx_mstate_global->__pyx_kp_u_successful_file_transfer); if (unlikely(!__pyx_mstate_global->__pyx_tuple[0])) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[0]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[0]);
+
+  /* "backend/engine/finalizer.py":91
+ * 
+ *         if any(x in buf_lower for x in (
+ *             "error", "failed", "no such", "permission denied",             # <<<<<<<<<<<<<<
+ *             "connection refused", "timed out", "cannot open",
+ *             "invalid input",
+*/
+  __pyx_mstate_global->__pyx_tuple[1] = PyTuple_Pack(8, __pyx_mstate_global->__pyx_n_u_error, __pyx_mstate_global->__pyx_n_u_failed, __pyx_mstate_global->__pyx_kp_u_no_such, __pyx_mstate_global->__pyx_kp_u_permission_denied, __pyx_mstate_global->__pyx_kp_u_connection_refused, __pyx_mstate_global->__pyx_kp_u_timed_out, __pyx_mstate_global->__pyx_kp_u_cannot_open, __pyx_mstate_global->__pyx_kp_u_invalid_input); if (unlikely(!__pyx_mstate_global->__pyx_tuple[1])) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[1]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[1]);
+
+  /* "backend/engine/finalizer.py":177
  * 
  *                 OVERWRITE_PATTERNS = (
  *                     "overwrite?[confirm]",             # <<<<<<<<<<<<<<
  *                     "overwrite existing",
  *                     "[confirm]",
 */
-  __pyx_mstate_global->__pyx_tuple[0] = PyTuple_Pack(4, __pyx_mstate_global->__pyx_kp_u_overwrite_confirm, __pyx_mstate_global->__pyx_kp_u_overwrite_existing, __pyx_mstate_global->__pyx_kp_u_confirm, __pyx_mstate_global->__pyx_n_u_confirm_2); if (unlikely(!__pyx_mstate_global->__pyx_tuple[0])) __PYX_ERR(0, 96, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[0]);
-  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[0]);
+  __pyx_mstate_global->__pyx_tuple[2] = PyTuple_Pack(4, __pyx_mstate_global->__pyx_kp_u_overwrite_confirm, __pyx_mstate_global->__pyx_kp_u_overwrite_existing, __pyx_mstate_global->__pyx_kp_u_confirm, __pyx_mstate_global->__pyx_n_u_confirm_2); if (unlikely(!__pyx_mstate_global->__pyx_tuple[2])) __PYX_ERR(0, 177, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[2]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[2]);
 
-  /* "backend/engine/finalizer.py":155
+  /* "backend/engine/finalizer.py":256
  * 
  *             digits  = re.sub(r"[^0-9a-fA-F]", "", mac)
  *             dot_mac = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()             # <<<<<<<<<<<<<<
- *             always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log tftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
- *             print(f"[{ts()}] [EPC_TFTP_Upload] {always_on_export}", file=sys.stderr)
+ *             if proto == "SFTP" and tftp_ip:
+ *                 always_on_export = f"copy flash:/ALWAYS_ON_{dot_mac}.log sftp://{tftp_ip}/ALWAYS_ON_{dot_mac}.log"
 */
-  __pyx_mstate_global->__pyx_slice[0] = PySlice_New(__pyx_mstate_global->__pyx_int_0, __pyx_mstate_global->__pyx_int_4, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[0])) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_slice[0] = PySlice_New(__pyx_mstate_global->__pyx_int_0, __pyx_mstate_global->__pyx_int_4, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[0])) __PYX_ERR(0, 256, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[0]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[0]);
-  __pyx_mstate_global->__pyx_slice[1] = PySlice_New(__pyx_mstate_global->__pyx_int_4, __pyx_mstate_global->__pyx_int_8, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[1])) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_slice[1] = PySlice_New(__pyx_mstate_global->__pyx_int_4, __pyx_mstate_global->__pyx_int_8, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[1])) __PYX_ERR(0, 256, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[1]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[1]);
-  __pyx_mstate_global->__pyx_slice[2] = PySlice_New(__pyx_mstate_global->__pyx_int_8, __pyx_mstate_global->__pyx_int_12, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[2])) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_slice[2] = PySlice_New(__pyx_mstate_global->__pyx_int_8, __pyx_mstate_global->__pyx_int_12, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[2])) __PYX_ERR(0, 256, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[2]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[2]);
 
-  /* "backend/engine/finalizer.py":220
+  /* "backend/engine/finalizer.py":327
  * 
  *     #  8: clear ACTIVE_RCA state (always runs)
  *     with active_rca_lock:             # <<<<<<<<<<<<<<
  *         active_rca_sessions.pop(mac, None)
  *     clear_ap_workflow(mac)
 */
-  __pyx_mstate_global->__pyx_tuple[1] = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_tuple[1])) __PYX_ERR(0, 220, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[1]);
-  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[1]);
+  __pyx_mstate_global->__pyx_tuple[3] = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_tuple[3])) __PYX_ERR(0, 327, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[3]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[3]);
+
+  /* "backend/engine/finalizer.py":22
+ * 
+ * 
+ * def _run_transfer_interactive(             # <<<<<<<<<<<<<<
+ *     conn,
+ *     cmd: str,
+*/
+  __pyx_mstate_global->__pyx_tuple[4] = PyTuple_Pack(1, ((PyObject*)__pyx_mstate_global->__pyx_int_300)); if (unlikely(!__pyx_mstate_global->__pyx_tuple[4])) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[4]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[4]);
   #if CYTHON_IMMORTAL_CONSTANTS
   {
     PyObject **table = __pyx_mstate->__pyx_tuple;
-    for (Py_ssize_t i=0; i<2; ++i) {
+    for (Py_ssize_t i=0; i<5; ++i) {
       #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
       #if PY_VERSION_HEX < 0x030E0000
       if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -9634,42 +12410,42 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 11; } index[] = {{1},{12},{11},{19},{17},{21},{19},{20},{63},{67},{42},{79},{48},{58},{65},{35},{41},{82},{39},{39},{35},{31},{21},{25},{64},{76},{30},{39},{42},{44},{40},{34},{32},{23},{45},{50},{45},{48},{42},{44},{30},{4},{179},{1},{0},{1},{1},{1},{8},{27},{9},{20},{12},{22},{49},{46},{7},{6},{18},{10},{20},{2},{9},{4},{12},{16},{10},{28},{19},{18},{5},{23},{37},{5},{10},{8},{14},{11},{3},{13},{8},{14},{1},{5},{10},{4},{18},{20},{10},{15},{19},{16},{7},{7},{7},{19},{18},{4},{24},{4},{9},{17},{12},{18},{5},{7},{7},{11},{12},{11},{4},{6},{10},{7},{6},{9},{3},{8},{10},{10},{8},{4},{8},{7},{3},{4},{2},{13},{5},{9},{5},{3},{8},{12},{10},{10},{8},{7},{4},{1},{8},{13},{3},{4},{5},{12},{2},{12},{21},{6},{16},{33},{11},{6},{6},{4},{12},{19},{12},{10},{14},{5},{6},{8},{8},{3},{5},{3},{3},{8},{11},{7},{9},{5},{4},{2},{8},{6},{8},{5},{6},{10},{10},{8},{8},{2003},{2}};
-    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (2625 bytes) */
-const char* const cstring = "(\265/\375`w\023\275Q\000\352r\210\030H\340\262\272\0010\314G\030\230\035\327\302\354\230\035\263y\032aP\036OK4\017G1\343\245cg\244m\266k\312\267MK'\343\212\020\010\352{\034\027\231\255S11\234\010\2754\230\031gY\213V\032\n-\326Pe`\273\002b\001V\001\214\001>o2\324\260\035\352\317\366-\3636\224\365X\346\255\366\\\365\351\316\303.\362\330'\362|\301Fb\032\255t\365\216A\323p\267 \377\354\247]'\\.+\352q\306\227\243/\271=\361\235\217!\336~\213\233Fn\260\225\242Q\245>\257?\353\311q\223=\244\346\2311\225\"\016\032:\306\221\373nm\037\326d\307=V\223\245\0371\352e\243\206\016k\255j\306\205\302vMbR\213\332\204\327\341H\343\333\343\027;\304\242\327%\317\226\344Y\324em,E\254\303lQV\036\nG\006\005\025s\363\361\374\221\343\270g.\373\302\211Q\315\234\310\314\320\270jP^\324\335\206\261\022\246?\261\\y\226\213\333g-\212\034e_+/\265\002&\306S\301\274\210\374\244\333pO\210=\311G\027\332\266\254\351\323\341\306\240\325<Xfm\230fYL\250`T-\357\206Ew\221\217]\223\226\324^LY\337\311\3752\342<\232\362\230\0227\337\351\273\304h\262\205a\t\366\256s.\273\3754Ij\260\213\230\3646\306Cko\344\320a_\037\346\341XsW4/4\027\265J\345\330\327K\207c\351I\337\255\311+\347\245E\256\262&&\223)G\2070\034\206\030uU3\327\205\343\335\304x(\257\227\023\017<\301 N8\260\3101\005\264\355\257&C\\\326\304M\216#\037\307o\024\371l\323\274\276\331\246\303\362\343\237\356\345\214\024\367%\265\314\343\261\357t\332\355\373\216\333w.\363:F\212%\270\301\353;\006?Z\276\327\357|\365\275\031\323\256\347_\366;\266?\237\367\247u\336<\372#9xm\370\352\214\311}\303Lj\020,a=<\004g$\357\271d\347\373\362\034r\0163\231\272/9\311w\026m\370~w\034\261\246a1\313|\211\357\210o\017/\316\344M\265\256\313\225B\241j\\\240ny\027Zu}\336%\\\330V\367\272T4\336\352\246h`Z7\255\224\315LJ\306S]\230\0236\321\233e\036#\363&\320\222\330g\2609\206\355\341\262\356\302}\337\241\335\026[\277ENCAa\031=\350\255\351\353;\307.x\316a\242\356\373\353Yw\227\014:\030\304\375\351\335\265\267\3016t\235\r\237N\2666\030\215\373^\242\260\330F\236M2\373\312\261\215&R\203(Z""\3341Q\243|\242\236e\014\323\367\373\260\013\nH\216I\367\020\277h\036r\177\366\302\365\\\024\361\005\353E-\363\035\217\237\326\242-\271\315\2020\326\324\365h\363>\334%\254\3430\303\312n\273\317zG\2236e%\345d\225ZY\221\324\001\022HVV\206}\330+\345A1:B\303\307\200\233@\332- yg\010\217\272\"\365\322\022\016~\000\021\322\227\177v}Zj\202\216P\020\025\276\212\023B-E\245%\032\301\344\2334\370\rB+\311'\t\355rV\374\0257\377\246\365U\324\222\212B\345\253\234\316\322\371b\222D\273\017\316uB\030!q\236\316\007#\353\010\375\240\023\240s\345`p\03665\277\246\365kT\236\224A:\202~\320\025\373a%'I\264\266\270\377\236\244 hM\247R\362W\316\007\254\264$\255AIt\247RN\203\310\027\t\355pl\276\r\353_PG*\014\311\237\220\315\0263$\264\256\300\3712j\210*\203\336\234\2273\031\371\007B\253\227\206\244)T\304\256v\0228G\316\232\231b\372[\202\320n\364\301\325\316\224\323\233\"\370d\235\244\263\201h-\235\243\223\206e.\020\255\336I\"ZY\270\031\246Hhu\265~W+\250(F>\314d\231%\346\310\034\205Nf\010hw\272y\032\240\017\000\003v|L\327\355\000h-\241,\010>\211\333\351f\000\264\216v\237S\302\255\200\307:\340c\365L\222\307\252`D\362`\rQ\260\216\2100X\260:h\260\216Dk\001\320\nR`Ep`5\000\262&@\260\373\320\310a\217\r\334\275\0141\017\351]\364\360qw\355o\207\225}\374|\037\265\016\373\254\373\260\304\240\376\356\275\262\214\273i\204\010\323\025KR\324\344\275:\243\363t3\000ZY\256\334G\256\206K\301\225\210\276\010\264z\267\020\350\344!]AC\224\322\0162\335\207\221\3711E\036+\366\370x\000\"\240\326R\023\237\263\345f\300#\324\261t\036JjO+\244\257\024\322\237\220o\2633\304\372\341\261\216\322\214.@A\210>\354\306\272\225\334F7\220\017\317\014!1\003\230+\353v\000\004\343\243\236\300Q\361[T\001j\013:\223;\3456\210\326RMe\307\322\275P9\037\260 \340,i\375\344L\247\003\321\n\352\257Q\277\224\2228\335B\005\000\200v\264j\270\0245\026\257\377\252\3711\225\245\312x\247\214[\002\320\016\374 Y\373\265\361\217\341\354\317d_\266\263\377\226QcX\276\227JKp\3702\177\345\257H\370\0224J\002=\2416:O\347\241\203\345X9\036\034\306Q\30018?\272/""g\202\360\275\323\343\204E\370\273\221\177\036\3731O\027\242\323\301y\270\233\223\345\262\370,X?\253\020\322\017\250\205/;#\254~K* m\321\331\314v\376N\354\307h\276\006-#=I\240\343\000\222\326P\227\014\037\345t\000\203\302\371\231\014v\264\360\207\373\357\357\177.\337\205\302\237\200\033\341\362\371I-\240 %\271\027\234\014\0254\277T\031\250\037R\007\236*\003\025\241+\351^\270\320\356\245\363uh\376\215\352\2511\243\234\314IBZk'>\007\234#\244\235\207\013\301\225HV\030\3768\347\347\254~M\235\231\360\003\004\201\334\250\021!TJ\031\032\021\021I\222$\035!\010BA\220\363\232z\222\332\022\243\210\t\024adD\002\231\021IAIJ\n\031v\003JF;E!f\275\023gk\335\324\014\262+\373.\361\204\315\210\335PC\037TU$\235\230R\023r\265\233 \304\341{1\205\231=]\371,P\270JK-\313]\210\334\230Qy\354\221\357|\177\343K\343\274\227\240\357\304*\277\003\320\244u\240\200AX\355\232e$\347\266\t\340\331V8\003\351\031\243\353!H\356u\252=C!\213\236L\254\302\245\222Q\272\013\376\331L3\340\033$Q\017f\252\00041\217\0206\203\245\315t\255\256\364\316wW\245\002#\371J\307\363\037\220\266\\\352\031\302\344T\177\202\223\323\027^\010\373\254\3749D\200P\271\240\212SA7\276\252\264\220h\244r\361\210\367\025m\213z\342\031\025\020i\333\036\241\331\014)\226Qy\026\326c\361&\200\035W\217\341c\251G\253%\334\3471t\336v=\026[\261\317\226c@\347K\\W.\022\000\315<]\223\235&\336\237\322\306#\333\0079,\t\350\374\243L#C\022d\321S\231\021\214\233N\217P\310\023\027\272d\306L]\273\253\001\217\314~\231`\320q\207\010\355x:\321p>\223\267n\227%4K\265\377\272L?x\320\230F>ht\335v\336\244B\253R6\225\204Y\010\344\r\345r{G@)\035\265\014\220]\021\270\\\220(\254\274K\364\272n\021\341\245\005\031$v\356)\336\252\305\243]jO\341*\0366BW\327\360hL\210\236\250\005D\036\"\227$z\220\213\310\265% \003+\205\307/\254%|\330\246z\262\023\224\271\317\226\330\021\255>\324\310}\233\220\327\020\246Su\322\216\212\232\030NT\032Vj6D\305\344\024\317zs\211\036\233i\314@\213q\250\270\244\372\205Jj\227\237\2606\341wI\264\371\r\204k\357\000?\206\021S\025\272$\206\205+\341""\250\343E\344\272i\314vd\306ZQ \001\023\372\337P'Q2*n\335\230\022`\314\256\272\314\353H{\023\225\201\254\3570\252T@\373GMN\226\255s\352\220 <\351\267c\377v\236\200\036\201.\206\232\344T=:\203\363VW\2421H{@\"\n\252\376\253\\'\023\017>4\325c\223\203\203\325QB\2266\237\242\370y\341\203\031\303$|\316\3102\273M\215vT\372MA\014\334\237\244\356\324\035[\227\237\235+\247\314^\272E\203\032\376[\362\006`\271(\235\2563\323\303\344\245\256'\201 \224\031-9y\016\211\356JI\252`r\330\220l&!\362PJ\212\022\000\300\316\337\n\224\304\357\262\266c,\220:\322V\376q\014\334 \t\026\221\177\373\322\232\002\347G!$\263\330&L\253\227\234Rj\322:\376\r\312\213\260=\025r\271kM\023\227\231\234\354w\272L!\005\314\3223~\347\r\032}p\002\035\031\327\315\n\341\200\033\323\271\213\273\016\352A\312\316\324\247\352\025\346K\357\236\006\205\2746\021\311\241\3562\301\034\367_\3607\3048\251T\276\253\272\352f\033\304C\0303\233[\367G?\014\345\224i\346\030^\261\347E\022\214\245\356\032\353$v\244\241\333\0014O\270\003\342\362H\336}V\2600\007\275\0378\313\277\333E\276\367\261[\037\215)b\233\307\253\356R\245Q\331\006\001[\213\236\3559\222\206\232\221\254)\222\204@Vv\003\257iE\361\001\267)\300\254\325X\261 \321P\227b\200\253!\202\331A\233\241\214p\220\306\2701\374\271j\272\272_\217\244\315\303\313\007\264\372E\302\342\375\202\267Rz\r<Q\031\314\346\232\025\rc\t<\031\271g\"2e\277\201\343Ku}\207\262,A%\236\264\353\305\215\340\260$\332\244\361B_\264\3736\250E\025T_@\375\366\000\221\034\212\021A\230\344L\337V\001";
-    PyObject *data = __Pyx_DecompressString(cstring, 2625, 3);
+    const struct { const unsigned int length: 12; } index[] = {{1},{12},{11},{19},{17},{21},{19},{22},{20},{63},{58},{63},{29},{47},{43},{63},{77},{48},{79},{58},{68},{64},{56},{35},{41},{82},{39},{39},{35},{31},{21},{25},{64},{76},{30},{39},{42},{44},{40},{34},{32},{23},{45},{50},{45},{48},{42},{44},{30},{4},{179},{9},{1},{0},{1},{1},{1},{8},{30},{27},{12},{11},{9},{20},{18},{12},{22},{49},{46},{20},{7},{6},{18},{10},{20},{2},{13},{9},{4},{12},{12},{16},{7},{10},{28},{19},{18},{9},{5},{17},{8},{23},{37},{5},{10},{24},{14},{8},{14},{9},{17},{11},{15},{9},{10},{8},{3},{13},{8},{14},{1},{5},{10},{4},{4},{18},{20},{4},{10},{4},{15},{19},{16},{13},{7},{7},{7},{19},{18},{4},{24},{4},{9},{6},{5},{9},{17},{12},{18},{5},{3},{7},{7},{11},{4},{12},{11},{4},{6},{10},{7},{6},{9},{5},{3},{8},{10},{10},{6},{8},{4},{8},{7},{3},{4},{3},{2},{13},{5},{9},{5},{3},{8},{12},{10},{10},{8},{7},{4},{1},{8},{13},{3},{4},{5},{5},{11},{12},{2},{12},{12},{21},{6},{16},{33},{25},{42},{1},{11},{6},{6},{4},{12},{19},{13},{12},{10},{9},{13},{9},{13},{14},{5},{5},{6},{8},{8},{3},{5},{3},{3},{8},{11},{7},{9},{5},{4},{5},{7},{12},{14},{2},{5},{8},{6},{5},{8},{5},{6},{10},{10},{8},{8},{13},{1},{4},{2116},{507},{2},{2}};
+    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (3313 bytes) */
+const char* const cstring = "(\265/\375`\267\031=g\000\032\204@\034I\360\320\270\001\314\300\332\000$e\220\317\024I\005\254\220\362\200\000-\330\207\244\023\326Pn\362hg\304\356\244\305\024!\311\225$\222\215\030\334U\023\375?u7\333(2\217=\325\325>T#\232!\202\010\001 \376\300C\230\023d\004\231\001\216\001\316\001^\014KY\317\242'+\273\247Wh\362\302d\200qq\261\\w{!)jY(\352\357\366p\346m\253\353\363\314\363\326\247;\027\373\317\267\037\330\310L\243\225\260\336!hZ\356\027\344\337\3754,\004\014v\267\036s\\|\347\243\356\233\217\341\016i\244\016k\247\305\362!)\224\223*\307\221\373~m_\326d\317B\327\217y\025\2431\003G+\007&\342\366L\352\255Al\036\372\314\"\024\363\016k\274\356\232\334%\367\266.kc\271\263\026\275\373\342\352V&p^V7=\037\367>\322\304M+\307\005'g\007\306\263\362\367\247\224\351o\227\256\356r\2777_\335\230\253c\235\260\271\351Z65\244\366`\276\237\246\205\236\337\035zO{\375]\222\337\315]\272-\013\211y\034C \227M\320\345-O\362qH\337+\343\313\321\22797\365i1\314\340\325Ayvm\231ve@\264lZ:]O\251iy\223\272\363hO\333)\177Bps\357v1\207~k\217F\344\036\367\234\214\215\027v\177v\370m\335\257\r\0318\256\037i\234\034\357Gr\241\336\263\353\3460h\314\336\230\362F\326\016\371\212\036~\030S6Q,\301\336\265\347\225\375~\232$5\330w&\375\375\341\342\2755n\340\210\335\330\227\2718\362`\327N\315\016^\271X>\367\336XL\213c\351I\337oK\314'\2467o\335\226T*\345\243EY\026\305\274\302\255\034\0143\321\365\334t/\261\032\227\016t\311\032\\(\244\360\361\tB60\354e\351\207\374\006q\027\342c\350\273\366\270\313\312>\222d\037\265\026;\306^,3\250?\3371\316:\367\036b\234\3420\223\302\273$7YzMb,\346\231\2075)\346\262\206\261\2501\367|\207\3448\362q\0347\007\ni^c\317\246\305\362\343@\344\016\361\314\347\261\257\3504\334C<\206^\377\220\273\004C\020\373\236A\214=\306\336\220&\265\337\032c/\323\260\347_\367\341O\370yO{a\220\006\261-\1774O{x\207X\004\2010\331y\210\271\327C\017h\2273\217\324 \251\205\300R&r.K\245B\222\207\336\266e\374\341o\317|\231\361\230q\027q\366H\314\322\3010\030k\265\342\201\201Z\307\017\351\026\3760dsa\014k\355t.""\314\332\261\321\351\321a\221\310a\265rZ,\234\256\205mB\330v\027\201\357\227\256m\020|\256L\351\201<~3\363)\220\314>\302\365\\\\!>\353[\177!\215\324\243L\007\356{(\336\360\346\031\337>\334\234\346_^dF\017\366\333\303\240\035z?\017<\347\262\256\277\356\351\336!\002\n\010;\234\320QL\370Px\327&\243q\337\313\027\031[\tj\322K\315n\314\207_\357\323\341\250\275Mf\033S\244\006_\364\016\177\266~\371\266\006\362\262lF\323\244&5\376\276\334\341%\005B\003\2737\245\273\230kt\020\371\000{\276w~p\375\3263\317\375\375\264\336\267\344\266\013\332\334T\327\243\315\007*\324\303\314\240\233I$\247\030@U(\215i\360[Q\352\203v\037\316\034M\374b\370\303\357\177\035~\007\006\177\005=\241\336)Z\035\250 ,\270\032\364E\211\235_\262\006X\014+\202\216}\241\316\244\2504\206\226r1\024\037\305\316\357a;\366\346\204\3039UJ\332\332\231\317\000'JI\256CIP\224J+\313?\373|\037\327\257\2619+\337c\201J\373\362d_\026[\203\324\254r\220\360!\240+%9\223\222\356$\tbO\254\335\372\001\301\3678)\371\274\357\301>mmQO\252\206\006\277\304\231\240\266\256\326RU\320\362[\016\374\003\245V\345\253\224r>'\376\211\236\337\243\363cX\024+\"\346\307\250N\324Yc\226\230r\"\024v&@\361p\252\316\024\224\366\244bH\001\2440\234\r:\"\301\363yt>\017\033\264\032XQT\221\232\341~\031\313YbjU\340\217]V\020\265\226\306\260\374\014g\312keYyT\225T\205\302I8\371'\245\234\t\022\237\304\353?`O\254\215\312_\361L\032\223\244\324\2360\361qX\022\026G\305\270\016\327\202\362EJm\267\222\254,u&W;\005\234(g\315\2041\375\215@)w\022\241\265\023\346\364\346I>_g\311y\300\324\242\316\323\271\3632MLmw\252\230\332\027\n\303<)\2650\235\337\331\006\254\010\224/3_&\213y2O%\225IB\312\251n^\006\351\243#@\016\221\t\273\211\220Z\224*3\362=\334T\267\020R{\312\211\316\005\267\001\2436\300G\333\231%\243\266\300I%\245%)\320\242\234\0300i\021\034hO\246v\000\251\005\031\320\216\210\264! -\201\221\234H\006\310\220'\006\247\363d\242P\017\217\017\363\202\252\200H\007\210\212\345k\004&\035\245\034\033n-^(\013\272R\253\341V\270\226\220\377\001\225pvs&\207+\200c1b\232J)~\212""\224\257a\326\020\025\226\212\340`\250\314\t\340\274q`2\240\204\353\333\326\274\326\270\374\017\\\r]\241*T\327\230e>\2418\346\310T\231$r\33141Y\267R\205l\216\334H\243\266SITV\332\203s!\371\272c$\307(g\"\220\023\311@\355\234\"\246\211\324v\267\022)\375Hk8\030\334\204\014\352\006\324ja\226b8\231\"\3234j\363\350#\205$\200\255\255 D'\315-d$\246\257\364\002\212\355k\2035\006S\362W\274\033\320\271\241\375\030\265\247\325SMT\r\246/\273\275n,\267\323\r\344\2433ITL\017\363u\023!\265\020\261!L\224\37044j\016N\205\233\300\340\214y\245,b\316\224W\002\364\342R'\002\323\352\243V\017\252[i@\007)\207N\r\035q\312\375\260/\026\247;_\334\010\220r+\302\037\216\373o\021\350\003\315\376,\247\026\322\024y\335\240\206\244\024\024\374\373/\214\375`C\300\374\266\306b\312\275\376\313\365]3\177\206\345\263\234\264\352AU\251$\322.\035\2452\334\013\027\204f\224\001j\340\024\245\037.\225\340w\347\350\224\231\006J\271\037\360\203\372k\005?\347\261\362\360\340\341A\024\243\243#\007\014\333\267\275R\226\016\3559er\247\025(\335\200\243\235\nJ\332\005\177\201\251\035I\021\3731\014*\026\000{a\315IU\251\205\334\220\320\027\362\337\363\317U\370\343\023\277\005\233\331\226\206\257!\2273+bU\255+\227\317O\005\2466\202\271\250b\233\026t\320042\"I\222\244\003B\030\010\211\243a\246\355z\007\262\302\024\223\212\031D\214\210\210\310\310((H\222\3122\006\266\2055\346\204\t\003\006\202\317Dgg\003.4\037\024\215\277\340-\rf\312G\307\253\3457\026!\235}\301K\361\002\354\372\363\353\026#\227\335\351\355\223O\310\032\244\340n\205\372\360\370\255\242z\335\333\250\204U\006]t\032\316\206g\005G\027\375\256\r\323At\370\317\360E-\275Y!\236\0311\246\240F\253=\312N>\334\344VSe\244^\221\273\003_k\202`\235\223z\020>G\000\335I(\211\334GW.\350\344\0104P\372\017\266\224\n4u\004\234buI,\362\363\317\256U\243\352\0233\331\207\3720\231\013\227\t\2612\337\354\006\222\332'\341\237\237\313\210\377\373C9\261H\332s~^`o\201w7-\367S<M\362\007\031\r\177\033~\224\001\372:aDq}\242\244J\231\244\rn\264\346\247$\\=P\177\311c\034`j\324\020\256S@\032""\344d\224.\360\315=3\252>XGWJw\276\305\220y\035\232\203\nM\326\331O \227#3=\320C\031r\3265;\004k\343\267\003\340%^\370\304\003\2575\030J\362\2667\022\305\204\n\315\371\251,\240]\367\002\252\302\005}\376\004n\305\244\301\235\221\317\364_dJ\202\337\212\203<X\217\263n>\222\324\242\",\216\351\376\030\350\327&\022\365\367\260\313-\006\360%\357\223\247k`y\246%\357\377\327\014M\270A\267q\302\306k\230\263\360\002\257\r\325\373\333\025;\016\017[\216\222\"\341H8rs\350\335\274bw\320Y\337\003nq\201\257\013\254\204\215L\036\326\311_C\335/\351\302s\33278\304ry\376\177\246[\241\276\311r\246\"JpNt\301\302\330<\260\002 0\373\013\273\262\324\310R\"\376Fa\276q\016\242P\305\321_T\307e+Hg\t\245\222y`[\344e9B\247\243)\227fJ.\217>/a\341\325J\261Z\212\357\002\257\337\020\233\247\024\344\234\023m\rM\001\374\266\364p\305\026\221[\353%DG\3546\023\306\213`\345\323I\205'\007\353\373\276~&\006H\2161uK)\365/\251f\026\227-UF\256\311M\203N\2362J\266n\361\342n\023\321\220\365\260l\243\256]\247\246b\323A^~\253pT\265 4\023\316\225\240\273w\322\030\370t\3137X\322\247\235z\276\305\2559\362\377ab\022\357\340\314\344\273@:(5\3220\025\\)5\226f\257\330\370b0\302 A\315!\323xV\024\315\225\247\240\313y@'\3724\257;\221H\347\256b\342\320,\306\210F\0367\340\021\357%%\013\216\350\372q\367$\274<\026Y&\261\325P\307\2627qm\332\213\277a\260\016\236^`\345\014h\224\020\247\2556\324=G\353\033I\301\253\252\371\362\2375\327\340=\2212\350i\346\360\323\242^\361\315D\017\320\3205\253\315\240\312T\010\244\200\337H\006~\225\347\010Ch\244\363M\224;\023\224\263\340\246\006r\343\236@\313\224\214\301\\^:1\372\210\363+\2250\010xy3\3529\037x\016\370\352\311\r\367\213\035_\370J\024\311Y\n\371~4\214\3013j\356\306\213\225F8\222\210<\271j\351]f\325\253\207\206\366\344q\363o\221\345\3742Q\341\217\351 \036J\224\276\366\337\3309z\"\017\353\376\031\216e\202\253\225\237\377\007\356d|\233^F=\227\252}VP\360\316\234\264Xx\341\2262\264\024$\211\3613\037k\350\277Y\361\260L\263\314\270\274\257\204~V]\0316L\304\344\035\321\024=J\004Nc\324r,\351@""\364\315\321\277RP\304>\245\267\241\014.\005\177-\033d\345\025\3072\363\363\021\253=\275\014\034{\004\276<\317\256\360\256\354\016<|*KQD\317{\323\311\013\330JO\202\"\263*g\373\332\301\220\200k\204\316tW\016\347\255#\266\245\3633pI'$d\347Q\024zp<s\205\375\r\302L\r\257\\!2\006\217P\n\261s\247\000k\270\334\366\245\355z\305\356\032\331!\256ta\271\206\320\353\036J@3\336\351}^\034\266\235\016\3066\224\324\302\335\201\237\303\341\204\357P\205o\032\006\031\014\021\343&S\200\310\215g\006\212\023\242j\251\312\347\365\225:!>\204\334\200\355\016\321/\325 \327Z\205\344\211\336p'\246\016\372\276\010\242q1&\226\032w\007W~\246?^\035Lzov\253\3021i\302s\312\014=\216\000q\225\016\257FP\034>\272\3530\333Vh/@\232\204kG\014\034\3115\334\025\034\306\366w \235#\356~\223gzT\352\177b\010\277E!\331\267\352\007S\353\232\247]\0248 -bg\0371\376,4\323\245f{\000\032\240\311\327P\241\301\330\344\030\372Uw\203\032i\210\321\310t\371\177\255\273X.\310\002\224'\014\371\000\307\006\306\312\201\364dROM\240\320g\357\332d\325\232\217\213f\024\366C\241U\t\242O\345\204d\016\026@\200\335\257X\226\r+6X\306\032]2\301H'@\236\370\250\277P\356\241\034\250\261\270\210t\320\301\203\300\023\222w\000\336\237\365\212\001\303M\2749\346\254\317\350N\372\363`\314\032N\2359\231r\013\266E\014B9\250\235\"\014\203\010n\346Pq\346\334\342\2536\023H\303\223\343@\n6\020\025\340\344\201F\0018\"\352\217]>\223\277\023\3038\264\002\3526N\177\312M\233\324\242\243B\303b\263f\252\025";
+    PyObject *data = __Pyx_DecompressString(cstring, 3313, 3);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (2810 bytes) */
-const char* const cstring = "BZh91AY&SYc\277?Z\000\001\326\377\377\377\377\377\377\377\377\357\377\277\377\377\377\377\377\377\377A@\\D@@@@@@@@P\000@\000`\n\037=\026\334u\351\356\236\013u\357unv\356\2731\026\266\332\333i\355\000{\202J$h\322jOb\236\214FS\310\032hh\223\331M\244\236S\332H\332OS\321\224cOQ\000\366\250\336\223 \236\246\236\236\251\372\214M\246\244\332#G\244\375H%\020 \000\232OD\300\2200\230\024z\232i\243@h\000i\240h4\323@4\000\000\000\006\200\003POSS\323Rh\323D3L\214\0216\215\007\252`#\020\304\014\020f\221\200h\002\032a\240&\t\2040\2310\224\322h$Sz\023F!\252z\236\324\236\246\232d\r\000i\352\003@\000\000\000\000\000\000\032\0004\000 \300\232a4\304\304\321\223\000L\0014\030\t\246\000\t\223\000\000#\004bb0\t\241\210d\321\202I\023M\032\010\001P\331\244\331I\372\223\315(z4\324\0035\000\000\000\000\000\000\000\0322z&\203\324\3654i=\003\033\375.\003\205\337\322L\307\007\013\336t\230\210\317c\206\004WL?\326Jy\347\037`\371^\352(\230\032O(A&ff \324\305\027S\237\357B\273\266\343\240\247!H\025\t\204\201&BBBd\2477Lm3G\373\271&\214:j\025L\223\0143\002\212%;\356_\341\t \306\220\361\006;\306$\327\341\034qi\335;k^r\034\320\257\212[\0045\211:\250\330RYY\257RW\306@\303\010k\352\375R \367\211]\316\026\251\352\250\343RH\214\232CR:\010\251\221:D\t\252e\240\201\013Q\213*&\022C\303\275x\245x\241\226\305`,\riCd\227\032vi\240`\350D\037\r \r\221\224=s[5\233\373W-\361Y\206@\367\301\344\034s\367!\263\201\363\217\337-f{\274!\306\374\305^\261r\t*\252w5\220\220\340n\212st\334,%\327\274\205\332\005\204w\220\357\261z\323\024\254\366>\246\027Q\3765m\246/\023\005\345\224\332\321\3601\323\034\355\211\207Z\322H\324\352\231ZU\034\tr[7\340\276\371y\373Ra|\237\256)`\351/\242\231\313\265q\275\267\323\250\257\252\031\3642\322\242\212\351[\336\3467\344\203\254\251\222\323.h\\K\201\356\330\233\357^\215Y\245NV\271\263\300r\267\036\344\227Z\272\312K\223*q\014p\322f\":0\200!\216\222\270i\005Gi\030\034\303\267uc\374\326G\225\261\234\270\032\206\205Pn\266\242C\257K\352\354tt\275\237\2177\343Lw\262\263\213Y\336\336\2144\2122\364rS""\311\n\r\3251\332\3648\337\331M\037\312\371\014\217.@\366\236%\2644\261\364\300\277\324x\342Ph\034\226\246\215\203r\020`\315n\257\250\347\233\273\344\r\376\t\206\224\221\306t\367\212{xg$\"\351U\324Jq|Hc\030o*\014j\252\032\347(R\213OL\347\262Sg.,\257\001\206\014e\374\036\254]\0148\215\261\245\325\020\246\016\215hPU\030\2060\266\221\222\300\324\177\235@2U\362\217\035s\253>\210\224\024w\241\025%Th\347\256\221\3646%\367\214}\272\371cj\200r\216CliDU|\334cow\347}\363^7\342\002\331\311\027\324!9\327wP\300\210\360\204\352\nn\251s1\022\034\317\270\272XUx\204(\t\021&\210OB\200\233\346\330\315\306\312G\\I^Sz\013*\3659 f\363\272\304\265\364\332e\273\266IP!m2FD\207\2679\304\330\367&q\327\346\201\255\231\304\32072i\306\251i5\016A\027\340\006\021\000 =rR\353A\030\200\253s\016\273\270\361\214\335X\347\024+j\327\265!\366&e\242\352\304\271\356P\334\335\216\350GDB\365\241\211j\303&\\\330\000\226\302\014\026\240\3077`\360\234\014\372\226\031\240\\5w\345\220\304\221\244\0304J\224\261\205k\022\230\326t \031W F \231*\263\362(]\016 \2058\270\322\"\315\2000\313\307\216\204\206(\343\217T\266\372?H\264\350V\2026\243\225u!f\027\2523!\224GS:$\211$\244\356$\306\034\201\300\2352J\367<\264\301!\002\230\020\213\306T\331h\316e\306\335\343W\t\035\232\3711O\320I\2436\013\267\271\353_\017$.\375\367\333@\020\001\362\354`\272Nog\223B\360V\364\262\034\313\253\312y\217\277\003\341\266\032b\007\235S\225\200\2253\t\"Z\333\001'B\020\247!\0211\211S\206:\316\002\3014u\017#\260~!\340\341\236\024o!\213\270K\330\033\367Z52r\372\2400\3550Ja\024\377\026%!eE\337]\343\2668\006\332D\211\320\225\313\323Sw\010V\023\032ca&4{J\230\217$\211z\230\304\320\242\334\323\326\341\277\266b\206\205w\2424\212ds\003l\356\267\273\035\276\357\223\020\301cj\031L\254\266Pjf}\321\010\323\2279\265\316\006\001B\037_i\330ZRkh8X\334\205\245[\021'\002\266\342\204,x\034\021\303\204Lu\352\214yA\200E\211\005\225d\223\023\241)9\341 \037\330\210\202CI*\247\336\355\2710\241\350\331\204%\221&Q\251\2653\032\270\235\251\331\346\252\266\333$\230\352Y3""\244\2300\200\207m\231>q\334m\243\241.Jy\271\253\247[\025\316-\212\316\227;QL\232E\376>\367+\\\331\215y\267\010<\265\356\265\234\371\257\300`\204\357\030\030`\210!FmF\004\001\034)\245@\006M\251 ,\021\336t\251i\023\365\nXY\314\0044:Kd\016cot\315%,\236\271\345\3315\306\224)\321\332N?!\3573\341+B\207\034%iN\025g\017`\211\333l\343\335\005\263M\240\276.\263h\026b\233\212\231\335\214F\035\234\027k\252\274\362\360\322\202\261H\034\325\3270\277\214w[\230\344\224B\306\330^\245Zb\211S&Z\3214\275&SC\000\340\221E&\213)+\025\327&f\0313*\345C\261\314Sbq\261\204\242\301^>\007q5SJ\035\267\027c\307%-;\334\315\274z\246\344\270F\356\3354\014>y\341l\372\351\321\321U\362\360\\5u\030\256/\320\367\241J\371\030\245\026\307<\271\235&\025\372d\247+^\211T\216t\212\2671E\253\256$L\326\026\322\020D\335\246H\257,\022315 \256\343A\357\311\263\264R\231\024\nD\201F\301\227H\231\026|\321\010\304j\200\265\262\\\021\022\304j\320\210\022\2262\000~\231!\305Qc,\301$\201L\314\t\3518\217\305\243\036\025B\263H%\220\2266\341\014\367:Z^\301}\333\362\014R\352\361\3356\262I\222\243\272aXN\244\316\315R\210\226\016nu\203\247\265\320\241\204\343;\262\224\304\n\215{\300\256r`H\031\304$\354QL\245%rbaR\266\353\344\363\211\205\273\234L:\272D;\366\026\3249\r(M\034\021*\220\"\305\264\322\335\014\213q\014LD\245{UUy\305\007f-Ng\263\214\272\300\366M\234\230\200\224p\216\272d3\265\306\305\253\\\214\006\241\251\225\2473\213EDK\234\235L\345\306q\216V\255\314V\rR\213\231A\240\240\302\257\300\273\247\273r$_#\200\r\320\3318\300\204\325q\361d\301\217#\351\244\350\364\255+\205A\031\213\234\267K\005'o\333\032Q\275\247wg\224a\213\325\021\241L\325\245$5\307&\032\350\3440(\032\305\034^7A\234\273A\211\t\005\225MgX\351\0063\216\224Q*\020Qh\254\032\320\022\235\327Pb\3107\312\264\277\211\352\225\247\033\257\310cS\345OD\260k\306\266\264\313f\2220c\353\341e\261\326O\022\203\252\031u,V\023\003\213\004\300\304\225\r2\315\271(P\231\r~\327\276\312\244B\331\243K\211\371\216&\250\213\3101+*\323\252e%4)}\345\201\027C\274<\357\315\276\262Re+d\365Q""\021iX\264\ni<\260E\304\221\243\014\221\3266\3069UI!.\375\\\017\242\\\313\222b\310WacDcB\212\220h\223;l0S)\325t\003\336\246\215\016\246\271\334\370\334\0375\024\301\265\037\370g\315\223^\010b\303\210\005\331\2560\360\340\033-a\300\254#\014\241n\256+\340N(\234\204\316\230\307\032\240\270m\213ma\257&\264\257\262\361\205\226\317n\024~\265\002$K\213\001i\025\244\351?y\014Q/\036\252\350\007\265\220\351=!+\371\231\020\211\256J\224\336v\367\300V\25407\002\331\373@k}{\241\350Gi+\201\267\247keV\0079\271\354\221\320W\030\027\270\315\315\264\006\022\263\2422@\337G\330\227\374u\026xO\377#y\230\346\342\225j\304\204\206\240$l\310\020x\363\267\216 \366\313h[\273\344&\304\006\251\244\324p\010\362\214\013>\301\230g0\301V9\261q\247\r\371W\271\224\226*X\275: \324\3431%\227gae\266\324\257\020t\t\263\277\277\205p\363\364\t7d\225\357\253o\226\357\3636\275!G\311\372\363\344\363\325\013\334#=\234~]\262\032\361g\363O\376\t\304\3143\376\212\256\306\307\270N\364\247\354\252|\213c0\275\210T,_\331\261\247\354\354n\351\360u\017\256\224.]\"N\225\235|\022\035\237\005\014\035\331\30362\017E\006o&S\310\251w\247\305\340^\323\352\341\271L\2312\252\301\231\325\244\347/\214\226\322\232\300)3\214%\353\261\267\222\260\025cC8\225&Q\263s\"\277X;j\271\230\234\003\360\255\242\352DW\217\262\002\035:.\367\026\211\301\353\313\327\325 \341\351\342D\242Q?\235\023'GC\325\316}\277\240\250\375\353\274=\225\302\336\300\375(\234\275\026\003(\n\336\312#\034\246\301\254\247\242B\356\032\276x\312}\245p\332\3278\370q1\311\365\267\033\033\337\246\375\314\226\365\264\236v\023^\325d\032\373\377\327z\0318\341\220\207\224\207a\346\220Tf\210\363\t\001/\\y\377n \222\374M\251D(\250\001Q\240Qy\237\267LL\307\273\214\350\224\024\3639\332:H\355\211\362\027\326S\2150\2726\260V+\247\305\266\340t.\373\256;\270x\263\024i\227w%\233\262S\034F\210\370\213c\247[\344\217g\222\376_\270\200\315X\031\277\361w$S\205\t\006;\363\365\240";
-    PyObject *data = __Pyx_DecompressString(cstring, 2810, 2);
+    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (3470 bytes) */
+const char* const cstring = "BZh91AY&SYm\2008\307\000\004\336\177\377\377\377\377\377\377\377\377\377\277\377\377\377\377\377\377\377\301@\\D@@@@@@@@P\000@\000`\014\374\037vn\334{\251o\016\366\2732{d\356\312\265w\r\254\001GQ\235<\364\017\241\360\t$\210&M\022xI\372\236\215S\364Li\247\242\247\351\243&\222z\231\224\303P~\212d=\030\236\204M\250\017I\350M3S\323S\323\324d\364\247\244\362OP\362\202Q\t\211\241\240I\350%=G\224yOM&\236\246\203\365@z\200\000\000\000\000\000\000\000h\000\032\000\rL\020\321#)\215Ji\351\262\236\246\223\365=Q\247\224\362\215\036\2202\003@\310\000\r\000h\000\000\365\000b4\0004\t\022\020\t\220\2314\321\006\321MOI\343T<\243\324\365=\023OI\215 z@\000\00044\000\032\017P\365\r\007\250y#\324\025I\223&\324\30114y\020\030\2314hb`F@\364\004\030L\032\232444\311\246\000=B\03141\000\320\t$S\323A&\233M\0324I\352\232~\206\212~\251\372j\236\241\352\000\001\223@\000\000\031\001\352h\000\000\036\247\244\003@\037\370\256\321\231<\0365\036\017c\374x\217f<^?\032Re'\354\316~\0266Y\336s\220\331\352NV\334\036O \233\006\321e,ES1)9\327\207\001\255\026\233F\251\"\341^\330\323i\261\261\246\251T\022\274\220\267\325R\247{\301f\033\334\365\344.J\372RF\323\0140\022\314\306\322\030\3206\230\300m\214m;\252\265\316\204)\ri\321\300%m\266\031\274u\213t\312\322\267\235$X\233\032@\330\r\244\314J\022Q!\021f$Z\325\333D\004PDu\264\224\020\214%\3549!4/B\003(\031\005\3472cT\032\264\275\344\357i\272\030\316\331\014Pc\021\031\031\023+\256},R\3261\014hO\005\256\373\212j\331J\002\304Mc\233\246\023V\343\211\345\340f+\275\336;H\2421h\251\005\t\337\242:\205EV\326+]M\r\262's\346\322K\000\322\022\320\304`\020B\231\354\026\226'j\204\252\014\014H=09\210c\236\225\212B\331\027\263\257T]\246m\255y\333\326?{e\023\375\213\276<\364\202Cn\277\t\342\315\273\237\317?\334\246?a\230;N\311\236[\315\024bT\272?\206xU1\215\r4 \253\224\360i4b\377lA\231\030\271\305\030\225\211\220\357\031\337b\362\3520Z\361\243\026\0161\242\254\363\377\033\n\033\213\235\031w\362nE\363\301\243\340l\335L\232,\024\345\340S\025=\223KHPQI\263\231\222\374\027\3400O""\332&e\242\025\271\237\253\231\247N{\247'\254\031\252p\2766\354?RP\334\362\303\252od\305\317\300\316x\306\031U\344\272\231$\214\213\275<WE\221\020\254\265\357\215\340\335\362F3pa\331kq\265\035.\325G\311\234AW%\367t\332\246[\236!\345:\034\007f\346\022|\024(A\214\205\204\002\302\031\032\216,Q8\210\203\001ETY\257\253\2107\240|\372f]\213*;]a\260D\016\310\301\274Q\036\225*\347+\243\340\210x\333n\377\245o\333\275\300z\344t\373\222U\342r\255\004;\357d\026\221\007\350\307\2511\326\220\374\204O\302\023\262\355\360\344`W\212\370Fl\016\234\307\255m\242{\354Y\325\244R-\202\205(\025,K\360\366\346O7p\212\314\n\014\245\262%?\177\331\342NB\274YP\316\r\315\035}T8g\036\264\254-\354v\317?\0222\276\227\3176\257\214NH\301U\006s\n\211\306\033\323\203\007bY\341hn\232\312i6\211\r{1\031\373\210P\004\326f8i\354\366\265\375\216\333\224!l\020\034\340\320\272\326C1\304%\245\202xphFLF\355K,\026\n\3142@\225\321x\350\216\223\310\346\274\233D\3579\337R\274\334b8\260Wk$\200\034\303\254Xr\261Q^\242\262\310h/\004xy\375\324\234\235w^\000\342?\014\036\017@B\265\31266zI\204(q\203 +\266l\252\237tJ\327c\025\223\201\225J\300\205\024J-\316\000\204\353X\256\333\372\362/\311\224Q\236$\255reG#o\303\307\365\336%\311\305\230\347\347\354\\\254\020\272\321\002[\004\243\301\016\t\357\366\347\013\233\277\313Q\273\203\226EU\206\255\273:{\025\024\260\346\270\351\334\200\231\373\352\014\234!\310\007\220>\322\013\220\005\200-\2421\307g\tU9)*\3257B\224\351&\342\n\226Xn\316%,\311\260\351\361^\035F\244\373Z\220\327\205=(Cj\010c\212^\030df\313r\235:\267\264\200co\034D,\250W\251\246M\370\n`\t3\335\273]\247m\305W\177\233\307\255\214\230Kx\0304Q8\024\206=ub\202\273\325\304\211Fe\300#\020@W7%\241t\014\242\024\211g\235Pf[\336\325\241\t\237\201\353Vv\177\234\275\246\276\322\357\326\037S\262[\036\227\301\276\254\226\214\345=X\353\371\371\034\310u(,p6\330\345\020\333\032\037\347\325a\357Z\320\323oL\036\253A!\201\245\002Ro1\227P\361\323b:\233c\332\245-\206\236FB\337\232\250\224\216\361Y\301\3455\3335\005\376\217\003\356\000H\000\352""\257\3173\334f\302\365\332\267-\266cQ\373O,]i\361\220\2071A\325\353\033@6\221\030\224X,\247A\314P^\217\"\311\200\304ft\240\256h\306\230\014\244\347f\t\270\372XL\251\227\324\344\241\330\036\363\265\320\350\330x{\272\215\22743{\177V\227\341[\217\311\215\326c@`52#9\004\211\356\364n%\"2\242\227p\261#\316\232%\253\331Za/.\2107\013\017&\336\250J\220xK<\217\037b\203\313\256P&\210\334\373\005\321c\332\303[\2574\017\304\361\202\347V:l\036\005\370/O\337\240\346=?q\350\365\372\375+(\373\026\225\266\341\222sr\331\226\367\031\270\352\362D \333\307MR\331p\250sv\363\235n\350BK\304\217\026\271\355\356\035\033\033qqo<t1B\365v)\232F\305F\3728\270}cN\212<8^\005\266,\003\207\242\312\315\267\353\010\342\016\312D\207\000\3049e\324\r*\221\340?\031\0279w\325\235'\016\305\260i\263Khr\343\\h\\~_\241\365\316\345{Kn\341Q\203[e\tv\223P\333\002L\240(a\003\222\321\021)\233\3612b\332l\213\312Kd\211\315\203F\023\021Y\036L\261\223\325 s\245J\243\207\273\301\352XWG`\031!Td\"6Yh\252\231\211WJ\3460\224\020\020\022\225\002UVQ\205A6WLE\035\2650\342`\204\377\211+\302\366\324-,t\024(\001\024N*\032,f\365Q\331\244o\001\231\245\303J\334\270Jw\331Y\300o\215\036\241\345\361\303{\235\265\3576\233\231.Bt\032o\326\200\210\212\355\362\232)\000B\373\304z\266\024\230L4\020`\371\355\265\242Z\357\r\231\250dK+/SBB\225\037(hr\030#\2052\223\344D\213\240\353mPV\251\004\352\327\215\272h\320\017\347Y\337\233\253\227\277\226\365\313\242*\246\025\202\330\030\211\264\252%\316\323\263.\2274\022\250\242\301\236Up\007R\3726\232S\315y\301\321%X\325\341\210\267\240\030\330\323f8;\237\024\313\332g\273\322\261\026X\216\353\242\006\264\016nNt\2056\373,\362\244n\217\363\263)\345\322\"D\36119 \253}\"\rt\301-z[\210;\025\306\367r\321U_H\312F+<b1\313\031d\345;\013\311\347{\306\270cCc\237\024\231Cc4H\265\261Xfb\213T\365\222\r\233\213\351\021\350\226\024\276\3215\024\331%F;q\261\022Ck&\223Ya\306\354mr\267\"\221NZ\206\203oY\221\221\235DD\344\366@\2670\226h!+\"jb H\301\217@;\342\347\356\n,K\335\205T\211:\330b\324\3107\251\3176kh\270\347\003y""\022\304/\021c\224\020\3067\303\022\2603[\313\214\3209m\355\347\276\245sM\2462\270\206CQh\324A\022RJ\354\315\\X\312\02289\325\226\320\353]|\334\320\340UII:\212\003\230_\020L\211\335%\002$%\003Lq[\025`\353\307TZ[\266\332\3632\321+\313\335\010\211\310\337t\007o{\251\251\034\323)\277=@\216\364H\340\322\250.\302'\215P#B\264U\352\352\311k8 \257$qB\014Y\347\266\312\034q\310b\263H\211\262\016\036\000\2233\325\034\252l\233\250\254J\335Di[\353\225\345\2425\336\030e\320\313\023>\265Y\007:Q\020y\274\271\364\252\371\014\273\333\215\014\334\032Cq\004\334\237\0048%\"\030\363\345\323\215\262\233;\244\315\007\013\253e\321\361Y)\034R$e$>\340\006\355\247T\030\251\006\014\256\371\\S\200\327\224=\032\313\335\027>\264ZH\006\305\005\313LMz\315\010z\036o77\272*\202n\240\254\256\025\035\227\003i\215\246\301\346\2041\3420\325(=HB\204bR\n\224\rk%\307\270f\255\305\016]\251\\;\337Bu_\215X\021\0350\306\230\"\2464\260\255X?I\225\031T\224\251u\004Z\323|&D\204\024\233\n\\\270\013,H\371\020\031\314D\021\306&\016\230\332v0\3077\231\265\333\247\214O#\005[\t\356h\214\007\240\306\034\030\tH\256\232m\205\244]\210F\010\335}\265\327qC\320\203\244\003\220A\013L\337Up4B[\027\260\304\373\223\n\342H\031\316\005X\n\365\231Fq\260*\324\302\231\n\302\025c#U\013X\303\247\320g\211CM\310\344R`\304lr\022@\306F`\314 \242\354\325H\rq\253!G\304\027\031\251\021\n\312[\353\270(\235{t\362l\222\234\326\0231\253\007%MF\2502\206\211\031!\201\004\025l\241\270\210f\252R\010\245\231\252\021\203\006\016r>L\251\265\315\217\261\214H\340=\261\341\262\310.\337+|\310g.\037\305\t1t\312\"\335|\2261u\330\001\363\322\213\364\274\2301[\330p\303_\247\323\246N\251uU\244\025-\024g\010\3003\361\034\332_Y\023i\005Z\315\031J\245\2665\234\2137g\010d\214M\213\254C\033Q\324s<-\336\271\021\030\262\335\332\316g*\310z[\310\331z\303\203\013:\352\357\234\021^b\330\253\036\352M\037\201,\"\\\326\227lL~c^\353\177;\036~d\r\270\363#\270\217\324\332iL\207EcP7S2+\001\351\027\205\206\247Q\334L\226:\220\"\305\256\303\310\364}h\022\375\037=\3574\332\027\255dG""\276\357\376\367\255&\t\203\003\301\363\010\374\333?\264\230\344\203\334\301\344\335ZeG\007)\314\025\222\311\330\276\364t]\251\013\312\237%\330\321\301\004\341m9\3109\031ak\304B6\234M\353\026\233!\306\323\206\016,.]r\002x9)\344\002\365\267#\222\250\307tb\200X\367\016'\236\023\214a\311Bj/*8\263\207QK\373L|\201A*\037/$\360g\227\214!:\205\013\030$\023\271g\275\274\373\316\357\337\300m\230\2142\234N\262@\377R/7\224\304m\366&\225\371o\307K\363K\276\361K=\005\317K\315Xm~\005\320\3727$\356s\351\334b\335\371\356\263y\356\342\273\267[\236*\016\345=}zX|\350#h\342I:\262J\322\030\313\225\216q)2x\"6\223g\224\265\276-9\007 X\343\220\027\236\374v8\002\354\014\304t\341\240\244\t\340\0351\227\001\310\250\3001B\007ET\234`d\201N\216\300\372I6\267\256\n\234f\215\377\rU\240\352y\264\353Sw\027|b\246b\314o\002\373/\243f^^\2531\314\311\244\234\356\201_\206\362yK8(i/\310\250>\227\337^\030ub\002\272\352F;\326\206\263\005\241W\030\217\0322\257\374R\336&dg\231\335\203\206\017I\331\375\251\236\3343\0337\261\355-\237\325\353.\332\211\214\307\003h'\300\313\274\376\252\260b\243\272\332\336\244\\-CMTS\326\2025`\016\3224\217R\321;\226h\037\235y\265\261\332~/{e8\202\377\\\301\314\345\314\344\312\202\220\3334\361\013v\200\247\311\367\253\363\340\206rI\235\200\200L\327aV#\332\030L\267\234\356\222k~\226i\223\310)\021\022q\246e\202\230\257\0317\251o\374\366u\255@\373G\000\321\323~\035\273\244\344\251\245bA`\371\262\003?Qe\312^l\037_\003\215K\232\226\340\206-\311EL\021\223\021[|T\005\216^\215\007.>MF\r\310\323\177wL\023\256\340\252\222\360\254\235\325a\233b\243\032\332\356\235\035d\312\325\3604O\217\312\200\202\374k\243=\\p\2526\277\361w$S\205\t\006\330\003\214p";
+    PyObject *data = __Pyx_DecompressString(cstring, 3470, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (2601 bytes) */
-const char* const cstring = "x\332\275VMs\333F\022\215\0229\221\025%\026#\332\226m9\206\254$\376\210EE\265\216\355(Q\\\260L9\312\352\213\242d\331\226i\354\020\030\212\260@\000\304\207$&\353\255\234\266xde\367\200\303\036x\344\221G\036q\344q\2168\262\362\013\362\023\366\r\010rI\231q\222\313VI\340`\246\247\347\365\353\327=H\354\275\370b\366+2\233\023g\2273s\342\352\256\3704-m\254KKD\323HV\243{\211D\342\226\260n\3504\323\235\332\313\334\022l\307\352\231\340o\203\254\034\327\324h&#\354%7\227\244\355\345\355Mi\307\324\014\242d\204As\277\374\347_B\027\201\240\031\373\202c\021\335\316Q\313\242\212`\273\262Lm;\347jZ)\361\233\333\315\207\252\375\322P\365\244)'L\231\230\177\316\305\262j\331\216\220\324\035j\t\026\265MC\267\351\302@\254\273\342\326\372\312\372\243\205\337\000,\024HI\310\223C*\344\210\252Q%!l\3751wX\021\350\261iXN\264\363w\354\211vDJ\366\254\241\207\307\377\231\235\177\020\352\362\312\272\270\272\362,\211\241\270\231\021\226\014]\247\262\243\352\210\325\020\304\315\001&\256\256\320\254\273\017h\232`S\335\031h\270\264\223\336\336X\233\335X_}\232\021\322\007\252ir\227yb)\262\241 U\273\253KskO\227\304\3159\216^\2205Jt\327\204\277\242Ku\031X\r\253\337c\224wA6\334N\372\250\363\272\331\262\252\023M\375\2018\252\301m\013\320\2473\300\333#\252S\213\204aZ\224sj\013(\204>\223\357\323\310y{Q\020\204_\376\371\363\211\010C\364\231\301\223\\\252\003\027\226\210\351\270\026\025\216\210\r\376,J\224\022J\3150MP\362\313O\377\006b\035\240\\\340J\014\334\277qH\255#KEH\246\205\340\034AAx\262\023\355F6\024\036Rr};\271\305\323\002w9\325*\014\366\325U\312\300UUW\035\225h\375e\362\272\231i\330\316lt\214`\270\216\351:',7L\252sP\310\270\220N\177\027\346\242\223\356\223\234\247)\\)\202\022\345\332\310\t6)P\256\256\353'\354l\373\315\tN\273\205\002\261J\235\004\276\226\276n\360\327\006O\343\310^\235\367T\334\000\343A\241\275yGT\310\300_ \010\370\315\306Q\014\373\221f\021\367\233\355\177\0378\360vpr\334v\207N\315\260\321 \372\023\r\343\276\232\347\267\300\272\001\316\235<q\204\245\222\223\307N\325\206\02255\313\001R""\215k\332Re^\2460\322\205\315\344\346\354\355{\267\005\036\252E_B\2606zuV\326\210\215\243y\232\263\256\252A\370\202S2\251\235\020VrB\311p\005\235B\330\220\261\t\273\336\rN\236\352\002/\177\014\204kD\327\r'\344E\302vH\355\032\004d\361&\206\236\207\335\313D\263ibot\356>Q\024\t\2664K\344\003\224\312\034\325\367U\235\316\345\332=\203Z\t\263\264\027i9\323\251\035 \340\204\343\344|B6\314R{\2700\327;\376\337\265\332.b\027%]\010\353\272\223\341\236j\347\0353[\022dP\211\023\237+\237?\267?\317\226\034j\343\027NU\252`\240\352x`\355\372snq\343>\336l*\333(\014~\367R\235?;\"\312\032\206\323\006r\255\233\356P\212\275:@\245\355\313\252\335\336\251$p\231$\302\373,\347\230\013ss\005\003\325\316\305\033\265'\220$\2206\201|\230C\317U\320\021\332\361\n\232j\363\316\2310:\315\350~\227\265\356\024\300EV\374\226\266\363\306QD\226\360w8\222\205p\372F\273k9\304\n;q\256\267wwn\202D\310#\364\204\215\\z\035\310N\236\363\311\017X5\344\203\236PE\275\324\373\225\320\375\322\211n\266\357\220\r\020\277\022\366\257\360!\255\213kI\356z\343qrkwke;)m\212\333\350\240\353iI\332,\035\343\377!\304,\255\323cg\213\346\322;KK\311tZ\332J\266\031\222,\231H\0320\364\274F\005e\267oo\t\312l\347\212\230\022qQ\022\246\004\302t\374\350ho\004\335_W\244\216\n\025\211@\357%]V\r\010\316BO\205Fm\276-\222m\242-\333DW\266\020\200\206\334\312\206\244\0326\257k\013.\244#\303:\310i\306Q{\"\353\346\360- k\330(\251(\024\213\310a\031\204%\317\333(t\023%1\372\221p2j\232\224\244\034\"3,\205\036\2522\345%F\025\320\241\250\373\252\303\005)\267yU\014G*\300i(0I\242\374\222\306\317\261\314\037\252#E\014HrA\211F\360\237#6f45\247\362=9W\2075os\307\246\265O\321X\240 SRm\251\313\003\224U\260_\332 \324$N\036\321Q\013\207J8\031A\341i\035\360\320]t1\274\031\212\313\335\026Jr\304\264\324yR\247\240\036 \343\307\216\311{\013\250R\270\036%\216\203\233\230\270\221\001\321\264T\035\310\213.\321\332\033-\312E'9j\201\002O\370\t\"E\227\225\024}\230X\024\025\244[\256.\365\312\371\344{\342\033(\006}\351\333D\024\256M\270t\332\237\"\310\227\234GV\340\212""\337\350\374_\352\364\221\2361\207\001\375K\022G\321\306\207\221Bs\304\325\034\033\237\\R\367s\313F\317@\r)\200\307\253\211'!\374E\020\250,\336\254M\264W\033R\225\320\210\0202/\262(c\341P5\273\365\206\201q\304\031\300\326c'\314C\273\355\202u\213\3038$\232\333~\330\350\006j\256\304\217\213F8\360H\223C\365\363_\236\341\237\206Z\037\236\tF\337\017>\37008=\032\214\234\016\306c\301\205\213\301\331s||~2\370h\"\2704\305gb\037\005\303\361\212\030\234z7\030>]\276\342\r\265\360\023\013F\336/\317\227\037\260\017\027\032\323\301\310\007\345te\350\327w\337:5\362\223S\236o\215LT\346\271\233\261X%V\231\251\244*Y6\371}\363\323\246\315\266\322\301\330\371\312?\252\251`|\312\023\203\361\263\225\024\177l{1o:\030\277\340\305\275\224Gz\006\347+\216w\333+V\207\370\\\2545v\246\354TnW\212\036\336'\275\367\274b\253\367\210o\032I\177\302\027\203\261\017\260\312&o\325\304\232\324XkN4\327\330\323g\301\330De\221\373\301\221\025\031\347]eS+\315X\363\032K=f\217\237\302\2425v\236\235\277Y\233\356\203=_\237j\354\3703~*\364z\311\273\307f\356\326\213\215Q\177\226G#1\351o\3018\2176\016x\336\014@g\231p\2571\324\230\364\317\371\207\315\035\266\265\303v\036s\223\305\352pu\245\226\256\277S\277\323\210\205\346\301\344%o\336{\2000'/{\351\352Pk<^Y\366\246\275\371AP\357\262\273\3377\247\233w\331\326.\333}\306\236\355\265\306\246\330\024B\014\306.\260\013\267\330-\254\236\000\376q\303\365\227\374b\010\374\262\367\204}\372U#\326\270\345\027X\032\001\313LV\332\364\307\317\203\317\267\331\305\207\276\350?k\036r\270@7\341\211\310'r\037?\333\375k\361\034\014\206\036\277Z\275\316n~\333 \215C?\023\006\235eY9\364\315MR\301\324\025d\361mvu\243Yd\233{l\2170\222\r\246\246\253\023U\261\025\237\364\336\365\210W\014\342S\336Z-v\362}\020\035\253M\261\271\313\266\221\266\347\354y\2465\3061\2751\372j\246>]\377\246\361\252)\016\316\327E\377N\363\\\323e\333\240\367\t\307\375\252\272\\\233A\276F\033\237\371Ca\014\236\\\215U\257\262O\356\263\373\nST\246jL+\264\372\242\003\207\235\240\006\347\360$\356s\025\305\373\004\261\376\310ew""\321\233c7\3567\212\376\350\211\\~Q?3(\227\263\376\253\020/\320\320\327t}\223mC&\310\302>\333\177\311^\036tK\342q}\321\177\307_d\233\250\274\217\275<\373\014\025\334\270\343_n\312,\365\202\275\2208?\013\336nU\254>\257O\324\305>\246\340\013A\033\3140[=2`\037\363dsAEj\030\020{\230w`E\330\274hx\344Yo\330\023\331\345DM\251#\\\376>\344\235\343<V?\251\222\352a-U\313\326\207\353b\375qc\276\361\240A\221 \344\370\n\273r\217\335\003\215l-\224P\037M\354\213\207~\022\365.\366\361\304\026Vy\007\300\311\310\331\313\377\017Q`#\317\362\007\354@\353'\312df\221\025\2557\020\305;\021{\206\330r,\307\361\266F\316\224_\241U\366\006\272\326L5\367\331\016\3542,\363\202w\305\"o\337(\227\277V\213}8\266\272\375\002=\375\327\221\267N\217\225\347CrzN|\340O\263%8\002\005\224\321\\0~\321K\324\206\202\270\000d\361n\305\307/\207\241\246z\006\227\274\273a\252~\250\207\313\251\026\010\271\033\312\271\330^DKGK\375\2746_\333h,6\337i.\262'O\373\216\376\2569\324Su\350\366?b\317\357\227;\356\033\364cD]y\273\002\373\2516=\023\025\021\021\236\032-\307\3123\345T9\313\306\277j\234m\310~,\030>\025\340J\372\332;@3\341{\3132\270\274\312\342\267\241\256\214\377\251o7\247\373\346\277\254\247\352Z4?\374~y\021\327M\357\362#\277\330|\257\203\032]\022\267\350\310\245\360\232:\005Z\2069n\022\014\217W\206*1~ev\341\334\251\347!\343\277\370X\274\020^x\275\213_7\356\371_\202\243\371\337\232\345\255td\254,\006#\343l|\246z\273Z\254\235B\177\342\025\222\noc/\366_\364\317\314-";
-    PyObject *data = __Pyx_DecompressString(cstring, 2601, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (3313 bytes) */
+const char* const cstring = "x\332\225W\317w\323V\026&4\241!$\0207\001\002\004PH[\372\2038\365\224\362#\300p\214I\332t \211\343@\n\301hd\3719\021\221%E\222\223\270\235v\272\232\343\245\317\314,\264\230\205\227^z\351\245\227^\276\245\226>\375\013\370\023\346\273\317\262c\007\223\266\347\020\353I\357\276\367\276{\357w\277\373\330\330x\375\325\314]e&\023\235YH\316F\237\254G_$\344\345%9\246\350\272\222\322\331F8\034\276!-\231\006K\266?m$oH\216kw|\240\267^Vn\316\322Y2)I\322\306\374JL^[X[\221\237Y\272\251\244\223R\362\017~\373\355\177\377\221\332\270$\335\334\224\\[1\234\014\263m\226\226\234\234\2522\307\311\344t=\037~\357r\353\261\346\27415c\336R\303\226\252X][\354j\212\324\033\342\212\3428{\246\235\226,\333\314Z\256\364\333\257\377\225\034f\2445cSJ\300P\262\002\203^\007\257\330\246k\252\246\376\240\327\244X\255\342tf\270\232\242;\222j\032\031m3\207/\275\241\254\005\200a\230EL]F\216\3656}\3460\333P\262\354\275\250s\201A/`\353\321\325\245\305\245o\347\336\023r)\253\344\245-e\227I\031E\323Y:,-\347\\+\347\316IGn\206\031\211\355[\246\355\006\353~\307~\311\004b{\027\347-\256t\204\246\351\312\266fY\344KW\"\217\334N\321\367\224\2743c\032\302\227?\003\244\353\214\243\234\227\216\332\245\275\001\010g\332R\032\351S]\270\243\031\222)v\370\243\353]-\213eX#)\031\027\357\300\276\260\270\024}\262\370r\036\303\350JR\212\231\206\201\315)>\256)EWz\230\344\2144K\3456\021\025\235x\341\3664\214=K\254-?\235Y^z\362\002lm\205|K\261\323\252\231\006\206\365'\261\331\247/b\321\225\3315Ae\235)F\316\302~;9f\250\210\220y\010]P\201\310f\316 \3506s\230\373\256\331\202f(\272\366\243\342j\246q\300\365w\314\276e\006\263\025\341\246\315(\235\216\004\241\3522\371>\001\3566'\021\335\337\376\365\357C\036\n\364\311\336\037I4zN\304\024\313\005\023\245=\305A\374l\246\244\363\220B\323\262\002r\202\253\000\225\003\256p\317\365\313\340\364\236\255\271\355\342ls\241\263J\347\227\326\346W)-\202\372v\266\367^mz\364\234\325\014\215\224\205\342l\231\206\303\336cf\231\216;\023\034\023\220\361\220\345\262\305\014\002\205\214K\211\304w\"\027\255t\037""\216y\202a\253\264\224\016rmf$\207\204\010\354\372\354\220\235\343\034\235\340D.\233U\354|+\201\357\244\257\355\374\365\336\237qd'\317;\212\275\207q/\327\216^\021h\010\360g\0258|\264q\340\303f\300Y\370}\264\375\357\003\007\336\026N\302\355\264\302\251\233\016d\251;\3210\356\252y\352\322K&b\356n)\256\024\313\273[X\2519`\242\256\245\010 \323\211\323\266\246R\231\302\310\220V\346Wfn\336\271)\221\2536{\003\302:h\274)UG\373c\016\2459\225\323t\020_r\363\026s\302\322bF\312\2339\311` 6hLm\262s\201\273\305\014\211\312\037\003\351\272b\030\246+\342\"c9\250v\035\004\262I\304\240\264X\275\200\376\310\302\022HC\035\341\301Px\366\241\222N\313X\204\362K\203\337@`K\242\343\001\211\315\262\344\334\026x\235R\324mT\324,365\203\315f\232\322\302\354\260\225O\345]FM\327\322XZ\025\000$\023<\337\010*!\331\252<R[\244\013\270\267\302j \255\370`\263\014\232(\244\320\3127'\347f;\307\007\327\250\246(\344 \021Y\241\023-\306t\250\007)p*/\251H\r\240\275J\177\371\312\371R\300\303\263\t\020\003\315\300\017\346>{E\026\237?\304\233\303T'\315\034D=\340\024\210BA@\361\321\375\013c\374\266\210\2322M\267\t\356z\233R\202\356\235\\C5o\252\232\261\213(Qo\202\024hNs\233t\030\215\223\376$'\343Zs\263\263b\3546\307Y\023RC\225\023h\243a\322\255l\213b\2524\223H\303\014t_t<\001C\3225B\276\0316[\202\370\260\035\373\366'\200oZ\265\256Ys\342\362f1;\2535\t\217\353\223F\227\300&\020g\313\334\013R \375\003G\251\222\260\377\274\251\255\256b\213~\221\351\3540\255~\025\026\331\001\353\261\220\n\344\340Z)\342z\320\201\273\356\233\255\010\270[\224Kr\347\211\251n\267\233\264{\370\316\326\021\354\234\350\361\0073\301\225l\2565\2206>\3133g\3260?\217\032\371\316\373k\373f\036t\372\357\300&\020gQ\350\271\370\221\227\242O\347\227\226\227\346\311\221\345\347\363\253\353\253\213k\363\362Jt\r]e)!\313+\371}\374=F\201\313Kl\337]e\031\272\026&\236\305b\363\211\204\274:O\035\275\2319\331V\025Y\207O\035\257\201\3308\315K\225\214\252mr\354\340\035\256+\226\254\344\240\035\226LU\203\007\371D\2513\322r\253\016\323\262\202\304\346\rU3Q[6V\241J""\035Z\026\024n\270Y\270\341v\341\202\305z*\227\001\242=\274\3442\210\255\272\2253\266U\315QMY3\035\022E\033\333\312`\313v\006f\315\017\201\251\216\315d\r*c+*\2433\204^\252\3314e\001Y\016\010\030<\310\r\002\017]T\362r\006\021\000\003\331\256\2462\222)\224\231\352\246\265M\315u\322t\272\310E\332t\345,\366\0265#\313\214.:x\320\245\217\355\253\030\355k\256\034\204K\306\271\301\010\0075k2\2438\370\256kD9Y\316\344\014\254\241\256\261o\331\233\314%I\323p\275\260d\315\221\333\001C\235d\2357\016\302n)\356\226\210\014 \310\300\001O\361koS<H\255\360f\246s\264s6\257\006)\221[\277\314\315j\333\340\313\276k\265\252\215jGn\251\212\205;\016\260Z6\020X\364?\033\361#\203\211L\227\345\235\234\24277\262\031\225\202\254\242m\030LH\234L\365\000\254\342\302'\007W\0039\270\006\332\014\222a\3309C\356,\313\303\357\341\373\340 \272\300_\303A4d\262h\225\027R\212\235Z\014}\317\304;[8\216B\346\315\313#H\242n\201\n\200Cw0\372\223[J\3351&WP\345\255\022\220\035b\266Ln5\235\307(\3152JNwI\221d\nd{@\021\025/T\341\355\001\255\243\377\320\310\355\233\265\003\351\266\204X9\330\314\266I\227\210+\342\2110B\243\2509[h\247\016\312MF\243\000\247H\210\002b\211\241f\2655\t\003s\217r \022\021$\243\035\242\316\261H)\016p\344\214\341\356\273\202P\315\216\234#\321m\341E\177\3105\177\034(\265\226\311\023\274`\204\355\366tU\024==\211\262B\312[\204\330\207\250\r\375\332\3278}\306\037:\345\217\234\366O\016\371\203'\375\321\220\177\341\242\177\366\034\215\317O\370\037\215\371\227&\351K\350#\277\177\274\030\365\007N\370\375'\013W\275\276\006\036!\177\360T!Rx\304O\317U\247\374\301\221B\242\330\367\366\304\261\201\301_\335B\24418V\214\3206\303\241b\2508]\214\027S|\342\373\372'u\207\257&\374\341\363\305_Jq\177t\322\213\372\243g\213q\372Y\363B\336\224?z\301\033\367\342\236\32218_t\275\233\336N\251\217\276\205\032\303g\nn\361fq\307\303\373\204\367\241\267\323\350<\342~u\2766V\213\372\303#\230\345\0237\312\321\262\\}Z\037\253?\345/^\372\303c\305\007\264\017\216,\2528\357\032\237\\\254\207\352\327y\3749\177\376\002\026\215\341""\363\374\374\027\345\251.\330\221\312d\365Ym\272\026\027\273^\362\356\360\351\333\225\235\352Pm\206\274\221\271\374w\177\224\274\035\007<o\032\240S\\\272S\355\253N\324\316\325v\353\317\370\3523\376\3549\231<(\365\227\026\313\211\312\007\225[\325\2200\367'.y\021\357\021\334\234\270\354%J}\215\321\361\342\2027\345EzA\275\315o\177_\237\252\337\346\253\353|\375%\177\271\321\030\236\344\223p\321\037\276\300/\334\34070{\010\370\225j\256\026\253\355\010\340\227\275\037\370'w\253\241\352\215Z\226'\340\260\312\325t3\374\343\347\021\317\343\374\342\343Z\264\366\262\276Kp\201n\314\213\"\237\310\375\370\331\366\277\006\345\2407\364\361k\245\317\370\027\177\255*\325\335ZR8\235\342)U\354M&q\177\362*\262x\234_[\256\357\360\225\r\276\241p%\345ON\225\306J\321\306\370\204w\302S\274\035\177|\322{Z\016\035~\357\025\216'\365h}\235\257!m\257\370\253dc\2300\035\351})Y\231\252\334\257\376\\\217\366\316\327\305\332\255\372\271z\216\257!\274?\020\356\237K\013\345i\344k\250\372i\255O\370\340\251\245P\351\032\377\370!\177\230\346i\215k:\327\263\215.\357\020\303\226S\275sx\030\367\244\367\030\274\210\2266*}~\353\205\177r\273\262W\315\020\221\333_nU\224\3567$gd\264\260[L\240\n\334R\304\037\275\342\231|&V\213\324\276\257+\364\246P\341\276\373\265!\246\304\2503^w\371\335\245\272R\377\211\277\004\245E\352D\251E\272\360\233\334t\271\273\307\367\366\033\235\237\277\256D*\313\265o\352\037\324#\024\333[\304\235\256\370\202\r`l\222'_S6N\343X\177\364*\277\212\260\373\343W\274l\371^e\273\026j`\351\234\267\216X$+\323\225x\327\006\210U\236\347\177y{\354\330?\373\036\035\307\343\321\361\330\361F\007\021\371\025\306Y\206g6[|\354\021}\301<d\027\233Q\3316\206\317\025S^\277\027\345\227\303\345t\005\305C\357}\3369\312d\351\343\222R\332-\307\313\251J\177%Zy^\215T\037U\031(\022\242\270tD}\232O\337\347\367W\370J\234\307\t\202\010\372\341\217\215\321i\330b\341\216\177(n\374\346w\365\201z\002\226\007\221\221\270t\227\024\342\n\277\362U\345T\365^M9\010\315\353\312\327 BghP\307[|k\233o\353\335\3610\270\201tYG\304\203$""\217\277D\035\"n \363\233\306\340\231\302\317\310\\'-\236\326\343\365\315v\366\032M\027BT\227\177+\355t\341Xm\013\023\232\307\333\301c'\207\013\021Q{\035'>\252M\361\0306\002\277D\254F/z\34128 \001\331x[Z\306/\013W\343\035\203K\336m\221\221\037+b:N\001\271\355}\334\324\010\232D\357\200v\177Y\216\224\227\253\017@\304\007\374\207\027]G\177W\357\353(o\264\225\237\260\346\367u\005\215-.\022W<^\234\242\002\024\341\031+F\341\341\300P!T\230.\304\013)>z\267z\266\252\326B~\377\200\217\336w\317\333\206j\321\332\202\212X^\343\3437A\242d\355\223\232S\237\352\372\376M%^\321\203\357\375\247\n\017\320\327:\247\277\255\355\324?l\241F\305\243]\017^\022\375p\000a\351'\334\212\337?Z\354\003o\250)\267\340\334\252l\201\255_\3270yAt\326\316\311{\325;A\261\366\376J\267\001t\317/\3137\313;\225\001Tb?\211\370\340p!\352\017\216\026G\2745\250\340\224h\377\270C\300\370\314(\3765\372)R\003'\336\236>\206\244\2677f|l\246\274^\231\257\216U\243~\377`\341tQAC\377\013\024S\330\367\017\027\346\213g\213J\203\3426Rx^\214\024\305!\375\305\247\245\346\r\203\252R\241\014\344\320\032?\366X)R\212\225v\312\003|f\241\246\324\362|\005\332\362\003\222\215\340\234<\013\223O\301u@}\342}\340\315\225\022\345\221J\242z\252v\223\332@\213\325\214_z\315_\243l\204\\\014\217\026O\203F?\226?*\343,j\207\303#\r\034|\277\350x_\224\036\203\235\177b!\020\363S7\312\261\362Nkz\247k\352Zi\032i;<up\\\254\364\223\220\276\036\213\013\367\210\241=\326\002\335\333\341cg/\006\225\310\370tG%\2426\"M\223\241c#\037\035\370qP\364T\003\021B\360Mq\000\252v\034\001<^\232\352r\032\227\005\354w\2403bI1\344\205\376\017o\245)\362";
+    PyObject *data = __Pyx_DecompressString(cstring, 3313, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (5239 bytes) */
-const char* const bytes = ".[^0-9a-fA-F]/ALWAYS_ON_Callable[..., None]Callable[[], str]Callable[[str], None]Callable[[], tuple]] [EPC_TFTP_Upload] ] [EPC_TFTP_Upload] \342\234\223 ALWAYS_ON log transferred successfully.] [EPC_TFTP_Upload] \342\234\223 ApDisjoinEpc.pcap transferred successfully.] [EPC_TFTP_Upload] First Enter response: ] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Response: ] [EPC_TFTP_Upload] WARNING: EPC export failed: ] [EPC_TFTP_Upload] WARNING: always-on log export failed: ] [EPC_TFTP_Upload] WARNING: transfer may have failed. Response: ] [FINALIZE] [AP] Connecting to AP ] [FINALIZE] [AP] undebug all sent to AP ] [FINALIZE] [CUSTOM-ONLY] Skipping hardcoded WLC/MYCAP/TFTP cleanup sequence for ] [FINALIZE] Disjoin counter reset for ] [FINALIZE] Finalization complete for ] [FINALIZE] Generating reports ...] [FINALIZE] JSON report   \342\206\222 ] [FINALIZE] [MYCAP] ] [FINALIZE] [MYCAP] \342\234\223 ] [FINALIZE] [MYCAP] Capture was already stopped \342\200\224 continuing.] [FINALIZE] [MYCAP] Overwrite prompt detected \342\200\224 sending ENTER to confirm.] [FINALIZE] [MYCAP] WARNING: ] [FINALIZE] [MYCAP] initial response: ] [FINALIZE] [MYCAP] post-confirm output: ] [FINALIZE] Opening WLC SSH for cleanup ...] [FINALIZE] Second disjoin of same AP (] [FINALIZE] Session complete for ] [FINALIZE] Summary report \342\206\222 ] [FINALIZE] WARNING: '] [FINALIZE] WARNING: AP undebug all failed: ] [FINALIZE] WARNING: WLC SSH for cleanup failed: ] [FINALIZE] WARNING: export command failed: ] [FINALIZE] WARNING: report generation failed: ] [FINALIZE] WARNING: undebug all failed: ] [FINALIZE] WLC cleanup SSH session closed.] [FINALIZE] [WLC] undebug allNoneNote that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.[\n/?add_notebackend/engine/finalizer.py[confirm] confirmed on flash.copy flash:/copy flash:/ALWAYS_ON_ \342\200\224 custom stop command""s already sent by caller.\\d+\\s+bytes\\s+copied\\s+in\\s+\\d+(\\.\\d+)?\\s+secsdisableenable export bootflash:' failed:  for undebug all ...gcisenabled.log.log tftp://monitor capture not active not found in flash listing.overwrite?[confirm]overwrite existing.pcapshow flash: | inc .pcap) \342\200\224 starting finalization sequence. stopstr | None tftp://threading.Lockundebug allAnyApDisjoinEpc_CallableConnectHandlerIMYCAPMYCAP_NAMENoneOVERWRITE_PATTERNS__Pyx_PyDict_NextRefSUCCESS_REactive_rca_lockactive_rca_sessionsalways_on_exportap_authap_connap_nameappend_finalized_apasyncio.coroutinesauthbackend.engine.finalizerboolcisco_iosclear_ap_workflowclear_buffercline_in_tracebackclosecompileconfirmconfirm_outdelay_factordevice_typedictdigitsdisconnectdot_macenable__enter__exc__exit__export_cmdexport_outfast_clifile__func__genexprgethostip_is_coroutineitemsjson_pathlowermac__main__mark_ap_used__module__mycap_name__name__netmikonextppasswordpcap_filenamepopportprint__qualname__reread_timeoutreset_disjoin_counterreturnrun_finalizationrun_finalization.<locals>.genexprsave_reportsearchsecretsendsend_commandsend_command_timing__set_name__setdefaultskip_hardcodedsleepstderrstop_cmdstop_outstrstripsubsys__test__tftp_exporttftp_ipthreadingthrowtimetstxt_pathtypingusernamevaluevaluesverify_cmdverify_outwlc_connwlc_host\200\001\340\016\017\330\n\013\330\r\016\330\t\n\330\010\t\330\020\021\330\031\032\330\025\026\330\010\t\330\027\030\330\022\023\330\033\034\330\031\032\330\021\022\330\004\024\220A\330\005\006\330\004\t\210\037\230\001\340\004\t\210\021\330\010\013\2101\210B\320\016:\270!\330\010\r\210S\220\001\360\006\000\005\010\200t\2101\340\010\023\2201\330\010\t\330\014\021\220\021\220#\220Q\220b\320\030J\310%\310s\320RS\330\014\027\220~\240Q\330\020\034\230A\330\020\025\220Q\330\020\025\220T\230\021\230!\330\020\031\230\024\230Q\230a\330\020\031\230\024\230Q\230a\330\020\027\220t\2304\230q\240\001\330\020\031\230\021\340\014\017\210t\2204\220q\230\001\330\020\030\230\007\230q""\340\014\021\220\021\220#\220Q\220b\320\030<\270E\300\023\300A\330\014\r\330\020\030\320\030,\250A\250_\270M\310\023\310M\320YZ\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034I\310\021\310'\320QV\320VY\320YZ\340\014\027\320\027*\250!\330\014\021\220\021\220#\220Q\220b\320\0301\260\034\270U\300#\300Q\330\014\r\330\020\033\2308\320#7\260q\270\n\300-\310s\320R_\320_`\330\020\023\2201\330\024\031\230\021\230#\230Q\230b\320 8\270\001\270\030\300\026\300v\310U\320RU\320UV\330\020\023\220=\240\004\240I\250S\260\003\2606\270\021\330\024\031\230\021\330\030\033\2301\230B\230a\330\030\035\230S\240\001\340\020\024\220F\230!\2301\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\0347\3207J\310!\3107\320RW\320WZ\320Z[\340\014\034\320\034,\250A\330\014\031\320\031,\320,J\310!\330\014\021\220\021\220#\220Q\220b\320\0301\260\036\270u\300C\300q\330\014\r\330\020\035\230X\320%9\270\021\270,\300m\320SV\320Vc\320cd\330\020\025\220Q\330\024\027\220q\230\002\320\032D\300A\300Z\310v\320UV\330\024\031\230\023\230A\360\006\000\021\022\330\024\025\330\024\025\330\024\025\330\024\025\340\020\031\230\021\330\024\031\230\021\330\030\033\2301\230B\230a\330\030\035\230S\240\001\340\024\"\240(\320*>\270a\270v\300]\320RU\320Ub\320bc\330\024\027\220q\330\030\035\230Q\330\034\037\230q\240\002\320\"O\310q\320P[\320[a\320ab\330\034!\240\023\240A\340\024\030\230\006\230a\230q\330\024\034\230M\250\021\340\024\030\230\006\230a\230q\330\024\034\230M\250\021\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034L\310A\310W\320TY\320Y\\\320\\]\340\014\031\230\021\330\014\021\220\021\220#\220Q\220b\320\0301\260\036\270u\300C\300q\330\014\r\330\020\035\230X\240]\260!\260<\270}\310A\330\020\023\2201\330\024\031\230\021\230#\230Q\230b\320 8\270\001\270\032\3006\310\026\310u\320TW\320WX\330\024\027\220}\240F\250#\250S\260\n\270&\300\001\330\030\035\230Q\230c\240\021\240\"\320$?\320?d\320di\320il\320lm\340\030\035\230Q\330\034\037\230q\240\002\320\"D\300A\330\034!""\240\023\240A\340\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\0347\3207L\310A\310W\320TY\320Y\\\320\\]\340\014\026\220d\230$\230a\230{\250!\330\014\032\230/\320)?\270q\300\n\310!\330\014\021\220\021\220#\220Q\220b\320\0300\260\017\270u\300C\300q\330\014\r\330\020\035\230X\320%9\270\021\270-\300}\320TW\320Wd\320de\330\020\025\220Q\220c\230\021\230\"\320\034I\310\021\310*\320TZ\320Zb\320bg\320gj\320jk\330\020\030\320\030,\250A\250V\260=\300\003\300=\320PQ\330\020\036\230h\320&:\270!\2706\300\035\310c\320Q^\320^_\330\020\023\220:\230W\240A\240\\\260\023\260A\330\024\031\230\021\230#\230Q\230b\320 g\320gl\320lo\320op\340\024\031\230\021\330\030\033\2301\230B\320\036b\320bc\320cd\330\030\035\230S\240\001\340\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034O\310q\320PW\320W\\\320\\_\320_`\340\014\026\220b\230\004\230A\320\035.\250d\260!\330\014\026\220b\230\001\230\026\230q\240\002\240$\240a\240v\250Q\250b\260\004\260A\260V\2701\270B\270e\3006\310\021\330\014\037\320\0378\3208L\310A\320Ma\320ab\330\014\021\220\021\220#\220Q\220b\320\0300\3200D\300E\310\023\310A\330\014\r\330\020\035\230X\320%9\270\021\320:L\310M\320Y\\\320\\i\320ij\330\020\025\220Q\220c\230\021\230\"\320\034I\310\021\310*\320TZ\320Zb\320bg\320gj\320jk\330\020\030\320\030,\250A\250V\260=\300\003\300=\320PQ\330\020\036\230h\320&:\270!\2706\300\035\310c\320Q^\320^_\330\020\023\220:\230W\240A\240\\\260\023\260A\330\024\031\230\021\230#\230Q\230b\320 c\320ch\320hk\320kl\340\024\031\230\021\330\030\033\2301\230B\320\036p\320pq\320qr\330\030\035\230S\240\001\340\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034Y\320YZ\320Za\320af\320fi\320ij\340\010\017\210}\230A\330\014\021\220\021\220#\220Q\220b\320\030M\310Q\310g\320UZ\320Z]\320]^\340\014\017\210q\330\020\021\330\024\034\230K\240q\330\024\031\230\021\230#\230Q\230b\320 R\320RW\320WZ\320Z[\330\027\030\360\010\000\t\014\2101\330\014\r\330\020\025\220Q\220c\230\021\230\"\320\034B\300!\320C]\320]b\320be\320ef\330""\020\032\230.\250\001\330\024 \240\001\330\024\031\230\021\330\024\031\230\021\330\024\035\230W\240A\240Q\330\024\035\230W\240A\240Q\330\024\033\2307\240$\240a\240z\260\021\330\024\035\230Q\340\020\023\2207\230$\230a\230q\330\024\033\2307\240!\330\020\027\320\027+\2501\250O\270=\310\003\310=\320XY\330\020\025\220Q\220c\230\021\230\"\320\034H\310\001\310\026\310u\320TW\320WX\330\020\027\220{\240!\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034L\310A\310W\320TY\320Y\\\320\\]\340\010\r\210Q\330\014\017\210q\220\002\220!\330\014\034\230A\330\014\021\220\023\220A\360\010\000\005\n\210\021\210#\210Q\210b\320\0209\270\025\270c\300\021\330\004\005\330\010\023\220;\230k\250\021\330\010\r\210Q\210c\220\021\220\"\320\0244\260A\260]\300%\300s\310!\330\010\r\210Q\210c\220\021\220\"\320\0245\260Q\260l\300%\300s\310!\330\004\013\210=\230\001\330\010\r\210Q\210c\220\021\220\"\320\024G\300q\310\007\310u\320TW\320WX\360\006\000\n\013\330\010\033\2304\230q\240\005\240Q\330\004\025\220Q\220a\330\004\020\220\001\220\021\330\004\t\210\021\210#\210Q\210b\320\0206\260h\270e\3003\300a\330\004\031\230\021\230!\330\004\t\210\021\210#\210Q\210b\320\020;\2708\3005\310\003\3101\330\004\t\210\021\210#\210Q\210b\320\020;\2708\3005\310\003\3101\330\004\027\220q\330\010\014\210A\330\010\020\320\020#\2404\240q\250\005\250S\260\004\260A\260Q\330\010\013\2101\230\021";
+    #else /* compression: none (6839 bytes) */
+const char* const bytes = "[[^0-9a-fA-F]/ALWAYS_ON_Callable[..., None]Callable[[], str]Callable[[str], None]Callable[[], tuple]]   [EPC_TFTP_Upload] ] [EPC_TFTP_Upload] ] [EPC_TFTP_Upload] \342\234\223 ALWAYS_ON log transferred successfully.] [EPC_TFTP_Upload] \342\234\223 ApDisjoinEpc.pcap transferred via ]   [EPC_TFTP_Upload] Password prompt \342\200\224 sending SFTP password] [EPC_TFTP_Upload] Protocol=] [EPC_TFTP_Upload] SFTP credentials configured]   [EPC_TFTP_Upload] Transfer complete \342\234\223]   [EPC_TFTP_Upload] Username prompt \342\200\224 sending SFTP username] [EPC_TFTP_Upload] WARNING: ALWAYS_ON log transfer may have failed. Output: ] [EPC_TFTP_Upload] WARNING: EPC export failed: ] [EPC_TFTP_Upload] WARNING: No server IP configured \342\200\224 skipping pcap transfer] [EPC_TFTP_Upload] WARNING: always-on log export failed: ] [EPC_TFTP_Upload] WARNING: pcap transfer may have failed. Output: ]   [EPC_TFTP_Upload] WARNING: transfer error detected in output]   [EPC_TFTP_Upload] WARNING: transfer timed out after ] [FINALIZE] [AP] Connecting to AP ] [FINALIZE] [AP] undebug all sent to AP ] [FINALIZE] [CUSTOM-ONLY] Skipping hardcoded WLC/MYCAP/TFTP cleanup sequence for ] [FINALIZE] Disjoin counter reset for ] [FINALIZE] Finalization complete for ] [FINALIZE] Generating reports ...] [FINALIZE] JSON report   \342\206\222 ] [FINALIZE] [MYCAP] ] [FINALIZE] [MYCAP] \342\234\223 ] [FINALIZE] [MYCAP] Capture was already stopped \342\200\224 continuing.] [FINALIZE] [MYCAP] Overwrite prompt detected \342\200\224 sending ENTER to confirm.] [FINALIZE] [MYCAP] WARNING: ] [FINALIZE] [MYCAP] initial response: ] [FINALIZE] [MYCAP] post-confirm output: ] [FINALIZE] Opening WLC SSH for cleanup ...] [FINALIZE] Second disjoin of same AP (] [FINALIZE] Session complete for ] [FINALIZE] Summary report \342\206\222 ] [FINALIZE] WARNING: '] [FINALIZE] WARNING: AP undebug all failed: ] [FINALIZE] WARNING: WLC SSH for cleanup failed: ] [FINALIZE] WARNING: export command failed: ] [FINALIZE] WARNING: report ge""neration failed: ] [FINALIZE] WARNING: undebug all failed: ] [FINALIZE] WLC cleanup SSH session closed.] [FINALIZE] [WLC] undebug allNoneNote that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.  Server=\n./?add_noteaddress or name of remote hostbackend/engine/finalizer.pybytes copiedcannot open[confirm] confirmed on flash.connection refusedcopy flash:/copy flash:/ALWAYS_ON_ \342\200\224 custom stop commands already sent by caller.\\d+\\s+bytes\\s+copied\\s+in\\s+\\d+(\\.\\d+)?\\s+secsdestination filenamedisableenable export bootflash:' failed:  for undebug all ...gcinvalid inputisenabled.log.log sftp://.log tftp://monitor capture no suchnot active not found in flash listing.overwrite?[confirm]overwrite existingpassword:.pcappermission denied sftp://show flash: | inc .pcap) \342\200\224 starting finalization sequence. stopstr | Nonesuccessful file transfer successfully. tftp://threading.Locktimed outtransfer completeundebug allupload completeusername:username [(yes/no)AnyApDisjoinEpc_CallableConnectHandlerIMYCAPMYCAP_NAMENONENoneOVERWRITE_PATTERNS__Pyx_PyDict_NextRefSFTPSUCCESS_RETFTPactive_rca_lockactive_rca_sessionsalways_on_exportalways_on_outap_authap_connap_nameappend_finalized_apasyncio.coroutinesauthbackend.engine.finalizerboolbuf_lowerbufferchunkcisco_iosclear_ap_workflowclear_buffercline_in_tracebackclosecmdcompileconfirmconfirm_outconndelay_factordevice_typedictdigitsdisconnectdot_macenable__enter__errorexc__exit__export_cmdexport_outfailedfast_clifile__func__genexprgethostintip_is_coroutineitemsjson_pathlowermac__main__mark_ap_used__module__mycap_name__name__netmikonextppasswordpcap_filenamepopportprintprotoproto_label__qualname__reread_channelread_timeoutreset_disjoin_counterreturnrun_finalizationrun_finalization.<locals>.genexpr_run_transfer_interactive_run_transfer_interactive.<locals>.genexprssave_reportsearchsecretsendsend_command""send_command_timing_session_snap__set_name__setdefaultsftp_passsftp_passwordsftp_usersftp_usernameskip_hardcodedsleepstartstderrstop_cmdstop_outstrstripsubsys__test__tftp_exporttftp_ipthreadingthrowtime_timetimeouttransfer_outtransfer_prototsts_fntxt_pathtypingupperusernamevaluevaluesverify_cmdverify_outwlc_connwlc_hostwrite_channelxyes\n\200\001\340\016\017\330\n\013\330\r\016\330\t\n\330\010\t\330\020\021\330\031\032\330\025\026\330\010\t\330\027\030\330\022\023\330\033\034\330\031\032\330\021\022\330\004\024\220A\330\005\006\330\004\t\210\037\230\001\340\004\t\210\021\330\010\013\2101\210B\320\016:\270!\330\010\r\210S\220\001\360\006\000\005\010\200t\2101\340\010\023\2201\330\010\t\330\014\021\220\021\220#\220Q\220b\320\030J\310%\310s\320RS\330\014\027\220~\240Q\330\020\034\230A\330\020\025\220Q\330\020\025\220T\230\021\230!\330\020\031\230\024\230Q\230a\330\020\031\230\024\230Q\230a\330\020\027\220t\2304\230q\240\001\330\020\031\230\021\340\014\017\210t\2204\220q\230\001\330\020\030\230\007\230q\340\014\021\220\021\220#\220Q\220b\320\030<\270E\300\023\300A\330\014\r\330\020\030\320\030,\250A\250_\270M\310\023\310M\320YZ\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034I\310\021\310'\320QV\320VY\320YZ\340\014\027\320\027*\250!\330\014\021\220\021\220#\220Q\220b\320\0301\260\034\270U\300#\300Q\330\014\r\330\020\033\2308\320#7\260q\270\n\300-\310s\320R_\320_`\330\020\023\2201\330\024\031\230\021\230#\230Q\230b\320 8\270\001\270\030\300\026\300v\310U\320RU\320UV\330\020\023\220=\240\004\240I\250S\260\003\2606\270\021\330\024\031\230\021\330\030\033\2301\230B\230a\330\030\035\230S\240\001\340\020\024\220F\230!\2301\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\0347\3207J\310!\3107\320RW\320WZ\320Z[\340\014\034\320\034,\250A\330\014\031\320\031,\320,J\310!\330\014\021\220\021\220#\220Q\220b\320\0301\260\036\270u\300C\300q\330\014\r\330\020\035\230X\320%9\270\021\270,\300m\320SV\320Vc\320cd\330\020\025\220Q\330\024\027\220q\230""\002\320\032D\300A\300Z\310v\320UV\330\024\031\230\023\230A\360\006\000\021\022\330\024\025\330\024\025\330\024\025\330\024\025\340\020\031\230\021\330\024\031\230\021\330\030\033\2301\230B\230a\330\030\035\230S\240\001\340\024\"\240(\320*>\270a\270v\300]\320RU\320Ub\320bc\330\024\027\220q\330\030\035\230Q\330\034\037\230q\240\002\320\"O\310q\320P[\320[a\320ab\330\034!\240\023\240A\340\024\030\230\006\230a\230q\330\024\034\230M\250\021\340\024\030\230\006\230a\230q\330\024\034\230M\250\021\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034L\310A\310W\320TY\320Y\\\320\\]\340\014\031\230\021\330\014\021\220\021\220#\220Q\220b\320\0301\260\036\270u\300C\300q\330\014\r\330\020\035\230X\240]\260!\260<\270}\310A\330\020\023\2201\330\024\031\230\021\230#\230Q\230b\320 8\270\001\270\032\3006\310\026\310u\320TW\320WX\330\024\027\220}\240F\250#\250S\260\n\270&\300\001\330\030\035\230Q\230c\240\021\240\"\320$?\320?d\320di\320il\320lm\340\030\035\230Q\330\034\037\230q\240\002\320\"D\300A\330\034!\240\023\240A\340\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\0347\3207L\310A\310W\320TY\320Y\\\320\\]\340\014\034\230D\240\004\240A\240[\260\001\330\014\034\230D\240\004\240A\320%7\260w\270f\300A\330\014\034\230D\240\004\240A\320%6\260a\330\014\034\230D\240\004\240A\320%6\260a\360\006\000\r\020\210v\220S\230\007\230t\2401\330\020\036\230o\320-C\3001\300J\310a\330\020\036\230a\330\021\022\330\020\036\230o\320-C\3001\300J\310a\330\020\036\230a\340\020\036\230a\330\020\036\230a\340\014\021\220\021\220#\220Q\220b\320\0309\3209N\310a\310{\320Z_\320_b\320bc\330\014\017\210t\2201\330\020\025\220Q\220c\230\021\230\"\320\034o\320ot\320tw\320wx\340\020\025\220Q\220c\230\021\230\"\320\0343\2601\260O\3005\310\003\3101\330\020\023\2206\230\023\230A\330\024\031\230\021\230#\230Q\230b\320 U\320UZ\320Z]\320]^\330\014\r\330\016\021\220\021\330\020\037\320\0378\270\001\330\024\036\230m\250;\260k\300\021\340\020\023\220:\230W\240A\240]\260#\260Q\330\024\031\230\021\230#""\230Q\230b\320 \\\320\\y\320y~\360\000\000\177\001B\002\360\000\000B\002C\002\340\024\031\230\021\330\030\033\2301\230B\320\036e\320ef\320fg\330\030\035\230S\240\001\340\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034O\310q\320PW\320W\\\320\\_\320_`\340\014\026\220b\230\004\230A\320\035.\250d\260!\330\014\026\220b\230\001\230\026\230q\240\002\240$\240a\240v\250Q\250b\260\004\260A\260V\2701\270B\270e\3006\310\021\330\014\017\210v\220S\230\007\230t\2401\330\020#\320#<\320<P\320PQ\320Qe\320ef\330\021\022\330\020#\320#<\320<P\320PQ\320Qe\320ef\340\020#\2401\330\014\017\210q\330\020\025\220Q\220c\230\021\230\"\320\0343\2601\3204H\310\005\310S\320PQ\330\014\r\330\016\021\220\021\330\020 \320 9\270\021\330\024\036\320\0360\260\013\270;\300a\340\020\023\220:\230W\240A\240^\2603\260a\330\024\031\230\021\230#\230Q\230b\320 c\320ch\320hk\320kl\340\024\031\230\021\330\030\033\2301\230B\320\036n\320no\320op\330\030\035\230S\240\001\340\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034Y\320YZ\320Za\320af\320fi\320ij\340\010\017\210}\230A\330\014\021\220\021\220#\220Q\220b\320\030M\310Q\310g\320UZ\320Z]\320]^\340\014\017\210q\330\020\021\330\024\034\230K\240q\330\024\031\230\021\230#\230Q\230b\320 R\320RW\320WZ\320Z[\330\027\030\360\010\000\t\014\2101\330\014\r\330\020\025\220Q\220c\230\021\230\"\320\034B\300!\320C]\320]b\320be\320ef\330\020\032\230.\250\001\330\024 \240\001\330\024\031\230\021\330\024\031\230\021\330\024\035\230W\240A\240Q\330\024\035\230W\240A\240Q\330\024\033\2307\240$\240a\240z\260\021\330\024\035\230Q\340\020\023\2207\230$\230a\230q\330\024\033\2307\240!\330\020\027\320\027+\2501\250O\270=\310\003\310=\320XY\330\020\025\220Q\220c\230\021\230\"\320\034H\310\001\310\026\310u\320TW\320WX\330\020\027\220{\240!\330\014\023\220=\240\001\330\020\025\220Q\220c\230\021\230\"\320\034L\310A\310W\320TY\320Y\\\320\\]\340\010\r\210Q\330\014\017\210q\220\002\220!\330\014\034\230A\330\014\021\220\023\220A\360\010\000\005\n\210\021\210#\210Q""\210b\320\0209\270\025\270c\300\021\330\004\005\330\010\023\220;\230k\250\021\330\010\r\210Q\210c\220\021\220\"\320\0244\260A\260]\300%\300s\310!\330\010\r\210Q\210c\220\021\220\"\320\0245\260Q\260l\300%\300s\310!\330\004\013\210=\230\001\330\010\r\210Q\210c\220\021\220\"\320\024G\300q\310\007\310u\320TW\320WX\360\006\000\n\013\330\010\033\2304\230q\240\005\240Q\330\004\025\220Q\220a\330\004\020\220\001\220\021\330\004\t\210\021\210#\210Q\210b\320\0206\260h\270e\3003\300a\330\004\031\230\021\230!\330\004\t\210\021\210#\210Q\210b\320\020;\2708\3005\310\003\3101\330\004\t\210\021\210#\210Q\210b\320\020;\2708\3005\310\003\3101\330\t\n\330\010\030\320\030+\2504\250q\260\005\260Q\330\004\027\220q\330\010\014\210A\330\010\020\220\r\230T\240\021\240!\330\010\013\2101\200\001\340\t\n\330\017\020\330\017\020\340\004\r\210Q\330\005\006\360\016\000\014\r\330\004\t\210\021\210#\210Q\210e\320\023-\250W\260E\270\023\270A\330\004\010\210\016\220a\220t\2302\230Q\330\004\r\210Q\330\004\014\210E\220\025\220a\340\004\005\330\010\r\210V\2201\220A\330\010\020\220\004\220M\240\021\330\010\013\2101\330\014\026\220a\330\014\017\210u\220F\230$\230e\2401\240C\240q\250\005\320-F\300a\300y\320PU\320UX\320XY\360\006\000\t\025\220F\230&\240\001\340\010\014\210L\230\003\230:\240S\250\r\260S\270\013\3004\300q\330\014\021\220\021\220#\220Q\220e\320\033^\320^c\320cf\320fg\330\014\020\220\016\230a\230z\250\022\2501\330\014\025\220Q\330\014\r\340\010\013\210<\220s\230*\240D\250\001\330\014\021\220\021\220#\220Q\220e\320\033^\320^c\320cf\320fg\330\014\020\220\016\230a\230z\250\022\2501\330\014\025\220Q\330\014\r\330\010\013\320\013,\250C\250q\330\014\020\220\016\230a\230q\330\014\025\220Q\330\014\r\330\010\013\320\013\"\240#\240Q\330\014\020\220\016\230a\230q\330\014\025\220Q\330\014\r\340\010\013\210<\220s\230*\240C\240{\260#\260Q\330\014\020\220\016\230a\230q\330\014\025\220Q\330\014\r\330\010\013\210;\220c\230\021\330\014\020\220\016\230a\230q\330\014\025\220Q\330\014\r\340\010\021\220\021\360\014""\000\025\032\230\021\230#\230Q\230e\320#R\320RW\320WZ\320Z[\330\024\033\2301\340\010\021\220\021\360\n\000\r\022\220\021\220#\220Q\220e\320\033a\320af\320fi\320ij\330\014\023\2201\340\010\013\2105\220\005\220S\230\002\230&\240\002\240!\330\014\021\220\021\220#\220Q\220e\320\033V\320VW\320Wc\320ch\320hk\320kl\330\014\023\2201\220\021\230\021";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 185; i++) {
+    for (int i = 0; i < 246; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
-      if (likely(string) && i >= 78) PyUnicode_InternInPlace(&string);
+      if (likely(string) && i >= 106) PyUnicode_InternInPlace(&string);
       if (unlikely(!string)) {
         Py_XDECREF(data);
         __PYX_ERR(0, 1, __pyx_L1_error)
@@ -9677,7 +12453,7 @@ const char* const bytes = ".[^0-9a-fA-F]/ALWAYS_ON_Callable[..., None]Callable[[
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 185; i < 187; i++) {
+    for (int i = 246; i < 250; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -9688,15 +12464,15 @@ const char* const bytes = ".[^0-9a-fA-F]/ALWAYS_ON_Callable[..., None]Callable[[
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 187; i++) {
+    for (Py_ssize_t i = 0; i < 250; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 185;
-      for (Py_ssize_t i=0; i<2; ++i) {
+      PyObject **table = stringtab + 246;
+      for (Py_ssize_t i=0; i<4; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -9715,16 +12491,17 @@ const char* const bytes = ".[^0-9a-fA-F]/ALWAYS_ON_Callable[..., None]Callable[[
   }
   {
     PyObject **numbertab = __pyx_mstate->__pyx_number_tab + 0;
-    int8_t const cint_constants_1[] = {0,1,2,3,4,8,10,12,15,22,30,60,100};
-    for (int i = 0; i < 13; i++) {
-      numbertab[i] = PyLong_FromLong(cint_constants_1[i - 0]);
+    int8_t const cint_constants_1[] = {0,1,2,3,4,8,12,15,22,30,60};
+    int16_t const cint_constants_2[] = {300};
+    for (int i = 0; i < 12; i++) {
+      numbertab[i] = PyLong_FromLong((i < 11 ? cint_constants_1[i - 0] : cint_constants_2[i - 11]));
       if (unlikely(!numbertab[i])) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #if CYTHON_IMMORTAL_CONSTANTS
   {
     PyObject **table = __pyx_mstate->__pyx_number_tab;
-    for (Py_ssize_t i=0; i<13; ++i) {
+    for (Py_ssize_t i=0; i<12; ++i) {
       #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
       #if PY_VERSION_HEX < 0x030E0000
       if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -9746,12 +12523,12 @@ const char* const bytes = ".[^0-9a-fA-F]/ALWAYS_ON_Callable[..., None]Callable[[
 }
 /* #### Code section: init_codeobjects ### */
 typedef struct {
-    unsigned int argcount : 1;
+    unsigned int argcount : 3;
     unsigned int num_posonly_args : 1;
     unsigned int num_kwonly_args : 4;
     unsigned int nlocals : 6;
     unsigned int flags : 10;
-    unsigned int first_line : 7;
+    unsigned int first_line : 8;
 } __Pyx_PyCode_New_function_description;
 /* NewCodeObj.proto */
 static PyObject* __Pyx_PyCode_New(
@@ -9768,14 +12545,29 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {0, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_GENERATOR), 101};
+    const __Pyx_PyCode_New_function_description descr = {0, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_GENERATOR), 81};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_p};
     __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_engine_finalizer_py, __pyx_mstate->__pyx_n_u_genexpr, __pyx_mstate->__pyx_kp_b_iso88591__7, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {0, 0, 15, 37, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 22};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_wlc_host, __pyx_mstate->__pyx_n_u_auth, __pyx_mstate->__pyx_n_u_ap_auth, __pyx_mstate->__pyx_n_u_mac, __pyx_mstate->__pyx_n_u_ip, __pyx_mstate->__pyx_n_u_mycap_name, __pyx_mstate->__pyx_n_u_active_rca_sessions, __pyx_mstate->__pyx_n_u_active_rca_lock, __pyx_mstate->__pyx_n_u_ts, __pyx_mstate->__pyx_n_u_clear_ap_workflow, __pyx_mstate->__pyx_n_u_mark_ap_used, __pyx_mstate->__pyx_n_u_reset_disjoin_counter, __pyx_mstate->__pyx_n_u_append_finalized_ap, __pyx_mstate->__pyx_n_u_save_report, __pyx_mstate->__pyx_n_u_skip_hardcoded, __pyx_mstate->__pyx_n_u_ConnectHandler, __pyx_mstate->__pyx_n_u_wlc_conn, __pyx_mstate->__pyx_n_u_exc, __pyx_mstate->__pyx_n_u_stop_cmd, __pyx_mstate->__pyx_n_u_stop_out, __pyx_mstate->__pyx_n_u_pcap_filename, __pyx_mstate->__pyx_n_u_export_cmd, __pyx_mstate->__pyx_n_u_export_out, __pyx_mstate->__pyx_n_u_OVERWRITE_PATTERNS, __pyx_mstate->__pyx_n_u_confirm_out, __pyx_mstate->__pyx_n_u_verify_cmd, __pyx_mstate->__pyx_n_u_verify_out, __pyx_mstate->__pyx_n_u_tftp_ip, __pyx_mstate->__pyx_n_u_tftp_export, __pyx_mstate->__pyx_n_u_digits, __pyx_mstate->__pyx_n_u_dot_mac, __pyx_mstate->__pyx_n_u_always_on_export, __pyx_mstate->__pyx_n_u_ap_conn, __pyx_mstate->__pyx_n_u_json_path, __pyx_mstate->__pyx_n_u_txt_path, __pyx_mstate->__pyx_n_u_genexpr, __pyx_mstate->__pyx_n_u_genexpr};
-    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_engine_finalizer_py, __pyx_mstate->__pyx_n_u_run_finalization, __pyx_mstate->__pyx_kp_b_iso88591_A_1B_S_t1_1_Qb_J_sRS_Q_A_Q_T_Qa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {0, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_GENERATOR), 90};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_x};
+    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_engine_finalizer_py, __pyx_mstate->__pyx_n_u_genexpr, __pyx_mstate->__pyx_kp_b_iso88591__7, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {0, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_GENERATOR), 182};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_p};
+    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_engine_finalizer_py, __pyx_mstate->__pyx_n_u_genexpr, __pyx_mstate->__pyx_kp_b_iso88591__8, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {6, 0, 0, 14, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 22};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_conn, __pyx_mstate->__pyx_n_u_cmd, __pyx_mstate->__pyx_n_u_sftp_user, __pyx_mstate->__pyx_n_u_sftp_pass, __pyx_mstate->__pyx_n_u_ts_fn, __pyx_mstate->__pyx_n_u_timeout, __pyx_mstate->__pyx_n_u_time_2, __pyx_mstate->__pyx_n_u_buffer, __pyx_mstate->__pyx_n_u_start, __pyx_mstate->__pyx_n_u_chunk, __pyx_mstate->__pyx_n_u_buf_lower, __pyx_mstate->__pyx_n_u_genexpr, __pyx_mstate->__pyx_n_u_genexpr, __pyx_mstate->__pyx_n_u_genexpr};
+    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_engine_finalizer_py, __pyx_mstate->__pyx_n_u_run_transfer_interactive, __pyx_mstate->__pyx_kp_b_iso88591_Q_Qe_WE_A_at2Q_Q_E_a_V1A_M_1_a, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {0, 0, 15, 44, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 103};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_wlc_host, __pyx_mstate->__pyx_n_u_auth, __pyx_mstate->__pyx_n_u_ap_auth, __pyx_mstate->__pyx_n_u_mac, __pyx_mstate->__pyx_n_u_ip, __pyx_mstate->__pyx_n_u_mycap_name, __pyx_mstate->__pyx_n_u_active_rca_sessions, __pyx_mstate->__pyx_n_u_active_rca_lock, __pyx_mstate->__pyx_n_u_ts, __pyx_mstate->__pyx_n_u_clear_ap_workflow, __pyx_mstate->__pyx_n_u_mark_ap_used, __pyx_mstate->__pyx_n_u_reset_disjoin_counter, __pyx_mstate->__pyx_n_u_append_finalized_ap, __pyx_mstate->__pyx_n_u_save_report, __pyx_mstate->__pyx_n_u_skip_hardcoded, __pyx_mstate->__pyx_n_u_ConnectHandler, __pyx_mstate->__pyx_n_u_wlc_conn, __pyx_mstate->__pyx_n_u_exc, __pyx_mstate->__pyx_n_u_stop_cmd, __pyx_mstate->__pyx_n_u_stop_out, __pyx_mstate->__pyx_n_u_pcap_filename, __pyx_mstate->__pyx_n_u_export_cmd, __pyx_mstate->__pyx_n_u_export_out, __pyx_mstate->__pyx_n_u_OVERWRITE_PATTERNS, __pyx_mstate->__pyx_n_u_confirm_out, __pyx_mstate->__pyx_n_u_verify_cmd, __pyx_mstate->__pyx_n_u_verify_out, __pyx_mstate->__pyx_n_u_tftp_ip, __pyx_mstate->__pyx_n_u_proto, __pyx_mstate->__pyx_n_u_sftp_user, __pyx_mstate->__pyx_n_u_sftp_pass, __pyx_mstate->__pyx_n_u_tftp_export, __pyx_mstate->__pyx_n_u_proto_label, __pyx_mstate->__pyx_n_u_transfer_out, __pyx_mstate->__pyx_n_u_digits, __pyx_mstate->__pyx_n_u_dot_mac, __pyx_mstate->__pyx_n_u_always_on_export, __pyx_mstate->__pyx_n_u_always_on_out, __pyx_mstate->__pyx_n_u_ap_conn, __pyx_mstate->__pyx_n_u_json_path, __pyx_mstate->__pyx_n_u_txt_path, __pyx_mstate->__pyx_n_u_session_snap, __pyx_mstate->__pyx_n_u_genexpr, __pyx_mstate->__pyx_n_u_genexpr};
+    __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_backend_engine_finalizer_py, __pyx_mstate->__pyx_n_u_run_finalization, __pyx_mstate->__pyx_kp_b_iso88591_A_1B_S_t1_1_Qb_J_sRS_Q_A_Q_T_Qa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;
@@ -11011,12 +13803,6 @@ static int __Pyx_ParseKeywords(
         return __Pyx_ParseKeywordDict(kwds, argnames, values, num_pos_args, num_kwargs, function_name, ignore_unknown_kwargs);
 }
 
-/* RaiseKeywordRequired */
-static void __Pyx_RaiseKeywordRequired(const char* func_name, PyObject* kw_name) {
-    PyErr_Format(PyExc_TypeError,
-        "%s() needs keyword-only argument %U", func_name, kw_name);
-}
-
 /* RaiseArgTupleInvalid */
 static void __Pyx_RaiseArgtupleInvalid(
     const char* func_name,
@@ -11041,6 +13827,46 @@ static void __Pyx_RaiseArgtupleInvalid(
                  "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
                  func_name, more_or_less, num_expected,
                  (num_expected == 1) ? "" : "s", num_found);
+}
+
+/* pybuiltin_invalid (used by pyint_simplify) */
+static void __Pyx_PyBuiltin_Invalid(PyObject *obj, const char *type_name, const char *argname) {
+    __Pyx_TypeName obj_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(obj));
+    if (argname) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument '%.200s' has incorrect type (expected %.200s, got " __Pyx_FMT_TYPENAME ")",
+            argname, type_name, obj_type_name
+        );
+    } else {
+        PyErr_Format(PyExc_TypeError,
+            "Expected %.200s, got " __Pyx_FMT_TYPENAME,
+            type_name, obj_type_name
+        );
+    }
+    __Pyx_DECREF_TypeName(obj_type_name);
+}
+
+/* pyint_simplify */
+static CYTHON_INLINE int __Pyx_PyInt_FromNumber(PyObject **number_var, const char *argname, int accept_none) {
+    PyObject *number = *number_var;
+    if (likely((accept_none && number == Py_None) || PyLong_CheckExact(number))) {
+        return 0;
+    }
+    PyObject *int_object;
+    if (likely(PyNumber_Check(number))) {
+        int_object = PyNumber_Long(number);
+        if (unlikely(!int_object)) goto bad;
+    } else {
+        __Pyx_PyBuiltin_Invalid(number, "int", argname);
+        goto bad;
+    }
+    *number_var = int_object;
+    Py_DECREF(number);
+    return 0;
+bad:
+    *number_var = NULL;
+    Py_DECREF(number);
+    return -1;
 }
 
 /* ArgTypeTestFunc (used by ArgTypeTest) */
@@ -11100,19 +13926,6 @@ static void __Pyx_RaiseUnboundLocalError(const char *varname) {
 static void __Pyx_RaiseClosureNameError(const char *varname) {
     PyErr_Format(PyExc_NameError, "free variable '%s' referenced before assignment in enclosing scope", varname);
 }
-
-/* PyObjectFastCallMethod */
-#if !CYTHON_VECTORCALL || PY_VERSION_HEX < 0x03090000
-static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *args, size_t nargsf) {
-    PyObject *result;
-    PyObject *attr = PyObject_GetAttr(args[0], name);
-    if (unlikely(!attr))
-        return NULL;
-    result = __Pyx_PyObject_FastCall(attr, args+1, nargsf - 1);
-    Py_DECREF(attr);
-    return result;
-}
-#endif
 
 /* GetException (used by pep479) */
 #if CYTHON_FAST_THREAD_STATE
@@ -11386,45 +14199,6 @@ static PyObject *__Pyx_Import(PyObject *name, PyObject *const *imported_names, P
     return __Pyx__Import(name, imported_names, len_imported_names, qualname, __pyx_mstate_global->__pyx_d, level);
 }
 
-/* ImportFrom */
-static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name) {
-    PyObject* value = __Pyx_PyObject_GetAttrStr(module, name);
-    if (unlikely(!value) && PyErr_ExceptionMatches(PyExc_AttributeError)) {
-        const char* module_name_str = 0;
-        PyObject* module_name = 0;
-        PyObject* module_dot = 0;
-        PyObject* full_name = 0;
-        PyErr_Clear();
-        module_name_str = PyModule_GetName(module);
-        if (unlikely(!module_name_str)) { goto modbad; }
-        module_name = PyUnicode_FromString(module_name_str);
-        if (unlikely(!module_name)) { goto modbad; }
-        module_dot = PyUnicode_Concat(module_name, __pyx_mstate_global->__pyx_kp_u_);
-        if (unlikely(!module_dot)) { goto modbad; }
-        full_name = PyUnicode_Concat(module_dot, name);
-        if (unlikely(!full_name)) { goto modbad; }
-        #if (CYTHON_COMPILING_IN_PYPY && PYPY_VERSION_NUM  < 0x07030400) ||\
-                CYTHON_COMPILING_IN_GRAAL
-        {
-            PyObject *modules = PyImport_GetModuleDict();
-            if (unlikely(!modules))
-                goto modbad;
-            value = PyObject_GetItem(modules, full_name);
-        }
-        #else
-        value = PyImport_GetModule(full_name);
-        #endif
-      modbad:
-        Py_XDECREF(full_name);
-        Py_XDECREF(module_dot);
-        Py_XDECREF(module_name);
-    }
-    if (unlikely(!value)) {
-        PyErr_Format(PyExc_ImportError, "cannot import name %S", name);
-    }
-    return value;
-}
-
 /* PyObjectCallNoArg */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
     PyObject *arg[2] = {NULL, NULL};
@@ -11602,6 +14376,75 @@ CYTHON_UNUSED static int __Pyx_VectorcallBuilder_AddArg_Check(PyObject *key, PyO
     return PyDict_SetItem(builder, key, value);
 }
 #endif
+
+/* PyObjectFastCallMethod */
+#if !CYTHON_VECTORCALL || PY_VERSION_HEX < 0x03090000
+static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *args, size_t nargsf) {
+    PyObject *result;
+    PyObject *attr = PyObject_GetAttr(args[0], name);
+    if (unlikely(!attr))
+        return NULL;
+    result = __Pyx_PyObject_FastCall(attr, args+1, nargsf - 1);
+    Py_DECREF(attr);
+    return result;
+}
+#endif
+
+/* RaiseUnexpectedTypeError */
+static int
+__Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj)
+{
+    __Pyx_TypeName obj_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(obj));
+    PyErr_Format(PyExc_TypeError, "Expected %s, got " __Pyx_FMT_TYPENAME,
+                 expected, obj_type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+    return 0;
+}
+
+/* RaiseKeywordRequired */
+static void __Pyx_RaiseKeywordRequired(const char* func_name, PyObject* kw_name) {
+    PyErr_Format(PyExc_TypeError,
+        "%s() needs keyword-only argument %U", func_name, kw_name);
+}
+
+/* ImportFrom */
+static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name) {
+    PyObject* value = __Pyx_PyObject_GetAttrStr(module, name);
+    if (unlikely(!value) && PyErr_ExceptionMatches(PyExc_AttributeError)) {
+        const char* module_name_str = 0;
+        PyObject* module_name = 0;
+        PyObject* module_dot = 0;
+        PyObject* full_name = 0;
+        PyErr_Clear();
+        module_name_str = PyModule_GetName(module);
+        if (unlikely(!module_name_str)) { goto modbad; }
+        module_name = PyUnicode_FromString(module_name_str);
+        if (unlikely(!module_name)) { goto modbad; }
+        module_dot = PyUnicode_Concat(module_name, __pyx_mstate_global->__pyx_kp_u__4);
+        if (unlikely(!module_dot)) { goto modbad; }
+        full_name = PyUnicode_Concat(module_dot, name);
+        if (unlikely(!full_name)) { goto modbad; }
+        #if (CYTHON_COMPILING_IN_PYPY && PYPY_VERSION_NUM  < 0x07030400) ||\
+                CYTHON_COMPILING_IN_GRAAL
+        {
+            PyObject *modules = PyImport_GetModuleDict();
+            if (unlikely(!modules))
+                goto modbad;
+            value = PyObject_GetItem(modules, full_name);
+        }
+        #else
+        value = PyImport_GetModule(full_name);
+        #endif
+      modbad:
+        Py_XDECREF(full_name);
+        Py_XDECREF(module_dot);
+        Py_XDECREF(module_name);
+    }
+    if (unlikely(!value)) {
+        PyErr_Format(PyExc_ImportError, "cannot import name %S", name);
+    }
+    return value;
+}
 
 /* DictGetItem */
 #if !CYTHON_COMPILING_IN_PYPY
@@ -11874,6 +14717,13 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_FormatAndDecref(PyObject* s, PyObj
     return result;
 }
 
+/* PyUnicode_Unicode */
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Unicode(PyObject *obj) {
+    if (unlikely(obj == Py_None))
+        obj = __pyx_mstate_global->__pyx_kp_u_None;
+    return __Pyx_NewRef(obj);
+}
+
 /* SliceObject */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(PyObject* obj,
         Py_ssize_t cstart, Py_ssize_t cstop,
@@ -11934,13 +14784,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(PyObject* obj,
     __Pyx_DECREF_TypeName(obj_type_name);
 bad:
     return NULL;
-}
-
-/* PyUnicode_Unicode */
-static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Unicode(PyObject *obj) {
-    if (unlikely(obj == Py_None))
-        obj = __pyx_mstate_global->__pyx_kp_u_None;
-    return __Pyx_NewRef(obj);
 }
 
 /* RaiseTooManyValuesToUnpack */

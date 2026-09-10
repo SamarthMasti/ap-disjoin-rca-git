@@ -97,6 +97,9 @@ class MonitorRuntimeConfig:
     ap_username: str = "Cisco"
     ap_password: str = "Cisco"
     ap_secret: str = ""
+    transfer_proto: str = "TFTP"
+    sftp_username: str = ""
+    sftp_password: str = ""
     epc_enabled: bool = True
     debug_commands_enabled: bool = False
     wlc_debug_cmd_file: str | None = "CONF/wlc_commands.conf"
@@ -123,6 +126,9 @@ class MonitorRuntimeConfig:
             "wlc_debug_cmd_file": self.wlc_debug_cmd_file,
             "ap_debug_cmd_file": self.ap_debug_cmd_file,
             "wlc_evidence_cmd_file": getattr(self, "wlc_evidence_cmd_file", "CONF/wlc_commands.conf"),
+            "transfer_proto":   self.transfer_proto,
+            "sftp_username":    self.sftp_username,
+            "sftp_password":    self.sftp_password,
         }
 
 
@@ -225,6 +231,9 @@ def config_from_gui_dict(config: dict[str, Any], event_sink: BackendEventSink | 
         wlc_debug_cmd_file=config.get("wlc_debug_cmd_file") or "CONF/wlc_commands.conf",
         ap_debug_cmd_file=config.get("ap_debug_cmd_file") or "CONF/ap_commands.conf",
         event_sink=event_sink,
+        transfer_proto=str(config.get("transfer_proto") or "TFTP"),
+        sftp_username=str(config.get("sftp_username") or ""),
+        sftp_password=str(config.get("sftp_password") or ""),
     )
 def _resolve_run_dir(base_report_dir: str) -> str:
     """

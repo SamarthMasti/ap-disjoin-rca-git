@@ -191,7 +191,7 @@ class MonitorEngine:
             trigger_mode=f"EEM_{'SNMP_trap' if legacy.TRIGGER_MODE == 'snmp' else 'MDT_gRPC_dialout'}",
             grpc_port=config.grpc_port if legacy.TRIGGER_MODE != "snmp" else None,
             total_disjoin_events=len(monitor.events),
-            unique_aps_traced=len(monitor.ap_reports),
+            unique_aps_traced=len(monitor.events),
             high_confidence_findings=high,
             report_json=str(json_path),
             report_summary=str(txt_path),
