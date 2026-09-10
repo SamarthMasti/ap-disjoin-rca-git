@@ -18,7 +18,6 @@ a = Analysis(
     datas=[
         ('assets/ciscologo.icns', 'assets'),
         ('CONF/iosxe_devices.yaml', 'CONF'),
-        ('wfconfig_WLC_1.yaml', '.'),
         ('mdt_grpc_dialout_pb2.py', '.'),
         ('mdt_grpc_dialout_pb2_grpc.py', '.'),
         ('telemetry_pb2.py', '.'),
