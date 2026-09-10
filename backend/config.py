@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import getpass
 import os
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
@@ -19,6 +20,23 @@ INVENTORY_PATH_CANDIDATES = (
     LEGACY_CONF_INVENTORY,
     LEGACY_CONF_LOWER_INVENTORY,
 )
+
+
+def resource_base_dir() -> Path:
+    """
+    Where to resolve bundled resource paths from.
+
+    Relative paths (CONF/..., assets/...) only resolve correctly against the
+    current working directory when that happens to be the project root — true
+    when running from source, but not guaranteed for a packaged build: a
+    double-clicked Windows .exe usually starts in its own folder, but a
+    double-clicked macOS .app does not start inside the bundle at all. When
+    frozen by PyInstaller, sys._MEIPASS is where the bundled files actually
+    were extracted to, regardless of the process's working directory.
+    """
+    if getattr(sys, "frozen", False):
+        return Path(getattr(sys, "_MEIPASS", Path(sys.executable).parent))
+    return PROJECT_ROOT
 DEFAULT_REPORT_DIR = "reports"
 DEFAULT_LOG_DIR = "logs"
 DEFAULT_CAPTURE_DIR = "captures"
@@ -138,10 +156,15 @@ def resolve_inventory_path(path: str | None) -> str:
     if candidate.exists():
         return str(candidate)
 
+    base = resource_base_dir()
+    resolved_candidate = base / candidate
+    if resolved_candidate.exists():
+        return str(resolved_candidate)
+
     normalized = str(candidate).replace("\\", "/")
     if normalized in INVENTORY_PATH_CANDIDATES:
         for inventory_candidate in INVENTORY_PATH_CANDIDATES:
-            resolved = Path(inventory_candidate)
+            resolved = base / inventory_candidate
             if resolved.exists():
                 return str(resolved)
     return str(candidate)

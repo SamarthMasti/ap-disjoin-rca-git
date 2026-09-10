@@ -46,7 +46,7 @@ except ImportError:
 import queue
 from concurrent.futures import ThreadPoolExecutor
 
-from backend.config import config_from_args
+from backend.config import config_from_args, resource_base_dir
 from backend.engine import event_engine
 from backend.engine import MonitorEngine
 from backend.state import counters as state_counters
@@ -346,6 +346,10 @@ def load_command_catalog(path: str) -> list[dict]:
     fall back to an empty list (no commands run) rather than crash.
     """
     p = Path(path)
+    if not p.exists():
+        alt = resource_base_dir() / path
+        if alt.exists():
+            p = alt
     if not p.exists():
         print(f"[{ts()}] [CMD_CATALOG] File not found: {path} — no commands loaded.", file=sys.stderr)
         return []
