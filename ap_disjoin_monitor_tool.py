@@ -2684,11 +2684,7 @@ class LiveMonitor:
         # before launching _react(). Recording it again here double-counts
         # total_disjoins for every AP that crosses the RCA threshold.
         disjoin_count = increment_disjoin_counter(mac)
-        print(
-            f"[{ts()}] Disjoin counter for {ip or mac}: {disjoin_count} "
-            f"(threshold={DISJOIN_THRESHOLD})",
-            file=sys.stderr,
-        )
+        
         if disjoin_count < DISJOIN_THRESHOLD and not force_rca:
             print(
                 f"[{ts()}] Counter {disjoin_count} < {DISJOIN_THRESHOLD} — "
@@ -2711,11 +2707,7 @@ class LiveMonitor:
                 ACTIVE_RCA_SESSIONS.pop(mac, None)
             return
         if force_rca and disjoin_count < DISJOIN_THRESHOLD:
-            print(
-                f"[{ts()}] [CGDC] force_rca=True — bypassing legacy counter threshold "
-                f"(count={disjoin_count}) for {mac}",
-                file=sys.stderr,
-            )
+            print()
         print(
             f"[{ts()}] *** THRESHOLD REACHED ({disjoin_count}) — "
             f"triggering full troubleshooting workflow for {ip or mac} ***",
@@ -2767,8 +2759,6 @@ class LiveMonitor:
             digits       = re.sub(r"[^0-9a-fA-F]", "", mac)
             dot_mac      = f"{digits[0:4]}.{digits[4:8]}.{digits[8:12]}".lower()
             event_ts_safe = re.sub(r"[^0-9]", "", event_ts)[:14]   # safe filename suffix
-
-            evidence: dict[str, str] = {}
 
             evidence: dict[str, str] = {}
             wlc_ap_evidence:    dict[str, str] = {}
@@ -3359,11 +3349,7 @@ class LiveMonitor:
             )
         detected_lines.append("")
         detected_path.write_text("\n".join(detected_lines), encoding="utf-8")
-        print(
-            f"[{trigger_ts}] [EEM_BATCH] {len(all_detected)} AP(s) detected — "
-            f"written to {detected_path}",
-            file=sys.stderr,
-        )
+        
         history_event = {
             "event_time": trigger_ts,
             "event_valid": True,
@@ -3373,7 +3359,7 @@ class LiveMonitor:
             ],
         }
         completed_count = append_disjoin_event_history(history_event)
-        print(f"[{trigger_ts}] [EEM_BATCH] Event recorded → Completed_Disjoin_Events_Count={completed_count}", file=sys.stderr)
+        
 
         # ── The locked AP for the 4th watcher = the most recent (first in reversed list) ──
         # parsed keeps the single entry used for RCA launch (unchanged behaviour)
